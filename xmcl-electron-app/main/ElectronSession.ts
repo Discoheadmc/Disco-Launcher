@@ -1,5 +1,4 @@
 import { Session, session } from 'electron'
-import { existsSync } from 'fs'
 import { createReadStream } from 'fs-extra'
 import { join } from 'path'
 import { Readable } from 'stream'
@@ -15,11 +14,7 @@ export class ElectronSession {
   #resolve(url: string): Session {
     const parsed = new URL(url)
     if (parsed.hostname === HOST) {
-      if (existsSync(join(this.app.appDataPath, 'Partitions', 'main'))) {
-        return session.fromPartition('persist:main')
-      } else {
-        return session.defaultSession
-      }
+      return session.defaultSession
     }
     return session.fromPartition(`persist:${parsed.hostname}`)
   }

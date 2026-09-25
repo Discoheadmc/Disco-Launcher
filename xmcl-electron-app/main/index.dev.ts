@@ -9,7 +9,6 @@
 import { app, session } from 'electron'
 import { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import { downloadChromeExtension } from 'electron-devtools-installer/dist/downloadChromeExtension'
-import { autoUpdater } from 'electron-updater'
 import 'source-map-support/register'
 import './index'
 
@@ -26,13 +25,6 @@ app.on('web-contents-created', (event, contents) => {
     }
   })
 })
-
-autoUpdater.setFeedURL({
-  provider: 'github',
-  repo: 'disco-launcher',
-  owner: 'discolauncher',
-})
-autoUpdater.logger = null
 
 app.whenReady().then(async () => {
   // Reimplement `electron-devtools-installer`'s install using the non-deprecated

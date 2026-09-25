@@ -19,8 +19,6 @@ export interface InstanceFileOperationHandlerContext {
 
   getCachedResource(sha1: string): Promise<string | undefined>
 
-  getPeerActualUrl: (peerUrl: string) => Promise<string | undefined>
-
   unzipFiles: (p: UnzipTaskPayload[], finished: Set<string>, signal: AbortSignal) => Promise<void>
 
   downloadFiles: (p: HttpTaskPayload[], finished: Set<string>, signal: AbortSignal) => Promise<void>
@@ -485,14 +483,6 @@ export class InstanceFileOperationHandler {
    */
   async #handleHttp(file: InstanceFile, destination: string, sha1?: string) {
     const urls = file.downloads!.filter((u) => u.startsWith('http'))
-    const peerUrl = file.downloads!.find((u) => u.startsWith('peer://'))
-
-    if (peerUrl) {
-      const url = await this.context.getPeerActualUrl(peerUrl)
-      if (url) {
-        urls.push(url)
-      }
-    }
 
     if (urls.length > 0) {
       // Prefer HTTP download than peer download

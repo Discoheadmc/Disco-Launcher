@@ -15,7 +15,6 @@ import defaultApp from './defaultApp'
 import { definedPlugins } from './definedPlugins'
 import { isReplayableFetchBody, splitFetchBody } from './fetchBody'
 import { getOzonePlatform } from './ozonePlatform'
-import { ElectronUpdater } from './utils/updater'
 import { getWindowsUtils } from './utils/windowsUtils'
 
 class ElectronShell implements Shell {
@@ -177,7 +176,13 @@ export default class ElectronLauncherApp extends LauncherApp {
       new ElectronShell(),
       new ElectronSecretStorage(join(app.getPath('appData'), LAUNCHER_NAME, IS_DEV ? 'secret-dev' : 'secret')),
       (app) => new ElectronController(app as ElectronLauncherApp),
-      (app) => new ElectronUpdater(app as ElectronLauncherApp),
+      // Disco Launcher: auto-update is removed — pass a no-op updater that
+    // rejects every operation so the BaseService update API stays type-safe.
+    (app) => ({
+      checkUpdateTask: () => Promise.reject(new Error('Disco Launcher: auto-update is disabled')),
+      downloadUpdate: () => Promise.reject(new Error('Disco Launcher: auto-update is disabled')),
+      installUpdateAndQuit: () => Promise.reject(new Error('Disco Launcher: auto-update is disabled')),
+    }),
       defaultApp,
       getEnv(),
       definedPlugins,
@@ -346,7 +351,7 @@ export default class ElectronLauncherApp extends LauncherApp {
       this.protocol.handle({ url })
     }).on('second-instance', (e, argv) => {
       const last = argv[argv.length - 1]
-      if (last.startsWith('xmcl://')) {
+      if (last.startsWith('disco://')) {
         this.protocol.handle({ url: last })
       } else {
         this.emit('second-instance', argv)

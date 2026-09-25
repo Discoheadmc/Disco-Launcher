@@ -300,17 +300,6 @@
       :description="t('setting.customCss.advancedDescription')"
     >
       <template #action>
-        <v-btn
-          v-if="!props.instancePath && developerMode"
-          variant="outlined"
-          size="small"
-          class="mr-2"
-          prepend-icon="smart_toy"
-          :title="t('setting.customCss.openInDialog')"
-          @click="openAssistant"
-        >
-          {{ t('setting.customCss.assistantTitle') }}
-        </v-btn>
         <v-switch
           :model-value="cssEnabled"
           color="primary"
@@ -455,7 +444,6 @@ import CustomCssEditor from '@/components/CustomCssEditor.vue'
 import SettingItem from '@/components/SettingItem.vue'
 import SettingItemCheckbox from '@/components/SettingItemCheckbox.vue'
 import SettingItemSelect from '@/components/SettingItemSelect.vue'
-import { useAgentChatOpen } from '@/composables/agentChat'
 import { kCustomCss } from '@/composables/customCss'
 import { kEnvironment } from '@/composables/environment'
 import { kInstanceTheme } from '@/composables/instanceTheme'
@@ -569,8 +557,6 @@ watch(backgroundType, (type) => {
 const globalCustomCss = injection(kCustomCss)
 const instanceThemeCtx = injection(kInstanceTheme)
 const { state: settingsState } = injection(kSettingsState)
-const developerMode = computed(() => settingsState.value?.developerMode ?? false)
-const { open: openAgentChat } = useAgentChatOpen()
 
 const isInstance = computed(() => !!props.instancePath)
 const cssEnabled = computed(() => props.theme.customCssEnabled ?? false)
@@ -585,9 +571,6 @@ function saveCss(value: string) {
 function onToggleCss(value: boolean | null) {
   props.theme.customCssEnabled = value ?? false
   emit('save')
-}
-function openAssistant() {
-  openAgentChat({ kind: 'css' })
 }
 
 // URL input refs

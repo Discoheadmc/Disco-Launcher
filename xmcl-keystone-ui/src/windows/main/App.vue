@@ -24,11 +24,10 @@
     </div>
     <AppContextMenu />
     <AppNotifier />
-    <AppOmniDialog :agent-enabled="true" />
+    <AppOmniDialog />
     <AppAddInstanceDialog />
     <AppGameExitDialog />
     <AppUnauthenticatedWarningDialog />
-    <AppMultiplayerLoginDialog />
     <AppImageDialog />
     <AppSharedTooltip />
     <UserProfileDialog :value="userProfileDialogShown" @input="userProfileDialogShown = $event" />
@@ -52,8 +51,6 @@ import '@/assets/common.css'
 import AppImageDialog from '@/components/AppImageDialog.vue'
 import AppSharedTooltip from '@/components/AppSharedTooltip.vue'
 import { useAuthProfileImportNotification } from '@/composables/authProfileImport'
-import { useAgentChatHotkey } from '@/composables/agentChat'
-import { kAgent, installAgentDevLauncher, useAgent } from '@/composables/agent'
 import { useCommandPaletteHotkey } from '@/composables/commandPalette'
 import { kDialogModel } from '@/composables/dialog'
 import { useDefaultErrorHandler } from '@/composables/errorHandler'
@@ -75,7 +72,6 @@ import AppBackground from '@/views/AppBackground.vue'
 import AppOmniDialog from '@/views/AppOmniDialog.vue'
 import AppContextMenu from '@/views/AppContextMenu.vue'
 import AppGameExitDialog from '@/views/AppGameExitDialog.vue'
-import AppMultiplayerLoginDialog from '@/views/AppMultiplayerLoginDialog.vue'
 import AppUnauthenticatedWarningDialog from '@/views/AppUnauthenticatedWarningDialog.vue'
 import UserProfileDialog from '@/components/UserProfileDialog.vue'
 import AppNotifier from '@/views/AppNotifier.vue'
@@ -92,12 +88,10 @@ import { UserSkinRenderPaused } from '@/composables/userSkin'
 import AppSideBarGroupSettingDialog from '@/views/AppSideBarGroupSettingDialog.vue'
 import AppGamepadPrompt from '@/views/AppGamepadPrompt.vue'
 import { useInstanceGroupDefaultColor } from '@/composables/instanceGroup'
-import { kMultiplayerEntry, useMultiplayerEntry } from '@/composables/multiplayerEntry'
 
 const lazyDialogComponents = {
   'task': defineAsyncComponent(() => import('@/views/AppTaskDialog.vue')),
   'feedback': defineAsyncComponent(() => import('@/views/AppFeedbackDialog.vue')),
-  'share-instance': defineAsyncComponent(() => import('@/views/AppShareInstanceDialog.vue')),
   'delete-instance': defineAsyncComponent(() => import('@/views/AppInstanceDeleteDialog.vue')),
   'launch-blocked': defineAsyncComponent(() => import('@/views/AppLaunchBlockedDialog.vue')),
   'InstanceInstallSkipDialog': defineAsyncComponent(() => import('@/views/AppInstallSkipDialog.vue')),
@@ -124,14 +118,6 @@ provide(kLocalizedContent, useLocalizedContentControl())
 provide(kInstanceLauncher, useInstanceLauncher())
 provide(kMinecraftFriends, useMinecraftFriendsImpl())
 
-// Agent must run in App.vue (not Context.ts) because its tool factory
-// injects kInstance/kInstanceMods/... which are provided by Context itself,
-// and `inject` only resolves on descendants.
-const agent = useAgent()
-provide(kAgent, agent)
-// Keep the window.__xmcl_agent debug surface restricted to developer mode.
-installAgentDevLauncher(agent, developerMode)
-
 // User profile dialog — moved from AppSystemBarUserMenu to App root
 const userMenu = useUserMenuControl()
 const userProfileDialogShown = userMenu.shown
@@ -143,8 +129,6 @@ provide(UserSkinRenderPaused, computed(() => !userProfileDialogShown.value && ro
 
 // Bind Ctrl/Cmd+Shift+C to open the command palette.
 useCommandPaletteHotkey()
-// Bind Ctrl/Cmd+Shift+A to open the agent chat panel.
-useAgentChatHotkey()
 
 const defaultColor = useInstanceGroupDefaultColor()
 
@@ -172,7 +156,6 @@ provide(kInFocusMode, computed({
 
 provide(kLaunchButton, useLaunchButton())
 provide(kInstanceLaunchCoordinator, useInstanceLaunchCoordinator())
-provide(kMultiplayerEntry, useMultiplayerEntry())
 
 const sidebarSettings = useSidebarSettings()
 provide(kSidebarSettings, sidebarSettings)

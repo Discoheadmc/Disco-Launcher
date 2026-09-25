@@ -17,8 +17,6 @@ import { createI18n } from '../../xmcl-electron-app/main/utils/i18n'
 import { DeskGapController } from './controller'
 import { plugins } from './plugins'
 import { toWebResponseBody } from './transport'
-import { DeskGapUpdater } from './updater'
-import { createDeskGapUpdater } from './updaterHost'
 
 const manifest = {
   name: 'X Minecraft Launcher',
@@ -112,7 +110,13 @@ export class DeskGapLauncherApp extends LauncherApp {
       new DeskGapShell(),
       new DeskGapSecretStorage(),
       launcher => new DeskGapController(launcher as DeskGapLauncherApp),
-      createDeskGapUpdater,
+      // Disco Launcher: auto-update is removed — no-op updater keeps the
+      // BaseService update API type-safe while rejecting every operation.
+      () => ({
+        checkUpdateTask: () => Promise.reject(new Error('Disco Launcher: auto-update is disabled')),
+        downloadUpdate: () => Promise.reject(new Error('Disco Launcher: auto-update is disabled')),
+        installUpdateAndQuit: () => Promise.reject(new Error('Disco Launcher: auto-update is disabled')),
+      }),
       manifest,
       'raw',
       plugins,
@@ -143,9 +147,6 @@ export class DeskGapLauncherApp extends LauncherApp {
   }
 
   override async quit() {
-    if (this.updater instanceof DeskGapUpdater && (await this.registry.get(kSettings)).autoInstallOnAppQuit) {
-      await this.updater.installOnQuit()
-    }
     await super.quit()
   }
 
@@ -167,14 +168,6 @@ export class DeskGapLauncherApp extends LauncherApp {
       return Menu.buildFromTemplate([
         { label: t('showLauncher'), click: () => this.controller.requireFocus() },
         { type: 'separator' },
-        {
-          label: t('checkUpdate'),
-          click: () => { void this.registry.get(BaseService).then(service => service.checkUpdate()) },
-        },
-        {
-          label: t('multiplayer'),
-          click: () => (this.controller as DeskGapController).navigate('/multiplayer'),
-        },
         {
           label: t('makeDesktopShortcut'),
           click: () => { void this.registry.get(BaseService).then(service => service.makeDesktopShortcut()) },
@@ -230,7 +223,7 @@ export class DeskGapLauncherApp extends LauncherApp {
     app.on('window-all-closed', () => this.emit('window-all-closed'))
     app.on('open-url', (event: unknown, url: string) => { void this.protocol.handle({ url }) })
     app.on('second-instance', (_event: unknown, argv: string[]) => {
-      const url = argv.find(value => value.startsWith('xmcl://'))
+      const url = argv.find(value => value.startsWith('disco://'))
       if (url) void this.protocol.handle({ url })
       else this.emit('second-instance', argv)
     })

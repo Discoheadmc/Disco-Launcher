@@ -1,7 +1,6 @@
 import { LaunchPrecheck, MinecraftFolder } from '@xmcl/core'
 import {
   LaunchException,
-  protocolToMinecraft,
   resolveFabricLoaderVersion,
   resolveForgeVersion,
   resolveQuiltVersion,
@@ -15,7 +14,6 @@ import { VersionInstallService } from '~/install/InstallService'
 import { isLinkTo, readlinkSafe } from '~/instance/utils/readLinkSafe'
 import { getManagedJavaComponent, JavaService, JavaValidation } from '~/java'
 import { LaunchService } from '~/launch'
-import { PeerService } from '~/peer'
 import { linkOrCopyDirectory, missing } from '~/util/fs'
 
 export const pluginLaunchPrecheck: LauncherAppPlugin = async (app) => {
@@ -191,33 +189,6 @@ export const pluginLaunchPrecheck: LauncherAppPlugin = async (app) => {
       await LaunchPrecheck.checkNatives(resourceFolder, payload.version, payload.options)
     },
   })
-  launchService.registerMiddleware({
-    name: 'expose-server',
-    async onBeforeLaunch(input, payload, options) {
-      if (payload.side === 'client') return
-
-      const peer = await app.registry.getIfPresent(PeerService)
-      if (peer && payload.side === 'server') {
-        const ver = payload.version.minecraftVersion
-        const minecraftToProtocol: Record<string, number> = {}
-        for (const [protocol, vers] of Object.entries(protocolToMinecraft)) {
-          for (const v of vers) {
-            minecraftToProtocol[v] = parseInt(protocol)
-          }
-        }
-        peer.exposePort(25565, minecraftToProtocol[ver] ?? 765)
-      }
-    },
-    async onAfterLaunch(result, input, payload, context) {
-      if (payload.side === 'server') {
-        const peer = await app.registry.getIfPresent(PeerService)
-        if (peer) {
-          peer.unexposePort(25565)
-        }
-      }
-    },
-  })
-
   app.registry.get(InstanceService).then((serv) => {
     serv.state.subscribe('instanceAdd', (instance) => {
       if (instance.edition === 'bedrock') return

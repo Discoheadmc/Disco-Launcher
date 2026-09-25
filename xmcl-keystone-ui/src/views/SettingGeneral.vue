@@ -107,97 +107,6 @@
     />
 
     <v-divider class="my-3" />
-
-    <SettingItem id="agent-settings" :title="t('setting.aiAgentApiKey')" :description="t('setting.aiAgentApiKeyDescription')">
-        <template #title>
-          <v-icon start size="small" color="primary">key</v-icon>
-          {{ t('setting.aiAgentApiKey') }}
-          <v-chip v-if="agentProviderMode === 'builtin'" size="x-small" class="ml-2">
-            {{ t('setting.aiAgentBuiltin') }}
-          </v-chip>
-          <v-chip v-else-if="agentConfigured" size="x-small" color="success" class="ml-2">
-            <v-icon start size="x-small">check_circle</v-icon>
-            {{ t('setting.aiAgentApiKeySaved') }}
-          </v-chip>
-        </template>
-        <template #action>
-          <v-text-field
-            data-testid="agent-api-key"
-            :model-value="agentApiKey"
-            :type="showAgentApiKey ? 'text' : 'password'"
-            variant="outlined"
-            density="compact"
-            class="setting-item-input"
-            hide-details="auto"
-            :disabled="agentProviderMode === 'builtin'"
-            :error-messages="agentSettingsError"
-            :placeholder="agentConfigured ? t('setting.aiAgentApiKeyStored') : t('setting.aiAgentApiKeyEmpty')"
-            :loading="clearingAgentKey"
-            @update:model-value="updateAgentApiKey($event ?? '')"
-          >
-            <template #append-inner>
-              <!-- The stored key is never read back, so the toggle only has
-                   something to reveal while the user is typing a new one. -->
-              <v-btn v-if="agentApiKey" icon variant="text" size="small" @click="showAgentApiKey = !showAgentApiKey">
-                <v-icon>{{ showAgentApiKey ? 'visibility_off' : 'visibility' }}</v-icon>
-              </v-btn>
-              <!-- Stands in for the built-in `clearable` affordance, which only
-                   appears while the field holds text and so could never reach a
-                   saved key (the field is empty once the key is stored). -->
-              <v-btn
-                v-if="agentProviderMode === 'custom' && (agentApiKey || agentConfigured)"
-                data-testid="agent-api-key-clear"
-                icon
-                variant="text"
-                size="small"
-                :disabled="clearingAgentKey"
-                :title="t('setting.aiAgentApiKeyClear')"
-                @click="onClearAgentApiKey"
-              >
-                <v-icon>close</v-icon>
-              </v-btn>
-            </template>
-          </v-text-field>
-        </template>
-    </SettingItem>
-
-    <v-divider class="my-3" />
-
-    <SettingItem :title="t('setting.aiAgentModel')" :description="t('setting.aiAgentModelDescription')">
-        <template #title>
-          <v-icon start size="small" color="primary">tune</v-icon>
-          {{ t('setting.aiAgentModel') }}
-        </template>
-        <template #action>
-          <v-text-field
-            v-model="agentModel"
-            variant="outlined"
-            density="compact"
-            class="setting-item-input"
-            hide-details
-            :placeholder="agentProviderMode === 'custom' ? t('setting.aiAgentModelPlaceholder') : agentResolvedModel"
-          />
-        </template>
-    </SettingItem>
-
-    <v-divider class="my-3" />
-
-    <SettingItem :title="t('setting.aiAgentEndpoint')" :description="t('setting.aiAgentEndpointDescription')">
-        <template #title>
-          <v-icon start size="small" color="primary">link</v-icon>
-          {{ t('setting.aiAgentEndpoint') }}
-        </template>
-        <template #action>
-          <v-text-field
-            v-model="agentEndpoint"
-            variant="outlined"
-            density="compact"
-            class="setting-item-input"
-            hide-details
-            :placeholder="agentProviderMode === 'custom' ? t('setting.aiAgentEndpointPlaceholder') : agentResolvedEndpoint"
-          />
-        </template>
-    </SettingItem>
   </SettingCard>
 </template>
 
@@ -213,7 +122,6 @@ import { kEnvironment } from '@/composables/environment'
 import { injection } from '@/util/inject'
 import { formatShortcutDisplay } from '@/util/shortcut'
 import { useDialog } from '../composables/dialog'
-import { useAgentSettings } from '../composables/agent/settings'
 import { useGameDirectory, useSettings } from '../composables/setting'
 
 const { isNoEmptySpace, invalidGameDataPath } = injection(kCriticalStatus)
@@ -248,36 +156,6 @@ const replaceNativeItems = computed(() => [
     value: 'all',
   },
 ])
-const {
-  apiKey: agentApiKey,
-  endpoint: agentEndpoint,
-  model: agentModel,
-  configured: agentConfigured,
-  mode: agentProviderMode,
-  error: agentSettingsError,
-  resolvedEndpoint: agentResolvedEndpoint,
-  resolvedModel: agentResolvedModel,
-  updateApiKey: updateAgentApiKey,
-  clearApiKey: clearAgentApiKey,
-} = useAgentSettings()
-const showAgentApiKey = ref(false)
-// Re-hide the key when the field empties (provider switch, or the user cleared it)
-// so the next key typed does not start out visible.
-watch(agentApiKey, value => {
-  if (!value) showAgentApiKey.value = false
-})
-
-const clearingAgentKey = ref(false)
-/** Clear the field and forget whatever key is stored for the current provider. */
-async function onClearAgentApiKey() {
-  clearingAgentKey.value = true
-  try {
-    await clearAgentApiKey()
-  } finally {
-    clearingAgentKey.value = false
-  }
-}
-
 const { show } = useDialog('migration')
 const { root, showGameDirectory } = useGameDirectory()
 async function browseRootDir() {

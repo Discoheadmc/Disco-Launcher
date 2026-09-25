@@ -1,5 +1,4 @@
 import { useExternalRoute, useI18nSync } from '@/composables'
-import { kXmclAccount, useXmclAccount } from '@/composables/xmclAccount'
 import { kCriticalStatus, useCriticalStatus } from '@/composables/criticalStatus'
 import { kCurseforgeCategories, useCurseforgeCategories } from '@/composables/curseforge'
 import { kCustomCss, useCustomCss } from '@/composables/customCss'
@@ -45,7 +44,6 @@ import {
   useModrinthAuthenticatedAPI,
 } from '@/composables/modrinthAuthenticatedAPI'
 import { kLocalCollections, useLocalCollections } from '@/composables/localCollections'
-import { kPeerState, usePeerState } from '@/composables/peers'
 import { kSearchModel, useSearchModel } from '@/composables/search'
 import { kServerStatusCache, useServerStatusCache } from '@/composables/serverStatus'
 import { kSettingsState, useSettingsState } from '@/composables/setting'
@@ -76,7 +74,6 @@ import { kLocalVersions, useLocalVersions } from '@/composables/versionLocal'
 import { kSupportedAuthorityMetadata, useSupportedAuthority } from '@/composables/yggrasil'
 import { vuetify } from '@/vuetify'
 import { provide, watchEffect } from 'vue'
-import { useTogetherMultiplayer } from './multiplayerTogether'
 
 export default defineComponent({
   setup(props, ctx) {
@@ -100,19 +97,6 @@ export default defineComponent({
     })
     const instance = useInstance(instances.selectedInstance, instances.instances)
     const settings = useSettingsState()
-    const multiplayerTransport = computed(() => settings.state.value?.multiplayerTransport ?? 'webrtc')
-    const togetherMultiplayer = typeof multiplayerNetworkDiagnostics !== 'undefined'
-      ? useTogetherMultiplayer(multiplayerTransport)
-      : undefined
-    if (togetherMultiplayer) {
-      provide(kPeerState, usePeerState(
-        user.gameProfile,
-        togetherMultiplayer.multiplayer,
-        togetherMultiplayer.state,
-        togetherMultiplayer.refreshNat,
-        instances.selectedInstance,
-      ))
-    }
     const instanceVersion = useInstanceVersion(
       instance.instance,
       localVersions.versions,
@@ -155,10 +139,6 @@ export default defineComponent({
 
     const modrinthAPI = useModrinthAuthenticatedAPI()
     provide(kModrinthAuthenticatedAPI, modrinthAPI)
-    provide(
-      kXmclAccount,
-      useXmclAccount(),
-    )
     provide(kLocalCollections, useLocalCollections())
     const searchModel = useSearchModel(instance.runtime)
     provide(kSearchModel, searchModel)

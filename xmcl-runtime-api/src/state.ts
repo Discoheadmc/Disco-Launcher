@@ -10,7 +10,6 @@ import { ServerInfoState } from './services/InstanceServerInfoService'
 import { InstanceState } from './services/InstanceService'
 import { JavaState } from './services/JavaService'
 import { ModpackState } from './services/ModpackService'
-import { PeerState } from './services/PeerService'
 import { UserState } from './services/UserService'
 
 export type Mutations<T> = {
@@ -27,7 +26,6 @@ export const AllStates = [
   JavaState,
   UserState,
   LocalVersions,
-  PeerState,
   InstanceInstallStatus,
   InstanceModsGroupState,
   ServerInfoState,

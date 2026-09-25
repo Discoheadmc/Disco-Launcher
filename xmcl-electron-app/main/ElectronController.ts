@@ -20,8 +20,6 @@ import { createI18n } from './utils/i18n'
 import { darkIcon } from './utils/icons'
 import { getLoginSuccessHTML } from './utils/login'
 import { createWindowTracker } from './utils/windowSizeTracker'
-import { MultiplayerNetworkDiagnosticsController } from './MultiplayerNetworkDiagnosticsController'
-import { BrowserRtcController } from './BrowserRtcController'
 
 export class ElectronController implements LauncherAppController {
   protected windowsVersion?: { major: number; minor: number; build: number }
@@ -52,10 +50,6 @@ export class ElectronController implements LauncherAppController {
   private settings: Settings | undefined
 
   private migrated: { from: string; to: string } | undefined
-
-  private readonly multiplayerNetworkDiagnostics: MultiplayerNetworkDiagnosticsController
-
-  readonly browserRtc = new BrowserRtcController()
 
   maximized: boolean | undefined
 
@@ -113,7 +107,6 @@ export class ElectronController implements LauncherAppController {
   }
 
   constructor(protected app: ElectronLauncherApp) {
-    this.multiplayerNetworkDiagnostics = new MultiplayerNetworkDiagnosticsController(ipcMain)
     plugins.forEach(p => p.call(this))
 
     if (app.platform.os === 'windows') {
@@ -292,15 +285,6 @@ export class ElectronController implements LauncherAppController {
     this.browserRef = browser
   }
 
-  openMultiplayer() {
-    const window = this.mainWin
-    if (!window || window.isDestroyed()) return
-    if (window.isMinimized()) window.restore()
-    window.show()
-    window.focus()
-    window.webContents.send('navigate', '/multiplayer')
-  }
-
   setWindowTranslucent(enable: boolean) {
     if (this.mainWin && !this.mainWin.isDestroyed()) {
       if (this.app.platform.os === 'osx') {
@@ -355,9 +339,6 @@ export class ElectronController implements LauncherAppController {
       show: false,
     })
 
-    this.multiplayerNetworkDiagnostics.attach(browser.webContents)
-    this.browserRtc.attach(browser.webContents)
-
     if (man.ratio) {
       browser.setAspectRatio(minWidth / minHeight)
     }
@@ -379,8 +360,6 @@ export class ElectronController implements LauncherAppController {
     browser.webContents.setWindowOpenHandler(this.windowOpenHandler)
     const webContentsId = browser.webContents.id
     browser.on('closed', () => {
-      this.multiplayerNetworkDiagnostics.detach(webContentsId)
-      this.browserRtc.detach(webContentsId)
       this.mainWin = undefined
     })
 

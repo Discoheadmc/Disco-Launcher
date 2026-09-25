@@ -6,80 +6,33 @@
     scrollable
     transition="dialog-top-transition"
   >
-    <div class="omni-surface" :class="`omni-surface--${mode}`">
+    <div class="omni-surface omni-surface--command">
       <div class="omni-input-card">
         <v-textarea
           ref="inputRef"
-          v-model="activeInput"
-          :data-testid="mode === 'command' ? 'command-palette-input' : 'agent-input'"
-          :placeholder="inputPlaceholder"
-          :disabled="inputDisabled"
+          v-model="commandInput"
+          data-testid="command-palette-input"
+          :placeholder="t('commandPalette.placeholder')"
           :readonly="inputReadonly"
           variant="plain"
           density="comfortable"
           hide-details
           auto-grow
           rows="1"
-          :max-rows="mode === 'agent' ? 6 : 1"
+          max-rows="1"
           class="omni-input"
           @compositionstart="composing = true"
           @compositionend="composing = false"
           @keydown="onInputKeydown"
-        >
-          <template v-if="mode === 'agent'" #append-inner>
-            <v-btn
-              v-if="!agentRunning"
-              icon="send"
-              size="small"
-              variant="text"
-              color="primary"
-              :disabled="inputDisabled || !activeInput.trim()"
-              @click="sendAgentInput"
-            />
-            <v-btn
-              v-else
-              data-testid="agent-abort"
-              icon="stop"
-              size="small"
-              variant="text"
-              color="error"
-              :title="t('agent.abort')"
-              :aria-label="t('agent.abort')"
-              @click="agentPanel?.abort()"
-            />
-          </template>
-        </v-textarea>
+        />
         <v-divider />
         <div class="omni-mode-controls">
-          <v-btn-toggle
-            v-model="mode"
-            density="compact"
-            variant="outlined"
-            color="primary"
-            mandatory
-            divided
-          >
-            <v-btn value="command" size="x-small">
-              <v-icon size="small" start>search</v-icon>
-              {{ t('commandPalette.commands') }}
-            </v-btn>
-            <v-btn v-if="agentEnabled" value="agent" size="x-small">
-              <v-icon size="small" start>smart_toy</v-icon>
-              {{ t('agent.title') }}
-            </v-btn>
-          </v-btn-toggle>
           <div id="omni-mode-specific-controls" class="omni-mode-specific-controls" />
         </div>
       </div>
       <AppCommandPalette
         ref="commandPanel"
-        v-show="mode === 'command'"
-        :agent-enabled="agentEnabled"
-      />
-      <AppAgentChat
-        v-if="agentEnabled"
-        ref="agentPanel"
-        v-show="mode === 'agent'"
+        v-show="shown"
       />
     </div>
   </v-dialog>
@@ -87,57 +40,24 @@
 
 <script lang="ts" setup>
 import { useOmniDialog } from '@/composables/omniDialog'
-import { shouldSubmitAgentInput } from '@/composables/agent/input'
-import AppAgentChat from '@/views/AppAgentChat.vue'
 import AppCommandPalette from '@/views/AppCommandPalette.vue'
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-const props = defineProps<{
-  agentEnabled: boolean
-}>()
-
+// Disco Launcher: the agent chat mode was removed with the agent backend.
+// This surface now hosts only the command palette.
 const { t } = useI18n()
-const { shown, mode, commandInput, agentInput, open, close } = useOmniDialog()
+const { shown, commandInput, close } = useOmniDialog()
 const commandPanel = ref<InstanceType<typeof AppCommandPalette> | null>(null)
-const agentPanel = ref<InstanceType<typeof AppAgentChat> | null>(null)
 const inputRef = ref<{ $el: HTMLElement } | null>(null)
 const composing = ref(false)
 
-const activeInput = computed({
-  get: () => mode.value === 'command' ? commandInput.value : agentInput.value,
-  set: value => {
-    if (mode.value === 'command') commandInput.value = value
-    else agentInput.value = value
-  },
-})
-const agentAvailable = computed(() => agentPanel.value?.available ?? false)
-const agentRunning = computed(() => agentPanel.value?.running ?? false)
-const inputDisabled = computed(() => mode.value === 'agent' && !agentAvailable.value)
-const inputReadonly = computed(() => mode.value === 'command' && (commandPanel.value?.inputReadonly ?? false))
-const inputPlaceholder = computed(() => mode.value === 'command'
-  ? t('commandPalette.placeholder')
-  : agentAvailable.value ? t('agent.inputPlaceholder') : t('agent.disabledPlaceholder'))
-
-function sendAgentInput() {
-  void agentPanel.value?.send()
-}
+const inputReadonly = computed(() => (commandPanel.value?.inputReadonly ?? false))
 
 function onInputKeydown(event: KeyboardEvent) {
   if (event.key === 'Escape') {
     event.preventDefault()
     close()
-    return
-  }
-  if (mode.value === 'agent') {
-    if (!shouldSubmitAgentInput(event, composing.value)) return
-    event.preventDefault()
-    sendAgentInput()
-    return
-  }
-  if (event.altKey && event.key === 'Enter') {
-    event.preventDefault()
-    commandPanel.value?.askAi()
     return
   }
   if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
@@ -153,11 +73,7 @@ function onInputKeydown(event: KeyboardEvent) {
   }
 }
 
-watch(() => props.agentEnabled, (enabled) => {
-  if (!enabled && mode.value === 'agent') close()
-})
-
-watch([shown, mode], async ([visible]) => {
+watch(shown, async (visible) => {
   if (!visible) return
   await nextTick()
   requestAnimationFrame(() => {
@@ -175,7 +91,7 @@ watch([shown, mode], async ([visible]) => {
   min-width: 0;
   min-height: 0;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   gap: 8px;
   --surface-blur: 0px;
   --surface-border: none;
@@ -185,10 +101,6 @@ watch([shown, mode], async ([visible]) => {
   --omni-content-width: 720px;
   transform: translateY(clamp(24px, 5vh, 48px));
   background: transparent !important;
-}
-
-.omni-surface--command {
-  align-items: center;
 }
 
 .omni-input-card {

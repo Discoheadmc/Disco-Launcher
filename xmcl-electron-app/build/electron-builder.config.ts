@@ -32,11 +32,6 @@ export const config = {
     to: '.',
     filter: 'package.json',
   }],
-  extraResources: [{
-    from: 'main/agent-documents',
-    to: 'agent-documents',
-    filter: ['**/*.md'],
-  }],
   artifactName: 'DiscoLauncher-Setup-${version}.${ext}',
   appx: {
     displayName: 'Disco Launcher',

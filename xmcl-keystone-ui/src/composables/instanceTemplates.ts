@@ -1,8 +1,7 @@
-import { renderMinecraftPlayerTextHead } from '@/util/avatarRenderer'
 import { getFTBTemplateAndFile } from '@/util/ftb'
 import type { InstanceFile, ModpackInstallProfile } from '@xmcl/instance'
 import { Resource } from '@xmcl/resource'
-import { CachedFTBModpackVersionManifest, InstanceManifest, JavaRecord, ModpackServiceKey, Peer } from '@xmcl/runtime-api'
+import { CachedFTBModpackVersionManifest, InstanceManifest, JavaRecord, ModpackServiceKey } from '@xmcl/runtime-api'
 import { Ref } from 'vue'
 import { DialogKey } from './dialog'
 import { useService } from './service'
@@ -31,7 +30,7 @@ export function useInstanceTemplates(javas: Ref<JavaRecord[]>) {
   const { t } = useI18n()
   const { openModpack } = useService(ModpackServiceKey)
 
-  const getTemplates = (modpackResources: Resource[], peers: Peer[], ftb: CachedFTBModpackVersionManifest[]) => {
+  const getTemplates = (modpackResources: Resource[], ftb: CachedFTBModpackVersionManifest[]) => {
     const all = [] as Array<Template>
     // for (const resource of modpackResources) {
     //   const config = resolveModpackInstanceConfig(resource)
@@ -52,52 +51,11 @@ export function useInstanceTemplates(javas: Ref<JavaRecord[]>) {
     //   }
     // }
 
-    for (const c of peers) {
-      if (c.sharing) {
-        all.push(getPeerTemplate(c.id, c.userInfo.name, c.userInfo.avatar, c.sharing))
-      }
-    }
-
     for (const f of ftb) {
       all.push(getFtbTemplate(f))
     }
 
     return all
-  }
-
-  function getPeerTemplate(id: string, name: string, icon: string, man: InstanceManifest) {
-    const result: Template = markRaw({
-      filePath: id,
-      name: `${man.name ?? 'Instance'}@${name}`,
-      description: '',
-      instance: {
-        icon,
-        name: `${man.name ?? 'Instance'}@${name}`,
-        description: man.description,
-        runtime: {
-          minecraft: man.runtime.minecraft,
-          forge: man.runtime.forge ?? '',
-          fabricLoader: man.runtime.fabricLoader ?? '',
-          quiltLoader: man.runtime.quiltLoader ?? '',
-          optifine: man.runtime.optifine ?? '',
-          neoForged: man.runtime.neoForged ?? '',
-          yarn: '',
-          liteloader: '',
-        },
-        vmOptions: man.vmOptions,
-        mcOptions: man.mcOptions,
-        minMemory: man.minMemory,
-        maxMemory: man.maxMemory,
-      },
-      loadFiles: () => Promise.resolve(markRaw(man.files.map(markRaw))),
-      type: 'peer',
-    })
-
-    renderMinecraftPlayerTextHead(icon)?.then((rendered) => {
-      result.instance.icon = rendered
-    })
-
-    return result
   }
 
   function getFtbTemplate(man: CachedFTBModpackVersionManifest): Template {

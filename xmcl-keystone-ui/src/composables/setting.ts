@@ -218,10 +218,6 @@ export function useSettings() {
     get: () => state.value?.disableTelemetry ?? false,
     set: v => state.value?.disableTelemetrySet(v),
   })
-  const multiplayerTransport = computed({
-    get: () => state.value?.multiplayerTransport ?? 'webrtc',
-    set: v => state.value?.multiplayerTransportSet(v),
-  })
   const enableDiscord = computed({
     get: () => state.value?.discordPresence ?? false,
     set: (v) => state.value?.discordPresenceSet(v),
@@ -275,7 +271,6 @@ export function useSettings() {
     apiSetsPreference,
     apiSets,
     disableTelemetry,
-    multiplayerTransport,
     error,
     isValidating,
   }

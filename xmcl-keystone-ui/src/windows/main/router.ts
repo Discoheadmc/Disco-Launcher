@@ -9,7 +9,6 @@ import Me from '@/views/Me.vue'
 import Mod from '@/views/Mod.vue'
 import ModActions from '@/views/ModActions.vue'
 import ModExtension from '@/views/ModExtension.vue'
-import MultiplayerDesktop from '@/views/MultiplayerDesktop.vue'
 import ResourcePack from '@/views/ResourcePack.vue'
 import ResourcePackActions from '@/views/ResourcePackActions.vue'
 import ResourcePackExtension from '@/views/ResourcePackExtension.vue'
@@ -125,11 +124,6 @@ export const router = createRouter({
     {
       path: '/me',
       component: Me,
-      meta: { workspaceSidePanel: true },
-    },
-    {
-      path: '/multiplayer',
-      component: MultiplayerDesktop,
       meta: { workspaceSidePanel: true },
     },
   ],

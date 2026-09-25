@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { DEFAULT_AGENT_ENDPOINT, DEFAULT_AGENT_MODEL } from '../services/AgentService'
 
 /**
  * API set configuration.
@@ -87,12 +86,6 @@ export const SettingSchema = z.object({
   developerMode: z.boolean().catch(false),
   /** Disable telemetry setting */
   disableTelemetry: z.boolean().catch(true),
-  /** WebRTC implementation used by Together. */
-  multiplayerTransport: z.enum(['webrtc', 'node-datachannel']).catch('webrtc'),
-  /** OpenAI-compatible agent endpoint (the API key is stored separately). */
-  agentEndpoint: z.string().catch(DEFAULT_AGENT_ENDPOINT),
-  /** Agent model identifier. */
-  agentModel: z.string().catch(DEFAULT_AGENT_MODEL),
   /** Linux titlebar setting */
   linuxTitlebar: z.boolean().catch(false),
   /** Enable dedicated GPU optimization */

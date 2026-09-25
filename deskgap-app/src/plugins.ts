@@ -1,12 +1,9 @@
-import { pluginAgentProtocol } from '@xmcl/runtime/agent'
 import type { LauncherAppPlugin } from '@xmcl/runtime/app'
 import { pluginApiFallback } from '@xmcl/runtime/app/pluginApiFallback'
 import { pluginCommonProtocol } from '@xmcl/runtime/app/pluginCommonProtocol'
 import { pluginMediaProtocol } from '@xmcl/runtime/app/pluginMediaProtocol'
 import { pluginCli } from '@xmcl/runtime/commands/pluginCli'
 import { pluginCommandHost } from '@xmcl/runtime/commands/pluginCommandHost'
-import { pluginExternalCredentialLifecycle } from '@xmcl/runtime/credential/pluginExternalCredentialLifecycle'
-import { elyByPlugin } from '@xmcl/runtime/elyby/elyByPlugin'
 import { pluginEncodingWorker } from '@xmcl/runtime/encoding/pluginEncodingWorker'
 import {
   pluginClientToken,
@@ -15,7 +12,6 @@ import {
   pluginImageStorage,
   pluginLogConsumer,
   pluginTasks,
-  pluginTelemetry,
   pluginUncaughtError,
 } from '@xmcl/runtime/infra/plugins'
 import { pluginLaunchPrecheck } from '@xmcl/runtime/launch/pluginLaunchPrecheck'
@@ -34,21 +30,20 @@ import { pluginModrinthAccess } from '@xmcl/runtime/user/pluginModrinthAccess'
 import { pluginOfficialUserApi } from '@xmcl/runtime/user/pluginOfficialUserApi'
 import { pluginOffineUser } from '@xmcl/runtime/user/pluginOfflineUser'
 import { pluginUserTokenStorage } from '@xmcl/runtime/user/pluginUserTokenStorage'
-import { pluginYggdrasilApi } from '@xmcl/runtime/user/pluginYggdrasilApi'
-import { pluginYggdrasilHandler } from '@xmcl/runtime/yggdrasilServer/pluginYggdrasilHandler'
 import localeMappings from '../../assets/locales.json'
 import { pluginGameLaunch } from './pluginGameLaunch'
 import { pluginOptifine } from './pluginOptifine'
 import { definedServices } from './services'
-import { pluginDeskGapUpdate } from './updaterHost'
 
 const pluginLocalization: LauncherAppPlugin = async (app) => {
   const settings = await app.registry.get(kSettings)
   settings.localesSet(Object.entries(localeMappings).map(([locale, name]) => ({ locale, name })))
 }
 
+// Disco Launcher: agent, telemetry, P2P multiplayer, third-party account
+// providers (ely.by / littleskin / yggdrasil server) and auto-update plugins
+// are removed from this host as well.
 export const plugins: LauncherAppPlugin[] = [
-  pluginAgentProtocol,
   pluginCommandHost({ services: definedServices }),
   pluginCli,
   pluginApiFallback,
@@ -61,26 +56,20 @@ export const plugins: LauncherAppPlugin[] = [
   pluginOptifine,
   pluginUncaughtError,
   pluginNativeReplacer,
-  elyByPlugin,
   pluginMarketProvider,
-  pluginYggdrasilApi,
   pluginMediaProtocol,
   pluginResourcePackLink,
   pluginUserPlaytime,
-  pluginYggdrasilHandler,
   pluginClientToken,
   pluginServicesHandler(definedServices),
-  pluginTelemetry,
   pluginLogConsumer,
   pluginSettings,
-  pluginDeskGapUpdate,
   pluginLocalization,
   pluginGFW,
   pluginTasks,
   pluginImageStorage,
   pluginFlights,
   pluginNetworkInterface,
-  pluginExternalCredentialLifecycle,
   pluginOfficialUserApi,
   pluginOffineUser,
   pluginUserTokenStorage,
