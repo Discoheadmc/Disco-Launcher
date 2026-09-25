@@ -82,11 +82,11 @@ export const SettingSchema = z.object({
   /** The launch environment variables */
   globalEnv: z.record(z.string(), z.string()).catch({}),
   /** Discord presence setting */
-  discordPresence: z.boolean().catch(true),
+  discordPresence: z.boolean().catch(false),
   /** Developer mode setting */
   developerMode: z.boolean().catch(false),
   /** Disable telemetry setting */
-  disableTelemetry: z.boolean().catch(false),
+  disableTelemetry: z.boolean().catch(true),
   /** WebRTC implementation used by Together. */
   multiplayerTransport: z.enum(['webrtc', 'node-datachannel']).catch('webrtc'),
   /** OpenAI-compatible agent endpoint (the API key is stored separately). */

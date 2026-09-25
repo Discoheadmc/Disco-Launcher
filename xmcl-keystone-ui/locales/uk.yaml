@@ -35,9 +35,10 @@ HomeLaunchMultiInstanceDialog:
 SettingMigrationDialog:
   selectRootDirectory: Вибрати кореневий каталог
 agent:
-  accessRequiredHint: Оформіть підписку XMCL, щоб використовувати вбудований Agent, або налаштуйте власного постачальника ШІ в налаштуваннях.
-  subscribeXmcl: Оформити підписку XMCL
-  title: XMCL Agent
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: Оформіть підписку DHMC, щоб використовувати вбудований Agent, або налаштуйте власного постачальника ШІ в налаштуваннях.
+  subscribeXmcl: Оформити підписку DHMC
+  title: Discohead
   statusReady: Готово
   statusWorking: Працюю…
   statusDisabled: Вимкнено — немає API key
@@ -345,7 +346,7 @@ feedback:
     Увійдіть до групи QQ для зворотного зв'язку та спілкуйтеся безпосередньо з авторами. Номер групи: {number}
   qqEnterGroup: Приєднатися
   reddit: Reddit
-  redditDescription: Приєднатися до спільноти r/XMCL у Reddit
+  redditDescription: Приєднатися до спільноти r/DHMC у Reddit
 fileDetail:
   fileSize: Розмір файлу
   filesize: Розмір файлу
@@ -518,7 +519,7 @@ instances:
     Імпортувати наявний екземпляр Modrinth. Вам потрібно вибрати кореневу папку даних Modrinth.
   addVanilla: Створити з ванільного Minecraft
   addVanillaDescription: >-
-    Імпортувати зі звичайної папки .minecraft. Це продублює оригінальний ігровий профіль в XMCL.
+    Імпортувати зі звичайної папки .minecraft. Це продублює оригінальний ігровий профіль в DHMC.
   fix: Відновити
   folderSetting: Налаштування папки
   importFolderDescription: Імпортувати Minecraft в лаунчер
@@ -1012,7 +1013,7 @@ multiplayer:
   openConsumerPortal: Відкрити портал клієнта
   refundHint: Потрібне повернення коштів? Перейдіть на клієнтський портал Waffo, щоб керувати замовленнями та підписками.
   togetherSupportHint: Якщо багатокористувацький режим не працює, приєднайтеся до нашого Discord і зв’яжіться з командою розробників. Ми допоможемо вирішити проблему.
-  autoShareAmbiguous: Запущено кілька ігор. Виберіть збірку, у якій відкрито світ для локальної мережі, щоб XMCL міг нею поділитися.
+  autoShareAmbiguous: Запущено кілька ігор. Виберіть збірку, у якій відкрито світ для локальної мережі, щоб DHMC міг нею поділитися.
   editSharingScope: Змінити область поширення
   gameAvailable: Доступна гра в локальній мережі
   joinGame: Приєднатися до гри
@@ -1022,16 +1023,16 @@ multiplayer:
   updateSharedInstanceTitle: Оновити поширену збірку?
   addFunds: "Додати кошти"
   availableBalance: "Доступний баланс"
-  balanceHint: "Доступно для служб XMCL Together"
+  balanceHint: "Доступно для служб DHMC Together"
   billing: "Оплата"
   billingDescription: "Керуйте доступом до ретранслятора, планом Together Home і платежами."
   billingError: "Не вдалося завантажити дані про оплату Together. Спробуйте ще раз за мить."
   buyTogether: "Придбати Together"
   cancelTogether: "Скасувати план"
   checkout: "Відкрити оплату Waffo"
-  connectionTogetherWarning: "Один із учасників кімнати вже деякий час не може підключитися до вас. Спробуйте XMCL Together, щоб покращити з'єднання для всіх у кімнаті. Together потрібен лише власнику кімнати."
+  connectionTogetherWarning: "Один із учасників кімнати вже деякий час не може підключитися до вас. Спробуйте DHMC Together, щоб покращити з'єднання для всіх у кімнаті. Together потрібен лише власнику кімнати."
   masterPurchaseHint: "Together Home потрібен лише власнику кімнати, щоб покращити з'єднання для всіх у кімнаті."
-  natTogetherWarning: "Ваш маршрутизатор може мати труднощі з підключенням до власника кімнати. Якщо підключення не вдаються, спробуйте XMCL Together, щоб покращити з'єднання між вами та друзями. Придбати Together для кімнати має лише її власник."
+  natTogetherWarning: "Ваш маршрутизатор може мати труднощі з підключенням до власника кімнати. Якщо підключення не вдаються, спробуйте DHMC Together, щоб покращити з'єднання між вами та друзями. Придбати Together для кімнати має лише її власник."
   togetherName: "Minecraft Together"
   trialDescription: "Один 7-денний пробний період із 1 GB ретрансляційного трафіку."
   trialTitle: "Пробний період підключення"
@@ -1039,7 +1040,7 @@ multiplayer:
   month: "місяць"
   orderStatus: "Замовлення Waffo: {status}"
   planDescription: "20 GB керованого ретрансляційного трафіку щомісяця, а також усунення несправностей модпаку за допомогою ШІ."
-  waffoHint: "Платежі безпечно здійснюються через Waffo Pancake. XMCL ніколи не отримує номер вашої картки."
+  waffoHint: "Платежі безпечно здійснюються через Waffo Pancake. DHMC ніколи не отримує номер вашої картки."
   subscription:
     active: "Активна"
     cancelled: "Скасована"
@@ -1049,7 +1050,7 @@ multiplayer:
     available: "Доступний безкоштовний пробний період"
     expired: "Пробний період використано"
     unavailable: "Пробний період недоступний"
-  loginRequiredDescription: Для мережевої гри P2P використовуються онлайн-сервіси XMCL. Увійдіть в обліковий запис XMCL, щоб продовжити.
+  loginRequiredDescription: Для мережевої гри P2P використовуються онлайн-сервіси DHMC. Увійдіть в обліковий запис DHMC, щоб продовжити.
   loginRequiredTitle: Увійдіть для мережевої гри P2P
   complete: Завершено
   confirm: Підтвердити
@@ -1474,7 +1475,7 @@ setting:
   developerMode: Режим розробника
   developerModeDescription: Режим розробника призначений для тестування ваших власних модів
   disableTelemetry: Вимкнути телеметрію
-  disableTelemetryDescription: XMCL збиратиме події запуску гри та входу користувачів.
+  disableTelemetryDescription: DHMC збиратиме події запуску гри та входу користувачів.
   enableDedicatedGPUOptimization: Призначити дискретну відеокарту
   enableDedicatedGPUOptimizationDescription: Ця опція призначить дискретну відеокарту процесу Minecraft.
   enableDiscord: Увімкнути присутність Discord
@@ -1612,7 +1613,7 @@ setup:
     name: '@:setting.appearance'
   dataRoot:
     description: >-
-      Кореневий каталог даних - це не звичайний каталог .minecraft. Оскільки структура каталогу даних XMCL відрізняється від ванільної, ми не рекомендуємо використовувати звичайний каталог .minecraft як кореневий каталог даних.
+      Кореневий каталог даних - це не звичайний каталог .minecraft. Оскільки структура каталогу даних DHMC відрізняється від ванільної, ми не рекомендуємо використовувати звичайний каталог .minecraft як кореневий каталог даних.
     drives: Рекомендовані місця
     name: Встановити каталог даних
   defaultLayoutDescription: >-
@@ -1734,8 +1735,8 @@ theme:
   selectImage: Вибрати зображення
   selectMusic: Вибрати музику
   selectVideo: Вибрати відео
-  title: XMCL
-title: XMCL
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: Кандидат хоста
   prflx: Кандидат Peer Reflexive
@@ -2065,6 +2066,6 @@ gamepad:
   steamAddedNotify: Лаунчер успішно додано до вашої бібліотеки Steam! Будь ласка, перезапустіть Steam, щоб побачити зміни.
   steamAlreadyAddedNotify: Лаунчер вже додано до вашої бібліотеки Steam.
   steamDeckTitle: Виявлено Steam Deck
-  steamDeckDesc: Ми виявили, що ви граєте на Steam Deck. Бажаєте додати XMCL до вашої бібліотеки Steam як сторонню гру для повної інтеграції оверлея та контролера в Gaming Mode?
+  steamDeckDesc: Ми виявили, що ви граєте на Steam Deck. Бажаєте додати DHMC до вашої бібліотеки Steam як сторонню гру для повної інтеграції оверлея та контролера в Gaming Mode?
   steamDeckAddBtn: Додати до Steam ({btn})
   steamDeckCancelBtn: Скасувати ({btn})

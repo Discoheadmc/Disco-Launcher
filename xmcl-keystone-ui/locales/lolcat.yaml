@@ -470,7 +470,7 @@ instances:
     IMPORT EXISTING MODRINTH INSTANCE. U NEED TO PICK DA MODRINTH ROOT DATA FOLDR.
   addVanilla: MAKE FROM VANILLA-LIKE MINECWAFT
   addVanillaDescription: >-
-    IMPORT FROM COMMON .MINECRAFT FOLDR. THIS WILL DUPLCIATE DA ORIGINAL GAME PROFILE TO XMCL.
+    IMPORT FROM COMMON .MINECRAFT FOLDR. THIS WILL DUPLCIATE DA ORIGINAL GAME PROFILE TO DHMC.
   fix: REPAIR
   folder: FOLDR
   folderSetting: FOLDR SETTINGZ
@@ -948,7 +948,7 @@ multiplayer:
   openConsumerPortal: OPEN CONSUMR PORTAL
   refundHint: NEED REFUND? VISIT WAFFO CONSUMR PORTAL TO MANAGE UR ORDERS AN SUBSCRIPSHUNS.
   togetherSupportHint: IF MULTIPLAYR NO WERK, JOIN R DISCORD AN CONTACT TEH DEV TEAM. WE HALP FIX IT.
-  autoShareAmbiguous: MANY GAEMS R RUNNIN. CHOOZ TEH INSTANCE HOSTIN TEH LAN WORLD SO XMCL CAN SHARE IT.
+  autoShareAmbiguous: MANY GAEMS R RUNNIN. CHOOZ TEH INSTANCE HOSTIN TEH LAN WORLD SO DHMC CAN SHARE IT.
   editSharingScope: EDIT SHARIN RANGE
   gameAvailable: LAN GAEM IZ HERE
   joinGame: JOIN GAEM
@@ -958,16 +958,16 @@ multiplayer:
   updateSharedInstanceTitle: UPDAET SHARED INSTANCE?
   addFunds: "Add moar funds"
   availableBalance: "Funds nao available"
-  balanceHint: "Usable for XMCL Together servicez"
+  balanceHint: "Usable for DHMC Together servicez"
   billing: "Billz"
   billingDescription: "Manage relay access, ur Together Home plan, and payz."
   billingError: "Together billz cud not load. Try again in a lil moment."
   buyTogether: "Buy Together"
   cancelTogether: "Cancel plan"
   checkout: "Open Waffo checkout"
-  connectionTogetherWarning: "Room member haz been unable to connect to u fur a while. Try XMCL Together to make connectivity better fur everybuddy in teh room. Only teh room master needs Together."
+  connectionTogetherWarning: "Room member haz been unable to connect to u fur a while. Try DHMC Together to make connectivity better fur everybuddy in teh room. Only teh room master needs Together."
   masterPurchaseHint: "Only teh room master needs Together Home to make connectivity better fur everybuddy in teh room."
-  natTogetherWarning: "Ur router may haf trouble connecting to teh room master. If connections fail, try XMCL Together to improve connectivity between u and ur frenz. Only teh room master needs to buy Together fur teh room."
+  natTogetherWarning: "Ur router may haf trouble connecting to teh room master. If connections fail, try DHMC Together to improve connectivity between u and ur frenz. Only teh room master needs to buy Together fur teh room."
   togetherName: "Minecraft Together"
   trialDescription: "One 7-day trial with 1 GB relay traffic. Much connect."
   trialTitle: "Connectivity trial"
@@ -975,7 +975,7 @@ multiplayer:
   month: "month"
   orderStatus: "Waffo order: {status}"
   planDescription: "20 GB managed relay traffic every month, plus AI troubleshooting fur ur modpack."
-  waffoHint: "Payments happen securely on Waffo Pancake. XMCL never gets ur card number, promise."
+  waffoHint: "Payments happen securely on Waffo Pancake. DHMC never gets ur card number, promise."
   subscription:
     active: "Active nao"
     cancelled: "Cancelled nao"
@@ -985,7 +985,7 @@ multiplayer:
     available: "Free trial available, yay"
     expired: "Trial used up"
     unavailable: "Trial unavailable nao"
-  loginRequiredDescription: P2P multiplayer uses XMCL onlinez. Sign in 2 an XMCL Account 2 continue.
+  loginRequiredDescription: P2P multiplayer uses DHMC onlinez. Sign in 2 an DHMC Account 2 continue.
   loginRequiredTitle: Sign in 4 P2P multiplayer
   complete: COMPLETE
   confirm: CONFIRM
@@ -1327,8 +1327,9 @@ serverStatus:
   refuse: §4SERVER REFUSED!
   timeout: §4CONNECT SERVR TIMEOUT!
 agent:
-  accessRequiredHint: SUBSCRIEB TO XMCL TO USE TEH BUILT-IN AGENT, OR CONFIGURE UR OWN AI PROVIDR IN SETTINGZ.
-  subscribeXmcl: SUBSCRIEB TO XMCL
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: SUBSCRIEB TO DHMC TO USE TEH BUILT-IN AGENT, OR CONFIGURE UR OWN AI PROVIDR IN SETTINGZ.
+  subscribeXmcl: SUBSCRIEB TO DHMC
   notConfiguredHint: SET AN API KEY, MODEL AN OPENAI-COMPATIBL ENDPOINT IN SETTINGZ → GENERAL → AI AGENT. FUR EXAMPL, USE OPENAI OR A CLAUDE-COMPATIBL GATEWAY.
 setting:
   aiAgentApiKeyDescription: CONFIGUR AN OPENAI-COMPATIBL PROVIDR, SUCH AS OPENAI OR A GATEWAY FUR CLAUDE. TEH KEY IZ STORED LOCALY ON DIS DEVICE.
@@ -1351,7 +1352,7 @@ setting:
   aboutBmclDescription: BMCL API PROVIDEZ CONVENEENT DOWNLODZ FUR USRZ IN CHINEEZ MAINLUND
   aboutContributors: 🧑‍💻 CONTRUBUTORS 🧑‍💻
   aboutDenoDescription: >-
-    XMCL LEVERAGEZ DENO DEPLOY'S HASSEL-FRU PLATFURM FUR SERVERLUS JAVASCRIPT APPLICASHUNZ
+    DHMC LEVERAGEZ DENO DEPLOY'S HASSEL-FRU PLATFURM FUR SERVERLUS JAVASCRIPT APPLICASHUNZ
   aboutLicense: MIT LICENSE
   aboutLicenseInfo: >-
     FRU CUD SINING ON WUNDUZ PROVDED BI SIGNPATH.IO, CERTIFICAT BI SIGNPATH FUNDASHUN
@@ -1413,7 +1414,7 @@ setting:
   developerMode: DEVELOPR MODE
   developerModeDescription: DEVELOPR MODE IS FUR TESTING UR OWN MODZ
   disableTelemetry: DISABL TELEMETRY
-  disableTelemetryDescription: XMCL WILL COLLECT DA GAME LAUNCH AN USER LOGIN EVENTS.
+  disableTelemetryDescription: DHMC WILL COLLECT DA GAME LAUNCH AN USER LOGIN EVENTS.
   enableDedicatedGPUOptimization: ASSIGN DEDICATED GPU
   enableDedicatedGPUOptimizationDescription: THIS OPSHUN WILL ASSIGN DEDICATED GPU TO MINECWAFT PROCESS.
   enableDiscord: ENABL DISCORD PRESENCE
@@ -1546,7 +1547,7 @@ setup:
     name: '@:setting.appearance'
   dataRoot:
     description: >-
-      TEH DATA ROOT IS NOT A COMMON .MINECRAFT DIRECTORY. SINCE XMCL DATA DIRECTORY STRUCTURE IS DIFFERENT FROM VANILLA, WE DO NOT RECOMMEND TO USE DA COMMON .MINECRAFT DIRECTORY AS A DATA ROOT.
+      TEH DATA ROOT IS NOT A COMMON .MINECRAFT DIRECTORY. SINCE DHMC DATA DIRECTORY STRUCTURE IS DIFFERENT FROM VANILLA, WE DO NOT RECOMMEND TO USE DA COMMON .MINECRAFT DIRECTORY AS A DATA ROOT.
     drives: RECOMMEND LOCASHUNS
     name: SET DATA DIRECTORY
   defaultLayoutDescription: >-

@@ -105,7 +105,7 @@ export async function writeSponge(blueprint: Blueprint): Promise<Uint8Array> {
     BlockEntities: blockEntities,
     Metadata: withSchema({
       Name: blueprint.name ?? '',
-      Author: blueprint.author ?? 'XMCL',
+      Author: blueprint.author ?? 'Discohead',
     }, { Name: TagType.String, Author: TagType.String }),
   }
 

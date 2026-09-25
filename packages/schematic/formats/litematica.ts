@@ -193,7 +193,7 @@ export async function writeLitematic(blueprint: Blueprint): Promise<Uint8Array> 
 
   const metadata: any = {
     Name: blueprint.name ?? regionName,
-    Author: blueprint.author ?? 'XMCL',
+    Author: blueprint.author ?? 'Discohead',
     Description: blueprint.description ?? '',
     EnclosingSize: withSchema({ x: size.x, y: size.y, z: size.z }, sizeSchema),
     TimeCreated: now,

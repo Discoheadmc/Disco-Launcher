@@ -33,8 +33,15 @@ export const pluginSettings: LauncherAppPlugin = async (app) => {
     return saver.flush()
   })
 
+  // Disco Launcher defaults to Turkish on first launch. A locale explicitly
+  // saved from Settings > General > Language always wins. E2E runs keep
+  // English so Playwright text assertions stay deterministic.
+  const DEFAULT_LOCALE = 'tr'
+
   const normalizeLocale = (locale: string) => {
-    locale = locale || app.host.getLocale()
+    if (!locale) {
+      return process.env.XMCL_E2E ? 'en' : DEFAULT_LOCALE
+    }
     if (locale.startsWith('en')) {
       locale = 'en'
     }

@@ -37,9 +37,10 @@ HomeLaunchMultiInstanceDialog:
 SettingMigrationDialog:
   selectRootDirectory: 选择新的根目录
 agent:
-  accessRequiredHint: 订阅 XMCL 即可使用内置 Agent，或前往设置自行配置 AI 服务商。
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: 订阅 DHMC 即可使用内置 Agent，或前往设置自行配置 AI 服务商。
   abort: 停止生成
-  title: XMCL Agent
+  title: Discohead
   statusReady: 就绪
   statusWorking: 处理中…
   statusDisabled: 已禁用 — 请登录或配置服务商
@@ -48,7 +49,7 @@ agent:
   notConfiguredHint: >-
     请在设置 → 通用 → AI Agent 中填写 API Key、模型和 OpenAI 兼容 Endpoint，例如 OpenAI 或兼容 Claude 的网关。
   openSettings: 打开设置
-  subscribeXmcl: 订阅 XMCL
+  subscribeXmcl: 订阅 DHMC
   setupGuide: 配置指南
   emptyHint: >-
     让 Agent 检查你的实例、启用/禁用模组、读取日志或诊断崩溃。
@@ -577,7 +578,7 @@ instances:
   addVanilla: 从原版 Minecraft 创建
   addVanillaDescription: |-
     从通用 .minecraft 文件夹导入。
-    这会将原始游戏配置文件复制到 XMCL。
+    这会将原始游戏配置文件复制到 DHMC。
   fix: 修复
   folder: 文件夹
   folderSetting: 文件夹设置
@@ -658,9 +659,9 @@ launchBlocked:
       没有权限执行 <span class="highlight"> {javaPath} </span>，请尝试给启动器更高权限，给 Java 文件增加可执行权限，或者更换 Java。
     title: 无权限使用 Java
   launchLinuxDisplayUnavailable:
-    environmentMissing: XMCL 无法从当前桌面会话恢复 X11 显示信息。请在当前桌面会话的终端中重新启动 XMCL，或注销后重新登录。
-    noGraphicalSession: XMCL 当前不在图形桌面会话中运行。请从桌面会话启动 XMCL 后再启动 Minecraft。
-    sandboxDenied: 应用沙箱无法访问 X11。请在 Flatpak 权限中允许 XMCL 访问 X11 socket，然后重启 XMCL。
+    environmentMissing: DHMC 无法从当前桌面会话恢复 X11 显示信息。请在当前桌面会话的终端中重新启动 DHMC，或注销后重新登录。
+    noGraphicalSession: DHMC 当前不在图形桌面会话中运行。请从桌面会话启动 DHMC 后再启动 Minecraft。
+    sandboxDenied: 应用沙箱无法访问 X11。请在 Flatpak 权限中允许 DHMC 访问 X11 socket，然后重启 DHMC。
     title: X11 显示不可用
     xwaylandMissing: 当前 Wayland 会话中的 Minecraft 需要 XWayland。请安装 Linux 发行版提供的 XWayland 软件包，然后注销并重新登录。
     xwaylandNotRunning: 已安装 XWayland，但当前没有运行 X11 显示服务。请在合成器配置中启用 XWayland，然后注销并重新登录。
@@ -1162,9 +1163,9 @@ modrinthCard:
   currentVersion: 当前版本
 multiplayer:
   addFunds: 充值
-  autoShareAmbiguous: 检测到多个正在运行的游戏。请选择开放局域网世界的实例，XMCL 将自动分享它。
+  autoShareAmbiguous: 检测到多个正在运行的游戏。请选择开放局域网世界的实例，DHMC 将自动分享它。
   availableBalance: 可用余额
-  balanceHint: 可用于 XMCL Together 服务
+  balanceHint: 可用于 DHMC Together 服务
   billing: 账单
   billingDescription: 管理中继服务、Together Home 套餐和付款。
   billingError: 暂时无法加载 Together 账单，请稍后重试。
@@ -1175,9 +1176,9 @@ multiplayer:
   confirm: 确定
   connectionError: 连接错误
   connectionFailedHint: 无法建立连接。请检查双方的 NAT 类型是否兼容。
-  connectionTogetherWarning: 有房间成员长时间无法连接到您。可以尝试 XMCL Together，改善房间内所有成员的联机体验；一个房间只需房间主控使用 Together。
+  connectionTogetherWarning: 有房间成员长时间无法连接到您。可以尝试 DHMC Together，改善房间内所有成员的联机体验；一个房间只需房间主控使用 Together。
   connectedToMaster: 已连接到房间主控
-  natTogetherWarning: 您的路由器可能难以连接房间主控。如果确实无法连接，可以尝试 XMCL Together，改善您和朋友之间的联机体验。一个房间只需房间主控购买 Together。
+  natTogetherWarning: 您的路由器可能难以连接房间主控。如果确实无法连接，可以尝试 DHMC Together，改善您和朋友之间的联机体验。一个房间只需房间主控购买 Together。
   openConsumerPortal: 打开消费者门户
   refundHint: 如需退款，请前往 Waffo 消费者门户管理您的订单和订阅。
   connections: 通过 P2P 联机
@@ -1215,7 +1216,7 @@ multiplayer:
   joinOrCreateGroup: 加入/创建群组
   joinOrCreateGroupHint: 从您的小伙伴那获得群组 ID 或自己创建一个群组
   joinCreatesMissingRoomHint: 如果该房间不存在，你会创建它并成为房间主控。
-  loginRequiredDescription: P2P 联机依赖 XMCL 在线服务。请先登录 XMCL Account 后继续。
+  loginRequiredDescription: P2P 联机依赖 DHMC 在线服务。请先登录 DHMC Account 后继续。
   loginRequiredTitle: 登录后使用 P2P 联机
   kernel: P2P内核
   kernelDescription: |-
@@ -1239,12 +1240,12 @@ multiplayer:
   orderStatus: 'Waffo 订单：{status}'
   planDescription: 每月包含 20 GB 托管中继流量，以及用于排查整合包问题的 AI 协助。
   relayAllowanceSummary: 本周期剩余 {remaining}，共 {total}
-  relayServiceAvailable: XMCL Together 中继服务可用
+  relayServiceAvailable: DHMC Together 中继服务可用
   subscription:
     active: 使用中
     cancelled: 已取消
     payment_due: 待付款
-  waffoHint: 付款由 Waffo Pancake 安全处理，XMCL 不会接收您的银行卡号。
+  waffoHint: 付款由 Waffo Pancake 安全处理，DHMC 不会接收您的银行卡号。
   networkInfo: 当前网络状况
   next: 下一步
   otherExposedPortDescription: '{user} 暴露给你的端口'
@@ -1673,7 +1674,7 @@ setting:
   about: 关于
   aboutBmclDescription: BMCL API 为中国地区用户提供便捷的下载服务
   aboutContributors: 🧑‍💻 贡献者 🧑‍💻
-  aboutDenoDescription: XMCL 使用 Deno Deploy 提供的无服务器 JavaScript 应用平台
+  aboutDenoDescription: DHMC 使用 Deno Deploy 提供的无服务器 JavaScript 应用平台
   aboutLicense: MIT 许可证
   aboutLicenseInfo: 感谢 SignPath.io 提供免费的 Windows 代码签名
   aboutSponsors: 😇 赞助商 😇
@@ -1769,11 +1770,11 @@ setting:
   developerMode: 开发者模式
   developerModeDescription: 开发者模式旨在帮助您测试自己写的模组
   disableTelemetry: 关闭遥测
-  disableTelemetryDescription: XMCL 会收集游戏启动以及用户登录事件
+  disableTelemetryDescription: DHMC 会收集游戏启动以及用户登录事件
   enableDedicatedGPUOptimization: 分配专用 GPU
   enableDedicatedGPUOptimizationDescription: 此选项将为 Minecraft 进程分配专用 GPU。
   enableDiscord: 启用 Discord Presence
-  enableDiscordDescription: 根据 XMCL 实时更新 Discord 的状态
+  enableDiscordDescription: 根据 DHMC 实时更新 Discord 的状态
   enterUrl: 输入网址
   exportSettings: 导出设置
   exportSettingsHint: 将当前设置保存到文件
@@ -1898,7 +1899,7 @@ setup:
   appearance:
     name: '@:setting.appearance'
   dataRoot:
-    description: 数据存储目录不是常规的 .minecraft 目录。因为 XMCL 的数据目录格式特殊，不建议将常规 .minecraft 目录设置为数据目录。
+    description: 数据存储目录不是常规的 .minecraft 目录。因为 DHMC 的数据目录格式特殊，不建议将常规 .minecraft 目录设置为数据目录。
     drives: 推荐路径
     name: 设置数据存储目录
   defaultLayoutDescription: |-
@@ -2032,8 +2033,8 @@ theme:
   selectImage: 选择图像
   selectMusic: 选择音乐
   selectVideo: 选择视频
-  title: XMCL
-title: XMCL
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: 公网地址
   prflx: 同伴反射地址
@@ -2299,16 +2300,16 @@ xmclAccount:
   accountSummary: 账户
   confirmMerge: 确认合并账户
   createdAt: 创建于 {date}
-  description: 无密码的 XMCL 身份，与 Minecraft 游戏账户分开管理。
+  description: 无密码的 DHMC 身份，与 Minecraft 游戏账户分开管理。
   expiresAt: 过期时间 {date}
-  gameAccountsSeparate: 移除游戏账户不会解除 XMCL 登录方式。
+  gameAccountsSeparate: 移除游戏账户不会解除 DHMC 登录方式。
   guest: 访客
-  identityConflict: 此 {provider} 登录属于另一个 XMCL Account。账户绝不会自动合并。
+  identityConflict: 此 {provider} 登录属于另一个 DHMC Account。账户绝不会自动合并。
   linkAccountWith: 使用以下方式绑定账户
   mergePreview: 确认前请检查将要迁移的资源。
-  mergeNeedsSession: 请先登录你希望保留的 XMCL Account，再检查合并。
+  mergeNeedsSession: 请先登录你希望保留的 DHMC Account，再检查合并。
   mergeQueued: 账户合并正在进行。
-  requestFailed: XMCL Account 服务无法完成请求。你的游戏账户未受影响。
+  requestFailed: DHMC Account 服务无法完成请求。你的游戏账户未受影响。
   reviewMerge: 检查合并
   session: 会话
   sessionActive: 有效
@@ -2320,7 +2321,7 @@ xmclAccount:
     deleted: 已删除
     deletion_pending: 等待删除
     merged: 已合并
-  title: XMCL Account
+  title: DHMC Account
 minecraftFriends:
   title: Minecraft 好友
   add: 添加好友

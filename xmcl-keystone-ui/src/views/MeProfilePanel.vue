@@ -16,26 +16,26 @@
         />
       </div>
 
-      <!-- Skin Library Button -->
-      <div v-if="canUploadSkin" class="skin-row border-t px-3 py-2"
-        style="border-color: rgba(var(--v-theme-on-surface), 0.06);"
+      <!-- Skin Library Button (Prism-style flat outline button) -->
+      <div v-if="canUploadSkin" class="skin-row px-3 py-2"
+        style="border-top: 1px solid rgba(var(--v-theme-on-surface), 0.08);"
       >
         <v-btn
-          variant="tonal"
+          variant="outlined"
           size="small"
           block
           color="primary"
-          class="rounded-lg font-medium text-xs tracking-normal"
+          class="prism-flat-btn font-medium text-xs tracking-normal"
           @click="isSkinLibraryOpen = true"
         >
-          <v-icon start size="16">accessibility</v-icon>
-          {{ t('userSkin.libraryTitle') }}
+          <v-icon start size="16">checkroom</v-icon>
+          {{ t('me.localCloset') }}
         </v-btn>
       </div>
 
       <!-- Cape row -->
-      <div v-if="capes.length > 0" class="cape-row border-t px-3 py-2.5"
-        style="border-color: rgba(var(--v-theme-on-surface), 0.06);"
+      <div v-if="capes.length > 0" class="cape-row px-3 py-2.5"
+        style="border-top: 1px solid rgba(var(--v-theme-on-surface), 0.08);"
       >
         <div class="text-[10px] font-semibold uppercase tracking-widest opacity-50 mb-1.5">
           {{ t('userCape.changeTitle') }}
@@ -51,10 +51,10 @@
           <!-- No cape -->
           <div
             v-shared-tooltip.top="() => t('userCape.noCape')"
-            class="cape-thumb flex-shrink-0 cursor-pointer rounded-lg border transition-all flex items-center justify-center hover:scale-110 hover:-translate-y-0.5"
+            class="cape-thumb flex-shrink-0 cursor-pointer border transition-colors flex items-center justify-center"
             :class="!skinModel.cape.value
-              ? 'border-primary bg-primary/15 shadow-sm shadow-primary/20'
-              : 'border-transparent hover:border-[rgba(var(--v-theme-on-surface),0.15)] hover:bg-[rgba(var(--v-theme-on-surface),0.05)]'"
+              ? 'border-primary bg-primary/10'
+              : 'border-transparent hover:border-[rgba(var(--v-theme-on-surface),0.2)]'"
             role="radio"
             tabindex="0"
             :aria-checked="!skinModel.cape.value"
@@ -72,10 +72,10 @@
             v-for="c of capes"
             :key="c.id"
             v-shared-tooltip.top="() => c.alias || c.id"
-            class="cape-thumb flex-shrink-0 cursor-pointer rounded-lg border transition-all overflow-hidden hover:scale-110 hover:-translate-y-0.5"
+            class="cape-thumb flex-shrink-0 cursor-pointer border transition-colors overflow-hidden"
             :class="skinModel.cape.value === c.url
-              ? 'border-primary bg-primary/15 shadow-sm shadow-primary/20'
-              : 'border-transparent hover:border-[rgba(var(--v-theme-on-surface),0.15)] hover:bg-[rgba(var(--v-theme-on-surface),0.05)]'"
+              ? 'border-primary bg-primary/10'
+              : 'border-transparent hover:border-[rgba(var(--v-theme-on-surface),0.2)]'"
             role="radio"
             tabindex="0"
             :aria-checked="skinModel.cape.value === c.url"
@@ -265,9 +265,9 @@
 
         <div class="flex-grow" />
         <v-btn
-          variant="tonal"
+          variant="outlined"
           color="primary"
-          class="mt-2 rounded-xl flex-grow-0"
+          class="prism-flat-btn mt-2 flex-grow-0 opacity-60"
           block
           :disabled="preferences?.friendsEnabled === false"
           @click="openFriendsDialog"
@@ -379,6 +379,16 @@ async function onRemoveFriend(f: MinecraftFriend) {
 <style scoped>
 .me-profile-panel {
   --workspace-side-panel-width: 280px;
+}
+
+/* Prism-style flat outline button: sharp corners, no fill/gloss. */
+.prism-flat-btn {
+  border-radius: 2px !important;
+  text-transform: none;
+}
+
+.prism-flat-btn :deep(.v-btn__overlay) {
+  opacity: 0;
 }
 
 .skin-thumb,

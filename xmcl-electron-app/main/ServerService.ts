@@ -187,8 +187,8 @@ export class ServerService extends AbstractService implements IServerService {
       const config = [
         '<service>',
         `  <id>${escapeXml(options.name)}</id>`,
-        `  <name>${escapeXml(`XMCL Minecraft Server - ${options.name}`)}</name>`,
-        '  <description>Minecraft dedicated server managed by XMCL.</description>',
+        `  <name>${escapeXml(`Disco Launcher Minecraft Server - ${options.name}`)}</name>`,
+        '  <description>Minecraft dedicated server managed by Disco Launcher.</description>',
         `  <executable>${escapeXml(launchOptions.java)}</executable>`,
         `  <arguments>${escapeXml(args.map(quoteWindowsArgument).join(' '))}</arguments>`,
         `  <workingdirectory>${escapeXml(serverDirectory)}</workingdirectory>`,

@@ -25,14 +25,14 @@
               type="button"
               :aria-label="source.text"
               :aria-pressed="!omitSources.includes(source.id)"
-              class="source-button surface-card-row rounded-xl relative flex-1 flex flex-col items-center justify-center p-3"
+              class="source-button prism-flat-box relative flex-1 flex flex-col items-center justify-center p-3"
               :class="{ omitted: omitSources.includes(source.id) }"
               @click="toggleSource(source.id)"
             >
               <component :is="source.component" class="w-6 h-6 fill-current" />
               <span class="text-xs font-bold mt-2">{{ source.text }}</span>
               <div
-                class="cross-overlay absolute inset-0 flex items-center justify-center rounded-xl transition-opacity duration-200"
+                class="cross-overlay absolute inset-0 flex items-center justify-center transition-opacity duration-200"
               >
                 <v-icon color="red" size="60">close</v-icon>
               </div>
@@ -157,7 +157,7 @@
             hide-delimiter-background
             show-arrows="hover"
             color="white"
-            class="rounded-3xl overflow-hidden"
+            class="rounded-sm overflow-hidden"
             interval="6000"
           >
             <template #prev="{ props: btnProps }">
@@ -644,31 +644,14 @@ useTutorial(
   background-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Elevated Search Input */
+/* Search input: flat, no elevation glow */
 .elevated-search :deep(.v-field) {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none !important;
+  border-radius: 3px !important;
 }
 
-.elevated-search.v-input--focused :deep(.v-field),
 .elevated-search :deep(.v-field--focused) {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2) !important;
-  transform: translateY(-1px);
-}
-
-.theme--dark .elevated-search :deep(.v-field) {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
-}
-
-.theme--dark .elevated-search :deep(.v-field--focused) {
-  box-shadow: 0 8px 30px rgba(var(--v-theme-primary), 0.2) !important;
-}
-
-/* Pagination styling */
-.store-pagination :deep(.v-pagination__item .v-btn),
-.store-pagination :deep(.v-pagination__prev .v-btn),
-.store-pagination :deep(.v-pagination__next .v-btn) {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(var(--v-theme-primary), 0.55) !important;
 }
 
 .filter-title {
@@ -679,22 +662,30 @@ useTutorial(
   @apply mb-2;
 }
 
-/* Source Button Styles — shape + border + hover-border come from the
-   shared `.surface-card-row` utility. Only the colour-tone bits and
-   the omitted (off) override live here. */
+/* Source Button Styles — Prism-style flat box: sharp corners, thin
+   border, no lift or shadow. The selected (on) state swaps the border
+   to the accent colour. */
 .source-button {
   @apply text-gray-600 dark:text-gray-400;
+  border-radius: 2px;
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.18);
+  background: transparent;
+}
+
+.source-button:hover {
+  border-color: rgba(var(--v-theme-primary), 0.55);
 }
 
 .source-button .cross-overlay {
   opacity: 0;
 }
 
-/* Off-state: transparent shell, no border swap on hover */
+/* Off-state: dimmed shell */
 .source-button.omitted,
 .source-button.omitted:hover {
   background: transparent;
-  border-color: transparent;
+  border-color: rgba(var(--v-theme-on-surface), 0.08);
+  opacity: 0.5;
 }
 
 .source-button.omitted {

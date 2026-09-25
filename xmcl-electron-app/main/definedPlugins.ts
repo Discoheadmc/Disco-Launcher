@@ -22,7 +22,6 @@ import {
   pluginImageStorage,
   pluginLogConsumer,
   pluginTasks,
-  pluginTelemetry,
   pluginUncaughtError,
 } from '@xmcl/runtime/infra/plugins'
 import { pluginLaunchPrecheck } from '@xmcl/runtime/launch/pluginLaunchPrecheck'
@@ -76,7 +75,8 @@ export const definedPlugins: LauncherAppPlugin[] = [
   pluginYggdrasilHandler,
   pluginClientToken,
   pluginServicesHandler(definedServices),
-  pluginTelemetry,
+  // Disco Launcher: telemetry disabled — faster startup and less background
+  // network/CPU overhead on low-end machines.
   pluginLogConsumer,
   pluginSettings,
   pluginGFW,

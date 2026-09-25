@@ -32,8 +32,9 @@ HomeLaunchMultiInstanceDialog:
 SettingMigrationDialog:
   selectRootDirectory: রুট ডিরেক্টরি নির্বাচন করুন
 agent:
-  accessRequiredHint: বিল্ট-ইন এজেন্ট ব্যবহার করতে XMCL-এ সাবস্ক্রাইব করুন, অথবা সেটিংসে নিজের AI প্রদানকারী কনফিগার করুন।
-  subscribeXmcl: XMCL-এ সাবস্ক্রাইব করুন
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: বিল্ট-ইন এজেন্ট ব্যবহার করতে DHMC-এ সাবস্ক্রাইব করুন, অথবা সেটিংসে নিজের AI প্রদানকারী কনফিগার করুন।
+  subscribeXmcl: DHMC-এ সাবস্ক্রাইব করুন
   callingTool: '{name}-কে কল করা হচ্ছে…'
   disabledPlaceholder: এজেন্ট নিষ্ক্রিয়
   emptyHint: এজেন্টকে আপনার ইনস্ট্যান্স পরীক্ষা করতে, মড চালু/বন্ধ করতে, লগ পড়তে অথবা ক্র্যাশ নির্ণয় করতে বলুন।
@@ -50,7 +51,7 @@ agent:
   suggestion2: আমার মডগুলো ক্র্যাশ করছে — কারণটি খুঁজুন এবং কীভাবে এটি ঠিক করা যায় তা আমাকে বলুন
   suggestion3: 'একটি মডপ্যাক তৈরি করুন: আমার পছন্দের ফিচারের জন্য মড খুঁজুন এবং সেগুলো এই ইনস্ট্যান্সে ইনস্টল করুন'
   thinking: ভাবছে…
-  title: XMCL এজেন্ট
+  title: Discohead
   toggleHint: টগল করার জন্য
 ago:
   day: '{duration} দিন আগে | {duration} দিন আগে'
@@ -522,7 +523,7 @@ instances:
   addModrinthDescription: বিদ্যমান Modrinth ইন্সট্যান্স ইম্পোর্ট করুন। আপনাকে Modrinth রুট ডেটা ফোল্ডারটি নির্বাচন করতে হবে।
   addPrismDescription: বিদ্যমান PrismLauncher ইন্সট্যান্স ইম্পোর্ট করুন।
   addVanilla: ভ্যানিলা-সদৃশ Minecraft থেকে তৈরি করুন
-  addVanillaDescription: সাধারণ .minecraft ফোল্ডার থেকে ইম্পোর্ট করুন। এটি আসল গেম প্রোফাইলটিকে XMCL-এ অনুলিপি (duplicate) করবে।
+  addVanillaDescription: সাধারণ .minecraft ফোল্ডার থেকে ইম্পোর্ট করুন। এটি আসল গেম প্রোফাইলটিকে DHMC-এ অনুলিপি (duplicate) করবে।
   edition: সংস্করণ
   editionJava: জাভা সংস্করণ
   editionBedrock: বেডরক সংস্করণ
@@ -1012,7 +1013,7 @@ multiplayer:
   openConsumerPortal: কনজিউমার পোর্টাল খুলুন
   refundHint: রিফান্ড প্রয়োজন? আপনার অর্ডার ও সাবস্ক্রিপশন পরিচালনা করতে Waffo কনজিউমার পোর্টালে যান।
   togetherSupportHint: মাল্টিপ্লেয়ার কাজ না করলে Discord-এ যোগ দিয়ে ডেভেলপমেন্ট টিমের সঙ্গে যোগাযোগ করুন। আমরা সমস্যা সমাধানে সাহায্য করব।
-  autoShareAmbiguous: একাধিক গেম চলছে। XMCL যাতে শেয়ার করতে পারে, ল্যান ওয়ার্ল্ড হোস্ট করা ইনস্ট্যান্সটি নির্বাচন করুন।
+  autoShareAmbiguous: একাধিক গেম চলছে। DHMC যাতে শেয়ার করতে পারে, ল্যান ওয়ার্ল্ড হোস্ট করা ইনস্ট্যান্সটি নির্বাচন করুন।
   editSharingScope: শেয়ারের পরিধি সম্পাদনা করুন
   gameAvailable: ল্যান গেম উপলভ্য
   joinGame: গেমে যোগ দিন
@@ -1022,16 +1023,16 @@ multiplayer:
   updateSharedInstanceTitle: শেয়ার করা ইনস্ট্যান্স আপডেট করবেন?
   addFunds: "অর্থ যোগ করুন"
   availableBalance: "উপলভ্য ব্যালেন্স"
-  balanceHint: "XMCL Together পরিষেবার জন্য উপলভ্য"
+  balanceHint: "DHMC Together পরিষেবার জন্য উপলভ্য"
   billing: "বিলিং"
   billingDescription: "রিলে অ্যাক্সেস, আপনার Together Home প্ল্যান এবং পেমেন্ট পরিচালনা করুন।"
   billingError: "Together-এর বিলিং লোড করা যায়নি। কিছুক্ষণ পর আবার চেষ্টা করুন।"
   buyTogether: "Together কিনুন"
   cancelTogether: "প্ল্যান বাতিল করুন"
   checkout: "Waffo চেকআউট খুলুন"
-  connectionTogetherWarning: "একজন রুম সদস্য কিছুক্ষণ ধরে আপনার সঙ্গে সংযোগ করতে পারছেন না। রুমের সবার সংযোগ উন্নত করতে XMCL Together ব্যবহার করে দেখুন। শুধু রুম মাস্টারের Together প্রয়োজন।"
+  connectionTogetherWarning: "একজন রুম সদস্য কিছুক্ষণ ধরে আপনার সঙ্গে সংযোগ করতে পারছেন না। রুমের সবার সংযোগ উন্নত করতে DHMC Together ব্যবহার করে দেখুন। শুধু রুম মাস্টারের Together প্রয়োজন।"
   masterPurchaseHint: "রুমের সবার সংযোগ উন্নত করতে শুধু রুম মাস্টারের Together Home প্রয়োজন।"
-  natTogetherWarning: "আপনার রাউটারের রুম মাস্টারের সঙ্গে সংযোগ করতে সমস্যা হতে পারে। সংযোগ ব্যর্থ হলে, আপনার বন্ধুদের সঙ্গে সংযোগ উন্নত করতে XMCL Together ব্যবহার করে দেখুন। রুমের জন্য শুধু রুম মাস্টারকেই Together কিনতে হবে।"
+  natTogetherWarning: "আপনার রাউটারের রুম মাস্টারের সঙ্গে সংযোগ করতে সমস্যা হতে পারে। সংযোগ ব্যর্থ হলে, আপনার বন্ধুদের সঙ্গে সংযোগ উন্নত করতে DHMC Together ব্যবহার করে দেখুন। রুমের জন্য শুধু রুম মাস্টারকেই Together কিনতে হবে।"
   togetherName: "Minecraft Together"
   trialDescription: "1 GB রিলে ট্র্যাফিকসহ 7 দিনের একটি ট্রায়াল।"
   trialTitle: "সংযোগ ট্রায়াল"
@@ -1039,7 +1040,7 @@ multiplayer:
   month: "মাস"
   orderStatus: "Waffo অর্ডার: {status}"
   planDescription: "প্রতি মাসে 20 GB পরিচালিত রিলে ট্র্যাফিক, সঙ্গে আপনার মডপ্যাকের সমস্যা সমাধানে AI সহায়তা।"
-  waffoHint: "Waffo Pancake-এ পেমেন্ট নিরাপদে সম্পন্ন হয়। XMCL কখনও আপনার কার্ড নম্বর পায় না।"
+  waffoHint: "Waffo Pancake-এ পেমেন্ট নিরাপদে সম্পন্ন হয়। DHMC কখনও আপনার কার্ড নম্বর পায় না।"
   subscription:
     active: "সক্রিয়"
     cancelled: "বাতিল করা হয়েছে"
@@ -1049,7 +1050,7 @@ multiplayer:
     available: "বিনামূল্যের ট্রায়াল উপলভ্য"
     expired: "ট্রায়াল ব্যবহার করা হয়েছে"
     unavailable: "ট্রায়াল উপলভ্য নয়"
-  loginRequiredDescription: P2P মাল্টিপ্লেয়ার XMCL অনলাইন পরিষেবা ব্যবহার করে। চালিয়ে যেতে একটি XMCL অ্যাকাউন্টে সাইন ইন করুন।
+  loginRequiredDescription: P2P মাল্টিপ্লেয়ার DHMC অনলাইন পরিষেবা ব্যবহার করে। চালিয়ে যেতে একটি DHMC অ্যাকাউন্টে সাইন ইন করুন।
   loginRequiredTitle: P2P মাল্টিপ্লেয়ারের জন্য সাইন ইন করুন
   complete: সম্পন্ন
   confirm: নিশ্চিত করুন
@@ -1483,7 +1484,7 @@ setting:
   about: সম্পর্কে
   aboutBmclDescription: BMCL API চীনের মূল ভূখণ্ডের ব্যবহারকারীদের জন্য সুবিধাজনক ডাউনলোডের সুবিধা প্রদান করে
   aboutContributors: 🧑‍💻 অবদানকারীগণ 🧑‍💻
-  aboutDenoDescription: সার্ভারহীন জাভাস্ক্রিপ্ট অ্যাপ্লিকেশনের জন্য XMCL ডেনো ডিপ্লয় (Deno Deploy)-এর ঝামেলামুক্ত প্ল্যাটফর্ম ব্যবহার করে
+  aboutDenoDescription: সার্ভারহীন জাভাস্ক্রিপ্ট অ্যাপ্লিকেশনের জন্য DHMC ডেনো ডিপ্লয় (Deno Deploy)-এর ঝামেলামুক্ত প্ল্যাটফর্ম ব্যবহার করে
   aboutLicense: MIT লাইসেন্স
   aboutLicenseInfo: SignPath.io দ্বারা উইন্ডোজে বিনামূল্যে কোড সাইনিং এবং SignPath ফাউন্ডেশন দ্বারা সার্টিফিকেট প্রদান করা হয়েছে
   aboutSponsors: 😇 পৃষ্ঠপোষকগণ 😇
@@ -1566,7 +1567,7 @@ setting:
   developerMode: ডেভেলপার মোড
   developerModeDescription: ডেভেলপার মোড আপনার নিজস্ব মড পরীক্ষার জন্য
   disableTelemetry: টেলিমেট্রি নিষ্ক্রিয় করুন
-  disableTelemetryDescription: XMCL গেম চালু এবং ব্যবহারকারীর লগইন ইভেন্টগুলি সংগ্রহ করবে।
+  disableTelemetryDescription: DHMC গেম চালু এবং ব্যবহারকারীর লগইন ইভেন্টগুলি সংগ্রহ করবে।
   enableDedicatedGPUOptimization: ডেডিকেটেড জিপিইউ বরাদ্দ করুন
   enableDedicatedGPUOptimizationDescription: এই বিকল্পটি মাইনক্রাফ্ট প্রসেসের জন্য ডেডিকেটেড জিপিইউ বরাদ্দ করবে।
   enableDiscord: ডিসকর্ড প্রেসেন্স সক্ষম করুন
@@ -1706,7 +1707,7 @@ setup:
   appearance:
     name: '@:setting.appearance'
   dataRoot:
-    description: ডাটা রুট কোনো সাধারণ .minecraft ডিরেক্টরি নয়। যেহেতু XMCL ডাটা ডিরেক্টরি গঠন ভ্যানিলা থেকে আলাদা, তাই আমরা ডাটা রুট হিসেবে সাধারণ .minecraft ডিরেক্টরি ব্যবহার করার পরামর্শ দিই না।
+    description: ডাটা রুট কোনো সাধারণ .minecraft ডিরেক্টরি নয়। যেহেতু DHMC ডাটা ডিরেক্টরি গঠন ভ্যানিলা থেকে আলাদা, তাই আমরা ডাটা রুট হিসেবে সাধারণ .minecraft ডিরেক্টরি ব্যবহার করার পরামর্শ দিই না।
     drives: সুপারিশকৃত অবস্থানসমূহ
     name: ডাটা ডিরেক্টরি সেট করুন
   defaultLayoutDescription: ডিফল্ট লেআউটটি গেমের "ইনস্ট্যান্স" ধারণাকে উন্নত করার চেষ্টা করে। এটি ডিসকর্ড এর মতো অ্যাপের মতো দেখায়। এটি স্টিম ইত্যাদি অন্যান্য গেম লঞ্চার অ্যাপ দ্বারাও অনুপ্রাণিত।

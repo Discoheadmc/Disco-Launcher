@@ -92,7 +92,8 @@ describe('pluginSettings', () => {
     expect(fsExtra.readJson).toHaveBeenCalledWith(join('/mock/app/data', 'setting.json'))
   })
 
-  test('should use host locale when no locale is set', async () => {
+  test('should default to Turkish (tr) when no locale is set', async () => {
+    // Disco Launcher ships with Turkish as the out-of-box language.
     vi.mocked(fsExtra.readJson).mockResolvedValue({})
 
     const { pluginSettings } = await import('./pluginSettings')
@@ -102,7 +103,7 @@ describe('pluginSettings', () => {
       expect(mockApp.registry.register).toHaveBeenCalled()
     })
 
-    expect(mockApp.host.getLocale).toHaveBeenCalled()
+    expect(mockState.locale).toBe('tr')
   })
 
   test('should normalize English locale to "en"', async () => {
@@ -129,15 +130,15 @@ describe('pluginSettings', () => {
       expect(mockApp.registry.register).toHaveBeenCalled()
     })
     
-    // Verify settings are initialized with defaults (locale normalized to 'en' from 'en-US')
-    expect(mockState.locale).toBe('en')
+    // Verify settings are initialized with defaults (locale defaults to 'tr')
+    expect(mockState.locale).toBe('tr')
     expect(mockState.theme).toBe('dark')
     expect(mockState.developerMode).toBe(false)
     expect(mockState.autoDownload).toBe(false)
     expect(mockState.httpProxy).toBe('')
     expect(mockState.httpProxyEnabled).toBe(false)
     expect(mockState.globalHideLauncher).toBe(true)
-    expect(mockState.discordPresence).toBe(true)
+    expect(mockState.discordPresence).toBe(false) // Disco default: off
     expect(mockState.enableDedicatedGPUOptimization).toBe(true)
   })
 
@@ -252,14 +253,14 @@ describe('pluginSettings', () => {
       expect(mockApp.registry.register).toHaveBeenCalled()
     })
 
-    // Verify settings are normalized - locale normalized from host locale
-    expect(mockState.locale).toBe('en') // normalized from host locale 'en-US'
+    // Verify settings are normalized - empty locale defaults to 'tr'
+    expect(mockState.locale).toBe('tr') // default locale, not from host
     expect(mockState.theme).toBe('dark')
     expect(mockState.autoDownload).toBe(false)
     expect(mockState.maxSockets).toBe(32) // value from file
     expect(mockState.globalVmOptions).toEqual([])
     expect(mockState.developerMode).toBe(false) // default value
-    expect(mockState.discordPresence).toBe(true) // default from Settings class
+    expect(mockState.discordPresence).toBe(false) // Disco default: off
   })
 
   test('should salvage valid fields and use defaults for invalid fields', async () => {
@@ -284,8 +285,8 @@ describe('pluginSettings', () => {
     expect(mockState.maxSockets).toBe(128) // valid value from file
     expect(mockState.httpProxy).toBe('http://proxy.example.com') // valid value from file
 
-    // Invalid fields should use defaults (locale normalized from host)
-    expect(mockState.locale).toBe('en') // default normalized from host locale
+    // Invalid fields should use defaults (locale defaults to 'tr')
+    expect(mockState.locale).toBe('tr') // default locale
     expect(mockState.developerMode).toBe(false) // default value
   })
 
@@ -305,7 +306,7 @@ describe('pluginSettings', () => {
 
     // Invalid fields use defaults, but settings are still normalized
     // Settings are initialized with normalized defaults
-    expect(mockState.locale).toBe('en') // normalized from host locale
+    expect(mockState.locale).toBe('tr') // default locale
     expect(mockState.theme).toBe('dark') // default value (invalid value was rejected)
     expect(mockState.developerMode).toBe(false)
   })
@@ -334,7 +335,7 @@ describe('pluginSettings', () => {
     expect(fsExtra.writeJson).toHaveBeenCalledWith(
       join('/mock/app/data', 'setting.json'),
       {
-        locale: 'en',
+        locale: 'tr',
         autoDownload: false,
         autoInstallOnAppQuit: false,
         allowPrerelease: false,
@@ -360,9 +361,9 @@ describe('pluginSettings', () => {
         globalPrependCommand: '',
         globalPreExecuteCommand: '',
         globalEnv: {},
-        discordPresence: true,
+        discordPresence: false,
         developerMode: true,
-        disableTelemetry: false,
+        disableTelemetry: true,
         multiplayerTransport: 'webrtc',
         agentEndpoint: '',
         agentModel: '',
@@ -405,7 +406,7 @@ describe('pluginSettings', () => {
     expect(fsExtra.writeJson).toHaveBeenCalledWith(
       join('/mock/app/data', 'setting.json'),
       {
-        locale: 'en',
+        locale: 'tr',
         autoDownload: false,
         autoInstallOnAppQuit: false,
         allowPrerelease: false,
@@ -431,9 +432,9 @@ describe('pluginSettings', () => {
         globalPrependCommand: '',
         globalPreExecuteCommand: '',
         globalEnv: {},
-        discordPresence: true,
+        discordPresence: false,
         developerMode: false,
-        disableTelemetry: false,
+        disableTelemetry: true,
         multiplayerTransport: 'webrtc',
         agentEndpoint: '',
         agentModel: '',

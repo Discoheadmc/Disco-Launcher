@@ -24,9 +24,9 @@ function existingShortcuts() {
 
 describe('addSteamShortcutToVdf', () => {
   const shortcut = {
-    executable: '"/home/deck/XMCL"',
+    executable: '"/home/deck/DiscoLauncher"',
     startDir: '"/home/deck"',
-    icon: '/home/deck/XMCL',
+    icon: '/home/deck/DiscoLauncher',
   }
 
   test('appends a shortcut without rewriting existing binary-VDF entries', () => {
@@ -39,11 +39,11 @@ describe('addSteamShortcutToVdf', () => {
       existing.subarray(0, existing.length - 1),
     )
     expect(updated![updated!.length - 1]).toBe(0x08)
-    expect(updated!.toString('utf8')).toContain('XMCL')
+    expect(updated!.toString('utf8')).toContain('Disco Launcher')
   })
 
   test('does not add a second launcher shortcut', () => {
-    const launcher = object('0', string('AppName', 'XMCL'))
+    const launcher = object('0', string('AppName', 'Disco Launcher'))
     const existing = Buffer.concat([
       Buffer.from([0x00, ...Buffer.from('shortcuts\0')]),
       launcher,

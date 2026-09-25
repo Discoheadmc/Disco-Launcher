@@ -8,6 +8,9 @@ export const pluginAutoUpdate: LauncherAppPlugin = async (app) => {
   if (process.env.XMCL_E2E) {
     return
   }
+  // Disco Launcher is a custom-branded fork: never let the upstream XMCL
+  // updater overwrite this build with stock XMCL releases.
+  return
   const state = await app.registry.get(kSettings)
   state.subscribe('autoInstallOnAppQuitSet', (value) => {
     autoUpdater.autoInstallOnAppQuit = value

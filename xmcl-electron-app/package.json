@@ -1,19 +1,19 @@
 {
-    "name": "xmcl",
+    "name": "disco-launcher",
     "private": true,
     "main": "./index.js",
-    "version": "0.70.0",
-    "author": "ci010 <cijhn@hotmail.com>",
-    "description": "XMCL - An open-source launcher for Minecraft",
+    "version": "0.1.0",
+    "author": "Disco",
+    "description": "Disco Launcher - A fast Minecraft launcher",
     "license": "MIT",
     "engines": {
         "node": ">=22.16.0"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/voxelum/x-minecraft-launcher"
+        "url": "https://github.com/discolauncher/disco-launcher"
     },
-    "msstoreCliAppId": "9MXJWHXTP4B9",
+    
     "scripts": {
         "compile": "cross-env BUILD_TARGET=none tsx build.ts",
         "build": "cross-env NODE_ENV=production tsx build.ts",

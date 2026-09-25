@@ -4,7 +4,7 @@
       <div>
         <div class="flex items-center gap-2">
           <v-icon color="primary">hub</v-icon>
-          <h2 class="text-xl font-semibold">XMCL Together</h2>
+          <h2 class="text-xl font-semibold">DHMC Together</h2>
         </div>
         <p class="mt-1 text-sm opacity-70">{{ t('multiplayer.billingDescription') }}</p>
       </div>

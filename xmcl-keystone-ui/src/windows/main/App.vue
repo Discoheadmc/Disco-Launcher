@@ -7,6 +7,7 @@
     }">
     </div>
     <AppSystemBar :back="sidebarStyle === 'notch'" />
+    <AppMenuBar />
     <div
       class="app-layout flex-grow relative flex overflow-auto"
       :class="[layoutClasses, { 'workspace-side-panel-attached': hasAttachedWorkspacePanel }]"
@@ -81,6 +82,7 @@ import AppNotifier from '@/views/AppNotifier.vue'
 import AppSideBarClassic from '@/views/AppSideBarClassic.vue'
 import AppSideBarNotch from '@/views/AppSideBarNotch.vue'
 import AppSystemBar from '@/views/AppSystemBar.vue'
+import AppMenuBar from '@/views/AppMenuBar.vue'
 import Setup from '@/views/Setup.vue'
 import { useLocalStorage, useMediaQuery, usePreferredColorScheme, usePreferredDark } from '@vueuse/core'
 import { kInstanceLauncher, useInstanceLauncher } from '@/composables/instanceLauncher'
@@ -154,7 +156,8 @@ provide(kInFocusMode, computed({
     const less = isLessThan490px.value
     const isDashboard = modes.value[basename(path.value)]
     if (isDashboard === undefined) {
-      return true // 'focus' is default
+      // Disco: default to the dashboard (Prism-style grid) instead of focus.
+      return false
     }
     if (less) {
       return false

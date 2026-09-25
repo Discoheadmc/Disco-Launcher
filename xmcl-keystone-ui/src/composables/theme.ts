@@ -86,40 +86,44 @@ export function getDefaultTheme(): UIThemeDataV1 {
     colors: {
       lightAppBarColor: '#e0e0e0FF',
       lightSideBarColor: '#FFFFFFFF',
-      darkAppBarColor: '#111111FF',
-      darkSideBarColor: '#11111166',
-      darkPrimaryColor: '#4caf50',
+      darkAppBarColor: '#14120dFF',
+      darkSideBarColor: '#14120d66',
+      darkPrimaryColor: '#7C8CF8',
       darkBackground: '#121212A5',
       darkInfoColor: '#2196F3',
       darkErrorColor: '#FF5252',
       darkWarningColor: '#FB8C00',
 
       darkSuccessColor: '#4CAF50',
-      darkAccentColor: '#00e676',
-      darkCardColor: '#0c0c0ccc',
-      lightPrimaryColor: '#1976D2',
+      darkAccentColor: '#A5B4FC',
+      darkCardColor: '#100e0acc',
+      lightPrimaryColor: '#5B6ADB',
       lightBackground: '#FFFFFF',
       lightInfoColor: '#2196F3',
       lightErrorColor: '#FF5252',
       lightWarningColor: '#FB8C00',
       lightSuccessColor: '#4CAF50',
-      lightAccentColor: '#82B1FF',
+      lightAccentColor: '#7C8CF8',
       lightCardColor: '#e0e0e080' },
     backgroundColorOverlay: true,
     backgroundVolume: 1,
     backgroundImage: undefined,
     backgroundImageDark: undefined,
     backgroundImageFit: 'cover',
+    // Flat solid background by default: no animated halo/particles keeps the
+    // UI minimalist and saves GPU/CPU (and therefore idle RAM).
     backgroundType: BackgroundType.NONE,
     font: undefined,
     fontSize: 16,
-    borderRadiusEnabled: true,
+    // Prism-style flat look: sharp corners by default. Users can re-enable
+    // rounded corners from appearance settings.
+    borderRadiusEnabled: false,
     customCssEnabled: false,
     blur: {
-      background: 3,
-      card: 20,
-      appBar: 3,
-      sideBar: 3 } }
+      background: 0,
+      card: 0,
+      appBar: 0,
+      sideBar: 0 } }
 }
 
 export function useStoredThemes() {

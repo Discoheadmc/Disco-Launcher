@@ -2,6 +2,10 @@ AppAddInstanceDialog:
   choiceTitle: Birden fazla başlatma profili algılandı. Lütfen içe aktarmak için birini seçin.
   createTitle: Oyun Oluştur
   serverTitle: Sunucu adresini girin
+menuBar:
+  about: Hakkında
+  files: Dosyalar
+  gameDataFolder: Oyun Veri Klasörü
 AppShareInstanceDialog:
   editScopeDescription: Eşlerin LAN'da çalışan bu oyunu keşfettikten sonra alabileceği dosyaları seçin.
   editScopeTitle: Paylaşım kapsamını düzenle
@@ -377,6 +381,7 @@ installVersion:
 instance:
   changeIcon: Simgeyi Değiştir
   contents: İçerik
+  gridUngrouped: Gruplandırılmamış
   current: Mevcut Instance
   delete: Oyunu Sil
   deleteFailed: Instance silinemedi
@@ -490,7 +495,7 @@ instances:
   addMMCDescription: Mevcut MultiMC instance'ını içe aktar. MultiMC'den veri klasörünü seçmeniz gerekir.
   addModrinthDescription: Mevcut Modrinth instance'ını içe aktar. Modrinth kök veri klasörünü seçmeniz gerekir.
   addVanilla: Vanilla benzeri Minecraft'tan oluştur
-  addVanillaDescription: Yaygın .minecraft klasöründen içe aktar. Bu, orijinal oyun profilini XMCL'ye kopyalayacaktır.
+  addVanillaDescription: Yaygın .minecraft klasöründen içe aktar. Bu, orijinal oyun profilini DHMC'ye kopyalayacaktır.
   fix: Onar
   folder: Klasör
   folderSetting: Klasör Ayarları
@@ -668,6 +673,7 @@ logsCrashes:
   showFile: Klasörde Göster
 me:
   groupByDate: Tarihe göre grupla
+  localCloset: Yerel Gardırop
   groupByFolder: Klasöre göre grupla
   instanceViewMode: Oyun örneği görünüm modu
   listView: Liste görünümü
@@ -965,7 +971,7 @@ multiplayer:
   openConsumerPortal: Tüketici Portalını Aç
   refundHint: Para iadesine mi ihtiyacınız var? Siparişlerinizi ve aboneliklerinizi yönetmek için Waffo Tüketici Portalı'nı ziyaret edin.
   togetherSupportHint: Çok oyunculu mod çalışmıyorsa Discord'umuza katılın ve geliştirme ekibiyle iletişime geçin. Sorunu çözmenize yardımcı olacağız.
-  autoShareAmbiguous: Birden fazla oyun çalışıyor. XMCL'nin paylaşabilmesi için LAN dünyasını barındıran örneği seçin.
+  autoShareAmbiguous: Birden fazla oyun çalışıyor. DHMC'nin paylaşabilmesi için LAN dünyasını barındıran örneği seçin.
   editSharingScope: Paylaşım kapsamını düzenle
   gameAvailable: LAN oyunu mevcut
   joinGame: Oyuna katıl
@@ -975,16 +981,16 @@ multiplayer:
   updateSharedInstanceTitle: Paylaşılan örnek güncellensin mi?
   addFunds: "Bakiye ekle"
   availableBalance: "Kullanılabilir bakiye"
-  balanceHint: "XMCL Together hizmetleri için kullanılabilir"
+  balanceHint: "DHMC Together hizmetleri için kullanılabilir"
   billing: "Faturalandırma"
   billingDescription: "Aktarma erişimini, Together Home planını ve ödemelerini yönet."
   billingError: "Together faturalandırması yüklenemedi. Biraz sonra tekrar dene."
   buyTogether: "Together satın al"
   cancelTogether: "Planı iptal et"
   checkout: "Waffo ödeme sayfasını aç"
-  connectionTogetherWarning: "Bir oda üyesi bir süredir sana bağlanamıyor. Odadaki herkesin bağlantısını iyileştirmek için XMCL Together'ı dene. Together'a yalnızca oda sahibi ihtiyaç duyar."
+  connectionTogetherWarning: "Bir oda üyesi bir süredir sana bağlanamıyor. Odadaki herkesin bağlantısını iyileştirmek için DHMC Together'ı dene. Together'a yalnızca oda sahibi ihtiyaç duyar."
   masterPurchaseHint: "Odadaki herkesin bağlantısını iyileştirmek için Together Home'a yalnızca oda sahibinin ihtiyacı vardır."
-  natTogetherWarning: "Yönlendiricin oda sahibine bağlanmakta zorlanıyor olabilir. Bağlantılar başarısız olursa, seninle arkadaşların arasındaki bağlantıyı iyileştirmek için XMCL Together'ı dene. Oda için Together'ı yalnızca oda sahibinin satın alması gerekir."
+  natTogetherWarning: "Yönlendiricin oda sahibine bağlanmakta zorlanıyor olabilir. Bağlantılar başarısız olursa, seninle arkadaşların arasındaki bağlantıyı iyileştirmek için DHMC Together'ı dene. Oda için Together'ı yalnızca oda sahibinin satın alması gerekir."
   togetherName: "Minecraft Together"
   trialDescription: "1 GB aktarma trafiği içeren 7 günlük bir deneme."
   trialTitle: "Bağlantı denemesi"
@@ -992,7 +998,7 @@ multiplayer:
   month: "ay"
   orderStatus: "Waffo siparişi: {status}"
   planDescription: "Aylık 20 GB yönetilen aktarma trafiği ve modpack'in için yapay zekâ destekli sorun giderme."
-  waffoHint: "Ödemeler Waffo Pancake üzerinden güvenli bir şekilde tamamlanır. XMCL kart numaranı asla almaz."
+  waffoHint: "Ödemeler Waffo Pancake üzerinden güvenli bir şekilde tamamlanır. DHMC kart numaranı asla almaz."
   subscription:
     active: "Aktif"
     cancelled: "İptal edildi"
@@ -1002,7 +1008,7 @@ multiplayer:
     available: "Ücretsiz deneme kullanılabilir"
     expired: "Deneme kullanıldı"
     unavailable: "Deneme kullanılamıyor"
-  loginRequiredDescription: P2P çok oyunculu oyun XMCL çevrimiçi hizmetlerini kullanır. Devam etmek için bir XMCL Hesabında oturum açın.
+  loginRequiredDescription: P2P çok oyunculu oyun DHMC çevrimiçi hizmetlerini kullanır. Devam etmek için bir DHMC Hesabında oturum açın.
   loginRequiredTitle: P2P çok oyunculu oyun için giriş yapın
   complete: Tamamla
   confirm: Onayla
@@ -1437,7 +1443,7 @@ setting:
   developerMode: Geliştirici Modu
   developerModeDescription: Geliştirici Modu kendi modlarınızı test etmek içindir
   disableTelemetry: Telemetriyi Devre Dışı Bırak
-  disableTelemetryDescription: XMCL oyun başlatma ve kullanıcı giriş olaylarını toplayacaktır.
+  disableTelemetryDescription: DHMC oyun başlatma ve kullanıcı giriş olaylarını toplayacaktır.
   enableDedicatedGPUOptimization: Özel GPU Ata
   enableDedicatedGPUOptimizationDescription: Bu seçenek Minecraft işlemine özel GPU atayacaktır.
   enableDiscord: Discord Durumunu Etkinleştir
@@ -1551,7 +1557,7 @@ setting:
     failed: Arka plan resmi ayarlanamadı
   aboutBmclDescription: BMCL API, Çin Anakarası'ndaki kullanıcılar için kolay indirmeler sağlar
   aboutContributors: 🧑‍💻 Katkıda Bulunanlar 🧑‍💻
-  aboutDenoDescription: XMCL, sunucusuz JavaScript uygulamaları için Deno Deploy'un sorunsuz platformundan yararlanır
+  aboutDenoDescription: DHMC, sunucusuz JavaScript uygulamaları için Deno Deploy'un sorunsuz platformundan yararlanır
   aboutLicense: MIT LİSANSI
   aboutLicenseInfo: Windows'ta ücretsiz kod imzalama SignPath.io tarafından, sertifika ise SignPath Foundation tarafından sağlanmaktadır
   aboutSponsors: 😇 Sponsorlar 😇
@@ -1594,7 +1600,7 @@ setup:
   appearance:
     name: '@:setting.appearance'
   dataRoot:
-    description: Veri kökü yaygın bir .minecraft dizini değildir. XMCL veri dizini yapısı vanilla'dan farklı olduğundan, veri kökü olarak yaygın .minecraft dizinini kullanmanızı önermiyoruz.
+    description: Veri kökü yaygın bir .minecraft dizini değildir. DHMC veri dizini yapısı vanilla'dan farklı olduğundan, veri kökü olarak yaygın .minecraft dizinini kullanmanızı önermiyoruz.
     drives: Önerilen Konumlar
     name: Veri Dizinini Ayarla
   defaultLayoutDescription: Varsayılan düzen oyun "instance" kavramını geliştirmeye çalışıyor. Discord gibi uygulamalara benziyor. Ayrıca Steam vb. diğer oyun başlatıcı uygulamalarından da esinlenmiştir.
@@ -1716,8 +1722,8 @@ theme:
   selectImage: Resim Seç
   selectMusic: Müzik Seç
   selectVideo: Video Seç
-  title: X Minecraft Başlatıcısı
-title: X Minecraft Başlatıcısı
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: Ana Bilgisayar Adayı
   prflx: Eş Yansıtmalı Aday
@@ -1976,8 +1982,9 @@ migrateMinecraft:
 reinstall:
   name: '{version} yeniden kur'
 agent:
-  accessRequiredHint: Yerleşik temsilciyi kullanmak için XMCL’ye abone olun veya ayarlarda kendi yapay zeka sağlayıcınızı yapılandırın.
-  subscribeXmcl: XMCL’ye abone ol
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: Yerleşik temsilciyi kullanmak için DHMC’ye abone olun veya ayarlarda kendi yapay zeka sağlayıcınızı yapılandırın.
+  subscribeXmcl: DHMC’ye abone ol
   callingTool: '{name} çağrılıyor…'
   disabledPlaceholder: Temsilci devre dışı
   emptyHint: Temsilciden örneğinizi incelemesini, modları değiştirmesini, günlükleri okumasını veya çökmeyi teşhis etmesini isteyin.
@@ -1994,7 +2001,7 @@ agent:
   suggestion2: Modlarım çöküyor — nedenini bulun ve nasıl düzelteceğimi söyleyin
   suggestion3: 'Mod paketi oluşturun: İstediğim bir özellik için modları bulun ve bu örneğe yükleyin'
   thinking: düşünüyor…
-  title: XMCL Temsilcisi
+  title: Discohead
   toggleHint: geçiş yapmak için
 minecraftFriends:
   accept: Kabul Et
@@ -2118,6 +2125,6 @@ gamepad:
   steamAddedNotify: Başlatıcı Steam Kütüphanesine başarıyla eklendi! Görmek için lütfen Steam'i yeniden başlatın.
   steamAlreadyAddedNotify: Başlatıcı zaten Steam Kütüphanenizde var.
   steamDeckTitle: Steam Deck Algılandı
-  steamDeckDesc: Steam Deck üzerinde çalıştığınızı algıladık. Oyun Modunda tam Steam arayüzü ve kontrolcü entegrasyonu için X Minecraft Başlatıcısını Steam Kütüphanenize Steam dışı bir oyun olarak eklemek ister misiniz?
+  steamDeckDesc: Steam Deck üzerinde çalıştığınızı algıladık. Oyun Modunda tam Steam arayüzü ve kontrolcü entegrasyonu için Disco Launcher'ı Steam Kütüphanenize Steam dışı bir oyun olarak eklemek ister misiniz?
   steamDeckAddBtn: Steam'e Ekle ({btn})
   steamDeckCancelBtn: İptal Et ({btn})

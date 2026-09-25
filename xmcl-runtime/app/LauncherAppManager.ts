@@ -28,7 +28,7 @@ export class LauncherAppManager implements AppsHost {
     this.app.controller.handle('launch-app', (_, url) => this.bootAppByUrl(url))
     this.app.controller.handle('create-app-shortcut', (_, url) => this.createShortcut(url))
 
-    app.protocol.registerHandler('xmcl', ({ request, response }) => {
+    app.protocol.registerHandler('disco', ({ request, response }) => {
       const parsed = request.url
       if (parsed.host === 'launcher' && parsed.pathname === '/app') {
         const params = parsed.searchParams

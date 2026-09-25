@@ -37,8 +37,9 @@ HomeLaunchMultiInstanceDialog:
 SettingMigrationDialog:
   selectRootDirectory: 選擇新嘅根目錄
 agent:
-  accessRequiredHint: 訂閱 XMCL 即可使用內置 AI 助理，或者去設定自行配置 AI 供應商。
-  subscribeXmcl: 訂閱 XMCL
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: 訂閱 DHMC 即可使用內置 AI 助理，或者去設定自行配置 AI 供應商。
+  subscribeXmcl: 訂閱 DHMC
   callingTool: 正在呼叫 {name}…
   disabledPlaceholder: AI 助理已停用
   emptyHint: 你可以叫 AI 助理檢查你嘅實例、切換模組、讀取記錄或者診斷崩潰。
@@ -55,7 +56,7 @@ agent:
   suggestion2: 我嘅模組崩潰咗 — 搵出原因並話我知點樣修復
   suggestion3: 製作模組包：尋找我想要嘅功能模組並安裝到呢個實例中
   thinking: 思考中…
-  title: XMCL AI 助理
+  title: Discohead
   toggleHint: 以切換
 ago:
   day: '{duration} 天前'
@@ -554,7 +555,7 @@ instances:
   addVanilla: 從原版 Minecraft 建立
   addVanillaDescription: |-
     從通用 .minecraft 資料夾匯入。
-    呢個會將原始遊戲設定檔案複製到 XMCL。
+    呢個會將原始遊戲設定檔案複製到 DHMC。
   edition: 版本
   editionJava: Java 版
   editionBedrock: 基岩版
@@ -1058,7 +1059,7 @@ multiplayer:
   openConsumerPortal: 開啟消費者入口網站
   refundHint: 如需退款，請前往 Waffo 消費者入口網站管理你的訂單及訂閱。
   togetherSupportHint: 如果連線無法正常運作，請加入 Discord 聯絡開發團隊，我們會協助你解決問題。
-  autoShareAmbiguous: 有多個遊戲正在運行。請選擇主持區域網絡世界的實例，讓 XMCL 可以分享它。
+  autoShareAmbiguous: 有多個遊戲正在運行。請選擇主持區域網絡世界的實例，讓 DHMC 可以分享它。
   editSharingScope: 編輯分享範圍
   gameAvailable: 有可用的區域網絡遊戲
   joinGame: 加入遊戲
@@ -1068,16 +1069,16 @@ multiplayer:
   updateSharedInstanceTitle: 更新分享的實例？
   addFunds: "增值"
   availableBalance: "可用結餘"
-  balanceHint: "可用於 XMCL Together 服務"
+  balanceHint: "可用於 DHMC Together 服務"
   billing: "帳單"
   billingDescription: "管理轉送連線存取權、Together Home 方案同付款。"
   billingError: "未能載入 Together 帳單資料。請稍後再試。"
   buyTogether: "購買 Together"
   cancelTogether: "取消方案"
   checkout: "開啟 Waffo 付款頁面"
-  connectionTogetherWarning: "房間入面有位成員一段時間都未能連線到你。可以試吓 XMCL Together，改善房間入面所有人嘅連線。只需要房主使用 Together。"
+  connectionTogetherWarning: "房間入面有位成員一段時間都未能連線到你。可以試吓 DHMC Together，改善房間入面所有人嘅連線。只需要房主使用 Together。"
   masterPurchaseHint: "只需要房主使用 Together Home，就可以改善房間入面所有人嘅連線。"
-  natTogetherWarning: "你個路由器可能難以連線到房主。如果連線失敗，可以試吓 XMCL Together，改善你同朋友之間嘅連線。房間只需要由房主購買 Together。"
+  natTogetherWarning: "你個路由器可能難以連線到房主。如果連線失敗，可以試吓 DHMC Together，改善你同朋友之間嘅連線。房間只需要由房主購買 Together。"
   togetherName: "Minecraft Together"
   trialDescription: "一次 7 日試用，包含 1 GB 轉送流量。"
   trialTitle: "連線試用"
@@ -1085,7 +1086,7 @@ multiplayer:
   month: "個月"
   orderStatus: "Waffo 訂單：{status}"
   planDescription: "每月 20 GB 代管轉送流量，另提供模組包 AI 疑難排解。"
-  waffoHint: "付款會喺 Waffo Pancake 上安全完成。XMCL 絕對唔會收到你嘅卡號。"
+  waffoHint: "付款會喺 Waffo Pancake 上安全完成。DHMC 絕對唔會收到你嘅卡號。"
   subscription:
     active: "使用中"
     cancelled: "已取消"
@@ -1095,7 +1096,7 @@ multiplayer:
     available: "有免費試用"
     expired: "試用已用完"
     unavailable: "未能使用試用"
-  loginRequiredDescription: P2P 多人遊戲使用 XMCL 線上服務。請登入 XMCL 帳戶以繼續。
+  loginRequiredDescription: P2P 多人遊戲使用 DHMC 線上服務。請登入 DHMC 帳戶以繼續。
   loginRequiredTitle: 登入以使用 P2P 多人遊戲
   complete: 完成
   confirm: 確定
@@ -1535,7 +1536,7 @@ setting:
   about: 關於
   aboutBmclDescription: BMCL API 為中國地區用戶提供便捷嘅下載服務
   aboutContributors: 🧑‍💻 貢獻者 🧑‍💻
-  aboutDenoDescription: XMCL 使用 Deno Deploy 平台提供嘅無伺服器 JavaScript 應用程式
+  aboutDenoDescription: DHMC 使用 Deno Deploy 平台提供嘅無伺服器 JavaScript 應用程式
   aboutLicense: MIT 授權
   aboutLicenseInfo: Windows 代碼簽名由 SignPath.io 免費提供，簽署人為 SignPath Foundation
   aboutSponsors: 😇 贊助商 😇
@@ -1618,11 +1619,11 @@ setting:
   developerMode: 開發者模式
   developerModeDescription: 開發者模式旨喺協助你測試自己寫嘅模組
   disableTelemetry: 停用遙測
-  disableTelemetryDescription: XMCL 會收集遊戲啟動以及使用者登入事件
+  disableTelemetryDescription: DHMC 會收集遊戲啟動以及使用者登入事件
   enableDedicatedGPUOptimization: 分配專用 GPU
   enableDedicatedGPUOptimizationDescription: 此選項將為 Minecraft 程序分配專用 GPU。
   enableDiscord: 啟用 Discord Presence
-  enableDiscordDescription: 根據 XMCL 實時更新 Discord 嘅狀態
+  enableDiscordDescription: 根據 DHMC 實時更新 Discord 嘅狀態
   enterUrl: 輸入網址
   exportSettings: 匯出設定
   exportSettingsHint: 將目前設定儲存到檔案
@@ -1761,7 +1762,7 @@ setup:
   appearance:
     name: '@:setting.appearance'
   dataRoot:
-    description: 資料儲存目錄唔係常規嘅 .minecraft 目錄。因為 XMCL 嘅資料目錄格式特殊，唔建議將常規 .minecraft 目錄設定為資料目錄。
+    description: 資料儲存目錄唔係常規嘅 .minecraft 目錄。因為 DHMC 嘅資料目錄格式特殊，唔建議將常規 .minecraft 目錄設定為資料目錄。
     drives: 推薦路徑
     name: 設定資料儲存目錄
   defaultLayoutDescription: |-
@@ -1892,8 +1893,8 @@ theme:
   selectImage: 選擇影象
   selectMusic: 選擇音樂
   selectVideo: 選擇影片
-  title: XMCL
-title: XMCL
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: 公網位址
   prflx: 同伴反射位址
@@ -2187,6 +2188,6 @@ gamepad:
   steamAddedNotify: 啟動器已成功新增至 Steam 收藏庫！請重新啟動 Steam 嚟套用變更。
   steamAlreadyAddedNotify: 啟動器已經喺你嘅 Steam 收藏庫中。
   steamDeckTitle: 偵測到 Steam Deck
-  steamDeckDesc: 偵測到你正在使用 Steam Deck。你想將 XMCL 新增至 Steam 收藏庫作為非 Steam 遊戲，以便在遊戲模式中使用完整的 Steam 介面同手掣整合功能嗎？
+  steamDeckDesc: 偵測到你正在使用 Steam Deck。你想將 DHMC 新增至 Steam 收藏庫作為非 Steam 遊戲，以便在遊戲模式中使用完整的 Steam 介面同手掣整合功能嗎？
   steamDeckAddBtn: 新增至 Steam ({btn})
   steamDeckCancelBtn: 取消 ({btn})

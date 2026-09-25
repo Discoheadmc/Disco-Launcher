@@ -43,20 +43,6 @@ export function useTutorialModel() {
         description: t('tutorial.launchDescription'),
       },
     },
-    {
-      element: '#tutor-button',
-      popover: {
-        title: t('help'),
-        description: t('tutorial.helpDescription'),
-      },
-    },
-    {
-      element: '#feedback-button',
-      popover: {
-        title: t('feedback.name'),
-        description: t('tutorial.feedbackDescription'),
-      },
-    },
   ])
 
   async function start() {

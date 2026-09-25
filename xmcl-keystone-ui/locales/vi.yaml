@@ -32,8 +32,9 @@ HomeLaunchMultiInstanceDialog:
 SettingMigrationDialog:
   selectRootDirectory: Chọn thư mục gốc
 agent:
-  accessRequiredHint: Đăng ký XMCL để sử dụng Trợ lý tích hợp hoặc cấu hình nhà cung cấp AI của riêng bạn trong phần cài đặt.
-  subscribeXmcl: Đăng ký XMCL
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: Đăng ký DHMC để sử dụng Trợ lý tích hợp hoặc cấu hình nhà cung cấp AI của riêng bạn trong phần cài đặt.
+  subscribeXmcl: Đăng ký DHMC
   callingTool: đang gọi {name}…
   disabledPlaceholder: Trợ lý đã bị vô hiệu hóa
   emptyHint: Yêu cầu trợ lý kiểm tra phiên bản của bạn, bật/tắt mod, đọc nhật ký hoạt động hoặc chẩn đoán sự cố crash.
@@ -50,7 +51,7 @@ agent:
   suggestion2: Các mod của tôi đang bị crash — hãy tìm nguyên nhân và chỉ tôi cách khắc phục
   suggestion3: 'Tạo một modpack: tìm các mod có tính năng tôi muốn và cài đặt chúng vào phiên bản này'
   thinking: đang suy nghĩ…
-  title: Trợ lý XMCL
+  title: Trợ lý DHMC
   toggleHint: để bật/tắt
 ago:
   day: '{duration} ngày trước | {duration} ngày trước'
@@ -522,7 +523,7 @@ instances:
   addModrinthDescription: Nhập phiên bản Modrinth hiện có. Bạn cần chọn thư mục dữ liệu gốc của Modrinth.
   addPrismDescription: Nhập phiên bản PrismLauncher hiện có.
   addVanilla: Tạo từ Minecraft vanilla
-  addVanillaDescription: Nhập từ thư mục .minecraft thông thường. Thao tác này sẽ sao chép hồ sơ game gốc sang XMCL.
+  addVanillaDescription: Nhập từ thư mục .minecraft thông thường. Thao tác này sẽ sao chép hồ sơ game gốc sang DHMC.
   edition: Phiên bản
   editionJava: Phiên bản Java
   editionBedrock: Phiên bản Bedrock
@@ -1012,7 +1013,7 @@ multiplayer:
   openConsumerPortal: Mở Cổng thông tin khách hàng
   refundHint: Bạn cần hoàn tiền? Hãy truy cập Cổng thông tin khách hàng Waffo để quản lý đơn hàng và gói đăng ký.
   togetherSupportHint: Nếu chế độ nhiều người chơi không hoạt động, hãy tham gia Discord và liên hệ với nhóm phát triển. Chúng tôi sẽ giúp bạn giải quyết vấn đề.
-  autoShareAmbiguous: Có nhiều trò chơi đang chạy. Hãy chọn phiên bản đang lưu trữ thế giới LAN để XMCL có thể chia sẻ.
+  autoShareAmbiguous: Có nhiều trò chơi đang chạy. Hãy chọn phiên bản đang lưu trữ thế giới LAN để DHMC có thể chia sẻ.
   editSharingScope: Chỉnh sửa phạm vi chia sẻ
   gameAvailable: Có trò chơi LAN
   joinGame: Tham gia trò chơi
@@ -1022,16 +1023,16 @@ multiplayer:
   updateSharedInstanceTitle: Cập nhật phiên bản được chia sẻ?
   addFunds: "Thêm tiền"
   availableBalance: "Số dư khả dụng"
-  balanceHint: "Có thể sử dụng cho các dịch vụ XMCL Together"
+  balanceHint: "Có thể sử dụng cho các dịch vụ DHMC Together"
   billing: "Thanh toán"
   billingDescription: "Quản lý quyền truy cập relay, gói Together Home và các khoản thanh toán."
   billingError: "Không thể tải thông tin thanh toán Together. Vui lòng thử lại sau ít phút."
   buyTogether: "Mua Together"
   cancelTogether: "Hủy gói"
   checkout: "Mở trang thanh toán Waffo"
-  connectionTogetherWarning: "Một thành viên trong phòng đã không thể kết nối với bạn trong một thời gian. Hãy thử XMCL Together để cải thiện kết nối cho mọi người trong phòng. Chỉ chủ phòng cần Together."
+  connectionTogetherWarning: "Một thành viên trong phòng đã không thể kết nối với bạn trong một thời gian. Hãy thử DHMC Together để cải thiện kết nối cho mọi người trong phòng. Chỉ chủ phòng cần Together."
   masterPurchaseHint: "Chỉ chủ phòng cần Together Home để cải thiện kết nối cho mọi người trong phòng."
-  natTogetherWarning: "Bộ định tuyến của bạn có thể gặp khó khăn khi kết nối với chủ phòng. Nếu kết nối thất bại, hãy thử XMCL Together để cải thiện kết nối giữa bạn và bạn bè. Chỉ chủ phòng cần mua Together cho phòng."
+  natTogetherWarning: "Bộ định tuyến của bạn có thể gặp khó khăn khi kết nối với chủ phòng. Nếu kết nối thất bại, hãy thử DHMC Together để cải thiện kết nối giữa bạn và bạn bè. Chỉ chủ phòng cần mua Together cho phòng."
   togetherName: "Minecraft Together"
   trialDescription: "Một lần dùng thử trong 7 ngày với 1 GB lưu lượng relay."
   trialTitle: "Dùng thử kết nối"
@@ -1039,7 +1040,7 @@ multiplayer:
   month: "tháng"
   orderStatus: "Đơn hàng Waffo: {status}"
   planDescription: "20 GB lưu lượng relay được quản lý mỗi tháng, cùng với hỗ trợ AI khắc phục sự cố modpack."
-  waffoHint: "Thanh toán được hoàn tất an toàn trên Waffo Pancake. XMCL không bao giờ nhận số thẻ của bạn."
+  waffoHint: "Thanh toán được hoàn tất an toàn trên Waffo Pancake. DHMC không bao giờ nhận số thẻ của bạn."
   subscription:
     active: "Đang hoạt động"
     cancelled: "Đã hủy"
@@ -1049,7 +1050,7 @@ multiplayer:
     available: "Có bản dùng thử miễn phí"
     expired: "Đã dùng bản dùng thử"
     unavailable: "Không có bản dùng thử"
-  loginRequiredDescription: Chế độ nhiều người chơi P2P sử dụng dịch vụ trực tuyến XMCL. Hãy đăng nhập vào Tài khoản XMCL để tiếp tục.
+  loginRequiredDescription: Chế độ nhiều người chơi P2P sử dụng dịch vụ trực tuyến DHMC. Hãy đăng nhập vào Tài khoản DHMC để tiếp tục.
   loginRequiredTitle: Đăng nhập để chơi nhiều người P2P
   complete: Hoàn tất
   confirm: Xác nhận
@@ -1483,7 +1484,7 @@ setting:
   about: Giới thiệu
   aboutBmclDescription: BMCL API cung cấp các bản tải xuống thuận tiện cho người dùng tại Trung Quốc Đại Lục
   aboutContributors: 🧑‍💻 Những người đóng góp 🧑‍💻
-  aboutDenoDescription: XMCL tận dụng nền tảng tiện lợi của Deno Deploy cho các ứng dụng JavaScript không máy chủ (serverless)
+  aboutDenoDescription: DHMC tận dụng nền tảng tiện lợi của Deno Deploy cho các ứng dụng JavaScript không máy chủ (serverless)
   aboutLicense: GIẤY PHÉP MIT
   aboutLicenseInfo: Ký mã Windows miễn phí được cung cấp bởi SignPath.io, chứng chỉ bởi SignPath Foundation
   aboutSponsors: 😇 Nhà tài trợ 😇
@@ -1566,7 +1567,7 @@ setting:
   developerMode: Chế độ nhà phát triển
   developerModeDescription: Chế độ nhà phát triển dùng để thử nghiệm các bản mod của riêng bạn
   disableTelemetry: Vô hiệu hóa đo lường từ xa (Telemetry)
-  disableTelemetryDescription: XMCL sẽ thu thập dữ liệu về các sự kiện khởi chạy trò chơi và đăng nhập của người dùng.
+  disableTelemetryDescription: DHMC sẽ thu thập dữ liệu về các sự kiện khởi chạy trò chơi và đăng nhập của người dùng.
   enableDedicatedGPUOptimization: Chỉ định GPU rời
   enableDedicatedGPUOptimizationDescription: Tùy chọn này sẽ chỉ định GPU rời (Dedicated GPU) cho tiến trình Minecraft.
   enableDiscord: Bật trạng thái hoạt động Discord (Rich Presence)
@@ -1706,7 +1707,7 @@ setup:
   appearance:
     name: '@:setting.appearance'
   dataRoot:
-    description: Thư mục gốc của dữ liệu không phải là thư mục .minecraft thông thường. Vì cấu trúc thư mục dữ liệu của XMCL khác với phiên bản gốc (vanilla), chúng tôi khuyên bạn không nên sử dụng thư mục .minecraft thông thường làm thư mục gốc dữ liệu.
+    description: Thư mục gốc của dữ liệu không phải là thư mục .minecraft thông thường. Vì cấu trúc thư mục dữ liệu của DHMC khác với phiên bản gốc (vanilla), chúng tôi khuyên bạn không nên sử dụng thư mục .minecraft thông thường làm thư mục gốc dữ liệu.
     drives: Vị trí được khuyên dùng
     name: Thiết lập thư mục dữ liệu
   defaultLayoutDescription: Bố cục mặc định nhằm tối ưu hóa khái niệm "phiên bản" trò chơi. Nó trông giống như các ứng dụng như Discord và cũng được truyền cảm hứng từ các trình khởi chạy game khác như Steam, v.v.
@@ -1828,8 +1829,8 @@ theme:
   selectImage: Chọn hình ảnh
   selectMusic: Chọn nhạc
   selectVideo: Chọn video
-  title: XMCL
-title: XMCL
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: Ứng viên máy chủ (Host Candidate)
   prflx: Ứng viên phản chiếu ngang hàng
@@ -2108,6 +2109,6 @@ gamepad:
   steamAddedNotify: Đã thêm trình khởi chạy vào Thư viện Steam thành công! Vui lòng khởi động lại Steam để áp dụng.
   steamAlreadyAddedNotify: Trình khởi chạy đã có sẵn trong Thư viện Steam của bạn.
   steamDeckTitle: Phát hiện Steam Deck
-  steamDeckDesc: Chúng tôi phát hiện bạn đang chạy trên Steam Deck. Bạn có muốn thêm XMCL vào Thư viện Steam của mình dưới dạng trò chơi ngoài Steam để tích hợp đầy đủ lớp phủ Steam và điều khiển trong Gaming Mode không?
+  steamDeckDesc: Chúng tôi phát hiện bạn đang chạy trên Steam Deck. Bạn có muốn thêm DHMC vào Thư viện Steam của mình dưới dạng trò chơi ngoài Steam để tích hợp đầy đủ lớp phủ Steam và điều khiển trong Gaming Mode không?
   steamDeckAddBtn: Thêm vào Steam ({btn})
   steamDeckCancelBtn: Hủy ({btn})

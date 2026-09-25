@@ -95,7 +95,7 @@ export const pluginOfficialUserApi: LauncherAppPlugin = async (app) => {
   userService.registerAccountSystem(AUTHORITY_MICROSOFT, system)
   await userService.initialize()
 
-  app.protocol.registerHandler('xmcl', ({ request, response }) => {
+  app.protocol.registerHandler('disco', ({ request, response }) => {
     const parsed = request.url
     if (parsed.host === 'launcher' && parsed.pathname === '/auth') {
       let error: Error | undefined

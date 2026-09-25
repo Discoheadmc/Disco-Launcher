@@ -32,8 +32,9 @@ HomeLaunchMultiInstanceDialog:
 SettingMigrationDialog:
   selectRootDirectory: Pilih Direktori Utama
 agent:
-  accessRequiredHint: Berlangganan XMCL untuk menggunakan Agen bawaan, atau konfigurasikan penyedia AI Anda sendiri di Pengaturan.
-  subscribeXmcl: Berlangganan XMCL
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: Berlangganan DHMC untuk menggunakan Agen bawaan, atau konfigurasikan penyedia AI Anda sendiri di Pengaturan.
+  subscribeXmcl: Berlangganan DHMC
   callingTool: memanggil {name}…
   disabledPlaceholder: Agen dinonaktifkan
   emptyHint: Minta agen untuk memeriksa instansi Anda, mengaktifkan/menonaktifkan mod, membaca log, atau mendiagnosis crash.
@@ -50,7 +51,7 @@ agent:
   suggestion2: Mod saya mengalami crash — cari penyebabnya dan beri tahu saya cara memperbaikinya
   suggestion3: 'Buat modpack: cari mod untuk fitur yang saya inginkan dan pasang ke dalam instansi ini'
   thinking: berpikir…
-  title: Agen XMCL
+  title: Agen DHMC
   toggleHint: untuk beralih
 ago:
   day: '{duration} hari yang lalu | {duration} hari yang lalu'
@@ -522,7 +523,7 @@ instances:
   addModrinthDescription: Impor instansi Modrinth yang ada. Anda perlu memilih folder data utama Modrinth.
   addPrismDescription: Impor instansi PrismLauncher yang ada.
   addVanilla: Buat dari Minecraft mirip vanilla
-  addVanillaDescription: Impor dari folder .minecraft umum. Ini akan menduplikat profil game asli ke XMCL.
+  addVanillaDescription: Impor dari folder .minecraft umum. Ini akan menduplikat profil game asli ke DHMC.
   edition: Edisi
   editionJava: Edisi Java
   editionBedrock: Edisi Bedrock
@@ -1012,7 +1013,7 @@ multiplayer:
   openConsumerPortal: Buka Portal Konsumen
   refundHint: Perlu pengembalian dana? Kunjungi Portal Konsumen Waffo untuk mengelola pesanan dan langganan Anda.
   togetherSupportHint: Jika multipemain tidak berfungsi, bergabunglah ke Discord kami dan hubungi tim pengembang. Kami akan membantu menyelesaikan masalahnya.
-  autoShareAmbiguous: Beberapa game sedang berjalan. Pilih instans yang menghosting dunia LAN agar XMCL dapat membagikannya.
+  autoShareAmbiguous: Beberapa game sedang berjalan. Pilih instans yang menghosting dunia LAN agar DHMC dapat membagikannya.
   editSharingScope: Edit cakupan berbagi
   gameAvailable: Game LAN tersedia
   joinGame: Gabung ke game
@@ -1022,16 +1023,16 @@ multiplayer:
   updateSharedInstanceTitle: Perbarui instans yang dibagikan?
   addFunds: "Tambah dana"
   availableBalance: "Saldo tersedia"
-  balanceHint: "Tersedia untuk layanan XMCL Together"
+  balanceHint: "Tersedia untuk layanan DHMC Together"
   billing: "Penagihan"
   billingDescription: "Kelola akses relay, paket Together Home, dan pembayaran Anda."
   billingError: "Penagihan Together tidak dapat dimuat. Coba lagi sebentar."
   buyTogether: "Beli Together"
   cancelTogether: "Batalkan paket"
   checkout: "Buka pembayaran Waffo"
-  connectionTogetherWarning: "Seorang anggota ruangan tidak dapat terhubung ke Anda selama beberapa waktu. Coba XMCL Together untuk meningkatkan konektivitas semua orang di ruangan. Hanya master ruangan yang memerlukan Together."
+  connectionTogetherWarning: "Seorang anggota ruangan tidak dapat terhubung ke Anda selama beberapa waktu. Coba DHMC Together untuk meningkatkan konektivitas semua orang di ruangan. Hanya master ruangan yang memerlukan Together."
   masterPurchaseHint: "Hanya master ruangan yang memerlukan Together Home untuk meningkatkan konektivitas semua orang di ruangan."
-  natTogetherWarning: "Router Anda mungkin mengalami masalah saat terhubung ke master ruangan. Jika koneksi gagal, coba XMCL Together untuk meningkatkan koneksi antara Anda dan teman-teman. Hanya master ruangan yang perlu membeli Together untuk ruangan ini."
+  natTogetherWarning: "Router Anda mungkin mengalami masalah saat terhubung ke master ruangan. Jika koneksi gagal, coba DHMC Together untuk meningkatkan koneksi antara Anda dan teman-teman. Hanya master ruangan yang perlu membeli Together untuk ruangan ini."
   togetherName: "Minecraft Together"
   trialDescription: "Satu uji coba selama 7 hari dengan 1 GB lalu lintas relay."
   trialTitle: "Uji coba konektivitas"
@@ -1039,7 +1040,7 @@ multiplayer:
   month: "bulan"
   orderStatus: "Pesanan Waffo: {status}"
   planDescription: "20 GB lalu lintas relay terkelola setiap bulan, ditambah pemecahan masalah modpack dengan AI."
-  waffoHint: "Pembayaran diselesaikan dengan aman di Waffo Pancake. XMCL tidak pernah menerima nomor kartu Anda."
+  waffoHint: "Pembayaran diselesaikan dengan aman di Waffo Pancake. DHMC tidak pernah menerima nomor kartu Anda."
   subscription:
     active: "Aktif"
     cancelled: "Dibatalkan"
@@ -1049,7 +1050,7 @@ multiplayer:
     available: "Uji coba gratis tersedia"
     expired: "Uji coba telah digunakan"
     unavailable: "Uji coba tidak tersedia"
-  loginRequiredDescription: Multipemain P2P menggunakan layanan online XMCL. Masuk ke Akun XMCL untuk melanjutkan.
+  loginRequiredDescription: Multipemain P2P menggunakan layanan online DHMC. Masuk ke Akun DHMC untuk melanjutkan.
   loginRequiredTitle: Masuk untuk multipemain P2P
   complete: Selesai
   confirm: Konfirmasi
@@ -1483,7 +1484,7 @@ setting:
   about: Tentang
   aboutBmclDescription: BMCL API menyediakan unduhan yang nyaman bagi pengguna di Tiongkok Daratan
   aboutContributors: 🧑‍💻 Kontributor 🧑‍💻
-  aboutDenoDescription: XMCL memanfaatkan platform bebas repot Deno Deploy untuk aplikasi JavaScript serverless
+  aboutDenoDescription: DHMC memanfaatkan platform bebas repot Deno Deploy untuk aplikasi JavaScript serverless
   aboutLicense: LISENSI MIT
   aboutLicenseInfo: Penandatanganan kode gratis di Windows disediakan oleh SignPath.io, sertifikat oleh SignPath Foundation
   aboutSponsors: 😇 Sponsor 😇
@@ -1566,7 +1567,7 @@ setting:
   developerMode: Mode Pengembang
   developerModeDescription: Mode Pengembang adalah untuk menguji mod Anda sendiri
   disableTelemetry: Nonaktifkan Telemetri
-  disableTelemetryDescription: XMCL akan mengumpulkan peristiwa peluncuran game dan masuk pengguna.
+  disableTelemetryDescription: DHMC akan mengumpulkan peristiwa peluncuran game dan masuk pengguna.
   enableDedicatedGPUOptimization: Tetapkan GPU Khusus
   enableDedicatedGPUOptimizationDescription: Opsi ini akan menetapkan GPU khusus ke proses Minecraft.
   enableDiscord: Aktifkan Discord Presence
@@ -1706,7 +1707,7 @@ setup:
   appearance:
     name: '@:setting.appearance'
   dataRoot:
-    description: Folder data utama bukanlah direktori .minecraft umum. Karena struktur direktori data XMCL berbeda dari vanilla, kami tidak menyarankan menggunakan direktori .minecraft umum sebagai folder data utama.
+    description: Folder data utama bukanlah direktori .minecraft umum. Karena struktur direktori data DHMC berbeda dari vanilla, kami tidak menyarankan menggunakan direktori .minecraft umum sebagai folder data utama.
     drives: Lokasi yang Direkomendasikan
     name: Atur Direktori Data
   defaultLayoutDescription: Tata letak default mencoba untuk meningkatkan konsep "instansi" game. Terlihat seperti aplikasi seperti Discord. Ini juga terinspirasi oleh aplikasi peluncur game lain seperti Steam, dll.
@@ -1828,8 +1829,8 @@ theme:
   selectImage: Pilih Gambar
   selectMusic: Pilih Musik
   selectVideo: Pilih Video
-  title: XMCL
-title: XMCL
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: Kandidat Host
   prflx: Kandidat Peer Reflexive
@@ -2108,6 +2109,6 @@ gamepad:
   steamAddedNotify: Peluncur berhasil ditambahkan ke Perpustakaan Steam! Silakan mulai ulang Steam untuk melihatnya.
   steamAlreadyAddedNotify: Peluncur sudah ada di Perpustakaan Steam Anda.
   steamDeckTitle: Steam Deck Terdeteksi
-  steamDeckDesc: Kami mendeteksi bahwa Anda berjalan di Steam Deck. Apakah Anda ingin menambahkan XMCL ke Perpustakaan Steam Anda sebagai game non-Steam untuk integrasi overlay Steam dan pengontrol penuh dalam Mode Game?
+  steamDeckDesc: Kami mendeteksi bahwa Anda berjalan di Steam Deck. Apakah Anda ingin menambahkan DHMC ke Perpustakaan Steam Anda sebagai game non-Steam untuk integrasi overlay Steam dan pengontrol penuh dalam Mode Game?
   steamDeckAddBtn: Tambahkan ke Steam ({btn})
   steamDeckCancelBtn: Batal ({btn})

@@ -5,23 +5,23 @@ import type { Configuration } from 'electron-builder'
 dotenv()
 
 export const config = {
-  productName: 'XMCL',
-  appId: 'xmcl',
+  productName: 'Disco Launcher',
+  appId: 'com.discolauncher.app',
   directories: {
     output: 'build/output',
     buildResources: 'build',
     app: '.',
   },
   protocols: {
-    name: 'XMCL',
-    schemes: ['xmcl'],
+    name: 'Disco Launcher',
+    schemes: ['disco'],
   },
   // assign publish for auto-updater
   // set this to your own repo!
   publish: [{
     provider: 'github',
-    owner: 'voxelum',
-    repo: 'x-minecraft-launcher',
+    owner: 'discolauncher',
+    repo: 'disco-launcher',
   }],
   files: [{
     from: 'dist',
@@ -37,18 +37,18 @@ export const config = {
     to: 'agent-documents',
     filter: ['**/*.md'],
   }],
-  artifactName: 'xmcl-${version}-${platform}-${arch}.${ext}',
+  artifactName: 'DiscoLauncher-Setup-${version}.${ext}',
   appx: {
-    displayName: 'XMCL',
-    applicationId: 'xmcl',
-    identityName: 'xmcl',
+    displayName: 'Disco Launcher',
+    applicationId: 'DiscoLauncher',
+    identityName: 'DiscoLauncher',
     backgroundColor: 'transparent',
     publisher: process.env.PUBLISHER,
-    publisherDisplayName: 'CI010',
+    publisherDisplayName: 'Disco',
     setBuildNumber: true,
   },
   dmg: {
-    artifactName: 'xmcl-${version}-${arch}.${ext}',
+    artifactName: 'DiscoLauncher-${version}-${arch}.${ext}',
     contents: [
       {
         x: 410,
@@ -82,33 +82,38 @@ export const config = {
   win: {
     signtoolOptions: {
       certificateFile: undefined as string | undefined,
-      publisherName: 'CI010',
     },
     icon: 'icons/dark.ico',
     electronLanguages: ['en-US'],
     target: [
       {
-        target: 'zip',
-        arch: [
-          'x64',
-          'ia32',
-        ],
+        target: 'nsis',
+        arch: ['x64'],
       },
-      'appx',
     ],
   },
+  nsis: {
+    oneClick: false,
+    allowToChangeInstallationDirectory: true,
+    allowElevation: true,
+    perMachine: false,
+    createDesktopShortcut: true,
+    createStartMenuShortcut: true,
+    shortcutName: 'Disco Launcher',
+    artifactName: 'DiscoLauncher-Setup-${version}.${ext}',
+  },
   linux: {
-    executableName: 'xmcl',
+    executableName: 'DiscoLauncher',
     electronLanguages: ['en-US'],
     desktop: {
       entry: {
-        MimeType: 'x-scheme-handler/xmcl',
-        StartupWMClass: 'xmcl',
+        MimeType: 'x-scheme-handler/disco',
+        StartupWMClass: 'DiscoLauncher',
       },
     },
     category: 'Game',
     icon: 'icons/dark.icns',
-    artifactName: 'xmcl-${version}-${arch}.${ext}',
+    artifactName: 'DiscoLauncher-${version}-${arch}.${ext}',
     target: [
       { target: 'deb', arch: ['x64', 'arm64'] },
       { target: 'rpm', arch: ['x64', 'arm64'] },

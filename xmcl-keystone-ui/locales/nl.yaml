@@ -480,7 +480,7 @@ instances:
     Importeer een bestaande Modrinth instance. U moet de Modrinth hoofddatamap selecteren.
   addVanilla: Aanmaken vanaf vanilla-achtige Minecraft
   addVanillaDescription: >-
-    Importeer vanuit een standaard .minecraft map. Dit zal het originele spelprofiel dupliceren naar XMCL.
+    Importeer vanuit een standaard .minecraft map. Dit zal het originele spelprofiel dupliceren naar DHMC.
   fix: Repareren
   folder: Map
   folderSetting: Map Instellingen
@@ -969,7 +969,7 @@ multiplayer:
   openConsumerPortal: Consumentenportaal openen
   refundHint: Heb je een terugbetaling nodig? Ga naar het Waffo-consumentenportaal om je bestellingen en abonnementen te beheren.
   togetherSupportHint: Werkt multiplayer niet? Neem dan deel aan onze Discord en neem contact op met het ontwikkelteam. We helpen je het probleem op te lossen.
-  autoShareAmbiguous: Er zijn meerdere spellen actief. Selecteer de instantie die de LAN-wereld host, zodat XMCL deze kan delen.
+  autoShareAmbiguous: Er zijn meerdere spellen actief. Selecteer de instantie die de LAN-wereld host, zodat DHMC deze kan delen.
   editSharingScope: Deelbereik bewerken
   gameAvailable: LAN-spel beschikbaar
   joinGame: Deelnemen aan spel
@@ -979,16 +979,16 @@ multiplayer:
   updateSharedInstanceTitle: Gedeelde instantie bijwerken?
   addFunds: "Tegoed toevoegen"
   availableBalance: "Beschikbaar saldo"
-  balanceHint: "Beschikbaar voor XMCL Together-diensten"
+  balanceHint: "Beschikbaar voor DHMC Together-diensten"
   billing: "Facturering"
   billingDescription: "Beheer relaytoegang, je Together Home-abonnement en betalingen."
   billingError: "De facturering van Together kon niet worden geladen. Probeer het zo opnieuw."
   buyTogether: "Together kopen"
   cancelTogether: "Abonnement opzeggen"
   checkout: "Waffo-betaling openen"
-  connectionTogetherWarning: "Een groepslid kan al een tijdje geen verbinding met je maken. Probeer XMCL Together om de verbinding voor iedereen in de groep te verbeteren. Alleen de groepsbeheerder heeft Together nodig."
+  connectionTogetherWarning: "Een groepslid kan al een tijdje geen verbinding met je maken. Probeer DHMC Together om de verbinding voor iedereen in de groep te verbeteren. Alleen de groepsbeheerder heeft Together nodig."
   masterPurchaseHint: "Alleen de groepsbeheerder heeft Together Home nodig om de verbinding voor iedereen in de groep te verbeteren."
-  natTogetherWarning: "Je router kan problemen hebben om verbinding te maken met de groepsbeheerder. Als verbindingen mislukken, probeer dan XMCL Together om de verbinding tussen jou en je vrienden te verbeteren. Alleen de groepsbeheerder hoeft Together voor de groep te kopen."
+  natTogetherWarning: "Je router kan problemen hebben om verbinding te maken met de groepsbeheerder. Als verbindingen mislukken, probeer dan DHMC Together om de verbinding tussen jou en je vrienden te verbeteren. Alleen de groepsbeheerder hoeft Together voor de groep te kopen."
   togetherName: "Minecraft Together"
   trialDescription: "Een proefperiode van 7 dagen met 1 GB relayverkeer."
   trialTitle: "Connectiviteitstest"
@@ -996,7 +996,7 @@ multiplayer:
   month: "maand"
   orderStatus: "Waffo-bestelling: {status}"
   planDescription: "20 GB beheerd relayverkeer per maand, plus probleemoplossing met AI voor je modpack."
-  waffoHint: "Betalingen worden veilig via Waffo Pancake uitgevoerd. XMCL ontvangt nooit je kaartnummer."
+  waffoHint: "Betalingen worden veilig via Waffo Pancake uitgevoerd. DHMC ontvangt nooit je kaartnummer."
   subscription:
     active: "Actief"
     cancelled: "Opgezegd"
@@ -1006,7 +1006,7 @@ multiplayer:
     available: "Gratis proefperiode beschikbaar"
     expired: "Proefperiode gebruikt"
     unavailable: "Proefperiode niet beschikbaar"
-  loginRequiredDescription: P2P-multiplayer gebruikt de online diensten van XMCL. Meld u aan bij een XMCL-account om door te gaan.
+  loginRequiredDescription: P2P-multiplayer gebruikt de online diensten van DHMC. Meld u aan bij een DHMC-account om door te gaan.
   loginRequiredTitle: Aanmelden voor P2P-multiplayer
   complete: Voltooien
   confirm: Bevestigen
@@ -1352,8 +1352,9 @@ serverStatus:
   refuse: §4Server weigert!
   timeout: §4Verbinden met server timeout!
 agent:
-  accessRequiredHint: Abonneer je op XMCL om de ingebouwde agent te gebruiken, of configureer je eigen AI-provider in de instellingen.
-  subscribeXmcl: Abonneren op XMCL
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: Abonneer je op DHMC om de ingebouwde agent te gebruiken, of configureer je eigen AI-provider in de instellingen.
+  subscribeXmcl: Abonneren op DHMC
   notConfiguredHint: Stel een API-sleutel, model en OpenAI-compatibel endpoint in via Instellingen → Algemeen → AI-agent. Gebruik bijvoorbeeld OpenAI of een Claude-compatibele gateway.
 setting:
   aiAgentApiKeyDescription: Configureer een OpenAI-compatibele provider, zoals OpenAI of een gateway voor Claude. De sleutel wordt lokaal op dit apparaat opgeslagen.
@@ -1376,7 +1377,7 @@ setting:
   aboutBmclDescription: BMCL API biedt handige downloads voor gebruikers in Chinees Vasteland
   aboutContributors: 🧑‍💻 Bijdragers 🧑‍💻
   aboutDenoDescription: >-
-    XMCL maakt gebruik van het probleemloze platform van Deno Deploy voor serverloze JavaScript-toepassingen
+    DHMC maakt gebruik van het probleemloze platform van Deno Deploy voor serverloze JavaScript-toepassingen
   aboutLicense: MIT LICENSE
   aboutLicenseInfo: >-
     Gratis codetekening op Windows verzorgd door SignPath.io, certificaat door SignPath Foundation
@@ -1439,7 +1440,7 @@ setting:
   developerMode: Ontwikkelaarsmodus
   developerModeDescription: Ontwikkelaarsmodus is voor het testen van uw eigen mods
   disableTelemetry: Telemetrie Uitschakelen
-  disableTelemetryDescription: XMCL zal game-start en gebruikersinloggebeurtenissen verzamelen.
+  disableTelemetryDescription: DHMC zal game-start en gebruikersinloggebeurtenissen verzamelen.
   enableDedicatedGPUOptimization: Toewijzen van Dedicated GPU
   enableDedicatedGPUOptimizationDescription: Deze optie zal een dedicated GPU toewijzen aan het Minecraft-proces.
   enableDiscord: Discord Presence Inschakelen
@@ -1572,7 +1573,7 @@ setup:
     name: '@:setting.appearance'
   dataRoot:
     description: >-
-      De data root is geen gewone .minecraft map. Omdat de XMCL data mapstructuur anders is dan vanilla, raden we af om de gewone .minecraft map als data root te gebruiken.
+      De data root is geen gewone .minecraft map. Omdat de DHMC data mapstructuur anders is dan vanilla, raden we af om de gewone .minecraft map als data root te gebruiken.
     drives: Aanbevolen Locaties
     name: Stel Data Map In
   defaultLayoutDescription: >-
@@ -1694,7 +1695,7 @@ theme:
   selectImage: Selecteer Afbeelding
   selectMusic: Selecteer Muziek
   selectVideo: Selecteer Video
-  title: XMCL
+  title: Disco Launcher
 transportType:
   host: Host Kandidaat
   prflx: Peer Reflexive Kandidaat

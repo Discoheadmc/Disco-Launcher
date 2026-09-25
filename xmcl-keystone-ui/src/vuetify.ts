@@ -17,7 +17,7 @@ import 'vuetify/styles'
 import { BuiltinImages } from './constant'
 import { DEFAULT_SURFACE_BUTTON_RADIUS } from './composables/surfaceTokens'
 
-const xmcl: IconSet = {
+const disco: IconSet = {
   component: (props: IconProps) => {
     switch (props.icon) {
       case 'ftb': return h(FTBIcon)
@@ -57,7 +57,7 @@ export const vuetify = createVuetify({
   icons: {
     defaultSet: 'md',
     aliases,
-    sets: { md, xmcl },
+    sets: { md, disco },
   },
   defaults: {
     VSwitch: {
@@ -97,8 +97,8 @@ export const vuetify = createVuetify({
       dark: {
         dark: true,
         colors: {
-          primary: '#4caf50',
-          accent: '#00e676',
+          primary: '#7C8CF8',
+          accent: '#A5B4FC',
         },
       },
     },

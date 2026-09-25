@@ -2,17 +2,17 @@
     "name": "@xmcl/keystone-ui",
     "private": true,
     "type": "module",
-    "productName": "xmcl",
+    "productName": "Disco Launcher",
     "version": "0.66.0",
-    "author": "ci010 <cijhn@hotmail.com>",
-    "description": "XMCL - An open-source launcher for Minecraft",
+    "author": "Disco",
+    "description": "Disco Launcher - A fast Minecraft launcher",
     "license": "MIT",
     "engines": {
         "node": ">=20"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/voxelum/x-minecraft-launcher"
+        "url": "https://github.com/discolauncher/disco-launcher"
     },
     "scripts": {
         "build": "vite build --emptyOutDir && node ./scripts/verify-bundle.mjs",

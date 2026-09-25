@@ -457,7 +457,7 @@ instances:
     Musisz wybrać główny folder danych Modrinth.
   addVanilla: Tworzenie z Minecrafta w stylu vanilla
   addVanillaDescription: >-
-    Import ze wspólnego folderu .minecraft. Spowoduje to zduplikowanie oryginalnego profilu gry do XMCL.
+    Import ze wspólnego folderu .minecraft. Spowoduje to zduplikowanie oryginalnego profilu gry do DHMC.
   fix: Napraw
   folderSetting: Ustawienia folderów
   importFolderDescription: Importowanie Minecrafta do programu uruchamiającego
@@ -953,7 +953,7 @@ multiplayer:
   openConsumerPortal: Otwórz portal klienta
   refundHint: Potrzebujesz zwrotu środków? Odwiedź portal klienta Waffo, aby zarządzać zamówieniami i subskrypcjami.
   togetherSupportHint: Jeśli tryb wieloosobowy nie działa, dołącz do naszego Discorda i skontaktuj się z zespołem programistów. Pomożemy Ci rozwiązać problem.
-  autoShareAmbiguous: Uruchomionych jest wiele gier. Wybierz instancję hostującą świat LAN, aby XMCL mógł ją udostępnić.
+  autoShareAmbiguous: Uruchomionych jest wiele gier. Wybierz instancję hostującą świat LAN, aby DHMC mógł ją udostępnić.
   editSharingScope: Edytuj zakres udostępniania
   gameAvailable: Gra LAN jest dostępna
   joinGame: Dołącz do gry
@@ -963,16 +963,16 @@ multiplayer:
   updateSharedInstanceTitle: Zaktualizować udostępnioną instancję?
   addFunds: "Dodaj środki"
   availableBalance: "Dostępne saldo"
-  balanceHint: "Dostępne na usługi XMCL Together"
+  balanceHint: "Dostępne na usługi DHMC Together"
   billing: "Rozliczenia"
   billingDescription: "Zarządzaj dostępem do przekaźnika, planem Together Home i płatnościami."
   billingError: "Nie udało się wczytać rozliczeń Together. Spróbuj ponownie za chwilę."
   buyTogether: "Kup Together"
   cancelTogether: "Anuluj plan"
   checkout: "Otwórz płatność Waffo"
-  connectionTogetherWarning: "Jeden z członków pokoju od pewnego czasu nie może się z Tobą połączyć. Wypróbuj XMCL Together, aby poprawić łączność wszystkich osób w pokoju. Tylko właściciel pokoju potrzebuje Together."
+  connectionTogetherWarning: "Jeden z członków pokoju od pewnego czasu nie może się z Tobą połączyć. Wypróbuj DHMC Together, aby poprawić łączność wszystkich osób w pokoju. Tylko właściciel pokoju potrzebuje Together."
   masterPurchaseHint: "Tylko właściciel pokoju potrzebuje Together Home, aby poprawić łączność wszystkich osób w pokoju."
-  natTogetherWarning: "Twój router może mieć problemy z połączeniem z właścicielem pokoju. Jeśli połączenia się nie powiodą, wypróbuj XMCL Together, aby poprawić łączność między Tobą a znajomymi. Tylko właściciel pokoju musi kupić Together dla pokoju."
+  natTogetherWarning: "Twój router może mieć problemy z połączeniem z właścicielem pokoju. Jeśli połączenia się nie powiodą, wypróbuj DHMC Together, aby poprawić łączność między Tobą a znajomymi. Tylko właściciel pokoju musi kupić Together dla pokoju."
   togetherName: "Minecraft Together"
   trialDescription: "Jeden 7-dniowy okres próbny z 1 GB ruchu przez przekaźnik."
   trialTitle: "Okres próbny łączności"
@@ -980,7 +980,7 @@ multiplayer:
   month: "miesiąc"
   orderStatus: "Zamówienie Waffo: {status}"
   planDescription: "20 GB zarządzanego ruchu przez przekaźnik miesięcznie oraz rozwiązywanie problemów z modpackiem przez AI."
-  waffoHint: "Płatności są bezpiecznie realizowane w Waffo Pancake. XMCL nigdy nie otrzymuje numeru Twojej karty."
+  waffoHint: "Płatności są bezpiecznie realizowane w Waffo Pancake. DHMC nigdy nie otrzymuje numeru Twojej karty."
   subscription:
     active: "Aktywna"
     cancelled: "Anulowana"
@@ -990,7 +990,7 @@ multiplayer:
     available: "Dostępny bezpłatny okres próbny"
     expired: "Okres próbny wykorzystany"
     unavailable: "Okres próbny niedostępny"
-  loginRequiredDescription: Tryb wieloosobowy P2P korzysta z usług online XMCL. Zaloguj się na konto XMCL, aby kontynuować.
+  loginRequiredDescription: Tryb wieloosobowy P2P korzysta z usług online DHMC. Zaloguj się na konto DHMC, aby kontynuować.
   loginRequiredTitle: Zaloguj się do trybu wieloosobowego P2P
   complete: Kompletny
   confirm: Potwierdzenie
@@ -1334,8 +1334,9 @@ serverStatus:
   refuse: §4Serwer odmówił!
   timeout: §4Limit czasu połączenia z serwerem!
 agent:
-  accessRequiredHint: Zasubskrybuj XMCL, aby używać wbudowanego agenta, lub skonfiguruj własnego dostawcę AI w ustawieniach.
-  subscribeXmcl: Subskrybuj XMCL
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: Zasubskrybuj DHMC, aby używać wbudowanego agenta, lub skonfiguruj własnego dostawcę AI w ustawieniach.
+  subscribeXmcl: Subskrybuj DHMC
   notConfiguredHint: Ustaw klucz API, model i endpoint zgodny z OpenAI w Ustawienia → Ogólne → Agent AI. Na przykład użyj OpenAI albo bramki zgodnej z Claude.
 setting:
   aiAgentApiKeyDescription: Skonfiguruj dostawcę zgodnego z OpenAI, takiego jak OpenAI lub bramka dla Claude. Klucz jest przechowywany lokalnie na tym urządzeniu.
@@ -1412,7 +1413,7 @@ setting:
   developerMode: Tryb dewelopera
   developerModeDescription: Tryb deweloperski jest przeznaczony do testowania własnych modów
   disableTelemetry: Wyłącz telemetrię
-  disableTelemetryDescription: XMCL będzie zbierać zdarzenia uruchomienia gry i logowania użytkownika.
+  disableTelemetryDescription: DHMC będzie zbierać zdarzenia uruchomienia gry i logowania użytkownika.
   enableDedicatedGPUOptimization: Przypisanie dedykowanego układu GPU
   enableDedicatedGPUOptimizationDescription: Ta opcja przypisze dedykowany procesor graficzny do procesu Minecraft.
   enableDiscord: Włącz obecność Discord
@@ -1553,7 +1554,7 @@ setup:
     name: '@:setting.appearance'
   dataRoot:
     description: >-
-      Korzeń danych nie jest zwykłym katalogiem .minecraft. Ponieważ struktura katalogów danych XMCL różni się od struktury katalogu vanilla, nie zalecamy używania wspólnego katalogu .minecraft jako katalogu głównego danych.
+      Korzeń danych nie jest zwykłym katalogiem .minecraft. Ponieważ struktura katalogów danych DHMC różni się od struktury katalogu vanilla, nie zalecamy używania wspólnego katalogu .minecraft jako katalogu głównego danych.
     drives: Polecane lokalizacje
     name: Ustaw katalog danych
   defaultLayoutDescription: >-
@@ -1677,8 +1678,8 @@ theme:
   selectImage: Wybierz obraz
   selectMusic: Wybierz muzykę
   selectVideo: Wybierz wideo
-  title: XMCL
-title: XMCL
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: Kandydat na gospodarza
   prflx: Refleksyjny kandydat na rówieśnika

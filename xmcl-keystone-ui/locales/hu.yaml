@@ -495,7 +495,7 @@ instances:
     Ki kell választania a Modrinth gyökér adatmappát.
   addVanilla: Létrehozás vanilla-szerű Minecraftból
   addVanillaDescription: >-
-    Importálás a közös .minecraft mappából. Ez duplikálja az eredeti játékprofilt az XMCL-be.
+    Importálás a közös .minecraft mappából. Ez duplikálja az eredeti játékprofilt az DHMC-be.
   fix: Javítás
   folder: Mappa
   folderSetting: Mappa beállításai
@@ -997,7 +997,7 @@ multiplayer:
   openConsumerPortal: Ügyfélportál megnyitása
   refundHint: Visszatérítést szeretnél? Rendeléseid és előfizetéseid kezeléséhez keresd fel a Waffo ügyfélportálját.
   togetherSupportHint: Ha a többjátékos mód nem működik, csatlakozz a Discordunkhoz, és lépj kapcsolatba a fejlesztőcsapattal. Segítünk megoldani a problémát.
-  autoShareAmbiguous: Több játék is fut. Válaszd ki a LAN-világot futtató példányt, hogy az XMCL megoszthassa.
+  autoShareAmbiguous: Több játék is fut. Válaszd ki a LAN-világot futtató példányt, hogy az DHMC megoszthassa.
   editSharingScope: Megosztási kör szerkesztése
   gameAvailable: LAN-játék érhető el
   joinGame: Csatlakozás a játékhoz
@@ -1007,16 +1007,16 @@ multiplayer:
   updateSharedInstanceTitle: Megosztott példány frissítése?
   addFunds: "Egyenleg feltöltése"
   availableBalance: "Elérhető egyenleg"
-  balanceHint: "XMCL Together-szolgáltatásokhoz használható"
+  balanceHint: "DHMC Together-szolgáltatásokhoz használható"
   billing: "Számlázás"
   billingDescription: "Kezeld a relay-hozzáférést, a Together Home-csomagodat és a fizetéseidet."
   billingError: "A Together számlázása nem tölthető be. Próbáld újra egy pillanat múlva."
   buyTogether: "Together megvásárlása"
   cancelTogether: "Csomag lemondása"
   checkout: "Waffo fizetés megnyitása"
-  connectionTogetherWarning: "Egy szobatag egy ideje nem tud kapcsolódni hozzád. Próbáld ki az XMCL Together szolgáltatást, hogy mindenki számára javuljon a kapcsolat a szobában. Csak a szobamesternek van szüksége Togetherre."
+  connectionTogetherWarning: "Egy szobatag egy ideje nem tud kapcsolódni hozzád. Próbáld ki az DHMC Together szolgáltatást, hogy mindenki számára javuljon a kapcsolat a szobában. Csak a szobamesternek van szüksége Togetherre."
   masterPurchaseHint: "Csak a szobamesternek van szüksége Together Home-ra, hogy mindenki számára javuljon a kapcsolat a szobában."
-  natTogetherWarning: "Lehet, hogy az útválasztód nehezen tud kapcsolódni a szobamesterhez. Ha a kapcsolatok sikertelenek, próbáld ki az XMCL Togethert, hogy javuljon a kapcsolat közted és a barátaid között. A szobához csak a szobamesternek kell megvásárolnia a Togethert."
+  natTogetherWarning: "Lehet, hogy az útválasztód nehezen tud kapcsolódni a szobamesterhez. Ha a kapcsolatok sikertelenek, próbáld ki az DHMC Togethert, hogy javuljon a kapcsolat közted és a barátaid között. A szobához csak a szobamesternek kell megvásárolnia a Togethert."
   togetherName: "Minecraft Together"
   trialDescription: "Egy 7 napos próbaidőszak 1 GB relay-forgalommal."
   trialTitle: "Kapcsolati próbaidőszak"
@@ -1024,7 +1024,7 @@ multiplayer:
   month: "hónap"
   orderStatus: "Waffo-rendelés: {status}"
   planDescription: "Havonta 20 GB kezelt relay-forgalom, valamint AI-alapú hibaelhárítás a modcsomagodhoz."
-  waffoHint: "A fizetések biztonságosan a Waffo Pancake-en keresztül zajlanak. Az XMCL soha nem kapja meg a kártyaszámodat."
+  waffoHint: "A fizetések biztonságosan a Waffo Pancake-en keresztül zajlanak. Az DHMC soha nem kapja meg a kártyaszámodat."
   subscription:
     active: "Aktív"
     cancelled: "Lemondva"
@@ -1034,7 +1034,7 @@ multiplayer:
     available: "Ingyenes próbaidőszak érhető el"
     expired: "A próbaidőszak felhasználva"
     unavailable: "A próbaidőszak nem érhető el"
-  loginRequiredDescription: A P2P többjátékos mód az XMCL online szolgáltatásait használja. A folytatáshoz jelentkezzen be egy XMCL-fiókba.
+  loginRequiredDescription: A P2P többjátékos mód az DHMC online szolgáltatásait használja. A folytatáshoz jelentkezzen be egy DHMC-fiókba.
   loginRequiredTitle: Bejelentkezés a P2P többjátékos módhoz
   complete: Kész
   confirm: Megerősítés
@@ -1385,8 +1385,9 @@ serverStatus:
   refuse: §4A szerver elutasítot!
   timeout: §4Szerver csatlakozási időtúllépés!
 agent:
-  accessRequiredHint: Fizess elő az XMCL-re a beépített ügynök használatához, vagy állítsd be a saját AI-szolgáltatódat a beállításokban.
-  subscribeXmcl: Előfizetés az XMCL-re
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: Fizess elő az DHMC-re a beépített ügynök használatához, vagy állítsd be a saját AI-szolgáltatódat a beállításokban.
+  subscribeXmcl: Előfizetés az DHMC-re
   notConfiguredHint: Állítson be egy API-kulcsot, modellt és OpenAI-kompatibilis végpontot a Beállítások → Általános → AI ügynök alatt. Használhat például OpenAI-t vagy Claude-kompatibilis átjárót.
 setting:
   aiAgentApiKeyDescription: Állítson be OpenAI-kompatibilis szolgáltatót, például OpenAI-t vagy Claude-hoz használható átjárót. A kulcs helyileg, ezen az eszközön lesz tárolva.
@@ -1410,7 +1411,7 @@ setting:
     A BMCL API kényelmes letöltéseket biztosít a Kínai Kontinensen lévő felhasználók számára
   aboutContributors: 🧑‍💻 Közreműködők 🧑‍💻
   aboutDenoDescription: >-
-    Az XMCL a Deno Deploy egyszerű platformját használja kiszolgáló nélküli JavaScript alkalmazásokhoz
+    Az DHMC a Deno Deploy egyszerű platformját használja kiszolgáló nélküli JavaScript alkalmazásokhoz
   aboutLicense: MIT LICENSE
   aboutLicenseInfo: >-
     Ingyenes kódaláírás Windows alatt a SignPath.io által biztosított, SignPath Foundation által tanúsított
@@ -1474,7 +1475,7 @@ setting:
   developerModeDescription: Fejlesztői mód a saját írt mod tesztelésére irányul
   disableTelemetry: Telemetria kikapcsolása
   disableTelemetryDescription: >-
-    Az XMCL összegyűjti a játékindítási és a felhasználói bejelentkezési eseményeket.
+    Az DHMC összegyűjti a játékindítási és a felhasználói bejelentkezési eseményeket.
   enableDedicatedGPUOptimization: Dedikált GPU hozzárendelése
   enableDedicatedGPUOptimizationDescription: Ez az opció dedikált GPU-t rendel a Minecraft folyamathoz.
   enableDiscord: Discord státusz engedélyezése
@@ -1612,7 +1613,7 @@ setup:
     name: '@:setting.appearance'
   dataRoot:
     description: >-
-      Az adatgyökér nem egy közös .minecraft könyvtár. Mivel az XMCL adatok könyvtárszerkezet különbözik a vanilla könyvtárszerkezettől, nem javasoljuk, hogy a a közös .minecraft könyvtárat adatgyökérként használni.
+      Az adatgyökér nem egy közös .minecraft könyvtár. Mivel az DHMC adatok könyvtárszerkezet különbözik a vanilla könyvtárszerkezettől, nem javasoljuk, hogy a a közös .minecraft könyvtárat adatgyökérként használni.
     drives: Ajánlott helyek
     name: Adatmappa beállítása
   defaultLayoutDescription: >-
@@ -1738,8 +1739,8 @@ theme:
   selectImage: Válassza a Kép lehetőséget
   selectMusic: Válassza a Zene lehetőséget
   selectVideo: Válassza a Videó lehetőséget
-  title: XMCL
-title: XMCL
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: Kiszolgáló jelölt
   prflx: Peer Reflexív jelölt

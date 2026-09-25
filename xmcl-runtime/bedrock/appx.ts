@@ -92,12 +92,12 @@ export async function registerPackage(packageFamily: string, gameDir: string): P
     '    }' +
     '  }' +
     `  Add-AppxPackage -Register '${manifest.replace(/'/g, "''")}' -ForceApplicationShutdown;` +
-    '  Write-Output \'XMCL_REGISTER_OK\';' +
+    '  Write-Output \'DHMC_REGISTER_OK\';' +
     '} catch {' +
-    '  Write-Output ("XMCL_REGISTER_ERR:" + $_.Exception.Message);' +
+    '  Write-Output ("DHMC_REGISTER_ERR:" + $_.Exception.Message);' +
     '}'
   const out = (await runPowerShell(script)).trim()
-  if (out.includes('XMCL_REGISTER_OK')) {
+  if (out.includes('DHMC_REGISTER_OK')) {
     return
   }
   const lower = out.toLowerCase()
@@ -105,7 +105,7 @@ export async function registerPackage(packageFamily: string, gameDir: string): P
   if (lower.includes('0x80073cff') || lower.includes('developer')) {
     throw new DeveloperModeRequiredError()
   }
-  throw new Error(out.replace(/^XMCL_REGISTER_ERR:/, '') || 'Failed to register the Bedrock package.')
+  throw new Error(out.replace(/^DHMC_REGISTER_ERR:/, '') || 'Failed to register the Bedrock package.')
 }
 
 /**

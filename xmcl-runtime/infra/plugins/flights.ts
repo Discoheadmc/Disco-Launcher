@@ -1,6 +1,5 @@
-import { readFile, writeFile } from 'fs-extra'
+import { readFile } from 'fs-extra'
 import { join } from 'path'
-import { setTimeout } from 'timers/promises'
 import { LauncherAppPlugin } from '~/app'
 import { kClientToken } from '../client_token'
 import { kFlights } from '../flights'
@@ -40,35 +39,10 @@ export function applyRemoteFlights(
 
 export const pluginFlights: LauncherAppPlugin = async (app) => {
   const logger = app.getLogger('Flights')
-  const fetchFlights = async (output: Record<string, any>, cachedPath: string) => {
-    try {
-      const clientSession = await app.registry.get(kClientToken)
-      const build = app.build
-      const queryString = `version=${app.version}&build=${build}&locale=${app.host.getLocale()}&clientToken=${clientSession}`
-      const primary = await app.fetch(`https://api.xmcl.app/flights?${queryString}`).catch(() => undefined)
-      // Regional edges can return a 404 instead of failing the connection.
-      // Try the Azure fallback for that case too, not only for fetch failures.
-      const resp = primary?.ok
-        ? primary
-        : await app.fetch(`https://xmcl-core-api.azurewebsites.net/api/flights?${queryString}`)
-      if (resp.status !== 200) {
-        logger.error(new Error(`Failed to fetch flights: ${resp.status}`))
-        return
-      }
-      const result = await resp.json()
-      const persisted = applyRemoteFlights(output, result)
-      logger.log('Fetched flights', JSON.stringify(output))
-      // Write to cache
-      await writeFile(cachedPath, JSON.stringify(persisted))
-    } catch (e) {
-      const err = e as any
-      if (err.code === 'ENOTFOUND' && err.syscall === 'getaddrinfo' && err.message === 'net::ERR_INTERNET_DISCONNECTED') {
-        logger.warn('Failed to fetch flights: Network error. Please check your network connection.')
-      } else {
-        logger.error(e as Error)
-      }
-    }
-  }
+  // Disco Launcher: the remote flights fetch is removed entirely. Upstream it
+  // raced a 2s network timeout against first paint, which hurt cold-start on
+  // low-end machines and offline users. Flights now come from the local cache
+  // (or built-ins) only.
   const readCachedFlights = async (output: Record<string, any>, cachedPath: string) => {
     try {
       const cached = JSON.parse(await readFile(cachedPath, 'utf-8'))
@@ -81,17 +55,10 @@ export const pluginFlights: LauncherAppPlugin = async (app) => {
       return true
     }
   }
-  const readFlights = async (output: Record<string, any>, cachedPath: string) => {
-    if (await readCachedFlights(output, cachedPath)) {
-      await Promise.race([fetchFlights(output, cachedPath), setTimeout(2000)])
-    } else {
-      fetchFlights(output, cachedPath).catch(() => { })
-    }
-  }
   try {
     const filtered = applyDevelopmentApiFlight({ ...BUILTIN_FLIGHTS }) as Record<string, string>
     const cachedPath = join(app.appDataPath, 'flights.json')
-    const promise = readFlights(filtered, cachedPath).then(() => {
+    const promise = readCachedFlights(filtered, cachedPath).then(() => {
       logger.log('Flights loaded', JSON.stringify(filtered))
     })
 
@@ -107,8 +74,8 @@ export const pluginFlights: LauncherAppPlugin = async (app) => {
       }
     })
 
-    app.registry.register(kFlights, filtered)
-  } catch {
-    app.registry.register(kFlights, { ...BUILTIN_FLIGHTS })
+    app.registry.register(kFlights, Promise.resolve(filtered))
+  } catch (e) {
+    logger.error(e as Error)
   }
 }

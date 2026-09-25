@@ -462,7 +462,7 @@ instances:
     既存の Modrinth インスタンスをインポートします。
     Modrinth ルート データ フォルダーを選択する必要があります。
   addVanilla: Vanilla-LikeなMinecraftから作成
-  addVanillaDescription: 一般的な.minecraftフォルダからインポートします。これは元のプロファイルをXMCLに複製します。
+  addVanillaDescription: 一般的な.minecraftフォルダからインポートします。これは元のプロファイルをDHMCに複製します。
   fix: 直す
   folder: フォルダー
   folderSetting: フォルダーの設定
@@ -937,7 +937,7 @@ multiplayer:
   openConsumerPortal: コンシューマーポータルを開く
   refundHint: 返金をご希望ですか？Waffo コンシューマーポータルで注文とサブスクリプションを管理できます。
   togetherSupportHint: マルチプレイが動作しない場合は、Discord に参加して開発チームへお問い合わせください。問題解決をお手伝いします。
-  autoShareAmbiguous: 複数のゲームが実行中です。XMCLで共有するLANワールドをホストしているインスタンスを選択してください。
+  autoShareAmbiguous: 複数のゲームが実行中です。DHMCで共有するLANワールドをホストしているインスタンスを選択してください。
   editSharingScope: 共有範囲を編集
   gameAvailable: LANゲームが利用可能
   joinGame: ゲームに参加
@@ -947,16 +947,16 @@ multiplayer:
   updateSharedInstanceTitle: 共有インスタンスを更新しますか？
   addFunds: "残高を追加"
   availableBalance: "利用可能残高"
-  balanceHint: "XMCL Together のサービスに利用できます"
+  balanceHint: "DHMC Together のサービスに利用できます"
   billing: "請求"
   billingDescription: "リレーアクセス、Together Home プラン、お支払いを管理します。"
   billingError: "Together の請求情報を読み込めませんでした。しばらくしてからもう一度お試しください。"
   buyTogether: "Together を購入"
   cancelTogether: "プランを解約"
   checkout: "Waffo の決済を開く"
-  connectionTogetherWarning: "ルームメンバーの1人がしばらくあなたに接続できていません。ルーム全員の接続性を改善するには XMCL Together をお試しください。Together が必要なのはルームマスターだけです。"
+  connectionTogetherWarning: "ルームメンバーの1人がしばらくあなたに接続できていません。ルーム全員の接続性を改善するには DHMC Together をお試しください。Together が必要なのはルームマスターだけです。"
   masterPurchaseHint: "ルーム全員の接続性を改善するには、ルームマスターだけが Together Home を必要とします。"
-  natTogetherWarning: "ルーターがルームマスターへの接続に問題を抱えている可能性があります。接続に失敗する場合は、あなたと友達の接続性を改善するため XMCL Together をお試しください。ルームの Together を購入する必要があるのはルームマスターだけです。"
+  natTogetherWarning: "ルーターがルームマスターへの接続に問題を抱えている可能性があります。接続に失敗する場合は、あなたと友達の接続性を改善するため DHMC Together をお試しください。ルームの Together を購入する必要があるのはルームマスターだけです。"
   togetherName: "Minecraft Together"
   trialDescription: "1 GB のリレートラフィックを含む7日間のトライアルを1回利用できます。"
   trialTitle: "接続性トライアル"
@@ -964,7 +964,7 @@ multiplayer:
   month: "月"
   orderStatus: "Waffo の注文: {status}"
   planDescription: "毎月20 GBの管理リレートラフィックに加え、ModpackのAIトラブルシューティングを利用できます。"
-  waffoHint: "お支払いは Waffo Pancake で安全に完了します。XMCL がカード番号を受け取ることはありません。"
+  waffoHint: "お支払いは Waffo Pancake で安全に完了します。DHMC がカード番号を受け取ることはありません。"
   subscription:
     active: "有効"
     cancelled: "解約済み"
@@ -974,7 +974,7 @@ multiplayer:
     available: "無料トライアルを利用可能"
     expired: "トライアル使用済み"
     unavailable: "トライアル利用不可"
-  loginRequiredDescription: P2P マルチプレイヤーでは XMCL のオンラインサービスを使用します。続行するには XMCL アカウントにサインインしてください。
+  loginRequiredDescription: P2P マルチプレイヤーでは DHMC のオンラインサービスを使用します。続行するには DHMC アカウントにサインインしてください。
   loginRequiredTitle: P2P マルチプレイヤーにサインイン
   complete: 完了
   confirm: 続行
@@ -1385,8 +1385,9 @@ serverStatus:
   refuse: §4サーバーが拒否しました!
   timeout: §4サーバーへの接続がタイムアウト!
 agent:
-  accessRequiredHint: 内蔵エージェントを使用するには XMCL に登録するか、設定で独自の AI プロバイダーを構成してください。
-  subscribeXmcl: XMCL に登録
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: 内蔵エージェントを使用するには DHMC に登録するか、設定で独自の AI プロバイダーを構成してください。
+  subscribeXmcl: DHMC に登録
   notConfiguredHint: 設定 → 一般 → AIエージェントで API キー、モデル、OpenAI 互換エンドポイントを設定してください。たとえば、OpenAI または Claude 互換ゲートウェイを使用します。
 setting:
   aiAgentApiKeyDescription: OpenAI や Claude 用ゲートウェイなど、OpenAI 互換プロバイダーを設定します。キーはこのデバイスにローカル保存されます。
@@ -1408,7 +1409,7 @@ setting:
   about: について
   aboutBmclDescription: BMCL APIは、中国本土のユーザーに便利なダウンロードを提供します
   aboutContributors: 🧑‍💻 コントリビューター 🧑‍💻
-  aboutDenoDescription: XMCLはサーバーレスJavaScriptアプリケーション用のDeno Deployの手間のかかからないプラットフォームを活用しています
+  aboutDenoDescription: DHMCはサーバーレスJavaScriptアプリケーション用のDeno Deployの手間のかかからないプラットフォームを活用しています
   aboutLicense: MIT LICENSE
   aboutLicenseInfo: SignPath.ioが提供するWindows上の無料コード署名、SignPath Foundationによる証明書
   aboutSponsors: 😇 スポンサー 😇
@@ -1469,11 +1470,11 @@ setting:
   developerMode: 開発者モード
   developerModeDescription: あなたの作成したModを簡単に試せます
   disableTelemetry: テレメトリを無効化
-  disableTelemetryDescription: XMCLはゲームの立ち上げとユーザーイベントを収集します
+  disableTelemetryDescription: DHMCはゲームの立ち上げとユーザーイベントを収集します
   enableDedicatedGPUOptimization: 外部GPUを使用
   enableDedicatedGPUOptimizationDescription: Minecraftのプロセスに外部GPUを割り当てます
   enableDiscord: Discord RPCを有効化
-  enableDiscordDescription: XMCLでのリッチプレゼンス
+  enableDiscordDescription: DHMCでのリッチプレゼンス
   enterUrl: URLを入力してください
   exportSettings: 設定をエクスポート
   exportSettingsHint: 現在の設定をファイルに保存
@@ -1602,7 +1603,7 @@ setup:
     name: '@:setting.appearance'
   dataRoot:
     description: >-
-      データのルートは一般的な.minecraftディレクトリではありません。XMCLのディレキトリ構造はバニラとは互換性がないので、.minecraftをデータのルートに設定することは推奨されません。
+      データのルートは一般的な.minecraftディレクトリではありません。DHMCのディレキトリ構造はバニラとは互換性がないので、.minecraftをデータのルートに設定することは推奨されません。
     drives: 推奨の言語
     name: データディレクトリを設定
   defaultLayoutDescription: >-
@@ -1722,8 +1723,8 @@ theme:
   selectImage: 画像を選択
   selectMusic: 音楽を選択
   selectVideo: 映像を選択
-  title: XMCL
-title: XMCL
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: ホスト候補
   prflx: ピアの反射の候補

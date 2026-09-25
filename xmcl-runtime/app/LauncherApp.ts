@@ -135,7 +135,7 @@ export class LauncherApp extends EventEmitter {
 
   get userAgent() {
     const version = IS_DEV ? '0.0.0' : this.host.getVersion()
-    return `voxelum/x_minecraft_launcher/${version} (xmcl.app)`
+    return `discolauncher/disco-launcher/${version}`
   }
 
   #disposed = false
@@ -331,13 +331,13 @@ export class LauncherApp extends EventEmitter {
 
     this.logger.log(`Boot from ${this.appDataPath}`)
 
-    // register xmcl protocol
-    if (!this.host.isDefaultProtocolClient('xmcl')) {
-      const result = this.host.setAsDefaultProtocolClient('xmcl')
+    // register disco protocol (legacy xmcl links still accepted below)
+    if (!this.host.isDefaultProtocolClient('disco')) {
+      const result = this.host.setAsDefaultProtocolClient('disco')
       if (result) {
-        this.logger.log('Successfully register the xmcl protocol')
+        this.logger.log('Successfully register the disco protocol')
       } else {
-        this.logger.log('Fail to register the xmcl protocol')
+        this.logger.log('Fail to register the disco protocol')
       }
     }
 

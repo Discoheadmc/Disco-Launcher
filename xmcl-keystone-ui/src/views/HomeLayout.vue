@@ -65,7 +65,7 @@ useGamepadInnerNav({
 })
 
 const removeAfterEach = router.afterEach((r) => {
-  document.title = `XMCL - ${r.fullPath}`
+  document.title = `Disco Launcher - ${r.fullPath}`
   if (containerRef.value) {
     containerRef.value.scrollTop = 0
   }

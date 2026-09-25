@@ -2,6 +2,10 @@ AppAddInstanceDialog:
   choiceTitle: Multiple launch profiles detected. Please select one to import.
   createTitle: Create Game
   serverTitle: Input your server address
+menuBar:
+  about: About
+  files: Files
+  gameDataFolder: Game Data Folder
 AppShareInstanceDialog:
   alterDownloadDescription: >-
     If you don't want to mess up current instance. You can also create a new
@@ -38,7 +42,8 @@ HomeLaunchMultiInstanceDialog:
 SettingMigrationDialog:
   selectRootDirectory: Select Root Directory
 agent:
-  accessRequiredHint: Subscribe to XMCL to use the built-in Agent, or configure your own AI provider in Settings.
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: Subscribe to DHMC to use the built-in Agent, or configure your own AI provider in Settings.
   abort: Stop generation
   callingTool: calling {name}…
   confirmAccept: Continue
@@ -57,7 +62,7 @@ agent:
     → AI Agent. For example, use OpenAI or a Claude-compatible gateway.
   notConfiguredTitle: Agent unavailable
   openSettings: Open settings
-  subscribeXmcl: Subscribe to XMCL
+  subscribeXmcl: Subscribe to DHMC
   passiveGameCrashed: Game crashed
   passiveGameExitCode: Exit code {code}
   passiveGameExited: Game exited
@@ -85,7 +90,7 @@ agent:
     Build a modpack: find mods for a feature I want and install them into this
     instance
   thinking: thinking…
-  title: XMCL Agent
+  title: Discohead
   toolArguments: Arguments
   toolResult: Result
   toolRunning: Waiting for result…
@@ -472,7 +477,7 @@ feedback:
     {number}
   qqEnterGroup: Join
   reddit: Reddit
-  redditDescription: Join the r/XMCL subreddit community
+  redditDescription: Join the r/DHMC subreddit community
 fileDetail:
   fileSize: File Size
   filesize: File size
@@ -535,6 +540,7 @@ installVersion:
 instance:
   changeIcon: Change Icon
   contents: Content
+  gridUngrouped: Ungrouped
   current: Current Instance
   delete: Delete Game
   deleteFailed: Fail to delete instance
@@ -673,7 +679,7 @@ instances:
   addVanilla: Create from vanilla-like Minecraft
   addVanillaDescription: >-
     Import from common .minecraft folder. This will duplciate the original game
-    profile to XMCL.
+    profile to DHMC.
   edition: Edition
   editionJava: Java Edition
   editionBedrock: Bedrock Edition
@@ -750,9 +756,9 @@ launchBlocked:
       java file or raise the permission of launcher.
     title: No permission to launch
   launchLinuxDisplayUnavailable:
-    environmentMissing: XMCL could not recover the X11 display information from your desktop session. Restart XMCL from a terminal in the current desktop session, or sign out and sign in again.
-    noGraphicalSession: XMCL is not running in a graphical desktop session. Start XMCL from your desktop session before launching Minecraft.
-    sandboxDenied: The application sandbox cannot access X11. Grant XMCL access to the X11 socket in your Flatpak permissions, then restart XMCL.
+    environmentMissing: DHMC could not recover the X11 display information from your desktop session. Restart DHMC from a terminal in the current desktop session, or sign out and sign in again.
+    noGraphicalSession: DHMC is not running in a graphical desktop session. Start DHMC from your desktop session before launching Minecraft.
+    sandboxDenied: The application sandbox cannot access X11. Grant DHMC access to the X11 socket in your Flatpak permissions, then restart DHMC.
     title: X11 display unavailable
     xwaylandMissing: Minecraft needs XWayland in this Wayland session. Install the XWayland package provided by your Linux distribution, then sign out and sign in again.
     xwaylandNotRunning: XWayland is installed but no X11 display is running. Enable XWayland in your compositor configuration, then sign out and sign in again.
@@ -917,6 +923,7 @@ me:
   groupByDate: Group by date
   groupByFolder: Group by folder
   instanceViewMode: Instance view mode
+  localCloset: Local Closet
   listView: List view
   news: News
   recentPlay: Recent Play
@@ -926,16 +933,16 @@ xmclAccount:
   accountSummary: Account
   confirmMerge: Confirm account merge
   createdAt: Created {date}
-  description: Your passwordless XMCL identity, separate from Minecraft game accounts.
+  description: Your passwordless DHMC identity, separate from Minecraft game accounts.
   expiresAt: Expires {date}
-  gameAccountsSeparate: Removing a game account does not unlink an XMCL login method.
+  gameAccountsSeparate: Removing a game account does not unlink an DHMC login method.
   guest: Guest
-  identityConflict: This {provider} login belongs to another XMCL Account. Accounts are never merged automatically.
+  identityConflict: This {provider} login belongs to another DHMC Account. Accounts are never merged automatically.
   linkAccountWith: Link account with
   mergePreview: Review the resources that will move before confirming.
-  mergeNeedsSession: Sign in to the XMCL Account you want to keep before reviewing the merge.
+  mergeNeedsSession: Sign in to the DHMC Account you want to keep before reviewing the merge.
   mergeQueued: Account merge is in progress.
-  requestFailed: The XMCL Account service could not complete this request. Your game account is unchanged.
+  requestFailed: The DHMC Account service could not complete this request. Your game account is unchanged.
   reviewMerge: Review merge
   session: Session
   sessionActive: Active
@@ -947,7 +954,7 @@ xmclAccount:
     deleted: Deleted
     deletion_pending: Deletion pending
     merged: Merged
-  title: XMCL Account
+  title: DHMC Account
 minecraftFriends:
   accept: Accept
   add: Add a friend
@@ -1371,9 +1378,9 @@ modrinthCard:
   currentVersion: Current Version
 multiplayer:
   addFunds: Add funds
-  autoShareAmbiguous: Multiple games are running. Select the instance hosting the LAN world so XMCL can share it.
+  autoShareAmbiguous: Multiple games are running. Select the instance hosting the LAN world so DHMC can share it.
   availableBalance: Available balance
-  balanceHint: Available for XMCL Together services
+  balanceHint: Available for DHMC Together services
   billing: Billing
   billingDescription: Manage relay access, your Together Home plan, and payments.
   billingError: Together billing could not be loaded. Try again in a moment.
@@ -1387,7 +1394,7 @@ multiplayer:
     Unable to establish connection. Check if both peers have compatible NAT
     types.
   connectionTogetherWarning: >-
-    A room member has been unable to connect to you for a while. Try XMCL
+    A room member has been unable to connect to you for a while. Try DHMC
     Together to improve connectivity for everyone in the room. Only the room
     master needs Together.
   connectedToMaster: Connected to the room master
@@ -1446,7 +1453,7 @@ multiplayer:
   joinOrCreateGroup: Join/Create Group
   joinOrCreateGroupHint: Get group id from your friends or create a group
   joinCreatesMissingRoomHint: If this room does not exist, you will create it and become its master.
-  loginRequiredDescription: P2P multiplayer uses XMCL online services. Sign in to an XMCL Account to continue.
+  loginRequiredDescription: P2P multiplayer uses DHMC online services. Sign in to an DHMC Account to continue.
   loginRequiredTitle: Sign in for P2P multiplayer
   kernel: P2P Kernel
   kernelDescription: >-
@@ -1458,7 +1465,7 @@ multiplayer:
   name: Multiplayer on LAN
   natTogetherWarning: >-
     Your router may have trouble connecting to the room master. If connections
-    fail, try XMCL Together to improve connectivity between you and your friends.
+    fail, try DHMC Together to improve connectivity between you and your friends.
   openConsumerPortal: Open Consumer Portal
   refundHint: Need a refund? Visit the Waffo Consumer Portal to manage your orders and subscriptions.
     Only the room master needs to purchase Together for the room.
@@ -1502,8 +1509,8 @@ multiplayer:
   orderStatus: 'Waffo order: {status}'
   planDescription: 20 GB of managed relay traffic each month, plus AI troubleshooting for your modpack.
   relayAllowanceSummary: '{remaining} remaining of {total} this period'
-  relayServiceAvailable: XMCL Together relay service available
-  waffoHint: Payments are completed securely on Waffo Pancake. XMCL never receives your card number.
+  relayServiceAvailable: DHMC Together relay service available
+  waffoHint: Payments are completed securely on Waffo Pancake. DHMC never receives your card number.
   waitingForMaster: Waiting for the room master to reconnect
 myStuff: My Stuff
 natType:
@@ -1924,7 +1931,7 @@ setting:
   aboutBmclDescription: BMCL API provides convenient downloads for users in Chinese Mainland
   aboutContributors: 🧑‍💻 Contributors 🧑‍💻
   aboutDenoDescription: >-
-    XMCL leverages Deno Deploy's hassle-free platform for serverless JavaScript
+    DHMC leverages Deno Deploy's hassle-free platform for serverless JavaScript
     applications
   aboutLicense: MIT LICENSE
   aboutLicenseInfo: >-
@@ -2022,7 +2029,7 @@ setting:
   developerMode: Developer Mode
   developerModeDescription: Developer Mode is for testing your own mods
   disableTelemetry: Disable Telemetry
-  disableTelemetryDescription: XMCL will collect the game launch and user login events.
+  disableTelemetryDescription: DHMC will collect the game launch and user login events.
   enableDedicatedGPUOptimization: Assign Dedicated GPU
   enableDedicatedGPUOptimizationDescription: This option will assign dedicated GPU to Minecraft process.
   enableDiscord: Enable Discord Presence
@@ -2181,7 +2188,7 @@ setup:
     name: '@:setting.appearance'
   dataRoot:
     description: >-
-      The data root is not a common .minecraft directory. Since XMCL data
+      The data root is not a common .minecraft directory. Since DHMC data
       directory structure is different from vanilla, we do not recommend to use
       the common .minecraft directory as a data root.
     drives: Recommend Locations
@@ -2323,8 +2330,8 @@ theme:
   selectImage: Select Image
   selectMusic: Select Music
   selectVideo: Select Video
-  title: XMCL
-title: XMCL
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: Host Candidate
   prflx: Peer Reflexive Candidate
@@ -2643,6 +2650,6 @@ gamepad:
   steamAddedNotify: Launcher added to Steam Library successfully! Please restart Steam to see it.
   steamAlreadyAddedNotify: Launcher is already in your Steam Library.
   steamDeckTitle: Steam Deck Detected
-  steamDeckDesc: We detected that you are running on Steam Deck. Would you like to add XMCL to your Steam Library as a non-Steam game for full Steam overlay and controller integration in Gaming Mode?
+  steamDeckDesc: We detected that you are running on Steam Deck. Would you like to add DHMC to your Steam Library as a non-Steam game for full Steam overlay and controller integration in Gaming Mode?
   steamDeckAddBtn: Add to Steam ({btn})
   steamDeckCancelBtn: Cancel ({btn})

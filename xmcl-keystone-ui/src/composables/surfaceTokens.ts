@@ -14,11 +14,14 @@ import { InjectionKey, Ref, ref, watchEffect } from 'vue'
  */
 
 // ── Defaults ──────────────────────────────────────────────────────────
+// Disco: Prism-inspired flat desktop look — small radii everywhere.
+// The user can still force fully square corners by disabling rounded
+// corners in appearance settings (Context.ts maps enabled→DEFAULT, 0).
 
 /** Border radius (px). Matches Vuetify's `rounded="xl"`. */
-export const DEFAULT_SURFACE_RADIUS = 16
-/** Dialog shell radius (px). Keeps legacy 32px look at factor=1. */
-export const DEFAULT_SURFACE_DIALOG_RADIUS = 32
+export const DEFAULT_SURFACE_RADIUS = 4
+/** Dialog shell radius (px). */
+export const DEFAULT_SURFACE_DIALOG_RADIUS = 6
 
 /** Vuetify `rounded` prop value equivalent to `DEFAULT_SURFACE_RADIUS`. */
 export const DEFAULT_SURFACE_RADIUS_PROP = 'xl' as const
@@ -32,9 +35,9 @@ export const DEFAULT_SURFACE_BLUR = 48
 
 /** Menu-only: inner padding and list-item radius. */
 export const DEFAULT_SURFACE_MENU_PADDING = 6
-export const DEFAULT_SURFACE_MENU_ITEM_RADIUS = 10
+export const DEFAULT_SURFACE_MENU_ITEM_RADIUS = 3
 /** Shared tooltip bubble radius. */
-export const DEFAULT_SURFACE_TOOLTIP_RADIUS = 10
+export const DEFAULT_SURFACE_TOOLTIP_RADIUS = 3
 /** Pill button radius. Keep large by default to preserve capsule shape. */
 export const DEFAULT_SURFACE_PILL_RADIUS = 9999
 /**
@@ -42,15 +45,15 @@ export const DEFAULT_SURFACE_PILL_RADIUS = 9999
  * Applied through Vuetify's reactive `defaults` so buttons honor the
  * appearance toggle without per-element CSS overrides.
  */
-export const DEFAULT_SURFACE_BUTTON_RADIUS = 'lg' as const
+export const DEFAULT_SURFACE_BUTTON_RADIUS = 'sm' as const
 
 // Cards — three intentional tiers. Apply via the `.surface-card`,
 // `.surface-card-subsection`, `.surface-card-item` utility classes
 // (defined in common.css) so existing components that deliberately
 // pick a different radius keep working.
-export const DEFAULT_CARD_RADIUS = 16            // tier 1: HomeCard, SettingCard
-export const DEFAULT_CARD_SUBSECTION_RADIUS = 12 // tier 2: nested sections
-export const DEFAULT_CARD_ITEM_RADIUS = 10       // tier 3: list / compact tiles
+export const DEFAULT_CARD_RADIUS = 4            // tier 1: HomeCard, SettingCard
+export const DEFAULT_CARD_SUBSECTION_RADIUS = 3 // tier 2: nested sections
+export const DEFAULT_CARD_ITEM_RADIUS = 3       // tier 3: list / compact tiles
 
 /** Vuetify `elevation` prop value for subsection cards (SettingCard etc.). */
 export const DEFAULT_CARD_SUBSECTION_ELEVATION = 0
@@ -79,27 +82,27 @@ export const DEFAULT_CARD_BORDER = 'none'
 
 // Info / frosted panels — the recurring "rounded-2xl border border-white/10
 // bg-white/5" pattern used inside dialogs (Feedback / Export / Friends).
-export const DEFAULT_PANEL_RADIUS = 24
+export const DEFAULT_PANEL_RADIUS = 4
 export const DEFAULT_PANEL_BG = 'rgba(var(--v-theme-on-surface), 0.04)'
 export const DEFAULT_PANEL_BORDER = '1px solid rgba(var(--v-theme-on-surface), 0.10)'
 
 // Prominent cards — Store detail / market tile / large feature cards.
 // Same radius as panels (24px) but no built-in bg/border so the host
 // surface (often Vuetify's default) shows through.
-export const DEFAULT_CARD_PROMINENT_RADIUS = 24
+export const DEFAULT_CARD_PROMINENT_RADIUS = 4
 
 // Interactive (clickable) card behaviour. The `.surface-card-clickable`
 // utility ships shape (radius), surface (solid bg), border and hover
 // motion — paired with the StoreExploreCardModern reference (lift +
 // shadow + primary-tinted border). Override per-callsite via inner
 // UnoCSS atomics if a specific tile needs to deviate.
-export const DEFAULT_CARD_CLICKABLE_RADIUS = 24
+export const DEFAULT_CARD_CLICKABLE_RADIUS = 4
 export const DEFAULT_CARD_CLICKABLE_BG = 'rgb(var(--v-theme-surface))'
 export const DEFAULT_CARD_CLICKABLE_BORDER = '1px solid rgba(var(--v-theme-on-surface), 0.06)'
 export const DEFAULT_CARD_CLICKABLE_BORDER_HOVER = '1px solid rgba(var(--v-theme-primary), 0.35)'
 export const DEFAULT_CARD_CLICKABLE_SHADOW_HOVER = '0 12px 24px -8px rgba(0, 0, 0, 0.25), 0 4px 12px -4px rgba(0, 0, 0, 0.15)'
-/** Hover lift in px (negative = upward). */
-export const DEFAULT_CARD_CLICKABLE_LIFT = -4
+/** Hover lift in px (0 = none — Prism-style cards don't lift). */
+export const DEFAULT_CARD_CLICKABLE_LIFT = 0
 /** Scale applied while the card is being pressed (1 = none). */
 export const DEFAULT_CARD_CLICKABLE_ACTIVE_SCALE = 0.98
 export const DEFAULT_CARD_CLICKABLE_TRANSITION = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)'

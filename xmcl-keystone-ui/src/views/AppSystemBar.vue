@@ -30,23 +30,7 @@
     </span>
     <slot />
 
-    <AppAudioPlayer
-      v-if="!noDebug"
-      class="ml-22"
-    />
-
     <div class="flex-grow"/>
-
-    <AppSystemBarBadge
-      v-if="gamepadConnected"
-      v-shared-tooltip.bottom="() => gamepadLabel"
-      icon="sports_esports"
-      :text="gamepadLabel"
-      :aria-label="gamepadLabel"
-      can-hide-text
-      class="gamepad-badge"
-      @click="openPalette"
-    />
 
     <AppSystemBarBadge
       v-if="!noUser"
@@ -70,23 +54,6 @@
       :can-hide-text="!taskInlineText"
       :text="taskInlineText"
       @click="showTaskDialog()"
-    />
-    <AppSystemBarBadge
-      v-if="tutor"
-      id="tutor-button"
-      v-shared-tooltip.bottom="() => t('tutorial.tooltip')"
-      icon="quiz"
-      :text="t('help')"
-      can-hide-text
-      @click="tutor.start()"
-    />
-    <AppSystemBarBadge
-      v-if="!noDebug"
-      id="feedback-button"
-      icon="bug_report"
-      :text="t('feedback.name')"
-      can-hide-text
-      @click="showFeedbackDialog"
     />
 
     <span
@@ -131,13 +98,10 @@
 <script lang="ts" setup>
 import { useDialog } from '../composables/dialog'
 import { useTaskCount } from '../composables/task'
-import { useGamepad } from '@/composables/gamepad'
 
 import { injection } from '@/util/inject'
 import { useWindowStyle } from '@/composables/windowStyle'
-import { kTutorial } from '@/composables/tutorial'
 import AppSystemBarBadge from '@/components/AppSystemBarBadge.vue'
-import AppAudioPlayer from '@/components/AppAudioPlayer.vue'
 import { kTheme } from '@/composables/theme'
 import { useCommandPaletteVisible } from '@/composables/commandPalette'
 import { kNetworkStatus } from '@/composables/useNetworkStatus'
@@ -159,13 +123,11 @@ const { blurAppBar } = injection(kTheme)
 const { state: settingsState } = injection(kSettingsState)
 const { maximize, minimize, close, hide } = windowController
 const { shouldShiftBackControl, hideWindowControl } = useWindowStyle()
-const { show: showFeedbackDialog } = useDialog('feedback')
 const { show: showTaskDialog } = useDialog('task')
 const { t } = useI18n()
 const { count } = useTaskCount()
 // Optional: the standalone multiplayer/app windows don't provide network status.
 const networkStatus = inject(kNetworkStatus, undefined)?.status ?? ref(null)
-const tutor = inject(kTutorial, undefined)
 
 const taskSpeedText = computed(() => networkStatus.value?.downloadSpeed
   ? `${getExpectedSize(networkStatus.value.downloadSpeed)}/s`
@@ -184,16 +146,10 @@ const taskTooltip = computed(() => {
 })
 
 const paletteShown = useCommandPaletteVisible()
-const { isActive: gamepadActive, connected: gamepadConnected, name: gamepadName, labels: gamepadLabels } = useGamepad()
 const paletteShortcut = computed(() => {
-  if (gamepadActive.value) {
-    // Start / Menu button opens the palette in gamepad mode.
-    return gamepadLabels.value.menu
-  }
   const custom = settingsState.value?.quickActionShortcut
   return formatShortcutDisplay(custom || '')
 })
-const gamepadLabel = computed(() => gamepadName.value || t('gamepad.connected'))
 const openPalette = () => { paletteShown.value = true }
 
 const router = useRouter()
@@ -209,17 +165,6 @@ const closeAriaLabel = 'Close'
 const windowControlsAriaLabel = 'Window controls'
 </script>
 <style lang="css" scoped>
-/* Keep a long controller name from pushing/overflowing the bar. */
-.gamepad-badge {
-  max-width: 180px;
-  overflow: hidden;
-}
-.gamepad-badge :deep(.whitespace-nowrap) {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .system-btn {
   @apply  h-full top-0 mr-0 flex cursor-pointer select-none items-center justify-center px-3 py-1 after:hidden! w-[40px] min-w-[40px];
   font-size: 16px !important;

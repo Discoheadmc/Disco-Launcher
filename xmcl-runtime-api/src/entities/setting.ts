@@ -26,7 +26,8 @@ export class Settings implements SettingSchema {
   globalResolution: { width?: number; height?: number; fullscreen?: boolean; monitor?: string } = {}
   discordPresence = false
   developerMode = false
-  disableTelemetry = false
+  // Disco Launcher: telemetry off by default.
+  disableTelemetry = true
   multiplayerTransport: import('../multiplayer').MultiplayerTransport = 'webrtc'
   agentEndpoint = DEFAULT_AGENT_ENDPOINT
   agentModel = DEFAULT_AGENT_MODEL

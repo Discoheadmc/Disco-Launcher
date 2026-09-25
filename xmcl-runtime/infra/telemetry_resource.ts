@@ -37,7 +37,7 @@ export async function setupResourceTelemetryClient(
   const provider = new LoggerProvider({
     resource: resourceFromAttributes({
       'service.name': app.env,
-      'service.namespace': 'xmcl',
+      'service.namespace': 'disco',
       'service.version': IS_DEV ? '0.0.0' : `${app.version}#${app.build}`,
       'service.instance.id': launcherSessionId,
       'device.id': deviceId,

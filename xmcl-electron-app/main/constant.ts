@@ -1,6 +1,6 @@
 export const IS_DEV = process.env.NODE_ENV === 'development'
 export const HAS_DEV_SERVER = !!process.env.HAS_DEV_SERVER
-export const HOST = HAS_DEV_SERVER ? 'localhost' : 'xmcl.runtime'
+export const HOST = HAS_DEV_SERVER ? 'localhost' : 'disco.runtime'
 
 export enum AccentState {
   ACCENT_DISABLED = 0,

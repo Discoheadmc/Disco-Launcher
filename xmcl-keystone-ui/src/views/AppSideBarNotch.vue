@@ -79,47 +79,6 @@
 
         <div class="sidebar-notch__spacer" />
 
-        <!-- Agent -->
-        <AppSideBarNotchItem
-          data-testid="nav-agent"
-          icon="smart_toy"
-          :icon-size="iconSize"
-          :tooltip="() => ({ text: agentAriaLabel, direction: tooltipDirection })"
-          clickable
-          @click="openAgent"
-        >
-          <v-badge
-            v-if="agentConfirmationPending"
-            data-testid="nav-agent-confirmation"
-            color="warning"
-            dot
-            location="top end"
-          >
-            <v-icon class="sidebar-notch-item__icon" color="warning" :size="iconSize">priority_high</v-icon>
-          </v-badge>
-          <v-progress-circular
-            v-else-if="agentRunningInBackground"
-            data-testid="nav-agent-running"
-            class="sidebar-notch-item__icon"
-            color="primary"
-            indeterminate
-            :size="iconSize"
-            :width="2"
-          />
-          <v-icon v-else class="sidebar-notch-item__icon" :size="iconSize">smart_toy</v-icon>
-        </AppSideBarNotchItem>
-
-        <!-- Multiplayer -->
-        <AppSideBarNotchItem
-          data-testid="nav-multiplayer"
-          icon="hub"
-          :icon-size="iconSize"
-          :tooltip="() => ({ text: t('multiplayer.togetherName'), direction: tooltipDirection })"
-          clickable
-          :active="isMultiplayerActive"
-          @click="goMultiplayer"
-        />
-
         <div class="sidebar-notch__divider moveable" />
 
         <!-- Settings -->
@@ -132,7 +91,7 @@
           <v-badge
             right
             overlap
-            :model-value="state?.updateStatus !== 'none'"
+            :model-value="false"
           >
             <template #badge>
               <span>{{ 1 }}</span>
@@ -147,13 +106,10 @@
 
 <script lang="ts" setup>
 import PlayerAvatar from '@/components/PlayerAvatar.vue'
-import { useAgentChatEntry, useAgentChatStatus } from '@/composables/agentChat'
 import { useDialog } from '@/composables/dialog'
 import { useInstanceGroup } from '@/composables/instanceGroup'
-import { kMultiplayerEntry } from '@/composables/multiplayerEntry'
 import { AddInstanceDialogKey } from '@/composables/instanceTemplates'
 import { kInstances } from '@/composables/instances'
-import { kSettingsState } from '@/composables/setting'
 import { useInjectSidebarSettings } from '@/composables/sidebarSettings'
 import { kTheme } from '@/composables/theme'
 import { kUserContext } from '@/composables/user'
@@ -165,20 +121,11 @@ import AppSideBarNotchItemInstance from './AppSideBarNotchItemInstance.vue'
 
 const { blurSidebar, sideBarColor } = injection(kTheme)
 const { instances } = injection(kInstances)
-const { state } = injection(kSettingsState)
 const { gameProfile } = injection(kUserContext)
-const { request: openMultiplayer } = injection(kMultiplayerEntry)
 const { position, align, scale, autoHide } = useInjectSidebarSettings()
 const { show: showAddInstance } = useDialog(AddInstanceDialogKey)
-const { open: openAgent } = useAgentChatEntry()
-const agentChatStatus = useAgentChatStatus()
-const agentRunningInBackground = computed(() => agentChatStatus.running.value && !agentChatStatus.shown.value)
-const agentConfirmationPending = agentChatStatus.confirmationPending
 
 const { t } = useI18n()
-const route = useRoute()
-const agentAriaLabel = computed(() => agentConfirmationPending.value ? `${t('agent.title')}: ${t('agent.confirmPending')}` : t('agent.title'))
-const isMultiplayerActive = computed(() => route.path === '/multiplayer')
 
 // Hover state for auto-hide
 const isHovered = ref(false)
@@ -283,10 +230,6 @@ function onMouseLeave(e: MouseEvent) {
   }, 2500)
 }
 
-
-function goMultiplayer() {
-  openMultiplayer()
-}
 
 watch([autoHide, align, position, scale], ([newAutoHide]) => {
   if (newAutoHide) {

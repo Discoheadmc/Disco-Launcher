@@ -516,7 +516,7 @@ instances:
   addVanilla: Erstellen Sie mit Vanilla Minecraft
   addVanillaDescription: |-
     Importieren Sie aus dem gemeinsamen .minecraft-Ordner.
-    Dadurch wird das ursprüngliche Spielprofil in die XMCL kopiert.
+    Dadurch wird das ursprüngliche Spielprofil in die DHMC kopiert.
   fix: Repariere es
   folder: Ordner
   folderSetting: Ordnereinstellungen
@@ -1026,7 +1026,7 @@ multiplayer:
   openConsumerPortal: Kundenportal öffnen
   refundHint: Du benötigst eine Rückerstattung? Im Waffo-Kundenportal kannst du deine Bestellungen und Abonnements verwalten.
   togetherSupportHint: Wenn der Mehrspielermodus nicht funktioniert, tritt unserem Discord bei und kontaktiere das Entwicklungsteam. Wir helfen dir, das Problem zu lösen.
-  autoShareAmbiguous: Mehrere Spiele werden ausgeführt. Wähle die Instanz aus, die die LAN-Welt hostet, damit XMCL sie freigeben kann.
+  autoShareAmbiguous: Mehrere Spiele werden ausgeführt. Wähle die Instanz aus, die die LAN-Welt hostet, damit DHMC sie freigeben kann.
   editSharingScope: Freigabebereich bearbeiten
   gameAvailable: LAN-Spiel verfügbar
   joinGame: Spiel beitreten
@@ -1036,16 +1036,16 @@ multiplayer:
   updateSharedInstanceTitle: Freigegebene Instanz aktualisieren?
   addFunds: "Guthaben hinzufügen"
   availableBalance: "Verfügbares Guthaben"
-  balanceHint: "Für XMCL Together-Dienste verfügbar"
+  balanceHint: "Für DHMC Together-Dienste verfügbar"
   billing: "Abrechnung"
   billingDescription: "Verwalte Relay-Zugriff, deinen Together Home-Tarif und Zahlungen."
   billingError: "Die Together-Abrechnung konnte nicht geladen werden. Versuche es gleich noch einmal."
   buyTogether: "Together kaufen"
   cancelTogether: "Tarif kündigen"
   checkout: "Waffo-Kasse öffnen"
-  connectionTogetherWarning: "Ein Raummitglied kann seit einiger Zeit keine Verbindung zu dir herstellen. Versuche XMCL Together, um die Verbindung für alle im Raum zu verbessern. Nur der Raumleiter benötigt Together."
+  connectionTogetherWarning: "Ein Raummitglied kann seit einiger Zeit keine Verbindung zu dir herstellen. Versuche DHMC Together, um die Verbindung für alle im Raum zu verbessern. Nur der Raumleiter benötigt Together."
   masterPurchaseHint: "Nur der Raumleiter benötigt Together Home, um die Verbindung für alle im Raum zu verbessern."
-  natTogetherWarning: "Dein Router hat möglicherweise Schwierigkeiten, eine Verbindung zum Raumleiter herzustellen. Falls Verbindungen fehlschlagen, versuche XMCL Together, um die Verbindung zwischen dir und deinen Freunden zu verbessern. Nur der Raumleiter muss Together für den Raum kaufen."
+  natTogetherWarning: "Dein Router hat möglicherweise Schwierigkeiten, eine Verbindung zum Raumleiter herzustellen. Falls Verbindungen fehlschlagen, versuche DHMC Together, um die Verbindung zwischen dir und deinen Freunden zu verbessern. Nur der Raumleiter muss Together für den Raum kaufen."
   togetherName: "Minecraft Together"
   trialDescription: "Ein 7-tägiger Testzeitraum mit 1 GB Relay-Datenverkehr."
   trialTitle: "Verbindungstest"
@@ -1053,7 +1053,7 @@ multiplayer:
   month: "Monat"
   orderStatus: "Waffo-Bestellung: {status}"
   planDescription: "20 GB verwalteter Relay-Datenverkehr pro Monat sowie KI-Fehlerbehebung für dein Modpack."
-  waffoHint: "Zahlungen werden sicher über Waffo Pancake abgewickelt. XMCL erhält niemals deine Kartennummer."
+  waffoHint: "Zahlungen werden sicher über Waffo Pancake abgewickelt. DHMC erhält niemals deine Kartennummer."
   subscription:
     active: "Aktiv"
     cancelled: "Gekündigt"
@@ -1063,7 +1063,7 @@ multiplayer:
     available: "Kostenloser Testzeitraum verfügbar"
     expired: "Testzeitraum genutzt"
     unavailable: "Testzeitraum nicht verfügbar"
-  loginRequiredDescription: P2P-Multiplayer verwendet die XMCL-Onlinedienste. Melden Sie sich bei einem XMCL-Konto an, um fortzufahren.
+  loginRequiredDescription: P2P-Multiplayer verwendet die DHMC-Onlinedienste. Melden Sie sich bei einem DHMC-Konto an, um fortzufahren.
   loginRequiredTitle: Für P2P-Multiplayer anmelden
   complete: Bereit
   confirm: Bestätigen Sie
@@ -1425,8 +1425,9 @@ serverStatus:
   refuse: §4Der Server wurde abgelehnt!
   timeout: §4Es ist Zeit, sich mit dem Server zu verbinden!
 agent:
-  accessRequiredHint: Abonniere XMCL, um den integrierten Agenten zu verwenden, oder konfiguriere deinen eigenen KI-Anbieter in den Einstellungen.
-  subscribeXmcl: XMCL abonnieren
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: Abonniere DHMC, um den integrierten Agenten zu verwenden, oder konfiguriere deinen eigenen KI-Anbieter in den Einstellungen.
+  subscribeXmcl: DHMC abonnieren
   notConfiguredHint: Legen Sie einen API-Schlüssel, ein Modell und einen OpenAI-kompatiblen Endpunkt unter Einstellungen → Allgemein → KI-Agent fest. Verwenden Sie zum Beispiel OpenAI oder ein Claude-kompatibles Gateway.
 setting:
   aiAgentApiKeyDescription: Konfigurieren Sie einen OpenAI-kompatiblen Anbieter, z. B. OpenAI oder ein Gateway für Claude. Der Schlüssel wird lokal auf diesem Gerät gespeichert.
@@ -1449,7 +1450,7 @@ setting:
   aboutBmclDescription: BMCL API bietet bequeme Downloads für Benutzer in der chinesischen Provinz
   aboutContributors: 🧑‍💻 Mitwirkende 🧑‍💻
   aboutDenoDescription: >-
-    XMCL nutzt die unkomplizierte Plattform von Deno Deploy für serverlose JavaScript-Anwendungen
+    DHMC nutzt die unkomplizierte Plattform von Deno Deploy für serverlose JavaScript-Anwendungen
   aboutLicense: MIT LICENSE
   aboutLicenseInfo: >-
     Kostenlose Code-Signierung unter Windows von SignPath.io, Zertifikat von SignPath Foundation
@@ -1516,7 +1517,7 @@ setting:
   developerModeDescription: >-
     Der Entwicklermodus ist dazu gedacht, die von Ihnen geschriebene Mod zu testen.
   disableTelemetry: Telemetrie ausschalten
-  disableTelemetryDescription: XMCL sammelt die Ereignisse des Spielstarts und der Benutzeranmeldung.
+  disableTelemetryDescription: DHMC sammelt die Ereignisse des Spielstarts und der Benutzeranmeldung.
   enableDedicatedGPUOptimization: Weisen Sie eine dedizierte GPU zu
   enableDedicatedGPUOptimizationDescription: Diese Option weist dem Minecraft-Prozess eine dedizierte GPU zu.
   enableDiscord: Discord-Präsenz einschalten (Discord-Spielstatus)
@@ -1662,7 +1663,7 @@ setup:
     name: '@:setting.appearance'
   dataRoot:
     description: |-
-      Der Datenstamm ist kein normales .minecraft-Verzeichnis. Da die XMCL-Daten
+      Der Datenstamm ist kein normales .minecraft-Verzeichnis. Da die DHMC-Daten
        Verzeichnisstruktur von Vanilla abweicht, empfehlen wir nicht die Verwendung des
        das übliche .minecraft-Verzeichnis als Datenstamm zu verwenden.
     drives: Empfohlene Orte
@@ -1805,8 +1806,8 @@ theme:
   selectImage: Bild auswählen
   selectMusic: Wählen Sie Musik
   selectVideo: Wählen Sie Video
-  title: XMCL
-title: XMCL
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: Gastgeber-Kandidat
   prflx: Gastgeber-Peer Reflexive

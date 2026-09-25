@@ -51,7 +51,7 @@
       :slim="inferModelType ? undefined : slim"
       :cape="cape"
       :name="name"
-      :animation="hover ? 'running' : selected ? 'walking' : 'idle'"
+      :animation="'none'"
       @model="onModelChange"
       @error="onPreviewError"
       @drop.prevent="dropSkin"

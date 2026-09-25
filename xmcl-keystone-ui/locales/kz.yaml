@@ -475,7 +475,7 @@ instances:
     Бар болып тұрған Modrinth жеке жағдайын импорттау. Сіз Modrinth түбірлік деректер қалтасын таңдауыңыз керек.
   addVanilla: Vanilla тәрізді Minecraft-тан жасау
   addVanillaDescription: >-
-    Жалпы .minecraft қалтасынан импорттау. Бұл түпнұсқа ойын профилін XMCL-ге екі еселеп көшіреді.
+    Жалпы .minecraft қалтасынан импорттау. Бұл түпнұсқа ойын профилін DHMC-ге екі еселеп көшіреді.
   fix: Жөндеу
   folder: Қалта
   folderSetting: Қалта баптаулары
@@ -958,7 +958,7 @@ multiplayer:
   openConsumerPortal: Тұтынушы порталын ашу
   refundHint: Қаражатты қайтару керек пе? Тапсырыстар мен жазылымдарды басқару үшін Waffo тұтынушы порталына кіріңіз.
   togetherSupportHint: Көп ойыншы режимі жұмыс істемесе, Discord-қа қосылып, әзірлеушілер тобымен хабарласыңыз. Мәселені шешуге көмектесеміз.
-  autoShareAmbiguous: Бірнеше ойын іске қосылған. XMCL бөлісе алуы үшін LAN әлемін орналастырып тұрған дананы таңдаңыз.
+  autoShareAmbiguous: Бірнеше ойын іске қосылған. DHMC бөлісе алуы үшін LAN әлемін орналастырып тұрған дананы таңдаңыз.
   editSharingScope: Бөлісу ауқымын өзгерту
   gameAvailable: LAN ойыны қолжетімді
   joinGame: Ойынға қосылу
@@ -968,16 +968,16 @@ multiplayer:
   updateSharedInstanceTitle: Бөлісілген дананы жаңарту керек пе?
   addFunds: "Қаражат қосу"
   availableBalance: "Қолжетімді баланс"
-  balanceHint: "XMCL Together қызметтері үшін қолжетімді"
+  balanceHint: "DHMC Together қызметтері үшін қолжетімді"
   billing: "Төлемдер"
   billingDescription: "Реле қатынасын, Together Home жоспарын және төлемдерді басқарыңыз."
   billingError: "Together төлемдері жүктелмеді. Біраздан кейін қайталап көріңіз."
   buyTogether: "Together сатып алу"
   cancelTogether: "Жоспардан бас тарту"
   checkout: "Waffo төлем бетін ашу"
-  connectionTogetherWarning: "Бөлме мүшелерінің бірі біраз уақыттан бері сізге қосыла алмай жүр. Бөлмедегі барлығына қосылымды жақсарту үшін XMCL Together қолданып көріңіз. Together тек бөлме иесіне қажет."
+  connectionTogetherWarning: "Бөлме мүшелерінің бірі біраз уақыттан бері сізге қосыла алмай жүр. Бөлмедегі барлығына қосылымды жақсарту үшін DHMC Together қолданып көріңіз. Together тек бөлме иесіне қажет."
   masterPurchaseHint: "Бөлмедегі барлығына қосылымды жақсарту үшін Together Home тек бөлме иесіне қажет."
-  natTogetherWarning: "Маршрутизаторыңыз бөлме иесіне қосылуда қиындыққа тап болуы мүмкін. Қосылым сәтсіз болса, достарыңызбен байланыс сапасын жақсарту үшін XMCL Together қолданып көріңіз. Бөлме үшін Together сатып алуы керек адам тек бөлме иесі."
+  natTogetherWarning: "Маршрутизаторыңыз бөлме иесіне қосылуда қиындыққа тап болуы мүмкін. Қосылым сәтсіз болса, достарыңызбен байланыс сапасын жақсарту үшін DHMC Together қолданып көріңіз. Бөлме үшін Together сатып алуы керек адам тек бөлме иесі."
   togetherName: "Minecraft Together"
   trialDescription: "1 GB реле трафигі бар бір 7 күндік сынақ мерзімі."
   trialTitle: "Қосылым сынағы"
@@ -985,7 +985,7 @@ multiplayer:
   month: "ай"
   orderStatus: "Waffo тапсырысы: {status}"
   planDescription: "Ай сайын 20 GB басқарылатын реле трафигі және модпак мәселелерін AI көмегімен анықтау."
-  waffoHint: "Төлемдер Waffo Pancake арқылы қауіпсіз орындалады. XMCL карта нөміріңізді ешқашан алмайды."
+  waffoHint: "Төлемдер Waffo Pancake арқылы қауіпсіз орындалады. DHMC карта нөміріңізді ешқашан алмайды."
   subscription:
     active: "Белсенді"
     cancelled: "Бас тартылды"
@@ -995,7 +995,7 @@ multiplayer:
     available: "Тегін сынақ нұсқасы қолжетімді"
     expired: "Сынақ нұсқасы қолданылды"
     unavailable: "Сынақ нұсқасы қолжетімсіз"
-  loginRequiredDescription: P2P көп ойыншысы XMCL онлайн қызметтерін пайдаланады. Жалғастыру үшін XMCL тіркелгісіне кіріңіз.
+  loginRequiredDescription: P2P көп ойыншысы DHMC онлайн қызметтерін пайдаланады. Жалғастыру үшін DHMC тіркелгісіне кіріңіз.
   loginRequiredTitle: P2P көп ойыншысы үшін кіру
   complete: Аяқтау
   confirm: Растау
@@ -1342,8 +1342,9 @@ serverStatus:
   refuse: §4Сервер бас тартты!
   timeout: §4Серверге қосылу уақыты аяқталды!
 agent:
-  accessRequiredHint: Кірістірілген агентті пайдалану үшін XMCL қызметіне жазылыңыз немесе баптауларда өз ЖИ провайдеріңізді реттеңіз.
-  subscribeXmcl: XMCL қызметіне жазылу
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: Кірістірілген агентті пайдалану үшін DHMC қызметіне жазылыңыз немесе баптауларда өз ЖИ провайдеріңізді реттеңіз.
+  subscribeXmcl: DHMC қызметіне жазылу
   notConfiguredHint: Баптаулар → Жалпы → ЖИ агенті бөлімінде API кілтін, модельді және OpenAI-мен үйлесімді соңғы нүктені орнатыңыз. Мысалы, OpenAI немесе Claude-пен үйлесімді шлюзді қолданыңыз.
 setting:
   aiAgentApiKeyDescription: OpenAI-мен үйлесімді провайдерді баптаңыз, мысалы OpenAI немесе Claude үшін шлюз. Кілт осы құрылғыда жергілікті сақталады.
@@ -1366,7 +1367,7 @@ setting:
   aboutBmclDescription: BMCL API қытай материктік пайдаланушылар үшін ыңғайлы жүктемелерді ұсынады
   aboutContributors: 🧑‍💻 Ымдастырушылар 🧑‍💻
   aboutDenoDescription: >-
-    XMCL серверсіз JavaScript қосымшалары үшін Deno Deploy-ның қиындықсыз платформасын пайдаланады
+    DHMC серверсіз JavaScript қосымшалары үшін Deno Deploy-ның қиындықсыз платформасын пайдаланады
   aboutLicense: MIT LICENSE
   aboutLicenseInfo: >-
     Windows-та SignPath.io ұсынған тегін коды имзалау, SignPath Foundation сертификаты
@@ -1428,7 +1429,7 @@ setting:
   developerMode: Әзірлеуші режимі
   developerModeDescription: Әзірлеуші режимі өз модтарыңызды тестеу үшін
   disableTelemetry: Телеметрияны өшіру
-  disableTelemetryDescription: XMCL ойынды іске қосу және пайдаланушы кіру оқиғаларын жинайды.
+  disableTelemetryDescription: DHMC ойынды іске қосу және пайдаланушы кіру оқиғаларын жинайды.
   enableDedicatedGPUOptimization: Арнайы графикалық процессорды тағайындау
   enableDedicatedGPUOptimizationDescription: Бұл опция Minecraft процесіне арнайы графикалық процессорды тағайындайды.
   enableDiscord: Discord қатысуын қосу
@@ -1563,7 +1564,7 @@ setup:
     name: '@:setting.appearance'
   dataRoot:
     description: >-
-      Деректер түбірі әдеттегі .minecraft қалтасы емес. XMCL деректер қалтасының құрылымы vanilla-ден өзгеше болғандықтан, біз деректер түбірі ретінде әдеттегі .minecraft қалтасын қолдануға ұсынбаймыз.
+      Деректер түбірі әдеттегі .minecraft қалтасы емес. DHMC деректер қалтасының құрылымы vanilla-ден өзгеше болғандықтан, біз деректер түбірі ретінде әдеттегі .minecraft қалтасын қолдануға ұсынбаймыз.
     drives: Ұсынылған орындар
     name: Деректер қалтасын орнату
   defaultLayoutDescription: >-
@@ -1685,7 +1686,7 @@ theme:
   selectImage: Суретті таңдау
   selectMusic: Музыканы таңдау
   selectVideo: Видеоны таңдау
-  title: XMCL
+  title: Disco Launcher
 transportType:
   host: Хост кандидаты
   prflx: Қарым-қатынас рефлексивті кандидаты

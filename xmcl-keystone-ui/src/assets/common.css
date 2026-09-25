@@ -70,8 +70,9 @@ html {
        provided at the app root (windows/app/Context.ts) and pushes
        its reactive refs onto <html> as `--surface-*` properties.
        Override them programmatically by injecting `kSurfaceTokens`
-       and writing to the refs (a future settings UI will wire here). */
-    --surface-radius: 16px;                                              /* matches Vuetify `rounded="xl"` */
+       and writing to the refs (a future settings UI will wire here).
+       Disco: Prism-inspired flat look — small radii. */
+    --surface-radius: 4px;                                              /* matches Vuetify `rounded="sm"` */
     --surface-border: 1px solid rgba(var(--v-theme-on-surface), 0.10);
     --surface-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.35);
 
@@ -81,16 +82,16 @@ html {
 
     /* Menu-only: inner padding + list-item radius (dialogs don't share). */
     --surface-menu-padding: 6px;
-    --surface-menu-item-radius: 10px;
-    --surface-dialog-radius: 32px;
-    --surface-tooltip-radius: 10px;
+    --surface-menu-item-radius: 3px;
+    --surface-dialog-radius: 6px;
+    --surface-tooltip-radius: 3px;
     --surface-pill-radius: 9999px;
 
     /* Cards — three intentional tiers. Apply with the `.surface-card`,
        `.surface-card-subsection`, `.surface-card-item` utility classes. */
-    --card-radius: 16px;
-    --card-subsection-radius: 12px;
-    --card-item-radius: 10px;
+    --card-radius: 4px;
+    --card-subsection-radius: 3px;
+    --card-item-radius: 3px;
     --card-subsection-elevation: 0;  /* Vuetify elevation prop number (read via JS, not CSS) */
     --card-subsection-bg: rgb(var(--v-theme-surface));
     --card-subsection-border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
@@ -108,25 +109,25 @@ html {
 
     /* Frosted info panels — the `.surface-panel` utility class.
        Padding is left to callsites (some panels host lists w/ their own). */
-    --panel-radius: 24px;
+    --panel-radius: 4px;
     --panel-bg: rgba(var(--v-theme-on-surface), 0.04);
     --panel-border: 1px solid rgba(var(--v-theme-on-surface), 0.10);
 
     /* Prominent cards (store detail / large feature). */
-    --card-prominent-radius: 24px;
+    --card-prominent-radius: 4px;
 
     /* Clickable card interaction (lift + shadow + primary-tinted border on
        hover). Apply via the `.surface-card-clickable` utility — it ships
        a solid surface bg and the prominent 24px radius by default so the
        Store-style tile language is the default. Pair with inner UnoCSS
        atomics if a specific tile needs a different padding / layout. */
-    --card-clickable-radius: 24px;
+    --card-clickable-radius: 4px;
     --card-clickable-bg: rgb(var(--v-theme-surface));
     --card-clickable-border: 1px solid rgba(var(--v-theme-on-surface), 0.06);
     --card-clickable-border-hover: 1px solid rgba(var(--v-theme-primary), 0.35);
     --card-clickable-shadow-hover: 0 12px 24px -8px rgba(0, 0, 0, 0.25),
                                     0 4px 12px -4px rgba(0, 0, 0, 0.15);
-    --card-clickable-lift: -4px;
+    --card-clickable-lift: 0px;
     --card-clickable-active-scale: 0.98;
     --card-clickable-transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                                  box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),

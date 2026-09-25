@@ -32,8 +32,9 @@ HomeLaunchMultiInstanceDialog:
 SettingMigrationDialog:
   selectRootDirectory: اختر المجلد الرئيسي
 agent:
-  accessRequiredHint: اشترك في XMCL عشان تستخدم العميل المدمج، أو ظبّط مزود الذكاء الاصطناعي بتاعك في الإعدادات.
-  subscribeXmcl: اشترك في XMCL
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: اشترك في DHMC عشان تستخدم العميل المدمج، أو ظبّط مزود الذكاء الاصطناعي بتاعك في الإعدادات.
+  subscribeXmcl: اشترك في DHMC
   callingTool: بيستدعي {name}…
   disabledPlaceholder: العميل معطل
   emptyHint: اطلب من العميل يفحص النسخة بتاعتك، أو يفعل/يعطل المودات، أو يقرأ السجلات، أو يشخص سبب الكراش.
@@ -50,7 +51,7 @@ agent:
   suggestion2: المودات بتاعتي بتعمل كراش — اعرف لي السبب وقول لي أصلحه إزاي
   suggestion3: 'عمل حزمة مودات (Modpack): دور على مودات بمميزات معينة وثبتها في النسخة دي'
   thinking: بيفكر…
-  title: عميل XMCL
+  title: عميل DHMC
   toggleHint: للتبديل
 ago:
   day: من {duration} يوم | من {duration} يوم
@@ -522,7 +523,7 @@ instances:
   addModrinthDescription: استيراد نسخة Modrinth موجودة. لازم تختار مجلد البيانات الرئيسي لـ Modrinth.
   addPrismDescription: استيراد نسخة PrismLauncher موجودة.
   addVanilla: إنشاء من لعبة ماينكرافت فانيلا
-  addVanillaDescription: استيراد من مجلد .minecraft المعتاد. العملية دي هتكرر ملف اللعبة الأصلي لـ XMCL.
+  addVanillaDescription: استيراد من مجلد .minecraft المعتاد. العملية دي هتكرر ملف اللعبة الأصلي لـ DHMC.
   edition: الإصدار (Edition)
   editionJava: نسخة الجافا (Java Edition)
   editionBedrock: نسخة البيدروك (Bedrock Edition)
@@ -1012,7 +1013,7 @@ multiplayer:
   openConsumerPortal: افتح بوابة المستهلك
   refundHint: هل تحتاج إلى استرداد أموالك؟ تفضل بزيارة بوابة Waffo للمستهلك لإدارة طلباتك واشتراكاتك.
   togetherSupportHint: إذا لم يعمل اللعب الجماعي، انضم إلى Discord وتواصل مع فريق التطوير. سنساعدك في حل المشكلة.
-  autoShareAmbiguous: هناك عدة ألعاب قيد التشغيل. حدد النسخة التي تستضيف عالم الشبكة المحلية لكي يتمكن XMCL من مشاركتها.
+  autoShareAmbiguous: هناك عدة ألعاب قيد التشغيل. حدد النسخة التي تستضيف عالم الشبكة المحلية لكي يتمكن DHMC من مشاركتها.
   editSharingScope: تحرير نطاق المشاركة
   gameAvailable: لعبة شبكة محلية متاحة
   joinGame: الانضمام إلى اللعبة
@@ -1022,16 +1023,16 @@ multiplayer:
   updateSharedInstanceTitle: تحديث النسخة المشتركة؟
   addFunds: "ضيف رصيد"
   availableBalance: "الرصيد المتاح"
-  balanceHint: "متاح لخدمات XMCL Together"
+  balanceHint: "متاح لخدمات DHMC Together"
   billing: "الفوترة"
   billingDescription: "إدارة الوصول للترحيل، وخطة Together Home، والمدفوعات."
   billingError: "مش قادرين نحمّل فواتير Together. جرّب تاني بعد شوية."
   buyTogether: "اشتري Together"
   cancelTogether: "إلغاء الخطة"
   checkout: "افتح الدفع على Waffo"
-  connectionTogetherWarning: "أحد أعضاء الغرفة مش قادر يتصل بيك بقاله فترة. جرّب XMCL Together عشان تحسّن الاتصال لكل الموجودين في الغرفة. قائد الغرفة بس هو اللي محتاج Together."
+  connectionTogetherWarning: "أحد أعضاء الغرفة مش قادر يتصل بيك بقاله فترة. جرّب DHMC Together عشان تحسّن الاتصال لكل الموجودين في الغرفة. قائد الغرفة بس هو اللي محتاج Together."
   masterPurchaseHint: "قائد الغرفة بس هو اللي محتاج Together Home عشان يحسّن الاتصال لكل الموجودين في الغرفة."
-  natTogetherWarning: "ممكن الراوتر بتاعك يواجه مشكلة في الاتصال بقائد الغرفة. لو الاتصال فشل، جرّب XMCL Together عشان تحسّن الاتصال بينك وبين أصحابك. قائد الغرفة بس هو اللي محتاج يشتري Together للغرفة."
+  natTogetherWarning: "ممكن الراوتر بتاعك يواجه مشكلة في الاتصال بقائد الغرفة. لو الاتصال فشل، جرّب DHMC Together عشان تحسّن الاتصال بينك وبين أصحابك. قائد الغرفة بس هو اللي محتاج يشتري Together للغرفة."
   togetherName: "Minecraft Together"
   trialDescription: "تجربة واحدة لمدة 7 أيام مع 1 GB من حركة مرور الترحيل."
   trialTitle: "تجربة الاتصال"
@@ -1039,7 +1040,7 @@ multiplayer:
   month: "شهر"
   orderStatus: "طلب Waffo: {status}"
   planDescription: "20 GB من حركة مرور الترحيل المُدارة كل شهر، بالإضافة إلى استكشاف أخطاء حزمة التعديلات وإصلاحها بالذكاء الاصطناعي."
-  waffoHint: "بتتم المدفوعات بأمان على Waffo Pancake. XMCL عمره ما بيستلم رقم بطاقتك."
+  waffoHint: "بتتم المدفوعات بأمان على Waffo Pancake. DHMC عمره ما بيستلم رقم بطاقتك."
   subscription:
     active: "نشطة"
     cancelled: "ملغاة"
@@ -1049,7 +1050,7 @@ multiplayer:
     available: "التجربة المجانية متاحة"
     expired: "تم استخدام التجربة"
     unavailable: "التجربة غير متاحة"
-  loginRequiredDescription: تستخدم لعبة P2P الجماعية خدمات XMCL عبر الإنترنت. سجّل الدخول إلى حساب XMCL للمتابعة.
+  loginRequiredDescription: تستخدم لعبة P2P الجماعية خدمات DHMC عبر الإنترنت. سجّل الدخول إلى حساب DHMC للمتابعة.
   loginRequiredTitle: سجّل الدخول لاستخدام اللعب الجماعي عبر P2P
   complete: اكتمل
   confirm: تأكيد
@@ -1481,7 +1482,7 @@ setting:
   about: حول البرنامج
   aboutBmclDescription: خدمة BMCL API بتوفر تنزيلات سريعة للمستخدمين في الصين
   aboutContributors: 🧑‍💻 المساهمون 🧑‍💻
-  aboutDenoDescription: XMCL بيستخدم منصة Deno Deploy المستقرة لتشغيل تطبيقات الجافا سكريبت بدون خوادم
+  aboutDenoDescription: DHMC بيستخدم منصة Deno Deploy المستقرة لتشغيل تطبيقات الجافا سكريبت بدون خوادم
   aboutLicense: ترخيص MIT
   aboutLicenseInfo: توقيع كود مجاني على ويندوز مقدم من SignPath.io، والشهادة من SignPath Foundation
   aboutSponsors: 😇 الداعمون والرعاة 😇
@@ -1564,7 +1565,7 @@ setting:
   developerMode: وضع المطور
   developerModeDescription: وضع المطور مخصص لاختبار المودات الخاصة بك
   disableTelemetry: تعطيل إرسال بيانات التشخيص (Telemetry)
-  disableTelemetryDescription: XMCL بيجمع بيانات تشغيل اللعبة وأحداث تسجيل دخول المستخدمين لتحسين الأداء.
+  disableTelemetryDescription: DHMC بيجمع بيانات تشغيل اللعبة وأحداث تسجيل دخول المستخدمين لتحسين الأداء.
   enableDedicatedGPUOptimization: تخصيص كارت الشاشة الخارجي (Dedicated GPU)
   enableDedicatedGPUOptimizationDescription: الخيار ده هيخصص كارت الشاشة الخارجي القوي لعملية تشغيل ماينكرافت.
   enableDiscord: تفعيل التواجد على ديسكورد (Discord Presence)
@@ -1704,7 +1705,7 @@ setup:
   appearance:
     name: '@:setting.appearance'
   dataRoot:
-    description: مجلد البيانات الرئيسي مش هو مجلد .minecraft المعتاد. عشان هيكل مجلد بيانات XMCL مختلف عن الفانيلا، مش بننصح باستخدام مجلد .minecraft المعتاد كمجلد رئيسي للبيانات.
+    description: مجلد البيانات الرئيسي مش هو مجلد .minecraft المعتاد. عشان هيكل مجلد بيانات DHMC مختلف عن الفانيلا، مش بننصح باستخدام مجلد .minecraft المعتاد كمجلد رئيسي للبيانات.
     drives: المواقع المقترحة
     name: تحديد مجلد البيانات
   defaultLayoutDescription: التخطيط الافتراضي بيحاول يعزز مفهوم "النسخة" للعبة. تصميمه قريب من تطبيقات زي ديسكورد، ومستوحى برضه من لانشرات ألعاب تانية زي Steam وغيره.
@@ -2106,6 +2107,6 @@ gamepad:
   steamAddedNotify: اللانشر انضاف لمكتبة Steam بنجاح! يا ريت ترستر Steam عشان تشوفه.
   steamAlreadyAddedNotify: اللانشر موجود بالفعل في مكتبة Steam بتاعتك.
   steamDeckTitle: تم اكتشاف جهاز Steam Deck
-  steamDeckDesc: اكتشفنا إنك بتشغل اللعبة على Steam Deck. تحب تضيف XMCL لمكتبة Steam كأداة مش من Steam عشان تستمتع بمميزات الـ Steam overlay ودعم الدراع الكامل في Gaming Mode؟
+  steamDeckDesc: اكتشفنا إنك بتشغل اللعبة على Steam Deck. تحب تضيف DHMC لمكتبة Steam كأداة مش من Steam عشان تستمتع بمميزات الـ Steam overlay ودعم الدراع الكامل في Gaming Mode؟
   steamDeckAddBtn: إضافة لـ Steam ({btn})
   steamDeckCancelBtn: إلغاء ({btn})

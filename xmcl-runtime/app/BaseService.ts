@@ -34,7 +34,6 @@ import { type Tasks, kTasks } from '~/infra'
 import { validateDirectory } from '~/util/validate'
 import { writeZipFile } from '../util/zip'
 import { LauncherApp } from '../app/LauncherApp'
-import { HAS_DEV_SERVER } from '../constant'
 import { ZipFile } from 'yazl'
 import { getTracker } from '~/util/taskHelper'
 import { addSteamShortcutToVdf } from './steamShortcut'
@@ -47,7 +46,7 @@ export class BaseService extends AbstractService implements IBaseService {
     @Inject(kTasks) private tasks: Tasks,
   ) {
     super(app, async () => {
-      this.checkUpdate()
+      // Disco Launcher is a custom build; never phone home for upstream updates.
     })
   }
 
@@ -109,7 +108,7 @@ export class BaseService extends AbstractService implements IBaseService {
   async makeDesktopShortcut() {
     const desktopDir = this.app.host.getPath('desktop')
     if (process.platform === 'win32') {
-      const shortcutPath = join(desktopDir, 'XMCL.lnk')
+      const shortcutPath = join(desktopDir, 'Disco Launcher.lnk')
       return this.app.shell.createShortcut(shortcutPath, {
         target: this.app.host.getPath('exe'),
         args: process.execArgv.join(' '),
@@ -234,30 +233,13 @@ export class BaseService extends AbstractService implements IBaseService {
 
   /**
    * Check launcher update.
+   * Disco Launcher: update checking is disabled entirely. The method stays as
+   * a no-op so existing IPC callers (e.g. a stale renderer bundle) succeed.
    */
   @Singleton()
   async checkUpdate() {
-    if (HAS_DEV_SERVER) return
-    try {
-      const settings = await this.getSettings()
-      this.log('Check update')
-      const info = await this.app.updater.checkUpdateTask()
-      setActiveSpanAttributes({
-        'update.available': info.newUpdate,
-        'update.phase': 'check',
-      })
-      const ready = settings.updateStatus === 'ready' && settings.updateInfo === info
-      settings.updateInfoSet(info)
-      settings.updateStatusSet(!info.newUpdate ? 'none' : ready ? 'ready' : 'pending')
-    } catch (e) {
-      if (e instanceof Error && e.name === 'Error') {
-        if (e.message === 'No update info found') {
-          return
-        }
-        e.name = 'CheckUpdateError'
-      }
-      throw e
-    }
+    const settings = await this.getSettings()
+    settings.updateStatusSet('none')
   }
 
   /**

@@ -32,8 +32,9 @@ HomeLaunchMultiInstanceDialog:
 SettingMigrationDialog:
   selectRootDirectory: मूलनिर्देशिकां चिनोतु
 agent:
-  accessRequiredHint: अन्तर्निर्मितप्रतिनिधिम् उपयोक्तुं XMCL-सदस्यतां गृह्णातु, अथवा विकल्पेषु स्वकीयम् AI-प्रदातारं विन्यस्यतु।
-  subscribeXmcl: XMCL-सदस्यतां गृह्णातु
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: अन्तर्निर्मितप्रतिनिधिम् उपयोक्तुं DHMC-सदस्यतां गृह्णातु, अथवा विकल्पेषु स्वकीयम् AI-प्रदातारं विन्यस्यतु।
+  subscribeXmcl: DHMC-सदस्यतां गृह्णातु
   callingTool: '{name} आह्वयति...'
   disabledPlaceholder: प्रतिनिधिः असमर्थितः
   emptyHint: स्वक्षणं परीक्षितुं, मोड्स परिवर्तयितुं, वृत्तलेखं पठितुं, अथवा पतनस्य निदानं कर्तुं प्रतिनिधिं पृच्छतु।
@@ -50,7 +51,7 @@ agent:
   suggestion2: मम मोड्स पतन्ति — कारणम् अन्विष्य परिहारमार्गं वदतु
   suggestion3: 'मोडप्याक् (Modpack) रचयतु: मम इच्छितसुविधानां कृते मोड्स अन्विष्य अस्मिन् क्षणम् संस्थापयतु'
   thinking: विचिन्तयति...
-  title: XMCL प्रतिनिधिः
+  title: Discohead
   toggleHint: परिवर्तनाय
 ago:
   day: '{duration} दिनं पूर्वम् | {duration} दिनानि पूर्वम्'
@@ -1012,7 +1013,7 @@ multiplayer:
   openConsumerPortal: ग्राहक पोर्टल उघडा
   refundHint: परतावा हवा आहे? तुमच्या ऑर्डर आणि सदस्यता व्यवस्थापित करण्यासाठी Waffo ग्राहक पोर्टलला भेट द्या.
   togetherSupportHint: मल्टीप्लेअर काम करत नसल्यास, आमच्या Discord मध्ये सामील व्हा आणि विकास कार्यसंघाशी संपर्क साधा. आम्ही समस्या सोडविण्यात मदत करू.
-  autoShareAmbiguous: अनेकानि क्रीडनानि प्रचलन्ति। XMCL तद् सहभाजयितुं शक्नुयात् इति LAN-जगतः आतिथ्यं कुर्वन्तं दृष्टान्तं चिनुत।
+  autoShareAmbiguous: अनेकानि क्रीडनानि प्रचलन्ति। DHMC तद् सहभाजयितुं शक्नुयात् इति LAN-जगतः आतिथ्यं कुर्वन्तं दृष्टान्तं चिनुत।
   editSharingScope: सहभाजनसीमां सम्पादयतु
   gameAvailable: LAN-क्रीडनम् उपलब्धम्
   joinGame: क्रीडने सम्मिलतु
@@ -1022,16 +1023,16 @@ multiplayer:
   updateSharedInstanceTitle: सहभाजितं दृष्टान्तम् अद्यतनीकरोतु?
   addFunds: "धनं योजयतु"
   availableBalance: "उपलब्धं शेषधनम्"
-  balanceHint: "XMCL Together-सेवानां कृते उपलब्धम्"
+  balanceHint: "DHMC Together-सेवानां कृते उपलब्धम्"
   billing: "भुगतानम्"
   billingDescription: "रिले-प्रवेशं, भवतः Together Home योजनां, भुगतांश्च प्रबन्धयतु।"
   billingError: "Together-भुगतानं लोडितुं न शक्यम्। किञ्चित्कालानन्तरं पुनः प्रयतताम्।"
   buyTogether: "Together क्रीणातु"
   cancelTogether: "योजना निरस्यतु"
   checkout: "Waffo-भुगतानं उद्घाटयतु"
-  connectionTogetherWarning: "कक्षस्य एकः सदस्यः किञ्चित्कालात् भवता सह संयोजितुं न शक्नोति। कक्षे सर्वेषां संयोजनं सुधारयितुं XMCL Together प्रयतताम्। केवलं कक्षस्वामिनः Together आवश्यकम्।"
+  connectionTogetherWarning: "कक्षस्य एकः सदस्यः किञ्चित्कालात् भवता सह संयोजितुं न शक्नोति। कक्षे सर्वेषां संयोजनं सुधारयितुं DHMC Together प्रयतताम्। केवलं कक्षस्वामिनः Together आवश्यकम्।"
   masterPurchaseHint: "कक्षे सर्वेषां संयोजनं सुधारयितुं केवलं कक्षस्वामिनः Together Home आवश्यकम्।"
-  natTogetherWarning: "भवतः रूटरेण कक्षस्वामिना सह संयोजने समस्या भवितुं शक्नोति। संयोजनं विफलं चेत्, भवद्भिः मित्रैः सह संयोजनं सुधारयितुं XMCL Together प्रयतताम्। कक्षस्य कृते Together क्रेतुं केवलं कक्षस्वामी आवश्यकः।"
+  natTogetherWarning: "भवतः रूटरेण कक्षस्वामिना सह संयोजने समस्या भवितुं शक्नोति। संयोजनं विफलं चेत्, भवद्भिः मित्रैः सह संयोजनं सुधारयितुं DHMC Together प्रयतताम्। कक्षस्य कृते Together क्रेतुं केवलं कक्षस्वामी आवश्यकः।"
   togetherName: "Minecraft Together"
   trialDescription: "1 GB रिले-यातायातेन सह एकं 7-दिवसीयं परीक्षणम्।"
   trialTitle: "संयोजन-परीक्षणम्"
@@ -1039,7 +1040,7 @@ multiplayer:
   month: "मासः"
   orderStatus: "Waffo-आदेशः: {status}"
   planDescription: "प्रतिमासं 20 GB प्रबन्धितं रिले-यातायातम्, तथा च भवतः मोडपैकस्य समस्यासु AI-सहायता।"
-  waffoHint: "भुगतानानि Waffo Pancake इत्यत्र सुरक्षिततया सम्पन्नानि भवन्ति। XMCL कदापि भवतः कार्ड-सङ्ख्यां न प्राप्नोति।"
+  waffoHint: "भुगतानानि Waffo Pancake इत्यत्र सुरक्षिततया सम्पन्नानि भवन्ति। DHMC कदापि भवतः कार्ड-सङ्ख्यां न प्राप्नोति।"
   subscription:
     active: "सक्रियम्"
     cancelled: "निरस्तम्"
@@ -1049,7 +1050,7 @@ multiplayer:
     available: "निःशुल्कं परीक्षणं उपलब्धम्"
     expired: "परीक्षणं प्रयुक्तम्"
     unavailable: "परीक्षणं अनुपलब्धम्"
-  loginRequiredDescription: P2P बहुक्रीडनं XMCL अन्तर्जालसेवान् उपयुङ्क्ते। अग्रे गन्तुं XMCL खाते प्रवेशं कुर्वन्तु।
+  loginRequiredDescription: P2P बहुक्रीडनं DHMC अन्तर्जालसेवान् उपयुङ्क्ते। अग्रे गन्तुं DHMC खाते प्रवेशं कुर्वन्तु।
   loginRequiredTitle: P2P बहुक्रीडनाय प्रवेशं कुर्वन्तु
   complete: पूर्णम्
   confirm: दृढीकरोतु
@@ -1481,7 +1482,7 @@ setting:
   about: विषये
   aboutBmclDescription: BMCL API प्रदान करोति अवतरणानि चीनदेशे।
   aboutContributors: 🧑‍💻 योगदानकर्तारः 🧑‍💻
-  aboutDenoDescription: XMCL Deno Deploy इत्यस्य उपयोगं करोति।
+  aboutDenoDescription: DHMC Deno Deploy इत्यस्य उपयोगं करोति।
   aboutLicense: MIT अनुज्ञापत्रम्
   aboutLicenseInfo: विण्डोज इत्यत्र निःशुल्कं सङ्केत-हस्ताक्षरम् SignPath.io द्वारा दत्तम्।
   aboutSponsors: 😇 प्रायोजकाः 😇
@@ -1564,7 +1565,7 @@ setting:
   developerMode: विकासकप्रणाली
   developerModeDescription: विकासकप्रणाली स्वकीयमोड्स परीक्षणाय अस्ति
   disableTelemetry: टेलीमेट्री (Telemetry) निष्क्रियं करोतु
-  disableTelemetryDescription: XMCL क्रीडाप्रवर्तनस्य प्रवेशस्य च घटनाः सङ्ग्रहीष्यति।
+  disableTelemetryDescription: DHMC क्रीडाप्रवर्तनस्य प्रवेशस्य च घटनाः सङ्ग्रहीष्यति।
   enableDedicatedGPUOptimization: विशिष्टं GPU विनियुङ्क्त
   enableDedicatedGPUOptimizationDescription: एषः विकल्पः माइनक्राफ्ट् प्रप्रक्रिये विशिष्टं GPU विनियुङ्क्ते।
   enableDiscord: Discord सक्रियं करोतु

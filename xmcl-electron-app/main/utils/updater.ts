@@ -59,7 +59,7 @@ async function downloadAsarUpdate(
     platformFlag += '-ia32'
   }
   const file = `app-${version}-${platformFlag}.asar`
-  const github = `https://github.com/Voxelum/x-minecraft-launcher/releases/download/v${version}/${file}`
+  const github = `https://github.com/discolauncher/disco-launcher/releases/download/v${version}/${file}`
 
   // Skip the download entirely if the pending file already matches the
   // published checksum.
@@ -206,7 +206,7 @@ async function downloadAppInstaller(
     tracker?: Tracker<DownloadUpdateTrackerEvents>
   } & DownloadBaseOptions,
 ): Promise<void> {
-  const destination = join(app.getPath('downloads'), 'XMCL.appinstaller')
+  const destination = join(app.getPath('downloads'), 'DiscoLauncher.appinstaller')
   const url = 'https://xmcl.blob.core.windows.net/releases/xmcl.appinstaller'
 
   await download({

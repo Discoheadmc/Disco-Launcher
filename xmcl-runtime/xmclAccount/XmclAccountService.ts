@@ -130,7 +130,7 @@ export class XmclAccountService
       },
     )
 
-    app.protocol.registerHandler('xmcl', ({ request, response }) => {
+    app.protocol.registerHandler('disco', ({ request, response }) => {
       if (request.url.host !== 'launcher' || request.url.pathname !== BROWSER_AUTH_CALLBACK_PATH)
         return
       const state = request.url.searchParams.get('state') ?? ''

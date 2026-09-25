@@ -476,7 +476,7 @@ instances:
   addVanilla: 從原版 Minecraft 建立
   addVanillaDescription: |-
     從通用 .minecraft 資料夾匯入。
-    這會將原始遊戲設定檔案複製到 XMCL。
+    這會將原始遊戲設定檔案複製到 DHMC。
   fix: 修復
   folder: 資料夾
   folderSetting: 資料夾設定
@@ -949,7 +949,7 @@ multiplayer:
   openConsumerPortal: 開啟消費者入口網站
   refundHint: 如需退款，請前往 Waffo 消費者入口網站管理您的訂單與訂閱。
   togetherSupportHint: 如果連線無法正常運作，請加入 Discord 聯絡開發團隊，我們會協助您解決問題。
-  autoShareAmbiguous: 有多個遊戲正在執行。請選擇主持區域網路世界的實例，讓 XMCL 可以分享它。
+  autoShareAmbiguous: 有多個遊戲正在執行。請選擇主持區域網路世界的實例，讓 DHMC 可以分享它。
   editSharingScope: 編輯分享範圍
   gameAvailable: 有可用的區域網路遊戲
   joinGame: 加入遊戲
@@ -959,16 +959,16 @@ multiplayer:
   updateSharedInstanceTitle: 更新分享的實例？
   addFunds: "儲值"
   availableBalance: "可用餘額"
-  balanceHint: "可用於 XMCL Together 服務"
+  balanceHint: "可用於 DHMC Together 服務"
   billing: "帳務"
   billingDescription: "管理轉送連線存取權、Together Home 方案與付款。"
   billingError: "無法載入 Together 帳務資訊。請稍後再試。"
   buyTogether: "購買 Together"
   cancelTogether: "取消方案"
   checkout: "開啟 Waffo 付款頁面"
-  connectionTogetherWarning: "房間中有一名成員已經一段時間無法連線到你。請嘗試 XMCL Together，改善房間內所有人的連線品質。只有房主需要使用 Together。"
+  connectionTogetherWarning: "房間中有一名成員已經一段時間無法連線到你。請嘗試 DHMC Together，改善房間內所有人的連線品質。只有房主需要使用 Together。"
   masterPurchaseHint: "只有房主需要 Together Home，就能改善房間內所有人的連線品質。"
-  natTogetherWarning: "你的路由器可能難以連線到房主。如果連線失敗，請嘗試 XMCL Together，改善你和朋友之間的連線。房間只需要由房主購買 Together。"
+  natTogetherWarning: "你的路由器可能難以連線到房主。如果連線失敗，請嘗試 DHMC Together，改善你和朋友之間的連線。房間只需要由房主購買 Together。"
   togetherName: "Minecraft Together"
   trialDescription: "一次 7 天試用，包含 1 GB 轉送流量。"
   trialTitle: "連線試用"
@@ -976,7 +976,7 @@ multiplayer:
   month: "月"
   orderStatus: "Waffo 訂單：{status}"
   planDescription: "每月 20 GB 的代管轉送流量，另提供模組包的 AI 疑難排解。"
-  waffoHint: "付款會在 Waffo Pancake 上安全完成。XMCL 絕不會取得你的卡號。"
+  waffoHint: "付款會在 Waffo Pancake 上安全完成。DHMC 絕不會取得你的卡號。"
   subscription:
     active: "使用中"
     cancelled: "已取消"
@@ -986,7 +986,7 @@ multiplayer:
     available: "提供免費試用"
     expired: "試用已使用"
     unavailable: "無法使用試用"
-  loginRequiredDescription: P2P 多人遊戲使用 XMCL 線上服務。請登入 XMCL 帳戶以繼續。
+  loginRequiredDescription: P2P 多人遊戲使用 DHMC 線上服務。請登入 DHMC 帳戶以繼續。
   loginRequiredTitle: 登入以使用 P2P 多人遊戲
   complete: 完成
   confirm: 確定
@@ -1406,8 +1406,9 @@ serverStatus:
   refuse: 伺服器中斷了連線！
   timeout: 伺服器響應超時！
 agent:
-  accessRequiredHint: 訂閱 XMCL 即可使用內建 AI 助手，或前往設定自行配置 AI 供應商。
-  subscribeXmcl: 訂閱 XMCL
+  discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
+  accessRequiredHint: 訂閱 DHMC 即可使用內建 AI 助手，或前往設定自行配置 AI 供應商。
+  subscribeXmcl: 訂閱 DHMC
   notConfiguredHint: 請在設定 → 基本設定 → AI 助手中設定 API 金鑰、模型和 OpenAI 相容端點，例如 OpenAI 或相容 Claude 的閘道。
 setting:
   aiAgentApiKeyDescription: 配置 OpenAI 相容供應商，例如 OpenAI 或 Claude 閘道。API 金鑰僅儲存在本機裝置。
@@ -1429,7 +1430,7 @@ setting:
   about: 關於
   aboutBmclDescription: BMCL API 為中國地區用戶提供便捷的下載服務
   aboutContributors: 🧑‍💻 貢獻者 🧑‍💻
-  aboutDenoDescription: XMCL 使用 Deno Deploy 平台提供的無伺服器 JavaScript 應用程式
+  aboutDenoDescription: DHMC 使用 Deno Deploy 平台提供的無伺服器 JavaScript 應用程式
   aboutLicense: MIT 授權
   aboutLicenseInfo: Windows 代碼簽名由 SignPath.io 免費提供，簽署人為 SignPath Foundation
   aboutSponsors: 😇 贊助商 😇
@@ -1502,11 +1503,11 @@ setting:
   developerMode: 開發者模式
   developerModeDescription: 開發者模式旨在協助您測試自己寫的模組
   disableTelemetry: 停用遙測
-  disableTelemetryDescription: XMCL 會收集遊戲啟動以及使用者登入事件
+  disableTelemetryDescription: DHMC 會收集遊戲啟動以及使用者登入事件
   enableDedicatedGPUOptimization: 分配專用 GPU
   enableDedicatedGPUOptimizationDescription: 此選項將為 Minecraft 程序分配專用 GPU。
   enableDiscord: 啟用 Discord Presence
-  enableDiscordDescription: 根據 XMCL 實時更新 Discord 的狀態
+  enableDiscordDescription: 根據 DHMC 實時更新 Discord 的狀態
   enterUrl: 輸入網址
   exportSettings: 匯出設定
   exportSettingsHint: 將目前設定儲存到檔案
@@ -1633,7 +1634,7 @@ setup:
   appearance:
     name: '@:setting.appearance'
   dataRoot:
-    description: 資料儲存目錄不是常規的 .minecraft 目錄。因為 XMCL 的資料目錄格式特殊，不建議將常規 .minecraft 目錄設定為資料目錄。
+    description: 資料儲存目錄不是常規的 .minecraft 目錄。因為 DHMC 的資料目錄格式特殊，不建議將常規 .minecraft 目錄設定為資料目錄。
     drives: 推薦路徑
     name: 設定資料儲存目錄
   defaultLayoutDescription: |-
@@ -1763,8 +1764,8 @@ theme:
   selectImage: 選擇影象
   selectMusic: 選擇音樂
   selectVideo: 選擇影片
-  title: XMCL
-title: XMCL
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: 公網位址
   prflx: 同伴反射位址
