@@ -13,7 +13,10 @@ import { ExploreProjectModern } from '@/components/StoreExploreCardModern.vue'
 import { getExpectedSize } from '@/util/size'
 import { useDateString } from './date'
 
-export function useRecentMinecraftItems(galleryMappings: Ref<Record<string, { name: string; description: string }>>) {
+export function useRecentMinecraftItems(
+  galleryMappings: Ref<Record<string, { name: string; description: string }>>,
+  enabled: Ref<boolean>,
+) {
   const { t } = useI18n()
   const tCategory = useCurseforgeCategoryI18n()
   const { getDateString } = useDateString()
@@ -23,18 +26,29 @@ export function useRecentMinecraftItems(galleryMappings: Ref<Record<string, { na
 
   // Latest minecraft
   const latestModrinth = computed(() => gameVersions.value.filter(v => v.major)[0].version)
-  const { data: modrinthRecentMinecraft } = useSWRV('/modrinth/recent_version', async () => {
-    const result = await clientModrinthV2.searchProjects({
-      index: 'newest',
-      limit: 30,
-      facets: getFacatsText(latestModrinth.value, '', [], [], 'modpack', ''),
-    })
-    return result.hits
-  }, inject(kSWRVConfig))
-  const { data: curseforgeRecentMinecraft } = useSWRV('/curseforge/recent_version', async () => {
-    const result = await clientCurseforgeV1.searchMods({ sortField: ModsSearchSortField.GameVersion, classId: 4471, pageSize: 30 })
-    return result.data
-  }, inject(kSWRVConfig))
+  // Disco Launcher: gated behind `enabled` — a null swrv key means "do not
+  // fetch". The section is hidden while searching/filtering, so the 30-item
+  // queries should not race with the user's own search.
+  const { data: modrinthRecentMinecraft } = useSWRV(
+    computed(() => (enabled.value ? '/modrinth/recent_version' : null)),
+    async () => {
+      const result = await clientModrinthV2.searchProjects({
+        index: 'newest',
+        limit: 30,
+        facets: getFacatsText(latestModrinth.value, '', [], [], 'modpack', ''),
+      })
+      return result.hits
+    },
+    inject(kSWRVConfig),
+  )
+  const { data: curseforgeRecentMinecraft } = useSWRV(
+    computed(() => (enabled.value ? '/curseforge/recent_version' : null)),
+    async () => {
+      const result = await clientCurseforgeV1.searchMods({ sortField: ModsSearchSortField.GameVersion, classId: 4471, pageSize: 30 })
+      return result.data
+    },
+    inject(kSWRVConfig),
+  )
 
   // Fetch mappings for latest minecraft items
   watch([modrinthRecentMinecraft, curseforgeRecentMinecraft], async ([modrinthItems, cfItems]) => {

@@ -360,6 +360,22 @@ const curseforgeCategory = useQueryNumber(
 )
 const pageSize = 20
 
+// Disco Launcher: the trending/latest sections render only when no search or
+// category filter is active; gate their network fetches with the same flag.
+// Mirrors `selectedCount > 0 || !!keyword` from raw state so it can be
+// declared before the data-fetching composables that consume it.
+const hasFilters = computed(() =>
+  !!keyword.value ||
+  !!query.value ||
+  !!gameVersion.value ||
+  modLoaders.value.length > 0 ||
+  _modrinthCategories.value.length > 0 ||
+  curseforgeCategory.value !== undefined ||
+  omitSources.value.length > 0 ||
+  !!sortQuery.value,
+)
+const hasFiltersComputed = hasFilters
+
 // --- Data Fetching Logic ---
 const tCategory = useCurseforgeCategoryI18n()
 const { getDateString } = useDateString()
@@ -394,9 +410,9 @@ useGamepadInnerNav({
   disabled: () => pageCount.value <= 1,
 })
 
-const { popularItems } = usePopularItems(galleryMappings)
+const { popularItems } = usePopularItems(galleryMappings, hasFiltersComputed)
 
-const { recentMinecraftItems: allRecentMinecraftItems } = useRecentMinecraftItems(galleryMappings)
+const { recentMinecraftItems: allRecentMinecraftItems } = useRecentMinecraftItems(galleryMappings, hasFiltersComputed)
 
 // Display only 8 items, with rotation support
 const recentMinecraftOffset = ref(0)
@@ -580,8 +596,6 @@ function onClose() {
   query.value = ''
   keyword.value = ''
 }
-
-const hasFilters = computed(() => selectedCount.value > 0 || !!keyword.value)
 
 const filter = ref<HTMLElement | null>(null)
 const { focused } = useFocus(filter)

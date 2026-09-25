@@ -13,25 +13,39 @@ import { SearchResultHit } from '@xmcl/modrinth'
 import useSWRV from 'swrv'
 import { GameGallery } from '@/components/StoreGallery.vue'
 
-export function usePopularItems(galleryMappings: Ref<Record<string, { name: string; description: string }>>) {
+export function usePopularItems(
+  galleryMappings: Ref<Record<string, { name: string; description: string }>>,
+  enabled: Ref<boolean>,
+) {
   const { t } = useI18n()
   const tCategory = useCurseforgeCategoryI18n()
   const { lookupBatch } = useService(ProjectMappingServiceKey)
 
-  // Popular list API calls
-  const { data: modrinthResult, error, isValidating } = useSWRV('/modrinth/featured', async () => {
-    const result = await clientModrinthV2.searchProjects({
-      index: 'follows',
-      limit: 5,
-      facets: getFacatsText('', '', [], [], 'modpack', ''),
-    })
-    return result.hits
-  }, injection(kSWRVConfig))
+  // Disco Launcher: the trending carousel only exists on the unfiltered
+  // discover page. A null (reactive) key keeps swrv from firing these calls
+  // while a search or filter hides the section, and the localStorage cache
+  // serves repeat visits without touching the network.
+  const { data: modrinthResult, error, isValidating } = useSWRV(
+    computed(() => (enabled.value ? '/modrinth/featured' : null)),
+    async () => {
+      const result = await clientModrinthV2.searchProjects({
+        index: 'follows',
+        limit: 5,
+        facets: getFacatsText('', '', [], [], 'modpack', ''),
+      })
+      return result.hits
+    },
+    injection(kSWRVConfig),
+  )
 
-  const { data: curseforgeResult, error: curseforgeError, isValidating: curseforgeValidating } = useSWRV('/curseforge/featured', async () => {
-    const result = await clientCurseforgeV1.searchMods({ sortField: ModsSearchSortField.Featured, classId: 4471, pageSize: 5 })
-    return result.data
-  }, injection(kSWRVConfig))
+  const { data: curseforgeResult, error: curseforgeError, isValidating: curseforgeValidating } = useSWRV(
+    computed(() => (enabled.value ? '/curseforge/featured' : null)),
+    async () => {
+      const result = await clientCurseforgeV1.searchMods({ sortField: ModsSearchSortField.Featured, classId: 4471, pageSize: 5 })
+      return result.data
+    },
+    injection(kSWRVConfig),
+  )
 
   // Fetch mappings for popular items
   watch([modrinthResult, curseforgeResult], async ([modrinthItems, cfItems]) => {
