@@ -72,8 +72,10 @@ export const optifine: ControllerPlugin = async function (this: ElectronControll
       minHeight: 400,
       webPreferences: {
         preload: optifinePreload,
-        contextIsolation: false,
-        sandbox: false,
+        // Disco Launcher: scrape runs our preload against a third-party CMS
+        // page, so keep the page JS isolated from the preload world.
+        contextIsolation: true,
+        sandbox: true,
       },
       show: false,
     })
