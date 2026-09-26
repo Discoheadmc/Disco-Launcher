@@ -1,8 +1,14 @@
 import { channel } from 'diagnostics_channel'
 import { DiagnosticsChannel, Dispatcher } from 'undici'
 import { LauncherAppPlugin } from '~/app'
+import { IS_DEV } from '../constant'
 
 export const pluginUndiciLogger: LauncherAppPlugin = (app) => {
+  // Disco Launcher: the per-request TRACE log is a debugging tool. Keep it
+  // dev-only — in production it writes undici.log on every request for no
+  // benefit (constant disk I/O on low-end machines).
+  if (!IS_DEV) return
+
   const undici = app.getLogger('undici', 'undici')
 
   channel('undici:request:create').subscribe((m, name) => {

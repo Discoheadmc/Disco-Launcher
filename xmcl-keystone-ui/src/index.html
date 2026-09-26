@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./assets/preload.css">
     <script src="http://launcher/flights"></script>
     <style>
+        /* Disco Launcher: static splash — no pulse animation. */
         .unloaded {
             background-color: rgb(16, 14, 10);
             height: 100vh;
@@ -18,17 +19,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
             overflow: hidden;
-        }
-        @keyframes pulse {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
         }
     </style>
 </head>

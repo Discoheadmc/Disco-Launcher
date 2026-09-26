@@ -65,6 +65,11 @@ export class ProjectMappingService extends AbstractService implements IProjectMa
     db: Kysely<Database>
     locale: string
   } | undefined
+  // When ensure fails (e.g. a truncated download), back off instead of
+  // retrying on every lookup: each retry re-downloads the whole database
+  // and previously spammed WARN/ERROR lines several times per second.
+  #lastFailureAt = 0
+  #failureLogged = false
 
   constructor(
     @Inject(LauncherAppKey) app: LauncherApp,
@@ -251,11 +256,25 @@ export class ProjectMappingService extends AbstractService implements IProjectMa
   }
 
   private async tryEnsureDatabase(init = false) {
+    // Backoff gate: after a failure, stay quiet for a minute before the next
+    // attempt. Log the failure once per streak so a broken download cannot
+    // flood the log.
+    if (this.#lastFailureAt > 0 && !init) {
+      if (Date.now() - this.#lastFailureAt < 60_000) return undefined
+      this.#failureLogged = false
+    }
     try {
-      return await this.ensureDatabase(init)
+      const result = await this.ensureDatabase(init)
+      this.#lastFailureAt = 0
+      this.#failureLogged = false
+      return result
     } catch (e) {
       this.#db = undefined
-      this.warn('Failed to open project mapping database. Project mapping lookup will be disabled until the next retry.', e)
+      this.#lastFailureAt = Date.now()
+      if (!this.#failureLogged) {
+        this.#failureLogged = true
+        this.warn('Failed to open project mapping database. Project mapping lookup will be disabled until the next retry.', e)
+      }
       return undefined
     }
   }
