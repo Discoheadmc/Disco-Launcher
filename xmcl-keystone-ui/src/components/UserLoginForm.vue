@@ -12,7 +12,7 @@
     <!-- Header / Branding Area -->
     <div class="login-form-branding flex flex-col items-center mb-2">
       <div
-        class="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 flex-shrink-0"
+        class="w-16 h-16 rounded flex items-center justify-center mb-4 flex-shrink-0"
         style="background-color: rgba(var(--v-theme-primary), 0.12)"
       >
         <v-icon size="32" color="primary">person</v-icon>
@@ -28,6 +28,17 @@
       hide-details
       @add-service="$emit('add-service')"
     />
+    <div
+      v-if="isOffline"
+      class="flex-grow-0 rounded border px-3 py-2 text-xs leading-5 opacity-80"
+      style="
+        background: rgba(var(--v-theme-on-surface), 0.04);
+        border-color: rgba(var(--v-theme-on-surface), 0.08);
+      "
+      data-testid="offline-hint"
+    >
+      {{ t('userServices.offline.hint') }}
+    </div>
     <v-combobox
       v-if="!streamerMode"
       ref="accountInput"
@@ -38,7 +49,7 @@
       prepend-inner-icon="person"
       variant="outlined"
       density="comfortable"
-      rounded="lg"
+      rounded="sm"
       required
       :label="getUserServiceAccount(authority)"
       :rules="usernameRules"
@@ -57,7 +68,7 @@
       prepend-inner-icon="person"
       variant="outlined"
       density="comfortable"
-      rounded="lg"
+      rounded="sm"
       required
       type="password"
       :label="getUserServiceAccount(authority)"
@@ -76,7 +87,7 @@
       prepend-inner-icon="lock"
       variant="outlined"
       density="comfortable"
-      rounded="lg"
+      rounded="sm"
       :type="passwordType"
       required
       :label="passwordLabel"
@@ -107,7 +118,7 @@
       density="compact"
       variant="tonal"
       color="error"
-      rounded="lg"
+      rounded="sm"
       class="text-left text-sm min-h-[min-content]"
     >
       {{ errorMessage }}
@@ -129,15 +140,9 @@
         block
         data-testid="login-submit"
         size="x-large"
-        rounded="xl"
-        class="text-white font-bold tracking-wider shadow-[0_10px_25px_-8px_rgba(var(--v-theme-primary),0.6)] hover:shadow-[0_15px_30px_-8px_rgba(var(--v-theme-primary),0.8)] transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
-        style="
-          background: linear-gradient(
-            to right,
-            rgb(var(--v-theme-primary)),
-            rgba(var(--v-theme-primary), 0.7)
-          );
-        "
+        color="primary"
+        variant="flat"
+        class="font-medium"
         :loading="isLogining && !hovered"
         :prepend-icon="isLogining ? undefined : 'login'"
         @click="onLogin"
@@ -158,7 +163,7 @@
       density="compact"
       variant="tonal"
       color="info"
-      rounded="lg"
+      rounded="sm"
       class="mt-3 text-left border border-info/30 min-h-[min-content]"
     >
       <a
@@ -173,7 +178,7 @@
     <div class="mt-4 flex flex-col gap-3 items-center text-sm font-medium">
       <div
         v-if="errorMessage && isMicrosoftAuthError"
-        class="flex flex-col gap-2 rounded-xl p-3 text-sm text-left border w-full backdrop-blur-sm"
+        class="flex flex-col gap-2 rounded p-3 text-sm text-left border w-full"
         style="
           background: rgba(var(--v-theme-error), 0.08);
           border-color: rgba(var(--v-theme-error), 0.2);
@@ -213,7 +218,7 @@
       </a>
       <div
         v-if="signUpLink"
-        class="flex items-center gap-3 flex-wrap justify-center py-2 px-4 rounded-xl border w-full backdrop-blur-sm"
+        class="flex items-center gap-3 flex-wrap justify-center py-2 px-4 rounded border w-full"
         style="
           background: rgba(var(--v-theme-on-surface), 0.03);
           border-color: rgba(var(--v-theme-on-surface), 0.08);

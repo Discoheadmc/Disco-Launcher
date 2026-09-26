@@ -1893,6 +1893,7 @@ userServices:
     password: Şifre
   offline:
     account: Kullanıcı Adı
+    hint: Çevrimdışı hesaplar tek oyunda, LAN'da ve online-mode=false sunucularında çalışır; resmî sunuculara ve Realms'e bağlanmaz.
     name: Çevrimdışı
     password: Şifre Yok
     uuid: Kullanıcı UUID (İsteğe Bağlı)

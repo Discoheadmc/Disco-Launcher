@@ -285,19 +285,15 @@ async function setup() {
 
 .setup-stepper-header {
   border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.08);
-  backdrop-filter: blur(10px);
 }
 
 .setup-stepper-item {
-  border-radius: 12px;
-  transition:
-    background-color 0.18s ease,
-    transform 0.18s ease;
+  border-radius: 4px;
+  transition: background-color 0.18s ease;
 }
 
 .setup-stepper-item:hover {
   background: rgba(var(--v-theme-on-surface), 0.05);
-  transform: translateY(-1px);
 }
 
 .setup .v-stepper-window {
@@ -329,21 +325,17 @@ async function setup() {
 .setup-step-forward-leave-active,
 .setup-step-back-enter-active,
 .setup-step-back-leave-active {
-  transition:
-    opacity 0.22s ease,
-    transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: opacity 0.18s ease;
 }
 
 .setup-step-forward-enter-from,
 .setup-step-back-leave-to {
   opacity: 0;
-  transform: translateX(22px) scale(0.985);
 }
 
 .setup-step-forward-leave-to,
 .setup-step-back-enter-from {
   opacity: 0;
-  transform: translateX(-22px) scale(0.985);
 }
 
 @media (prefers-reduced-motion: reduce) {

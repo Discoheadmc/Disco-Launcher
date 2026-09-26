@@ -2493,6 +2493,7 @@ userServices:
     password: Password
   offline:
     account: Username
+    hint: Offline accounts work in singleplayer, LAN and offline-mode (online-mode=false) servers; they cannot join official servers or Realms.
     name: Offline
     password: No Password
     uuid: User UUID (Optional)
