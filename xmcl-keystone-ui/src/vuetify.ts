@@ -61,7 +61,8 @@ export const vuetify = createVuetify({
   },
   defaults: {
     VSwitch: {
-      inset: true,
+      // Prism-minimal: flat track switch, no inset pill styling.
+      inset: false,
       color: 'primary',
     },
     VBtn: {

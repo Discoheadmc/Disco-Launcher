@@ -111,7 +111,7 @@
             color="blue"
             variant="flat"
             size="small"
-            rounded="pill"
+            rounded="sm"
             :loading="saving"
             data-testid="remote-server-save"
             @click="onSave"

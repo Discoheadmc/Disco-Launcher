@@ -74,18 +74,19 @@ html {
        Disco: Prism-inspired flat look — small radii. */
     --surface-radius: 4px;                                              /* matches Vuetify `rounded="sm"` */
     --surface-border: 1px solid rgba(var(--v-theme-on-surface), 0.10);
-    --surface-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.35);
+    /* Prism-minimal: barely-there elevation, no big diffusion glow. */
+    --surface-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.18);
 
-    /* Frosted-glass background shared by dialogs, menus and popovers. */
-    --surface-bg: rgba(var(--v-theme-surface), 0.82);
-    --surface-blur: 48px;
+    /* Prism-minimal: opaque solid surfaces — no frosted glass. */
+    --surface-bg: rgb(var(--v-theme-surface));
+    --surface-blur: 0px;
 
     /* Menu-only: inner padding + list-item radius (dialogs don't share). */
     --surface-menu-padding: 6px;
     --surface-menu-item-radius: 3px;
     --surface-dialog-radius: 6px;
     --surface-tooltip-radius: 3px;
-    --surface-pill-radius: 9999px;
+    --surface-pill-radius: 4px;
 
     /* Cards — three intentional tiers. Apply with the `.surface-card`,
        `.surface-card-subsection`, `.surface-card-item` utility classes. */
@@ -213,6 +214,11 @@ html ::-webkit-scrollbar {
     justify-content: center;
 }
 
+/* ── Prism-minimal dividers: thin, low contrast, everywhere ── */
+.v-divider {
+    border-color: rgba(var(--v-theme-on-surface), 0.08) !important;
+}
+
 /* ── Default surface for every v-card / v-sheet ──
    Routes the unstyled defaults through `--card-radius`. Specificity is
    forced to 0 via `:where()` so any explicit `rounded-*` / `bg-*` class
@@ -224,7 +230,7 @@ html ::-webkit-scrollbar {
     border-radius: var(--card-radius);
 }
 
-/* ── Modern frosted-glass menus ── */
+/* ── Modern minimal menus (Prism flat) ── */
 .v-menu > .v-overlay__content {
     border-radius: var(--surface-radius) !important;
 }

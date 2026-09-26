@@ -187,7 +187,7 @@
         <v-btn
           color="primary"
           variant="flat"
-          rounded="pill"
+          rounded="sm"
           prepend-icon="link"
           @click="confirm"
         >

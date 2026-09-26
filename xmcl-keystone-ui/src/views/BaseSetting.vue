@@ -457,10 +457,8 @@ useTutorial(computed(() => {
   flex-direction: column;
   padding: 10px;
   border: 1px solid rgba(var(--v-theme-on-surface), 0.1);
-  border-radius: 8px;
-  background: rgba(var(--v-theme-surface), 0.78);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(18px) saturate(1.15);
+  border-radius: var(--card-radius, 4px);
+  background: rgb(var(--v-theme-surface));
 }
 
 .base-setting-sidebar__heading {
@@ -496,7 +494,7 @@ useTutorial(computed(() => {
 .base-setting-nav-item {
   min-height: 42px !important;
   margin: 3px 0;
-  border-radius: 6px !important;
+  border-radius: var(--card-item-radius, 3px) !important;
 }
 
 .base-setting-nav-indicator {

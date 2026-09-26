@@ -37,7 +37,7 @@
             mandatory
             color="primary"
             variant="outlined"
-            rounded="pill"
+            rounded="sm"
             density="compact"
             divided
             @update:model-value="onEditionChange"
@@ -60,14 +60,12 @@
               <v-icon start size="16">view_in_ar</v-icon>
               {{ t('instances.editionBedrock') }}
             </v-btn>
-          </v-btn-toggle>
-          <v-btn
+          </v-btn-toggle>          <v-btn
             color="primary"
             variant="tonal"
-            rounded="pill"
+            rounded="sm"
             size="small"
-            @click="onMigrateFromOther"
-          >
+            @click="onMigrateFromOther">
             <v-icon start size="16">local_shipping</v-icon>
             {{ t('setting.migrateFromOther') }}
           </v-btn>
@@ -97,13 +95,11 @@
             {{ t('modpackUpdateOrCreate.description', { name: existingInstance.name }) }}
           </span>
           <v-btn
-            color="primary"
-            variant="tonal"
-            rounded="pill"
+            color="primary"            variant="tonal"
+            rounded="sm"
             size="small"
             :loading="loading"
-            @click="onUpdateExisting"
-          >
+            @click="onUpdateExisting">
             <v-icon start size="16">update</v-icon>
             {{ t('modpackUpdateOrCreate.update') }}
           </v-btn>
@@ -151,12 +147,10 @@
         <div v-if="type === 'template' || type === 'manual' || !type" class="flex justify-end">
           <v-btn
             data-testid="add-instance-import"
-            :loading="loading"
-            variant="tonal"
+            :loading="loading"            variant="tonal"
             color="primary"
-            rounded="pill"
-            @click="onImportModpack"
-          >
+            rounded="sm"
+            @click="onImportModpack">
             <v-icon start> folder_zip </v-icon>
             {{ t('importModpack.name') }}
           </v-btn>

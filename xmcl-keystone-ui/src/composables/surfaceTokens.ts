@@ -27,19 +27,20 @@ export const DEFAULT_SURFACE_DIALOG_RADIUS = 6
 export const DEFAULT_SURFACE_RADIUS_PROP = 'xl' as const
 
 export const DEFAULT_SURFACE_BORDER = '1px solid rgba(var(--v-theme-on-surface), 0.10)'
-export const DEFAULT_SURFACE_SHADOW = '0 12px 40px -8px rgba(0, 0, 0, 0.35)'
+/** Prism-minimal: barely-there elevation shadow, no big diffusion. */
+export const DEFAULT_SURFACE_SHADOW = '0 4px 16px -4px rgba(0, 0, 0, 0.18)'
 
-/** Frosted-glass background shared by dialogs, menus and popovers. */
-export const DEFAULT_SURFACE_BG = 'rgba(var(--v-theme-surface), 0.82)'
-export const DEFAULT_SURFACE_BLUR = 48
+/** Prism-minimal: opaque solid surfaces — no frosted glass. */
+export const DEFAULT_SURFACE_BG = 'rgb(var(--v-theme-surface))'
+export const DEFAULT_SURFACE_BLUR = 0
 
 /** Menu-only: inner padding and list-item radius. */
 export const DEFAULT_SURFACE_MENU_PADDING = 6
 export const DEFAULT_SURFACE_MENU_ITEM_RADIUS = 3
 /** Shared tooltip bubble radius. */
 export const DEFAULT_SURFACE_TOOLTIP_RADIUS = 3
-/** Pill button radius. Keep large by default to preserve capsule shape. */
-export const DEFAULT_SURFACE_PILL_RADIUS = 9999
+/** Pill button radius. Prism-minimal: flat corners, not capsules. */
+export const DEFAULT_SURFACE_PILL_RADIUS = 4
 /**
  * Default button radius as a Vuetify `rounded` prop value (NOT pixels).
  * Applied through Vuetify's reactive `defaults` so buttons honor the

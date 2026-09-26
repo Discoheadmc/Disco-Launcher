@@ -105,7 +105,7 @@
                     mandatory
                     dense
                     color="primary"
-                    rounded="pill"
+                    rounded="sm"
                     :aria-label="t('setting.sidebarAlign')"
                   >
                     <v-btn size="small"><v-icon size="small">format_align_left</v-icon></v-btn>

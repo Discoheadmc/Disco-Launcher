@@ -14,7 +14,7 @@
             v-for="(item, idx) in sections"
             :key="item.id"
             :value="idx"
-            class="mb-1 rounded-lg"
+            class="mb-1"
             color="primary"
             :title="t(item.title)"
             @click="scrollTo(item.id)"
@@ -43,7 +43,6 @@
           color="primary"
           show-arrows
           :aria-label="t('setting.name', 2)"
-          class="rounded-lg"
           @update:model-value="onTabChange"
         >
           <v-tab v-for="item in sections" :key="item.id">
@@ -269,8 +268,7 @@ useTutorial(
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(var(--v-theme-surface), 0.95);
-  backdrop-filter: blur(8px);
+  background: rgb(var(--v-theme-surface));
   padding: 8px 0;
   margin-bottom: 16px;
 }

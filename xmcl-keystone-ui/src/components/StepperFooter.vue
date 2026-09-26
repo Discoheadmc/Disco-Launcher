@@ -1,10 +1,10 @@
 <template>
   <div class="flex gap-4">
+    <!-- Prism-minimal: flat corners, solid primary only on the main action. -->
     <v-btn
       data-testid="add-instance-cancel"
       :disabled="creating"
       variant="text"
-      rounded="pill"
       @click="emit('quit')"
     >
       {{ t('shared.cancel') }}
@@ -16,7 +16,6 @@
       data-testid="add-instance-next"
       color="primary"
       variant="flat"
-      rounded="pill"
       :loading="creating"
       :disabled="disabled"
       @click="emit('next')"
@@ -28,7 +27,6 @@
       data-testid="add-instance-create"
       color="primary"
       variant="flat"
-      rounded="pill"
       :loading="creating"
       :disabled="disabled"
       @click="emit('create')"

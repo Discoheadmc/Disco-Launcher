@@ -3,16 +3,23 @@
     <!-- Mod Loader Selection -->
     <div class="text-sm font-bold opacity-70 my-4">{{ t('modrinth.categories.modloader') }}</div>
     <div class="flex flex-wrap gap-3 mb-6 items-center justify-center">
+      <!-- Prism-minimal loader tiles: flat surface, 1px border, selected
+           state shown by a thin primary border + faint primary tint only. -->
       <v-card
         v-for="loader in loaders" :key="loader.id"
         :data-testid="`modloader-tab-${loader.id}`"
-        :variant="currentTab === loader.id ? 'outlined' : 'tonal'"
-        :color="currentTab === loader.id ? 'primary' : undefined"
-        class="flex-1 min-w-[80px] max-w-[120px] flex flex-col items-center justify-center py-4 cursor-pointer hover:bg-white/5 transition-colors border-2"
-        :style="{ borderColor: currentTab === loader.id ? 'rgba(var(--v-theme-primary), 1)' : 'transparent' }"
+        variant="flat"
+        class="flex-1 min-w-[80px] max-w-[120px] flex flex-col items-center justify-center py-4 cursor-pointer transition-colors"
+        :style="{
+          borderRadius: 'var(--card-item-radius, 3px)',
+          background: currentTab === loader.id ? 'rgba(var(--v-theme-primary), 0.08)' : 'rgba(var(--v-theme-on-surface), 0.03)',
+          border: currentTab === loader.id
+            ? '1px solid rgba(var(--v-theme-primary), 0.9)'
+            : '1px solid rgba(var(--v-theme-on-surface), 0.10)',
+        }"
         @click="selectLoader(loader.id)"
       >
-        <img :src="loader.icon" width="36" height="36" class="mb-2 transition-transform hover:scale-110" />
+        <img :src="loader.icon" width="36" height="36" class="mb-2" />
         <span class="text-xs font-semibold">{{ loader.name }}</span>
       </v-card>
     </div>

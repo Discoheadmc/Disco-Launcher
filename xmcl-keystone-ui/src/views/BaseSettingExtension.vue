@@ -39,7 +39,7 @@
       >
         <v-btn
           id="modpack-export-button"
-          rounded="pill"
+          rounded="sm"
           color="primary"
           :loading="exporting || loading"
           @click="exportModpack"
@@ -60,7 +60,7 @@
       >
         <v-btn
           :color="serverLaunch.running.value ? 'error' : 'primary'"
-          rounded="pill"
+          rounded="sm"
           :variant="serverLaunch.running.value ? 'tonal' : 'flat'"
           size="large"
           :prepend-icon="isGamepadActive ? undefined : (serverLaunch.running.value ? 'stop' : 'play_arrow')"
@@ -83,7 +83,7 @@
       >
         <v-btn
           color="primary"
-          rounded="pill"
+          rounded="sm"
           variant="flat"
           size="large"
           prepend-icon="save"
