@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import Hint from '@/components/Hint.vue'
 import { useTutorial } from '@/composables/tutorial'
-import { useDateString } from '@/composables/date'
 import { useDialog } from '@/composables/dialog'
 import { kInstance } from '@/composables/instance'
 import { useInstanceContextMenuFunc } from '@/composables/instanceContextMenu'
@@ -9,8 +8,6 @@ import { useInstanceGroup } from '@/composables/instanceGroup'
 import { AddInstanceDialogKey } from '@/composables/instanceTemplates'
 import { kInstances } from '@/composables/instances'
 import { kLaunchButton } from '@/composables/launchButton'
-import { LauncherNews, useLauncherNews } from '@/composables/launcherNews'
-import { useMojangNews } from '@/composables/mojangNews'
 import { useInjectSidebarSettings } from '@/composables/sidebarSettings'
 import { useGamepadInnerNav } from '@/composables/gamepad'
 import { useTextFieldBehavior } from '@/composables/textfieldBehavior'
@@ -27,37 +24,12 @@ import { useRouter } from 'vue-router'
 import MeProfilePanel from './MeProfilePanel.vue'
 
 const { t } = useI18n()
-const { isDark } = injection(kTheme)
-const arrowColor = computed(() => (isDark.value ? 'white' : 'black'))
-const { news } = useMojangNews()
-const { news: launcherNews } = useLauncherNews()
-const { getDateString } = useDateString()
-
-const allNews = computed((): LauncherNews[] => {
-  const result: LauncherNews[] = [
-    ...launcherNews.value,
-    ...news.value.map((n) => ({
-      title: n.title,
-      category: n.tag,
-      date: n.date,
-      description: n.text,
-      image: {
-        url: n.newsPageImage.url,
-        width: n.newsPageImage.dimensions.width,
-        height: n.newsPageImage.dimensions.height,
-      },
-      link: n.readMoreLink,
-    })),
-  ]
-  return result.sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
-})
-
-const filterKey = ref('')
-const displayNewsHeader = useLocalStorage('displayNewsHeader', true, { writeDefaults: false })
 const { instances } = injection(kInstances)
 const { path } = injection(kInstance)
 const { groups } = useInstanceGroup()
 const { pinnedInstances } = useInjectSidebarSettings()
+
+const filterKey = ref('')
 
 // View mode: folder, date, or plain
 const instanceViewMode = useLocalStorage<'folder' | 'date' | 'plain'>('instanceViewMode', 'plain')
@@ -264,10 +236,6 @@ const filter = ref<HTMLElement | null>(null)
 const { focused } = useFocus(filter)
 useTextFieldBehavior(filter, focused)
 
-function openInBrowser(url: string) {
-  window.open(url, '_blank', 'noopener,noreferrer')
-}
-
 useTutorial(
   computed(() => [
     {
@@ -303,71 +271,6 @@ useTutorial(
     <!-- Right: News + Instances (unchanged content) -->
     <div ref="container" class="my-stuff-page h-full flex-grow overflow-auto min-w-0">
     <div class="classic-container">
-      <!-- News Section (Hero Style) -->
-      <section v-if="true && allNews.length > 0" class="news-section">
-        <div class="section-header">
-          <v-icon class="section-icon" color="primary">article</v-icon>
-          <h2 class="section-title">{{ t('news.name') }}</h2>
-        </div>
-
-        <div class="news-carousel-wrapper">
-          <v-carousel
-            height="280"
-            hide-delimiter-background
-            show-arrows-on-hover
-            cycle
-            :interval="6000"
-            class="news-carousel"
-          >
-            <template #prev="{ props: btnProps }">
-              <v-btn
-                variant="plain"
-                icon="chevron_left"
-                :color="arrowColor"
-                @click="btnProps.onClick"
-              />
-            </template>
-            <template #next="{ props: btnProps }">
-              <v-btn
-                variant="plain"
-                icon="chevron_right"
-                :color="arrowColor"
-                @click="btnProps.onClick"
-              />
-            </template>
-            <v-carousel-item v-for="(item, index) in allNews.slice(0, 8)" :key="index">
-              <div class="news-slide" @click="openInBrowser(item.link)">
-                <div class="news-image-wrapper">
-                  <v-img :src="item.image.url" height="280" cover class="news-image">
-                    <template v-slot:placeholder>
-                      <div class="d-flex align-center justify-center fill-height">
-                        <v-progress-circular indeterminate color="primary"></v-progress-circular>
-                      </div>
-                    </template>
-                  </v-img>
-                  <div class="news-gradient"></div>
-                </div>
-                <div class="news-info">
-                  <div class="news-meta">
-                    <span class="news-category">{{ item.category }}</span>
-                    <span class="news-dot">•</span>
-                    <span class="news-date">{{
-                      getDateString(item.date, { dateStyle: 'medium' })
-                    }}</span>
-                  </div>
-                  <h3 class="news-title">{{ item.title }}</h3>
-                  <p class="news-description">{{ item.description }}</p>
-                  <v-btn color="primary" class="news-read-more" size="small" variant="text">
-                    {{ t('news.readMore') }}
-                    <v-icon end size="small">open_in_new</v-icon>
-                  </v-btn>
-                </div>
-              </div>
-            </v-carousel-item>
-          </v-carousel>
-        </div>
-      </section>
-
       <!-- Instances Section -->
       <section class="instances-section">
         <div class="section-header">
@@ -543,138 +446,6 @@ useTutorial(
   color: rgba(255, 255, 255, 0.9);
 }
 
-.news-section {
-  user-select: none;
-  width: 100%;
-}
-
-.news-carousel-wrapper {
-  border-radius: 16px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.news-carousel {
-  border-radius: 16px;
-}
-
-.news-slide {
-  position: relative;
-  height: 100%;
-  cursor: pointer;
-  display: flex;
-  transition: transform 0.3s ease;
-}
-
-.news-slide:hover {
-  transform: scale(1.01);
-}
-
-.news-image-wrapper {
-  position: relative;
-  width: 55%;
-  flex-shrink: 0;
-}
-
-.news-image {
-  height: 100%;
-}
-
-.news-gradient {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 100px;
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.9));
-}
-
-.dark .news-gradient {
-  background: linear-gradient(to right, transparent, rgba(30, 30, 30, 1));
-}
-
-.news-info {
-  flex: 1;
-  padding: 24px 32px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.95);
-}
-
-.dark .news-info {
-  background: rgba(30, 30, 30, 0.95);
-}
-
-.news-meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.news-category {
-  color: var(--v-primary-base);
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.news-dot {
-  color: rgba(0, 0, 0, 0.3);
-}
-
-.dark .news-dot {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.news-date {
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 0.75rem;
-}
-
-.dark .news-date {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.news-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: rgba(0, 0, 0, 1);
-  margin: 0 0 12px 0;
-  line-height: 1.3;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.dark .news-title {
-  color: white;
-}
-
-.news-description {
-  color: rgba(0, 0, 0, 0.7);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  margin: 0 0 16px 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.dark .news-description {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.news-read-more {
-  align-self: flex-start;
-}
-
 .instances-section {
   width: 100%;
   user-select: none;
@@ -808,27 +579,6 @@ useTutorial(
   .classic-container {
     padding: 16px;
     gap: 24px;
-  }
-
-  .news-slide {
-    flex-direction: column;
-  }
-
-  .news-image-wrapper {
-    width: 100%;
-    height: 160px;
-  }
-
-  .news-gradient {
-    display: none;
-  }
-
-  .news-info {
-    padding: 16px;
-  }
-
-  .news-title {
-    font-size: 1.2rem;
   }
 
   .instances-grid {

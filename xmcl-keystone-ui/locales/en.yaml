@@ -955,38 +955,6 @@ xmclAccount:
     deletion_pending: Deletion pending
     merged: Merged
   title: DHMC Account
-minecraftFriends:
-  accept: Accept
-  add: Add a friend
-  addPlaceholder: Minecraft username
-  addedRelative: Added {time}
-  errors:
-    cannotAddSelf: You cannot send a friend request to yourself.
-    duplicate: That player is already in your list.
-    friendsDisabled: Your Minecraft account has friends disabled or cannot use friends. Enable friends in Minecraft account settings, then try again.
-    generic: Something went wrong. Please try again.
-    invalidName: Minecraft usernames must be between 3 and 16 characters.
-    inviteRejected: That player does not have friends enabled or does not accept invites.
-    tokenExpired: Your Microsoft session expired. Please log in again.
-    unknownProfile: We could not find a player with that name.
-  expiresRelative: Expires {time}
-  friends: Friends
-  heroEmptyHint: Add a Minecraft player by username above to send a friend request.
-  heroEmptyTitle: Your friends list is empty
-  incoming: Incoming requests
-  incomingHint: 1 incoming request | {count} incoming requests
-  notifyAdded: Friend request sent to {name}
-  outgoing: Outgoing requests
-  privacy:
-    acceptInvites: Accept friend invites
-    acceptInvitesHint: When off, other players cannot send you friend requests.
-    friendsEnabled: Friends list enabled
-  reconnectAction: Reconnect
-  requiresMicrosoft: Sign in with a Microsoft account to use friends.
-  scopedTo: Signed in as {name}
-  send: Send
-  title: Minecraft Friends
-  unsupported: Friends are only available for Microsoft accounts.
 migrationWindow:
   title: Data Migration
   preparing: Preparing migration…
@@ -1551,7 +1519,7 @@ peerSignalingState:
   have-local-offer: Waiting peer description
 presence:
   away: Away
-  instance: Idle in Instance {instance}
+  instance: 'Playing {instance}'
   instanceSetting: 'Edit Instance Setting: {instance}'
   mod: Viewing Mods in {instance}
   modrinthProject: Viewing {name} in Modrinth
@@ -1941,23 +1909,6 @@ setting:
   advancedJavaOptions: Advanced Java Options
   advancedSettings: Advanced Settings
   advancedSettingsHint: Danger zone - reset or manage launcher data
-  aiAgentApiKey: AI Agent API Key
-  aiAgentApiKeyClear: Clear key
-  aiAgentApiKeyDescription: Enter the key for the configured OpenAI-compatible endpoint. Keys are stored locally per endpoint host.
-  aiAgentApiKeyEmpty: Paste your API key
-  aiAgentApiKeyNotNeeded: Not required
-  aiAgentApiKeyNotNeededHint: This provider runs locally and needs no API key
-  aiAgentApiKeySaved: Saved
-  aiAgentApiKeyStored: Key saved - type to replace
-  aiAgentApiKeyPlaceholder: OpenAI or Claude provider API key
-  aiAgentBuiltin: Built-in
-  aiAgentCustom: Custom
-  aiAgentEndpoint: AI Agent Endpoint
-  aiAgentEndpointDescription: Chat completions endpoint URL.
-  aiAgentEndpointPlaceholder: https://api.openai.com/v1/chat/completions
-  aiAgentModelPlaceholder: gpt-5.6 or claude-sonnet-4-5
-  aiAgentModel: AI Agent Model
-  aiAgentModelDescription: Model name to send in chat completion requests.
   apiSets:
     auto: Auto (Determine by network)
     official: Official (Mojang)
@@ -2032,8 +1983,8 @@ setting:
   disableTelemetryDescription: DHMC will collect the game launch and user login events.
   enableDedicatedGPUOptimization: Assign Dedicated GPU
   enableDedicatedGPUOptimizationDescription: This option will assign dedicated GPU to Minecraft process.
-  enableDiscord: Enable Discord Presence
-  enableDiscordDescription: This will update Discord status to the launcher
+  enableDiscord: Discord Rich Presence
+  enableDiscordDescription: Show Disco Launcher activity on your Discord profile
   enterUrl: Enter URL
   exportSettings: Export Settings
   exportSettingsHint: Save your current settings to a file

@@ -1,10 +1,23 @@
 import { Client, type SetActivity } from '@xmcl/discord-rpc'
 import { type PresenceService as IPresenceService, type SharedState, PresenceServiceKey, Settings } from '@xmcl/runtime-api'
+import { LAUNCHER_NAME } from '~/constant'
 import { Inject, LauncherAppKey } from '~/app'
 import { AbstractService, ExposeServiceKey } from '~/service'
 import { kSettings } from '~/settings'
 import { LauncherApp } from '../app/LauncherApp'
 import { LaunchService } from '../launch/LaunchService'
+
+/**
+ * Disco Launcher Discord Rich Presence.
+ *
+ * Branding: the presence always presents itself as "Disco Launcher"
+ * (`LAUNCHER_NAME`) in the details line; the state line carries what the user
+ * is doing (e.g. "Playing <instance>"). The Discord Application client id is
+ * owned by the Discord Developer Portal app — DO NOT change it here; visible
+ * texts live in the two fields below.
+ */
+const PRESENCE_DETAILS = LAUNCHER_NAME
+const PRESENCE_LARGE_IMAGE = 'dark_512'
 
 @ExposeServiceKey(PresenceServiceKey)
 export class PresenceService extends AbstractService implements IPresenceService {
@@ -106,9 +119,11 @@ export class PresenceService extends AbstractService implements IPresenceService
       }
     }
     const param = this.current
-    this.current.largeImageKey = 'dark_512'
+    this.current.largeImageKey = PRESENCE_LARGE_IMAGE
+    this.current.largeImageText = LAUNCHER_NAME
     this.current.startTimestamp = Date.now()
-    this.current.details = activity
+    this.current.details = PRESENCE_DETAILS
+    this.current.state = activity
     await this.discord.user?.setActivity(param).catch((e: any) => {
       this.warn('Fail to set discord presence. %o', e)
     })

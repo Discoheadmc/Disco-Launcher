@@ -1098,7 +1098,7 @@ peerIceGatheringState:
 peerSignalingState:
   have-local-offer: Eş açıklaması bekleniyor
 presence:
-  instance: '{instance} Instance''ında Boşta'
+  instance: '{instance} oynuyor'
   instanceSetting: '{instance} Instance Ayarı Düzenleniyor'
   mod: '{instance} içindeki Modlar Görüntüleniyor'
   modrinthProject: Modrinth'te {name} Görüntüleniyor
@@ -1446,8 +1446,8 @@ setting:
   disableTelemetryDescription: DHMC oyun başlatma ve kullanıcı giriş olaylarını toplayacaktır.
   enableDedicatedGPUOptimization: Özel GPU Ata
   enableDedicatedGPUOptimizationDescription: Bu seçenek Minecraft işlemine özel GPU atayacaktır.
-  enableDiscord: Discord Durumunu Etkinleştir
-  enableDiscordDescription: Bu, Discord durumunu başlatıcıya güncelleyecektir
+  enableDiscord: Discord Zengin Durum
+  enableDiscordDescription: Disco Launcher etkinliğini Discord profilinde göster
   enterUrl: URL Girin
   exportSettings: Ayarları Dışa Aktar
   exportSettingsHint: Mevcut ayarlarınızı bir dosyaya kaydedin
@@ -1561,15 +1561,6 @@ setting:
   aboutLicense: MIT LİSANSI
   aboutLicenseInfo: Windows'ta ücretsiz kod imzalama SignPath.io tarafından, sertifika ise SignPath Foundation tarafından sağlanmaktadır
   aboutSponsors: 😇 Sponsorlar 😇
-  aiAgentApiKey: Yapay Zeka Temsilcisi API Anahtarı
-  aiAgentApiKeyDescription: OpenAI veya Claude için bir ağ geçidi gibi OpenAI uyumlu bir sağlayıcı yapılandırın. Anahtar bu cihazda yerel olarak saklanır.
-  aiAgentApiKeyPlaceholder: OpenAI veya Claude sağlayıcısı API anahtarı
-  aiAgentEndpoint: Yapay Zeka Temsilcisi Uç Noktası
-  aiAgentEndpointDescription: Sohbet tamamlama uç noktası URL'si.
-  aiAgentEndpointPlaceholder: https://api.openai.com/v1/chat/completions
-  aiAgentModelPlaceholder: gpt-5.6 veya claude-sonnet-4-5
-  aiAgentModel: Yapay Zeka Temsilcisi Modeli
-  aiAgentModelDescription: Sohbet tamamlama isteklerinde gönderilecek model adı.
   useDesktopBackground: Mevcut masaüstü duvar kağıdını kullan
   customCss:
     advancedDescription: Başlatıcının mevcut stilini kendi CSS'nizle geçersiz kılın.
@@ -2003,36 +1994,6 @@ agent:
   thinking: düşünüyor…
   title: Discohead
   toggleHint: geçiş yapmak için
-minecraftFriends:
-  accept: Kabul Et
-  add: Arkadaş ekle
-  addPlaceholder: Minecraft kullanıcı adı
-  addedRelative: '{time} eklendi'
-  errors:
-    cannotAddSelf: Kendinize arkadaşlık isteği gönderemezsiniz.
-    duplicate: Bu oyuncu zaten listenizde var.
-    generic: Bir şeyler yanlış gitti. Lütfen tekrar deneyin.
-    inviteRejected: Bu oyuncunun arkadaş özelliği etkin değil veya davetleri kabul etmiyor.
-    tokenExpired: Microsoft oturumunuzun süresi doldu. Lütfen tekrar oturum açın.
-    unknownProfile: Bu isimde bir oyuncu bulamadık.
-  expiresRelative: 'Süre dolum tarihi: {time}'
-  friends: Arkadaşlar
-  heroEmptyHint: Arkadaşlık isteği göndermek için yukarıya kullanıcı adına göre bir Minecraft oyuncusu ekleyin.
-  heroEmptyTitle: Arkadaş listeniz boş
-  incoming: Gelen istekler
-  incomingHint: 1 gelen istek | {count} gelen istek
-  notifyAdded: '{name} kullanıcısına arkadaşlık isteği gönderildi'
-  outgoing: Giden istekler
-  privacy:
-    acceptInvites: Arkadaşlık davetlerini kabul et
-    acceptInvitesHint: Kapalıyken diğer oyuncular size arkadaşlık isteği gönderemez.
-    friendsEnabled: Arkadaş listesi etkin
-  reconnectAction: Yeniden Bağlan
-  requiresMicrosoft: Arkadaş özelliğini kullanmak için bir Microsoft hesabıyla oturum açın.
-  scopedTo: '{name} olarak oturum açıldı'
-  send: Gönder
-  title: Minecraft Arkadaşlar
-  unsupported: Arkadaşlar özelliği yalnızca Microsoft hesapları için kullanılabilir.
 relative:
   daysAgo: '{count} gün önce | {count} gün önce'
   hoursAgo: '{count} saat önce | {count} saat önce'

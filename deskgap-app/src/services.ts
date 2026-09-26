@@ -30,7 +30,7 @@ import { RemoteServerService } from '@xmcl/runtime/remoteServer'
 import { ResourcePackPreviewService } from '@xmcl/runtime/resourcePack'
 import { ServerStatusService } from '@xmcl/runtime/serverStatus'
 import { ThemeService } from '@xmcl/runtime/theme'
-import { MinecraftFriendsService, OfficialUserService, UserService } from '@xmcl/runtime/user'
+import { OfficialUserService, UserService } from '@xmcl/runtime/user'
 
 // Disco Launcher: AgentService, XmclAccountService, ElyByService, PeerService
 // are removed from this host.
@@ -65,7 +65,6 @@ export const definedServices = [
   InstanceManifestService,
   ServerStatusService,
   OfficialUserService,
-  MinecraftFriendsService,
   UserService,
   VersionService,
   InstanceInstallService,

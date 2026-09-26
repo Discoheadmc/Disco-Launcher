@@ -82,7 +82,6 @@ import AppMenuBar from '@/views/AppMenuBar.vue'
 import Setup from '@/views/Setup.vue'
 import { useLocalStorage, useMediaQuery, usePreferredColorScheme, usePreferredDark } from '@vueuse/core'
 import { kInstanceLauncher, useInstanceLauncher } from '@/composables/instanceLauncher'
-import { kMinecraftFriends, useMinecraftFriendsImpl } from '@/composables/minecraftFriends'
 import { useUserMenuControl } from '@/composables/userMenu'
 import { UserSkinRenderPaused } from '@/composables/userSkin'
 import AppSideBarGroupSettingDialog from '@/views/AppSideBarGroupSettingDialog.vue'
@@ -98,7 +97,6 @@ const lazyDialogComponents = {
   'modpack-update-or-create': defineAsyncComponent(() => import('@/views/AppModpackUpdateDialog.vue')),
   'instance-server-edit': defineAsyncComponent(() => import('@/views/AppJoinServerDialog.vue')),
   'migrate-wizard': defineAsyncComponent(() => import('@/views/AppMigrateWizardDialog.vue')),
-  'minecraft-friends': defineAsyncComponent(() => import('@/views/AppMinecraftFriendsDialog.vue')),
   'mod-group-select': defineAsyncComponent(() => import('@/views/ModGroupSelectDialog.vue')),
   'modrinth-login': defineAsyncComponent(() => import('@/views/AppModrinthLoginDialog.vue')),
   'modrinth-project-create': defineAsyncComponent(() => import('@/views/AppModrinthProjectCreateDialog.vue')),
@@ -116,7 +114,6 @@ const developerMode = computed(() => state.value?.developerMode ?? false)
 provide('streamerMode', useLocalStorage('streamerMode', false, { writeDefaults: false }))
 provide(kLocalizedContent, useLocalizedContentControl())
 provide(kInstanceLauncher, useInstanceLauncher())
-provide(kMinecraftFriends, useMinecraftFriendsImpl())
 
 // User profile dialog — moved from AppSystemBarUserMenu to App root
 const userMenu = useUserMenuControl()
