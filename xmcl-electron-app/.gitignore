@@ -1,3 +1,6 @@
 cache
 dist
-meta.json
+meta.jsonbuild/icon-pngs/
+scripts/check-alpha.mjs
+scripts/probe-alpha.mjs
+scripts/preview-icon.html

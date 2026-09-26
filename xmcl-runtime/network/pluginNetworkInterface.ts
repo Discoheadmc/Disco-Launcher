@@ -28,7 +28,7 @@ export const pluginNetworkInterface: LauncherAppPlugin = (app) => {
   downloadController.load(join(app.appDataPath, 'download-reputation.json')).catch(() => {})
   app.registryDisposer(() => downloadController.save())
 
-  let maxConnection = 64
+  let maxConnection = 16
   const connectorOptions: buildConnector.BuildOptions = {
     timeout: 25_000,
     rejectUnauthorized: false,
@@ -41,7 +41,7 @@ export const pluginNetworkInterface: LauncherAppPlugin = (app) => {
 
   const proxyControl = new ProxySettingController()
   app.registry.get(kSettings).then((state) => {
-    maxConnection = state.maxSockets > 0 ? state.maxSockets : 64
+    maxConnection = state.maxSockets > 0 ? state.maxSockets : 16
     proxyControl.setProxyEnabled(state.httpProxyEnabled)
     const proxy = state.httpProxy || globalProxyHttps
     if (proxy) {
@@ -68,7 +68,7 @@ export const pluginNetworkInterface: LauncherAppPlugin = (app) => {
     state.subscribe('apiSetsSet', updateReassignableHosts)
 
     state.subscribe('maxSocketsSet', (val) => {
-      maxConnection = val > 0 ? val : 64
+      maxConnection = val > 0 ? val : 16
     })
     state.subscribe('httpProxySet', (p) => {
       app.setProxy(p)
@@ -110,7 +110,9 @@ export const pluginNetworkInterface: LauncherAppPlugin = (app) => {
       factory: (connect) =>
         new Agent({
           headersTimeout: 25_000,
-          bodyTimeout: 10_000,
+          // Generous stall budget: a slow CDN pause must not kill the
+          // stream. 10s used to abort big downloads mid-flight.
+          bodyTimeout: 60_000,
           connect,
           factory: (origin, opts) => {
             if (origin.toString().endsWith('bmclapi2.bangbang93.com')) {

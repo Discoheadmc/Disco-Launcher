@@ -21,6 +21,7 @@
         "postinstall": "tsx postinstall.ts",
         "postsign": "tsx postsign.ts",
         "fmt": "oxfmt -c ../.oxfmtrc.json .",
+        "icons": "electron scripts/generate-icon-pngs.mjs build/icon-source.png build/icon-pngs && node scripts/pack-icons.mjs build/icon-pngs icons",
         "check": "tsc --noEmit --project tsconfig.json && tsc --noEmit --project preload/tsconfig.json",
         "dev": "cross-env NODE_ENV=development tsx dev.ts",
         "lint": "oxlint -c ./node_modules/@xmcl/oxlint-config/oxlintrc.json .",

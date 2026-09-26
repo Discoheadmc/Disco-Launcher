@@ -76,7 +76,7 @@
 <script lang="ts" setup>
 import { InstalledAppManifest } from '@xmcl/runtime-api'
 
-import favicon from '@/assets/logo.webp'
+import favicon from '@/assets/logo.png'
 
 const props = defineProps<{
   manifest: InstalledAppManifest

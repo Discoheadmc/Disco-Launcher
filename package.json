@@ -49,5 +49,8 @@
         "typedoc": "^0.28.15",
         "typescript": "^5.9.3",
         "vitest": "^4.1.11"
+    },
+    "dependencies": {
+        "png-to-ico": "^3.0.2"
     }
 }

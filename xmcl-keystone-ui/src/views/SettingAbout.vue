@@ -34,7 +34,7 @@ import SettingCard from '@/components/SettingCard.vue'
 import { kEnvironment } from '@/composables/environment'
 import { injection } from '@/util/inject'
 import { computed } from 'vue'
-import logo from '../assets/logo.webp'
+import logo from '../assets/logo.png'
 
 const env = injection(kEnvironment)
 

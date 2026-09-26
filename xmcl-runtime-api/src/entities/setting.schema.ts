@@ -43,7 +43,7 @@ export const SettingSchema = z.object({
   /** The launcher theme */
   theme: z.enum(['dark', 'light', 'system']).catch('dark'),
   /** Maximum number of sockets to allow per host */
-  maxSockets: z.number().catch(64),
+  maxSockets: z.number().catch(16),
   /** Maximum number of sockets allowed for requesting API */
   maxAPISockets: z.number().catch(16),
   /** Replace natives setting */
