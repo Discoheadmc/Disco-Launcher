@@ -1,195 +1,118 @@
 <p align="center">
-  <a href="https://xmcl.app" target="_blank">
-    <img alt="Logo" width="100" src="https://github.com/Voxelum/x-minecraft-launcher/blob/master/xmcl-electron-app/icons/dark@256x256.png">
-  </a>
+  <img alt="Disco Launcher" width="100" src="xmcl-electron-app/icons/dark@256x256.png">
+</p>
+
+<h1 align="center">Disco Launcher</h1>
+
+<p align="center">
+  A fast, lightweight, privacy-friendly Minecraft launcher — focused on the essentials and built for low-end machines.
 </p>
 
 <p align="center">
-  <a href="https://github.com/Voxelum/x-minecraft-launcher">
-    <img src="https://github.com/Voxelum/x-minecraft-launcher/workflows/Build/badge.svg" alt="Build">
-  </a>
-  <a href="https://github.com/Voxelum/x-minecraft-launcher/blob/master/LICENSE">
-    <img src="https://img.shields.io/npm/l/@xmcl/core.svg" alt="License">
-  </a>
-  <a href="https://conventionalcommits.org">
-    <img src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg" alt="Commit">
-  </a>
-  <a href="https://flathub.org/en/apps/app.xmcl.voxelum">
-    <img src="https://img.shields.io/flathub/v/app.xmcl.voxelum?logo=flathub&label=Flathub" alt="Flathub">
-  </a>
+  <a href="#features">Features</a> ·
+  <a href="#how-is-disco-launcher-different-from-xmcl">Differences from XMCL</a> ·
+  <a href="#development">Development</a> ·
+  <a href="#building">Building</a>
 </p>
 
-<p align="center">
-  <a href="https://discord.gg/W5XVwYY7GQ">
-    <img src="https://img.shields.io/discord/405213567118213121?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="Discord">
-  </a>
-  <a href="https://www.reddit.com/r/XMCL/">
-    <img src="https://img.shields.io/badge/Reddit-r%2FXMCL-FF4500?logo=reddit&logoColor=white" alt="Reddit">
-  </a>
-  <a href="https://kook.top/gqjSHh">
-    <img src="https://img.shields.io/endpoint?url=https://api.xmcl.app/kook-badge" alt="Kook">
-  </a>
-</p>
+---
 
-<p align="center">
-  <a href="https://afdian.com/@ci010">
-    <img src="https://img.shields.io/endpoint?url=https://api.xmcl.app/afdian-badge" alt="afdian">
-  </a>
-  <a href="https://patreon.com/xmcl">
-    <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dxmcl%26type%3Dpledges" alt="patreon">
-  </a>
-</p>
-
-![home](https://raw.githubusercontent.com/Voxelum/xmcl-page/master/.vitepress/theme/assets/home.png)
-
-Visit the [official site](https://xmcl.app) to download the app!
-
-If you have winget, you can use winget to install
-
-```bash
-winget install CI010.XMinecraftLauncher
-```
-
-HomeBrew installation also available via tap
-
-```bash
-brew tap voxelum/xmcl
-brew install --cask voxelum/xmcl/xmcl
-sudo xattr -rd com.apple.quarantine /Applications/X\ Minecraft\ Launcher.app
-```
-
-On Linux, XMCL is also available on Flathub:
-
-```bash
-flatpak install flathub app.xmcl.voxelum
-```
-
-<kbd>[<img title="Ukraine" alt="Ukraine" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Ukraine.svg/1280px-Flag_of_Ukraine.svg.png" width="22">](i18n/README.uk.md)</kbd>
-<kbd>[<img title="Russia" alt="Russia" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/1280px-Flag_of_Russia.svg.png" width="22">](i18n/README.ru.md)</kbd>
-<kbd>[<img title="Germany" alt="Germany" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/1280px-Flag_of_Germany.svg.png" width="22">](i18n/README.de.md)</kbd>
-<kbd>[<img title="China" alt="China" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png" width="22">](i18n/README.zh.md)</kbd>
-<kbd>[<img title="Japan" alt="Japan" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png" width="22">](i18n/README.jp.md)</kbd>
-<kbd>[<img title="Poland" alt="Poland" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/1280px-Flag_of_Poland.svg.png" width="22">](i18n/README.pl.md)</kbd>
-<kbd>[<img title="Kazakhstan" alt="Kazakhstan" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Flag_of_Kazakhstan.svg/1280px-Flag_of_Kazakhstan.svg.png" width="22">](i18n/README.kz.md)</kbd>
-<kbd>[<img title="Spain" alt="Spain" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/1280px-Flag_of_Spain.svg.png" width="22">](i18n/README.es.md)</kbd>
-<kbd>[<img title="Korean" alt="Korean" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png" width="22">](i18n/README.ko.md)</kbd>
-<kbd>[<img title="Hungarian" alt="Hungarian" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Flag_of_Hungary.svg/1280px-Flag_of_Hungary.svg.png" width="22">](i18n/README.hu.md)</kbd>
-
-
+Disco Launcher is a fork of the open-source [X Minecraft Launcher (XMCL)](https://github.com/Voxelum/x-minecraft-launcher), rebuilt around a single idea: **keep what makes a launcher great, strip everything else**. On top of that cleanup it adds its own skin & cape management, a redesigned Prism-inspired UI, and hardened networking defaults.
 
 ## Features
 
+- 🪶 **Lightweight by design.** Telemetry, auto-update polling, multiplayer/P2P networking, the XMCL.org account backend and the AI assistant were all removed. Less code, fewer background processes, faster startup.
+- 🔐 **Two account types, zero clutter.** Sign in with a **Microsoft account** (OAuth device code / grant code) or create **offline accounts** for LAN and `online-mode=false` servers.
+- 🧥 **Local Closet (skin library).** Import skins from a PNG file, a URL, or fetch them by player name. Save skins to a local library and equip them per account — works for both Microsoft and offline accounts.
+- 🎨 **Custom cape.** Attach your own PNG as a "custom cape" that lives entirely on your machine. It is independent from Mojang's official cape entitlements, never uploaded anywhere, and per account: Microsoft accounts keep using their real, official capes alongside it; offline accounts finally get capes at all.
+- 🎮 **Offline skins that actually show up in game.** A built-in, launcher-local yggdrasil-compatible endpoint serves your offline profile's skin (and cape) to the game through authlib-injector during launch — no third-party services involved.
+- 🧩 **Modpack market without the noise.** Browse and install CurseForge, Modrinth and FTB modpacks with full search filters (game version, mod loader, categories, sort). The flaky "Trending" carousel is gone; the discover grid is the default view.
+- 🗂 **Multi-instance management.** Isolate versions, mods and settings per instance; shared assets/libraries are hard-linked to save disk space.
+- 💬 **Discord Rich Presence.** Show what you're playing using Disco Launcher's own Discord application.
+- 🖥 **Cross-platform targets.** Windows (NSIS installer), macOS (dmg), Linux (deb/rpm/AppImage/tar.xz/pacman). Windows is the primary, actively tested platform.
 
-- 📥 **Download & auto complete**. Support download `Minecraft`, `Forge`, `Fabric`, `Quilt`, `OptiFine`, `JVM` from official or third party mirrors.
-- ⚡️ **Download Fast**. Reuse socket via HTTP/HTTPS agents, and download the files in parts concurrently.
-- 💻 **Cross platform**. The launcher is based on Electron, and supports 🗔 Windows 10/11, 🍎 MacOS, and 🐧 Linux.
-- 📚 **Multi-Instancing**. Users can create multiple instances to isolate the different versions, mods and launch settings.
-- 🗂 **Manage all resources**. Use (hard/symbolic) links to install resources in instances, keep your disk usage optimal. No copies of mods everywhere! 😆
-- 🔥 **Built-in support of CurseForge, Modrinth**. You can download resources inside the launcher.
-- 📦 **Support import/export** CurseForge & Modrinth modpacks with compliance!
-- 🔒 **Support multiple account systems**. Built-in Microsoft login and Mojang Yggdrasil API. It also has builtin support of [ely.by](https://ely.by/) and [littleskin.cn](https://littleskin.cn). You can also add third-party authentication servers!
-- 🔗 **Peer to peer connection between users**. You can play multiplayer over LAN even you are not in same physical LAN!
-- 🔑 **Code sign & modern packaging**. Under Windows, you can use `appx` and `appinstaller` to install the app. You won't receive blocking messages from your browser or see SmartScreen errors anymore! 😎
+## How is Disco Launcher different from XMCL?
 
-## Core Libraries
+Disco Launcher started as an optimization fork of XMCL. The table below sums up the intentional deltas:
 
-This repository also includes the **Minecraft Launcher Core** (`@xmcl/*` packages) — a set of npm packages providing useful functions to build a Minecraft launcher. [API Documentation](https://docs.xmcl.app/en/core)
-
-| Package | Description | Version |
+| Area | XMCL | Disco Launcher |
 | --- | --- | --- |
-| [@xmcl/core](packages/core) | Launch Minecraft | [![npm](https://img.shields.io/npm/v/@xmcl/core.svg)](https://www.npmjs.com/package/@xmcl/core) |
-| [@xmcl/installer](packages/installer) | Install Minecraft, Forge, Fabric, Quilt, OptiFine, JVM | [![npm](https://img.shields.io/npm/v/@xmcl/installer.svg)](https://www.npmjs.com/package/@xmcl/installer) |
-| [@xmcl/user](packages/user) | User authentication and skin | [![npm](https://img.shields.io/npm/v/@xmcl/user.svg)](https://www.npmjs.com/package/@xmcl/user) |
-| [@xmcl/mod-parser](packages/mod-parser) | Parse Forge/LiteLoader/Fabric mods | [![npm](https://img.shields.io/npm/v/@xmcl/mod-parser.svg)](https://www.npmjs.com/package/@xmcl/mod-parser) |
-| [@xmcl/curseforge](packages/curseforge) | CurseForge API | [![npm](https://img.shields.io/npm/v/@xmcl/curseforge.svg)](https://www.npmjs.com/package/@xmcl/curseforge) |
-| [@xmcl/modrinth](packages/modrinth) | Modrinth API | [![npm](https://img.shields.io/npm/v/@xmcl/modrinth.svg)](https://www.npmjs.com/package/@xmcl/modrinth) |
-| [@xmcl/nbt](packages/nbt) | Parse NBT | [![npm](https://img.shields.io/npm/v/@xmcl/nbt.svg)](https://www.npmjs.com/package/@xmcl/nbt) |
-| [@xmcl/game-data](packages/game-data) | Load level data or servers.dat | [![npm](https://img.shields.io/npm/v/@xmcl/game-data.svg)](https://www.npmjs.com/package/@xmcl/game-data) |
-| [@xmcl/resourcepack](packages/resourcepack) | Parse resource packs | [![npm](https://img.shields.io/npm/v/@xmcl/resourcepack.svg)](https://www.npmjs.com/package/@xmcl/resourcepack) |
-| [@xmcl/gamesetting](packages/gamesetting) | Parse game settings | [![npm](https://img.shields.io/npm/v/@xmcl/gamesetting.svg)](https://www.npmjs.com/package/@xmcl/gamesetting) |
-| [@xmcl/client](packages/client) | Minecraft client network utilities | [![npm](https://img.shields.io/npm/v/@xmcl/client.svg)](https://www.npmjs.com/package/@xmcl/client) |
-| [@xmcl/model](packages/model) | Display player/block models | [![npm](https://img.shields.io/npm/v/@xmcl/model.svg)](https://www.npmjs.com/package/@xmcl/model) |
-| [@xmcl/text-component](packages/text-component) | Parse Minecraft text components | [![npm](https://img.shields.io/npm/v/@xmcl/text-component.svg)](https://www.npmjs.com/package/@xmcl/text-component) |
-| [@xmcl/forge-site-parser](packages/forge-site-parser) | Parse Forge website | [![npm](https://img.shields.io/npm/v/@xmcl/forge-site-parser.svg)](https://www.npmjs.com/package/@xmcl/forge-site-parser) |
-| [@xmcl/file-transfer](packages/file-transfer) | High-performance file downloads | [![npm](https://img.shields.io/npm/v/@xmcl/file-transfer.svg)](https://www.npmjs.com/package/@xmcl/file-transfer) |
-| [@xmcl/nat-api](packages/nat-api) | UPnP and NAT-PMP port mapping | [![npm](https://img.shields.io/npm/v/@xmcl/nat-api.svg)](https://www.npmjs.com/package/@xmcl/nat-api) |
-| [@xmcl/system](packages/system) | FS middleware for browser/Node | [![npm](https://img.shields.io/npm/v/@xmcl/system.svg)](https://www.npmjs.com/package/@xmcl/system) |
-| [@xmcl/unzip](packages/unzip) | yauzl unzip wrapper | [![npm](https://img.shields.io/npm/v/@xmcl/unzip.svg)](https://www.npmjs.com/package/@xmcl/unzip) |
-| [@xmcl/semver](packages/semver) | Fabric semver format | [![npm](https://img.shields.io/npm/v/@xmcl/semver.svg)](https://www.npmjs.com/package/@xmcl/semver) |
-| [@xmcl/bytebuffer](packages/bytebuffer) | ByteBuffer implementation | [![npm](https://img.shields.io/npm/v/@xmcl/bytebuffer.svg)](https://www.npmjs.com/package/@xmcl/bytebuffer) |
+| Accounts | Microsoft, offline, ely.by, littleskin.cn, arbitrary authlib-injector servers, XMCL.org account | **Microsoft + offline only** (third-party yggdrasil account system code removed) |
+| Multiplayer | XMCL Together P2P multiplayer, peer hosting, network diagnostics | **Removed** |
+| Auto-update | Built-in updater (electron-updater style flows) | **Removed** — update by installing a new setup bundle |
+| Telemetry | Azure/OTel-based telemetry & tracing | **Removed** — nothing is collected or sent |
+| AI assistant | Built-in AI chat, crash analysis, market agent | **Removed** |
+| News section & Minecraft friends | Shipped in the sidebar | **Removed** |
+| Skins | Skin library ("Local Closet") for Microsoft accounts | **Kept and fixed** — the closet dialog now opens for both account types; offline equips are fully local (no Mojang request) |
+| Capes | Official Mojang cape picker (Microsoft accounts only) | Official picker untouched **plus a launcher-local custom cape** (any account, your own PNG, stored per account in the launcher data folder) |
+| Offline skins in game | Not served by default | **Launcher-local yggdrasil endpoint** injects the offline profile's textures at launch |
+| Modpack store | Discover grid + "Trending" featured carousel | Discover grid only — the trending section and its featured API calls were removed |
+| Branding | XMCL user agent, XMCL Discord app | `discolauncher/disco-launcher` user agent, own Discord application id, own installer (`DiscoLauncher-Setup-*.exe`) |
+| UI | Original XMCL look | **Prism-inspired flat restyle** for login, settings, create-game and profile screens |
 
-## Contribute
+What stays the same: the entire [@xmcl/*](packages) core library family, instance/resource linking architecture, CurseForge & Modrinth integrations, and the multi-instance model.
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Voxelum/x-minecraft-launcher)
+## Development
 
-For general developer, see [Contributing](./CONTRIBUTING.md)
+**Prerequisites**
 
-For i18n localization developer, please follow [Getting Started with Localization](https://docs.xmcl.app/en/guide/i18n)
+- [Node.js](https://nodejs.org/) **≥ 22.16** (Node 22 LTS recommended)
+- [pnpm](https://pnpm.io/) 11 (Corepack picks it up automatically — `corepack enable`)
 
-## LICENSE
+**Getting started**
 
-[MIT](LICENSE)
+```bash
+# 1. Install dependencies (workspace-wide, uses pnpm workspaces)
+pnpm install --frozen-lockfile
 
-## Sponsorship
+# 2. Start the renderer dev server (http://localhost:3000)
+pnpm dev:renderer
 
-| [![](https://github.com/DGP-Studio/Snap.Hutao/assets/10614984/73ae8b90-f3c7-4033-b2b7-f4126331ce66)](https://signpath.io/) | Free code signing on Windows provided by [SignPath.io](https://signpath.io/), certificate by [SignPath Foundation](https://signpath.org/) |
-| :----------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: |
-| [![](https://deno.com/images/deno_logo_4.gif)](https://deno.com/deploy) | [Deno Deploy](https://deno.com/deploy), XMCL leverage its hassle-free platform for serverless JavaScript applications. Provided by [Deno](https://deno.com/)   |
-| [![](assets/EdgeOne.png)](https://edgeone.ai/) | [Best Asian CDN, Edge, and Secure Solutions - Tencent EdgeOne](https://edgeone.ai/),CDN acceleration and security protection for this project are sponsored by Tencent EdgeOne. |
+# 3. In a second terminal, compile & launch the Electron main process
+pnpm dev:main
+```
 
-### Sponsor (AFDIAN)
+The dev build loads the UI from `http://localhost:3000`; renderer changes hot-reload. Renderer production build + main-process checks are what CI gates on.
 
-<!-- afdian-start -->
-<div style="display: flex; align-items: center; justify-items:center; gap: 0.2em; flex-wrap: wrap;">
-<a title="爱发电用户_9d663: ￥390.00" href="https://afdian.com/u/9d663ec6fb6711ec9ace52540025c377"> <img width="100" height="100" style="border-radius: 100%" src="https://pic1.afdiancdn.com/default/avatar/avatar-purple.png?imageView2/1/"> </a>
-<a title="爱发电用户_19e29: ￥300.00" href="https://afdian.com/u/19e292c21a1d11ee929a52540025c377"> <img width="100" height="100" style="border-radius: 100%" src="https://pic1.afdiancdn.com/default/avatar/avatar-purple.png?imageView2/1/"> </a>
-<a title="ahdg: ￥180.00" href="https://afdian.com/u/dd9058ce20df11eba5c052540025c377"> <img width="70" height="70" style="border-radius: 100%" src="https://pic1.afdiancdn.com/user/dd9058ce20df11eba5c052540025c377/avatar/0c776e6de1b1027e951c6d94919eb781_w1280_h1024_s364.jpg"> </a>
-<a title="Kandk: ￥30.00" href="https://afdian.com/u/404b86a078e111ecab3652540025c377"> <img width="50" height="50" style="border-radius: 100%" src="https://pic1.afdiancdn.com/user/404b86a078e111ecab3652540025c377/avatar/dfa3e35a696d8d8af5425dd400d68a8d_w607_h527_s432.png"> </a>
-<a title="白雨 楠: ￥30.00" href="https://afdian.com/u/7f6ad7161b3e11eb8d0e52540025c377"> <img width="50" height="50" style="border-radius: 100%" src="https://pic1.afdiancdn.com/user/7f6ad7161b3e11eb8d0e52540025c377/avatar/1fa3b75648a15aea8da202c6108d659b_w1153_h1153_s319.jpeg"> </a>
-<a title="圣剑: ￥30.00" href="https://afdian.com/u/ef50bc78b3d911ecb85352540025c377"> <img width="50" height="50" style="border-radius: 100%" src="https://pic1.afdiancdn.com/user/user_upload_osl/8a1c4eb2e580b4b8b463ceb2114b6381_w132_h132_s3.jpeg"> </a>
-<a title="同谋者: ￥30.00" href="https://afdian.com/u/7c3c65dc004a11eb9a6052540025c377"> <img width="50" height="50" style="border-radius: 100%" src="https://pic1.afdiancdn.com/default/avatar/avatar-blue.png"> </a>
-<a title="染川瞳: ￥5.00" href="https://afdian.com/u/89b1218c86e011eaa4d152540025c377"> <img width="50" height="50" style="border-radius: 100%" src="https://pic1.afdiancdn.com/user/89b1218c86e011eaa4d152540025c377/avatar/9bf08f81d231f3054c98f9e5c1c8ce40_w640_h640_s57.jpg"> </a>
-<a title="爱发电用户_CvQb: ￥5.00" href="https://afdian.com/u/177bea3cf47211ec990352540025c377"> <img width="50" height="50" style="border-radius: 100%" src="https://pic1.afdiancdn.com/default/avatar/avatar-purple.png"> </a>
-<a title="水合: ￥5.00" href="https://afdian.com/u/039508f2b17d11ebad1052540025c377"> <img width="50" height="50" style="border-radius: 100%" src="https://pic1.afdiancdn.com/default/avatar/avatar-orange.png"> </a>
-<a title="爱发电用户_0c5c8: ￥5.00" href="https://afdian.com/u/0c5c865e08ee11ecba1352540025c377"> <img width="50" height="50" style="border-radius: 100%" src="https://pic1.afdiancdn.com/default/avatar/avatar-purple.png?imageView2/1/"> </a>
-<a title="DIO: ￥5.00" href="https://afdian.com/u/7ac297b4722211eab4a752540025c377"> <img width="50" height="50" style="border-radius: 100%" src="https://pic1.afdiancdn.com/default/avatar/avatar-purple.png"> </a>
-<a title="爱发电用户_DJpu: ￥5.00" href="https://afdian.com/u/8c23a236cf7311ec9c3452540025c377"> <img width="50" height="50" style="border-radius: 100%" src="https://pic1.afdiancdn.com/default/avatar/avatar-purple.png"> </a>
-</div>
-<!-- afdian-end -->
+**Useful commands**
+
+| Command | What it does |
+| --- | --- |
+| `pnpm check` | Type-checks every workspace package (`tsc`/`vue-tsc --noEmit`) |
+| `pnpm lint` | OxLint across all packages |
+| `pnpm test` | Runs the vitest unit suites |
+| `pnpm build:renderer` | Production build of the Vue renderer |
+| `pnpm dev:main` / `pnpm dev:renderer` | Dev runners for main process / renderer |
+| `pnpm test:e2e:ci` | Deterministic, network-free Playwright e2e suite (see [e2e](e2e)) |
+
+> Conventions for agents and contributors live in [AGENTS.md](AGENTS.md) and [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Building
+
+Disco Launcher uses the XMCL build pipeline (esbuild + electron-builder, driven by `xmcl-electron-app/build.ts`):
+
+```bash
+# Production renderer bundle + main process bundle
+pnpm build
+
+# Full platform packaging through electron-builder
+pnpm build:all
+```
+
+Packaging targets are declared in [`xmcl-electron-app/build/electron-builder.config.ts`](xmcl-electron-app/build/electron-builder.config.ts):
+
+- **Windows** — NSIS installer (produces `DiscoLauncher-Setup-<version>.exe`, plus a `.sha256` checksum)
+- **macOS** — dmg
+- **Linux** — deb, rpm, AppImage, tar.xz, pacman
+
+For a local Windows smoke build without packaging the full matrix, `pnpm --prefix xmcl-electron-app compile` emits a production main bundle (`HAS_DEV_SERVER=false`) that serves the built renderer — handy for verifying the packaged app path before running `build:all`.
+
+## License
+
+[MIT](LICENSE) — Disco Launcher inherits XMCL's MIT license. All credit for the original launcher goes to the [XMCL team](https://github.com/Voxelum/x-minecraft-launcher) and its contributors.
 
 ## Credits & Acknowledgments
 
-### 🌍 Community & Localization
+Disco Launcher would not exist without XMCL and its community. Original launcher, core libraries and years of maintenance by **[CI010](https://github.com/ci010)** and the XMCL contributors — thank you.
 
-**[BANSAFAn/Baneronetwo](https://github.com/BANSAFAn)**
-Community support and moderation
-
-**[Marmur2020](https://github.com/Marmur2020)**
-Complete Ukrainian language translation
-
-**[vanja-san](https://github.com/vanja-san)**
-Russian language support
-
-## 📦 Package Maintainers
-
-**[VolodiaKraplich](https://github.com/VolodiaKraplich)**
-AUR (Arch User Repository) package maintenance
-
-**[0xc0000142](https://github.com/0xc0000142)**
-winget package maintenance
-
-### 🛠️ Development Contributors
-
-**[lukechu10](https://github.com/lukechu10) & [HoldYourWaffle](https://github.com/HoldYourWaffle)**
-Launcher core development
-
-**[laolarou726](https://github.com/laolarou726)**
-Launcher design and UI/UX
-
-### 💙 Special Thanks
-
-A heartfelt thank you to these individuals for their support and contributions:
-
-[Yricky](https://github.com/Yricky) · [Jin](https://github.com/Indexyz) · [LG](https://github.com/LasmGratel) · [Phoebe](https://github.com/PhoebezZ) · [Sumeng Wang](https://github.com/darkkingwsm) · [Luca](https://github.com/LucaIsGenius) · [Charles Tang](https://github.com/CharlesQT)
-
----
+Localization contributions, package maintainers and the rest of the upstream acknowledgments are listed in the [upstream README](https://github.com/Voxelum/x-minecraft-launcher#credits--acknowledgments).
