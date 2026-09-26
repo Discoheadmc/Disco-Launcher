@@ -627,6 +627,7 @@ logView:
   searchPlaceholder: Günlükleri ara...
 login:
   dropHint: Manuel giriş yapmak için yetkilendirme kodlu bağlantıyı buraya bırakın
+  createAccount: Hesap Oluştur
   forgetPassword: Şifremi Unuttum?
   login: Giriş Yap
   manualLoginUrl: Tarayıcı açılmazsa, yetkilendirme için lütfen bu bağlantıya tıklayın!

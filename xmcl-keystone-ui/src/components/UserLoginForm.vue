@@ -80,7 +80,7 @@
       @keypress.enter="onLogin"
     />
     <v-text-field
-      v-if="!isOffline"
+      v-if="!isOffline && (authority !== AUTHORITY_MICROSOFT || data.useDeviceCode)"
       v-model="data.password"
       data-testid="login-password"
       class="flex-grow-0"
@@ -98,18 +98,6 @@
       :error="!!errorMessage"
       hide-details="auto"
       @update:model-value="error = undefined"
-      @keypress.enter="onLogin"
-    />
-    <v-text-field
-      v-else
-      v-model="data.uuid"
-      class="flex-grow-0"
-      variant="outlined"
-      density="comfortable"
-      prepend-inner-icon="fingerprint"
-      :placeholder="uuidLabel"
-      :label="uuidLabel"
-      hide-details
       @keypress.enter="onLogin"
     />
 
@@ -148,7 +136,7 @@
         @click="onLogin"
       >
         <template v-if="!isLogining">
-          {{ t('login.login') }}
+          {{ isOffline ? t('login.createAccount') : t('login.login') }}
         </template>
         <template v-else>
           <v-icon start>close</v-icon>
@@ -208,7 +196,7 @@
         </div>
       </div>
       <a
-        v-if="authority === AUTHORITY_MICROSOFT"
+        v-if="authority !== AUTHORITY_MICROSOFT && !isOffline"
         target="browser"
         href="https://my.minecraft.net/en-us/password/forgot/"
         class="hover:underline transition-colors opacity-70 hover:opacity-100"
@@ -352,9 +340,6 @@ const getUserServicePassword = (serv: string) => {
   if (serv === AUTHORITY_DEV) return t('userServices.offline.password')
   return t('userServices.mojang.password')
 }
-
-// UUID label
-const uuidLabel = computed(() => t('userServices.offline.uuid'))
 
 // Event handler
 on('microsoft-authorize-url', (url) => {

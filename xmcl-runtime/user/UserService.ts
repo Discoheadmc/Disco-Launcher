@@ -159,9 +159,15 @@ export class UserService extends StatefulService<UserState> implements IUserServ
   }
 
   async getSupportedAuthorityMetadata(): Promise<AuthorityMetadata[]> {
-    const result = Object.values(this.accountSystems).concat(await this.getYggdrasilAccountSystem()).map(s => s.getSupporetedAuthorityMetadata(true))
-      .flat()
-    return result
+    // Only query account systems that are actually registered. This used to
+    // unconditionally await the YggdrasilAccountSystem from the registry,
+    // which hangs forever when the third-party auth plugin is absent and left
+    // the login authority dropdown empty ("No data available").
+    const systems = [...Object.values(this.accountSystems)]
+    if (this.app.registry.has(kYggdrasilAccountSystem)) {
+      systems.push(await this.getYggdrasilAccountSystem())
+    }
+    return systems.map(s => s.getSupporetedAuthorityMetadata(true)).flat()
   }
 
   async removeUserGameProfile(userProfile: UserProfile, gameProfileId: string): Promise<void> {
