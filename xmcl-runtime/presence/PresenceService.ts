@@ -41,8 +41,11 @@ export class PresenceService extends AbstractService implements IPresenceService
     })
 
     // Initialize Discord client first before setting up event listeners
+    // Client ID belongs to the user's own "Disco Launcher" Discord
+    // application (created in the Developer Portal) so the presence shows
+    // Disco branding instead of the upstream XMCL app.
     this.discord = new Client({
-      clientId: '1075044884400054363',
+      clientId: '1553202858348773406',
     })
 
     settings.subscribe('discordPresenceSet', async (state) => {
