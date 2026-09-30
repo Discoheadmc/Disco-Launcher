@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Gardırop dialogu açılıyor",
+    "ok": true,
+    "detail": "CLICKED:checkroom\nYerel Gardırop"
+  },
+  {
+    "name": "Yeni cilt editörü açılıyor",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "media protokolü erişilebilir",
+    "ok": true,
+    "detail": "FETCH:404"
+  },
+  {
+    "name": "Gardırop state okunuyor (listeleme çalışıyor)",
+    "ok": true,
+    "detail": "{\"cardCount\":0,\"countLabel\":\"\"}"
+  }
+]

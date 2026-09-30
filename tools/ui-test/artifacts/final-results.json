@@ -1,0 +1,128 @@
+{
+  "results": [
+    {
+      "name": "Açılışta renderer hatasız",
+      "ok": true,
+      "detail": "exception sayısı: 0"
+    },
+    {
+      "name": "Renderer JS heap (boot) < 400MB",
+      "ok": true,
+      "detail": "21.4 MB, DOM: 1093 node"
+    },
+    {
+      "name": "Me paneli render",
+      "ok": true,
+      "detail": "search | Hızlı eylem | Ctrl+Shift+C | assignment | minimize | crop_din | close | arrow_back | store | add | settings | r"
+    },
+    {
+      "name": "Yerel Gardırop butonu",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Resmi pelerin satırı (Mojang)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Özel Pelerin bölümü (yeni)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "PNG Seç / Değiştir butonu (yeni)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Gardırop diyaloğu açılıyor",
+      "ok": true,
+      "detail": "CİLT ÖNİZLEMESİ | Klasik | person | Cilt önizlemesi yok | Cilt Seçilmedi | check | Minecraft Hesabın"
+    },
+    {
+      "name": "Gardırop diyaloğu kapanıyor",
+      "ok": true,
+      "detail": "CLICKED_X"
+    },
+    {
+      "name": "Store: Trend Olan kaldırıldı (yeni)",
+      "ok": true,
+      "detail": "trending bulundu: false"
+    },
+    {
+      "name": "Store: arama + keşfet render",
+      "ok": true,
+      "detail": "{\"trending\":false,\"search\":true,\"discover\":true,\"version\":true}"
+    },
+    {
+      "name": "Store: arama input odaklanabilir (eski)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Ayarlar ekranı render (eski)",
+      "ok": true,
+      "detail": "search | Hızlı eylem | Ctrl+Shift+C | assignment | minimize | crop_din | close | arrow_back | store "
+    },
+    {
+      "name": "Ana ekran render (eski)",
+      "ok": true,
+      "detail": "search | Hızlı eylem | Ctrl+Shift+C | assignment | minimize | crop_din | close | arrow_back | store "
+    },
+    {
+      "name": "Rota stresi sonrası heap büyümesi < 60MB",
+      "ok": true,
+      "detail": "21.4 -> 22.8 MB (+1.4)"
+    },
+    {
+      "name": "Stres sonrası exception yok",
+      "ok": true,
+      "detail": "0 exception"
+    },
+    {
+      "name": "Toplam RAM < 900MB",
+      "ok": true,
+      "detail": "892.5 MB (4 süreç)"
+    },
+    {
+      "name": "Gezinme sırasında CPU < %25",
+      "ok": true,
+      "detail": "CPU %13"
+    }
+  ],
+  "procSamples": [
+    {
+      "label": "boot",
+      "procs": 4,
+      "ramMB": 627.7,
+      "cpuPct": null
+    },
+    {
+      "label": "store-loaded",
+      "procs": 4,
+      "ramMB": 843.8,
+      "cpuPct": 7.4
+    },
+    {
+      "label": "after-views",
+      "procs": 4,
+      "ramMB": 863.9,
+      "cpuPct": 7.6
+    },
+    {
+      "label": "cpu-window-views",
+      "procs": 4,
+      "ramMB": 825.9,
+      "cpuPct": 2.1
+    },
+    {
+      "label": "after-stress",
+      "procs": 4,
+      "ramMB": 892.5,
+      "cpuPct": 13
+    }
+  ],
+  "heapBoot": 21.4,
+  "heapAfter": 22.8
+}

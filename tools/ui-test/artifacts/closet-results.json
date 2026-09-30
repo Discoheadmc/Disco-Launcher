@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Closet dialog opened",
+    "ok": true,
+    "detail": "undefined"
+  },
+  {
+    "name": "Add-skin editor opens",
+    "ok": true,
+    "detail": "{\"editorOpen\":true,\"hasDropZone\":true}"
+  },
+  {
+    "name": "Skin file loaded into editor (preview + name)",
+    "ok": false,
+    "detail": "{\"previewShown\":false,\"name\":\"\",\"equipEnabled\":false}"
+  },
+  {
+    "name": "Save & equip completes (dialog closes)",
+    "ok": false,
+    "detail": "refresh | Discoheadmc | Microsoft | delete | expand_more | checkroom | Yerel Gardırop | PELERİNİNİZİ DEĞİŞTİRİN | block | ÖZEL PELERİN | upload | PNG Seç"
+  },
+  {
+    "name": "Launcher media protocol responds",
+    "ok": true,
+    "detail": "status: 404"
+  },
+  {
+    "name": "Test skin deleted (cleanup)",
+    "ok": false,
+    "detail": "false"
+  }
+]

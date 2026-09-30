@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Eski instance şeridi kaldırıldı (0 item)",
+    "ok": true,
+    "detail": "item sayısı: 0"
+  },
+  {
+    "name": "Tek buton (aktif ikon + ok)",
+    "ok": true,
+    "detail": "{\"sidebar\":true,\"oldStrip\":0,\"button\":true,\"accounts\":true,\"store\":true,\"settings\":true,\"btnImage\":true,\"btnChevron\":true}"
+  },
+  {
+    "name": "Profil ikonu ayrı duruyor",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "Mağaza ikonu ayrı duruyor",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "Ayarlar ikonu ayrı duruyor",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "Popover açılıyor + instance listesi",
+    "ok": true,
+    "detail": "[\"\",\"\",\"\"]"
+  },
+  {
+    "name": "Instance tıklanınca navigasyon + seçim",
+    "ok": true,
+    "detail": "tıklanan: \"Fabulously Optimized-15.0.0-alpha.3\" / hash: #/me -> #/, ikon değişti: true, seçili: [\"\"]"
+  },
+  {
+    "name": "Seçimden sonra popover kapanıyor",
+    "ok": true,
+    "detail": ""
+  }
+]

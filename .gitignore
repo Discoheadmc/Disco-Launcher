@@ -24,8 +24,11 @@ package-lock.json
 ## CODE EDITORS
 !.vscode/
 !.zed/
-/docs/
+/docs/*
 !/docs/tutorial/
+# Disco: hand-written docs (not TypeDoc output)
+!/docs/*.md
+!/docs/images/
 
 # e2e artifacts
 e2e/artifacts/

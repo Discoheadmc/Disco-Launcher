@@ -1,118 +1,127 @@
 <p align="center">
-  <img alt="Disco Launcher" width="100" src="xmcl-electron-app/icons/dark@256x256.png">
+  <img alt="Disco Launcher" width="120" src="xmcl-electron-app/icons/dark@256x256.png">
 </p>
 
 <h1 align="center">Disco Launcher</h1>
 
 <p align="center">
-  A fast, lightweight, privacy-friendly Minecraft launcher — focused on the essentials and built for low-end machines.
+  <strong>Hızlı, hafif ve gizlilik dostu bir Minecraft launcher'ı — low-end makineler için tasarlandı.</strong><br>
+  A fast, lightweight, privacy-friendly Minecraft launcher, built for low-end machines.
 </p>
 
 <p align="center">
-  <a href="#features">Features</a> ·
-  <a href="#how-is-disco-launcher-different-from-xmcl">Differences from XMCL</a> ·
-  <a href="#development">Development</a> ·
-  <a href="#building">Building</a>
+  <a href="#-özellikler">Özellikler</a> ·
+  <a href="#-ekran-görüntüleri">Ekran Görüntüleri</a> ·
+  <a href="#-xmcl-farkı-nedir">XMCL Farkı</a> ·
+  <a href="#-kurulum">Kurulum</a> ·
+  <a href="#-geliştirme">Geliştirme</a> ·
+  <a href="#-lisans">Lisans</a><br>
+  <a href="README.en.md">🇬🇧 English version</a>
+</p>
+
+<p align="center">
+  <img alt="platform" src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-2d333b?logo=windows95&logoColor=white">
+  <img alt="node" src="https://img.shields.io/badge/Node.js-%E2%89%A522.16-339933?logo=nodedotjs&logoColor=white">
+  <img alt="license" src="https://img.shields.io/badge/license-MIT-green">
+  <img alt="based on" src="https://img.shields.io/badge/fork%20of-XMCL-8A2BE2">
+  <img alt="privacy" src="https://img.shields.io/badge/telemetry-none-success">
 </p>
 
 ---
 
-Disco Launcher is a fork of the open-source [X Minecraft Launcher (XMCL)](https://github.com/Voxelum/x-minecraft-launcher), rebuilt around a single idea: **keep what makes a launcher great, strip everything else**. On top of that cleanup it adds its own skin & cape management, a redesigned Prism-inspired UI, and hardened networking defaults.
+**Disco Launcher**, açık kaynak [X Minecraft Launcher (XMCL)](https://github.com/Voxelum/x-minecraft-launcher) projesinin bir fork'u; tek bir fikir etrafında yeniden inşa edildi: **bir launcher'ı iyi yapan şeyi koru, geri kalanını çıkar.** Bu sadeleştirmenin üzerine kendi kaplama & pelerin yönetimi, Prism'den ilham alan düz arayüz, "Başlat" butonuna özel renk seçici ve sağlamlaştırılmış ağ varsayılanları eklendi.
 
-## Features
+## ✨ Özellikler
 
-- 🪶 **Lightweight by design.** Telemetry, auto-update polling, multiplayer/P2P networking, the XMCL.org account backend and the AI assistant were all removed. Less code, fewer background processes, faster startup.
-- 🔐 **Two account types, zero clutter.** Sign in with a **Microsoft account** (OAuth device code / grant code) or create **offline accounts** for LAN and `online-mode=false` servers.
-- 🧥 **Local Closet (skin library).** Import skins from a PNG file, a URL, or fetch them by player name. Save skins to a local library and equip them per account — works for both Microsoft and offline accounts.
-- 🎨 **Custom cape.** Attach your own PNG as a "custom cape" that lives entirely on your machine. It is independent from Mojang's official cape entitlements, never uploaded anywhere, and per account: Microsoft accounts keep using their real, official capes alongside it; offline accounts finally get capes at all.
-- 🎮 **Offline skins that actually show up in game.** A built-in, launcher-local yggdrasil-compatible endpoint serves your offline profile's skin (and cape) to the game through authlib-injector during launch — no third-party services involved.
-- 🧩 **Modpack market without the noise.** Browse and install CurseForge, Modrinth and FTB modpacks with full search filters (game version, mod loader, categories, sort). The flaky "Trending" carousel is gone; the discover grid is the default view.
-- 🗂 **Multi-instance management.** Isolate versions, mods and settings per instance; shared assets/libraries are hard-linked to save disk space.
-- 💬 **Discord Rich Presence.** Show what you're playing using Disco Launcher's own Discord application.
-- 🖥 **Cross-platform targets.** Windows (NSIS installer), macOS (dmg), Linux (deb/rpm/AppImage/tar.xz/pacman). Windows is the primary, actively tested platform.
+- 🪶 **Hafif** — telemetri, oto-güncelleme, P2P çok oyunculu ve AI asistanı yok
+- 🔐 **Microsoft + çevrimdışı hesaplar**
+- 🧥 **Yerel kaplamalar & özel pelerin** — çevrimdışı kaplamalar oyunda görünür
+- 🧩 **Mod paketi mağazası** — CurseForge (kendi API anahtarınla), Modrinth, FTB
+- 🎨 **Prism-minimal tema** — 8 renk seçici; "Başlat" butonu rengi dahil
+- 🗂 **Çoklu instance** · 💬 **Discord Rich Presence** · 🖥 **Windows / macOS / Linux**
 
-## How is Disco Launcher different from XMCL?
+## 📸 Ekran Görüntüleri
 
-Disco Launcher started as an optimization fork of XMCL. The table below sums up the intentional deltas:
+<p align="center">
+  <img alt="Ana ekran" width="820" src="docs/images/home.png">
+</p>
+<p align="center"><em>Ana ekran — instance ızgarası, sağda tam yükseklikli hızlı eylem paneli</em></p>
 
-| Area | XMCL | Disco Launcher |
+<p align="center">
+  <img alt="Görünüm ayarları" width="820" src="docs/images/appearance.png">
+</p>
+<p align="center"><em>Görünüm ayarları — 8 renk seçicisi ve "Başlat" butonu için özel renk</em></p>
+
+## 🆚 XMCL Farkı Nedir?
+
+Disco Launcher, XMCL'nin optimizasyon fork'u olarak başladı. Bilinçli farkların özeti:
+
+| Alan | XMCL | Disco Launcher |
 | --- | --- | --- |
-| Accounts | Microsoft, offline, ely.by, littleskin.cn, arbitrary authlib-injector servers, XMCL.org account | **Microsoft + offline only** (third-party yggdrasil account system code removed) |
-| Multiplayer | XMCL Together P2P multiplayer, peer hosting, network diagnostics | **Removed** |
-| Auto-update | Built-in updater (electron-updater style flows) | **Removed** — update by installing a new setup bundle |
-| Telemetry | Azure/OTel-based telemetry & tracing | **Removed** — nothing is collected or sent |
-| AI assistant | Built-in AI chat, crash analysis, market agent | **Removed** |
-| News section & Minecraft friends | Shipped in the sidebar | **Removed** |
-| Skins | Skin library ("Local Closet") for Microsoft accounts | **Kept and fixed** — the closet dialog now opens for both account types; offline equips are fully local (no Mojang request) |
-| Capes | Official Mojang cape picker (Microsoft accounts only) | Official picker untouched **plus a launcher-local custom cape** (any account, your own PNG, stored per account in the launcher data folder) |
-| Offline skins in game | Not served by default | **Launcher-local yggdrasil endpoint** injects the offline profile's textures at launch |
-| Modpack store | Discover grid + "Trending" featured carousel | Discover grid only — the trending section and its featured API calls were removed |
-| Branding | XMCL user agent, XMCL Discord app | `discolauncher/disco-launcher` user agent, own Discord application id, own installer (`DiscoLauncher-Setup-*.exe`) |
-| UI | Original XMCL look | **Prism-inspired flat restyle** for login, settings, create-game and profile screens |
+| Hesaplar | Microsoft, çevrimdışı, ely.by, littleskin, XMCL.org | **Sadece Microsoft + çevrimdışı** |
+| Çok oyunculu | XMCL Together P2P | **Kaldırıldı** |
+| Otomatik güncelleme | Yerleşik updater | **Kaldırıldı** — yeni setup paketi kur |
+| Telemetri | Azure/OTel | **Kaldırıldı** — hiçbir şey toplanmaz |
+| AI asistan | Yerleşik sohbet/analiz | **Kaldırıldı** |
+| Haberler & Minecraft arkadaşları | Kenar çubuğunda | **Kaldırıldı** |
+| Kaplamalar | Skin library (sadece MS hesabı) | **Korundu ve düzeltildi** — iki hesap türünde de açılır |
+| Pelerinler | Resmi Mojang seçici (MS) | Resmi seçici **+ launcher-yerel custom cape** |
+| Çevrimdışı kaplama oyunda | Varsayılan yok | **Yerel yggdrasil ucu** enjekte eder |
+| Mod paketi mağazası | Keşif + "Trending" karuseli | Sadece keşif ızgarası; CF API anahtarı, FTB liste modu |
+| Tema | Orijinal XMCL görünümü | **Prism-minimal restyle** + 8 renk seçici + Başlat butonu rengi |
+| Marka | XMCL user agent, XMCL Discord app | `discolauncher/disco-launcher` UA, kendi Discord uygulaması, kendi installer'ı |
 
-What stays the same: the entire [@xmcl/*](packages) core library family, instance/resource linking architecture, CurseForge & Modrinth integrations, and the multi-instance model.
+Değişmeyen: [@xmcl/*](packages) çekirdek kütüphane ailesi, instance/resource bağlama mimarisi, CurseForge & Modrinth entegrasyonları ve çoklu instance modeli.
 
-## Development
+## 📦 Kurulum
 
-**Prerequisites**
+En son `DiscoLauncher-Setup-*.exe` (+.sha256) paketini [Releases](../../releases) sayfasından indir ve kur. Güncellemeler de aynı şekilde yeni paketle yapılır.
 
-- [Node.js](https://nodejs.org/) **≥ 22.16** (Node 22 LTS recommended)
-- [pnpm](https://pnpm.io/) 11 (Corepack picks it up automatically — `corepack enable`)
+## 🛠 Geliştirme
 
-**Getting started**
+**Gereksinimler**
+
+- [Node.js](https://nodejs.org/) **≥ 22.16** (Node 22 LTS önerilir)
+- [pnpm](https://pnpm.io/) 11 (Corepack otomatik alır — `corepack enable`)
+
+**Başlangıç**
 
 ```bash
-# 1. Install dependencies (workspace-wide, uses pnpm workspaces)
+# 1. Bağımlılıkları kur (workspace geneli)
 pnpm install --frozen-lockfile
 
-# 2. Start the renderer dev server (http://localhost:3000)
+# 2. Renderer dev sunucusunu başlat (http://localhost:3000)
 pnpm dev:renderer
 
-# 3. In a second terminal, compile & launch the Electron main process
+# 3. İkinci terminalde Electron ana sürecini derle & başlat
 pnpm dev:main
 ```
 
-The dev build loads the UI from `http://localhost:3000`; renderer changes hot-reload. Renderer production build + main-process checks are what CI gates on.
+**Sık kullanılan komutlar**
 
-**Useful commands**
-
-| Command | What it does |
+| Komut | İşlev |
 | --- | --- |
-| `pnpm check` | Type-checks every workspace package (`tsc`/`vue-tsc --noEmit`) |
-| `pnpm lint` | OxLint across all packages |
-| `pnpm test` | Runs the vitest unit suites |
-| `pnpm build:renderer` | Production build of the Vue renderer |
-| `pnpm dev:main` / `pnpm dev:renderer` | Dev runners for main process / renderer |
-| `pnpm test:e2e:ci` | Deterministic, network-free Playwright e2e suite (see [e2e](e2e)) |
+| `pnpm check` | Tüm workspace paketlerini tip kontrolünden geçirir |
+| `pnpm lint` | Tüm paketlerde OxLint |
+| `pnpm test` | Vitest unit testleri |
+| `pnpm build:renderer` | Vue renderer üretim derlemesi |
+| `pnpm dev:main` / `pnpm dev:renderer` | Ana süreç / renderer dev çalıştırıcıları |
+| `pnpm test:e2e:ci` | Ağsız, deterministik Playwright e2e ([e2e](e2e)) |
 
-> Conventions for agents and contributors live in [AGENTS.md](AGENTS.md) and [CONTRIBUTING.md](CONTRIBUTING.md).
+> Katkı ve agent kuralları: [AGENTS.md](AGENTS.md), [CONTRIBUTING.md](CONTRIBUTING.md)
 
-## Building
-
-Disco Launcher uses the XMCL build pipeline (esbuild + electron-builder, driven by `xmcl-electron-app/build.ts`):
+**Derleme**
 
 ```bash
-# Production renderer bundle + main process bundle
+# Renderer + ana süreç üretim derlemesi
 pnpm build
 
-# Full platform packaging through electron-builder
+# electron-builder ile tam paketleme
 pnpm build:all
 ```
 
-Packaging targets are declared in [`xmcl-electron-app/build/electron-builder.config.ts`](xmcl-electron-app/build/electron-builder.config.ts):
+Hedefler [`xmcl-electron-app/build/electron-builder.config.ts`](xmcl-electron-app/build/electron-builder.config.ts) içinde tanımlı: **Windows** NSIS (`DiscoLauncher-Setup-<sürüm>.exe` + sha256), **macOS** dmg, **Linux** deb/rpm/AppImage/tar.xz/pacman.
 
-- **Windows** — NSIS installer (produces `DiscoLauncher-Setup-<version>.exe`, plus a `.sha256` checksum)
-- **macOS** — dmg
-- **Linux** — deb, rpm, AppImage, tar.xz, pacman
+## 📄 Lisans
 
-For a local Windows smoke build without packaging the full matrix, `pnpm --prefix xmcl-electron-app compile` emits a production main bundle (`HAS_DEV_SERVER=false`) that serves the built renderer — handy for verifying the packaged app path before running `build:all`.
-
-## License
-
-[MIT](LICENSE) — Disco Launcher inherits XMCL's MIT license. All credit for the original launcher goes to the [XMCL team](https://github.com/Voxelum/x-minecraft-launcher) and its contributors.
-
-## Credits & Acknowledgments
-
-Disco Launcher would not exist without XMCL and its community. Original launcher, core libraries and years of maintenance by **[CI010](https://github.com/ci010)** and the XMCL contributors — thank you.
-
-Localization contributions, package maintainers and the rest of the upstream acknowledgments are listed in the [upstream README](https://github.com/Voxelum/x-minecraft-launcher#credits--acknowledgments).
+[MIT](LICENSE) — Disco Launcher, XMCL'nin MIT lisansını devralır. Orijinal launcher için tüm katkı [XMCL ekibine](https://github.com/Voxelum/x-minecraft-launcher) aittir; yerelleştirme ve bakım emeği için upstream [teşekkürler bölümüne](https://github.com/Voxelum/x-minecraft-launcher#credits--acknowledgments) bakabilirsin.
