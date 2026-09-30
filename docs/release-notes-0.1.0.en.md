@@ -21,7 +21,7 @@ The first public release of Disco Launcher: an XMCL-based, Windows-focused, ligh
 
 ### Stripping It Down
 
-Deliberate removals from upstream XMCL: the P2P multiplayer stack, third-party accounts (ely.by, LittleSkin, xmcl.org), the AI agent backend, the auto-update infrastructure and telemetry exporters were all removed; the News section and Minecraft friends were deleted; 17+ unused dependencies were pruned. **Result:** installer 93.85 → 91.5 MB, fewer background processes, faster startup.
+Deliberate removals from upstream XMCL: the P2P multiplayer stack, third-party accounts (ely.by, LittleSkin, xmcl.org), the AI agent backend, the auto-update infrastructure and telemetry exporters were all removed; the News section and Minecraft friends were deleted; 17+ unused dependencies were pruned. **Result:** fewer background processes, faster startup and lower resource usage while running. The 0.1.0 setup bundle is **94.23 MB**.
 
 ### Performance & Networking
 
@@ -66,6 +66,14 @@ Deliberate removals from upstream XMCL: the P2P multiplayer stack, third-party a
 - Fixed the `kUpdateSettings` injection error that crashed the menu bar on every start; the startup console is clean
 - The OptiFine resolver window is sandboxed; the splash animation is static; the .gitignore was repaired
 - The local skin service was hardened not to hang after the third-party account systems were removed
+- Fixed instance icon corruption when creating a shortcut: the builtin icons are `.webp`, and without a conversion step the raw webp bytes were written over `icon.ico` (shared `toPngIconUrl` helper; a broken favicon no longer hangs the dialog)
+- The CurseForge API key registered a new protocol handler on every settings write; the handler leak is gone and clearing the key now actually revokes the previous credential
+- The custom cape mod's Java 25 check was silently skipped when Java was set to "auto"; it now inspects the Java version XMCL will actually spawn
+- The horizontal (top/bottom) sidebar had no Settings button, making `/setting` unreachable
+- Launching from the right quick-actions panel and from the gamepad "X" button no longer skips the unauthenticated warning and the debounced instance-edit flush
+- Removed the dead "Check update" button (the auto-update infrastructure was removed as well)
+- Dropped writing the raw route path into the window title
+- Regenerated the `e2e/TESTIDS.md` registry (236 test ids)
 
 ---
 
@@ -73,7 +81,7 @@ Deliberate removals from upstream XMCL: the P2P multiplayer stack, third-party a
 
 | File | SHA-256 |
 | --- | --- |
-| `DiscoLauncher-Setup-0.1.0.exe` (≈ 91.5 MB) | `c78cda94b6e915c93667b3432d7b1d5f6555ab78b1f6237d4cd57565422c93f5` |
+| `DiscoLauncher-Setup-0.1.0.exe` (94.23 MB) | `6845ce462083eaaeed92a7dbe419241c55320bc7ab28ce6183aa1bdd003e6eb4` |
 
 **Platforms:** Windows (NSIS) is the primary, actively tested target · macOS (dmg) and Linux (deb/rpm/AppImage/tar.xz/pacman) targets are configured
 

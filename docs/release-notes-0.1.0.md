@@ -21,7 +21,7 @@ Disco Launcher'ın ilk genel sürümü: XMCL tabanlı, Windows odaklı, Türkçe
 
 ### Sadeleştirme ve Hafifletme
 
-Upstream XMCL'den bilinçli çıkarımlar: P2P çok oyunculu sistem, üçüncü parti hesaplar (ely.by, LittleSkin, xmcl.org), AI agent arka ucu, otomatik güncelleme altyapısı ve telemetri ihracatçıları kaldırıldı; haber bölümü ve Minecraft arkadaşları silindi; kullanılmayan 17+ bağımlılık budandı. **Sonuç:** installer 93,85 → 91,5 MB, daha az arka plan süreci, daha hızlı başlatma.
+Upstream XMCL'den bilinçli çıkarımlar: P2P çok oyunculu sistem, üçüncü parti hesaplar (ely.by, LittleSkin, xmcl.org), AI agent arka ucu, otomatik güncelleme altyapısı ve telemetri ihracatçıları kaldırıldı; haber bölümü ve Minecraft arkadaşları silindi; kullanılmayan 17+ bağımlılık budandı. **Sonuç:** daha az arka plan süreci, daha hızlı başlatma ve çalışma anında daha düşük kaynak tüketimi. 0.1.0 kurulum paketi **94,23 MB**.
 
 ### Performans ve Ağ
 
@@ -66,6 +66,14 @@ Upstream XMCL'den bilinçli çıkarımlar: P2P çok oyunculu sistem, üçüncü 
 - Her açılışta menü çubuğunu çökerten `kUpdateSettings` injection hatası giderildi; açılış konsolu temiz
 - OptiFine çözümleyici penceresi sandbox'a alındı; splash animasyonu sabitlendi; .gitignore onarıldı
 - Yerel kaplama servisi üçüncü parti hesap sistemlerinin kaldırılmasından sonra askıda kalmaması için sağlamlaştırıldı
+- Kısayol oluştururken instance ikonu bozulması giderildi: yerleşik ikonlar `.webp` olduğu için dönüştürme yapılmadan `icon.ico` üzerine ham webp yazılıyordu (paylaşılan `toPngIconUrl` yardımcısı; kırık favicon'da artık takılmıyor)
+- CurseForge API anahtarı her ayar değişiminde yeni bir protokol handler kaydediyordu; handler sızıntısı giderildi ve anahtarı temizleme artık gerçekten eski kimlik bilgisini geri çekiyor
+- Özel pelerin modunun Java 25 kontrolü "otomatik Java" seçiliyken sessizce atlanıyordu; artık XMCL'nin gerçekten çalıştıracağı Java sürümüne bakılıyor
+- Yatay (üst/alt) kenar çubuğunda Ayarlar düğmesi eksikti ve `/setting` yoluna ulaşılamıyordu
+- Sağ hızlı eylem panelinden ve gamepad "X" tuşundan başlatma artık giriş uyarısı ile debounce'lu instance düzenleme akışını atlamıyor
+- Ölü "Güncelleştirmeyi kontrol et" düğmesi kaldırıldı (güncelleme altyapısı da kaldırılmıştı)
+- Pencere başlığına ham rota yolu yazılması kaldırıldı
+- `e2e/TESTIDS.md` kayıt defteri yeniden üretildi (236 testid)
 
 ---
 
@@ -73,7 +81,7 @@ Upstream XMCL'den bilinçli çıkarımlar: P2P çok oyunculu sistem, üçüncü 
 
 | Dosya | SHA-256 |
 | --- | --- |
-| `DiscoLauncher-Setup-0.1.0.exe` (≈ 91,5 MB) | `c78cda94b6e915c93667b3432d7b1d5f6555ab78b1f6237d4cd57565422c93f5` |
+| `DiscoLauncher-Setup-0.1.0.exe` (94,23 MB) | `6845ce462083eaaeed92a7dbe419241c55320bc7ab28ce6183aa1bdd003e6eb4` |
 
 **Platformlar:** Windows (NSIS) birincil ve aktif test edilen hedef · macOS (dmg) ve Linux (deb/rpm/AppImage/tar.xz/pacman) hedefleri yapılandırıldı
 
