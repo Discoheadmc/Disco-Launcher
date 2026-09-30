@@ -43,7 +43,18 @@ const descriptionId = useId()
   align-items: center;
   gap: 16px;
   min-height: 64px;
-  padding: 8px 16px;
+  padding: 10px 16px;
+  transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Gentle hover on interactive rows only (checkbox rows carry this class) */
+.setting-item-checkbox:hover {
+  background: rgba(var(--v-theme-on-surface), 0.03);
+}
+
+.setting-item-checkbox:focus-visible {
+  outline: none;
+  background: rgba(var(--v-theme-on-surface), 0.05);
 }
 
 .setting-item__preaction {
@@ -64,13 +75,16 @@ const descriptionId = useId()
   display: flex;
   align-items: center;
   font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
   line-height: 1.5;
 }
 
 .setting-item__subtitle {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   line-height: 1.4;
-  opacity: 0.7;
+  opacity: 0.62;
+  margin-top: 2px;
 }
 
 .setting-item__action {

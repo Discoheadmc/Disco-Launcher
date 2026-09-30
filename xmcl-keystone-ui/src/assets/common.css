@@ -831,3 +831,17 @@ a {
 .v-chip--variant-outlined {
   border-color: rgba(var(--v-border-color), var(--v-border-opacity)) !important;
 }
+
+/* Disco: square, minimal switches (Minecraft-flavored). Applied globally to
+   every v-switch — settings rows, market filters, dialogs, quick menus.
+   Only the shape changes: sharp-ish corners on the track and a square knob
+   instead of the pill/circle Material look. Colors and sizes stay on the
+   theme tokens. */
+.v-switch .v-switch__track {
+  border-radius: 3px !important;
+}
+
+.v-switch .v-switch__thumb {
+  border-radius: 2px !important;
+  box-shadow: none !important;
+}

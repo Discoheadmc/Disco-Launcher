@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SettingCard class="mb-4" :title="t('setting.sidebarStyle')" icon="dashboard">
+    <SettingCard class="mb-4" :title="t('setting.sidebarPosition')" icon="dashboard">
       <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
         <div class="md:col-span-5 flex justify-center items-center">
           <!-- Live Preview -->
@@ -10,21 +10,22 @@
                 :class="[
                   'sidebar-preview',
                   `position-${sidebarPosition}`,
-                  `style-${sidebarStyle}`,
-                  `align-${sidebarAlign}`,
                 ]"
-                :style="{ transform: `scale(${sidebarScale / 100})` }"
               >
                 <div class="sidebar-preview-main">
-                  <div v-if="sidebarStyle === 'classic'" class="sidebar-preview-classic">
-                    <div class="preview-sidebar-item"></div>
-                    <div class="preview-sidebar-item"></div>
-                    <div class="preview-sidebar-item"></div>
+                  <!-- Disco (task 4): Classic style only — the notch preview
+                       branch was removed together with the "Sidebar Style"
+                       setting. The notch preview markup is kept as a comment:
+                  <div class="sidebar-preview-notch">
+                    <div class="sidebar-preview-notch-item"></div>
+                    <div class="sidebar-preview-notch-item"></div>
+                    <div class="sidebar-preview-notch-item"></div>
                   </div>
-                  <div v-else class="sidebar-preview-notch">
-                    <div class="sidebar-preview-notch-item"></div>
-                    <div class="sidebar-preview-notch-item"></div>
-                    <div class="sidebar-preview-notch-item"></div>
+                  -->
+                  <div class="sidebar-preview-classic">
+                    <div class="preview-sidebar-item"></div>
+                    <div class="preview-sidebar-item"></div>
+                    <div class="preview-sidebar-item"></div>
                   </div>
                   <div class="sidebar-preview-content">
                     <div class="sidebar-preview-content-header"></div>
@@ -40,33 +41,10 @@
         </div>
         <div class="md:col-span-7">
           <v-list class="transparent-list">
-            <!-- Style -->
-            <SettingItem
-              :title="t('setting.sidebarStyle')"
-              :description="t('setting.sidebarStyleHint')"
-            >
-              <template #action>
-                <v-btn-toggle
-                  v-roving-tabindex
-                  v-model="sidebarStyleIndex"
-                  mandatory
-                  density="compact"
-                  color="primary"
-                  :aria-label="t('setting.sidebarStyle')"
-                >
-                  <v-btn size="small">
-                    <v-icon start size="small">view_sidebar</v-icon>
-                    {{ t('setting.sidebarClassic') }}
-                  </v-btn>
-                  <v-btn size="small">
-                    <v-icon start size="small">dashboard</v-icon>
-                    {{ t('setting.sidebarNotch') }}
-                  </v-btn>
-                </v-btn-toggle>
-              </template>
-            </SettingItem>
-            <v-divider class="my-2" />
-
+            <!-- Disco (task 4): the "Sidebar Style" (Classic/Notch) selector was
+                 removed — the sidebar always renders in the Classic style. The
+                 removed block also contained the notch-only Align / Auto-hide /
+                 Scale controls. Position and pinned-instance settings remain. -->
             <!-- Position -->
             <SettingItem :title="t('setting.sidebarPosition')">
               <template #action>
@@ -84,65 +62,9 @@
                   <v-btn size="small">
                     <v-icon size="small">arrow_forward</v-icon>
                   </v-btn>
-                  <v-btn v-if="sidebarStyle === 'notch'" size="small">
-                    <v-icon size="small">arrow_upward</v-icon>
-                  </v-btn>
-                  <v-btn v-if="sidebarStyle === 'notch'" size="small">
-                    <v-icon size="small">arrow_downward</v-icon>
-                  </v-btn>
                 </v-btn-toggle>
               </template>
             </SettingItem>
-
-            <!-- Notch Specific -->
-            <template v-if="sidebarStyle === 'notch'">
-              <v-divider class="my-2" />
-              <SettingItem :title="t('setting.sidebarAlign')">
-                <template #action>
-                  <v-btn-toggle
-                    v-roving-tabindex
-                    v-model="sidebarAlignIndex"
-                    mandatory
-                    dense
-                    color="primary"
-                    rounded="sm"
-                    :aria-label="t('setting.sidebarAlign')"
-                  >
-                    <v-btn size="small"><v-icon size="small">format_align_left</v-icon></v-btn>
-                    <v-btn size="small"><v-icon size="small">format_align_center</v-icon></v-btn>
-                    <v-btn size="small"><v-icon size="small">format_align_right</v-icon></v-btn>
-                  </v-btn-toggle>
-                </template>
-              </SettingItem>
-
-              <v-divider class="my-2" />
-              <SettingItem
-                :title="t('setting.sidebarAutoHide')"
-                :description="t('setting.sidebarAutoHideHint')"
-              >
-                <template #action>
-                  <v-switch v-model="sidebarAutoHide" color="primary" hide-details dense />
-                </template>
-              </SettingItem>
-
-              <v-divider class="my-2" />
-              <SettingItem :title="`${t('setting.sidebarScale')} (${sidebarScale}%)`">
-                <template #action>
-                  <div class="w-32">
-                    <v-slider
-                      v-model="sidebarScale"
-                      :min="50"
-                      :max="150"
-                      :step="5"
-                      hide-details
-                      thumb-label
-                      color="primary"
-                      dense
-                    ></v-slider>
-                  </div>
-                </template>
-              </SettingItem>
-            </template>
 
             <v-divider class="my-2" />
             <!-- Show Only Pinned Instances -->
@@ -326,12 +248,12 @@ async function onDeleteTheme(name: string) {
 }
 
 // --- UI Customization State ---
+// Disco (task 4): the sidebar style is fixed to Classic — the style, notch
+// align, auto-hide and scale settings were removed. The `sidebarSettings`
+// store still carries them (harmless, ignored by the layout) so the notch
+// implementation remains intact for a possible future re-introduction.
 const sidebarSettings = useInjectSidebarSettings()
 const sidebarPosition = sidebarSettings.position
-const sidebarStyle = sidebarSettings.style
-const sidebarAlign = sidebarSettings.align
-const sidebarScale = sidebarSettings.scale
-const sidebarAutoHide = sidebarSettings.autoHide
 const sidebarShowOnlyPinned = sidebarSettings.showOnlyPinned
 const myStuffStyle = useLocalStorage('myStuffStyle', 'new', { writeDefaults: false }) as Ref<'old' | 'new'>
 
@@ -349,15 +271,6 @@ const sidebarPositionIndex = computed({
   },
 })
 
-// Sidebar Style Selector
-const sidebarStyles = ['classic', 'notch'] as const
-const sidebarStyleIndex = computed({
-  get: () => sidebarStyles.indexOf(sidebarStyle.value),
-  set: (v) => {
-    sidebarStyle.value = sidebarStyles[v]
-  },
-})
-
 // My Stuff Style Selector
 const myStuffStyles = ['old', 'new'] as const
 const myStuffStyleIndex = computed({
@@ -367,29 +280,7 @@ const myStuffStyleIndex = computed({
   },
 })
 
-// Sidebar Alignment Selector
-const sidebarAlignments = ['start', 'center', 'end'] as const
-const sidebarAlignIndex = computed({
-  get: () => {
-    const aligns = ['start', 'center', 'end']
-    return aligns.indexOf(sidebarAlign.value)
-  },
-  set: (v: number) => {
-    const aligns: Array<'start' | 'center' | 'end'> = ['start', 'center', 'end']
-    sidebarAlign.value = aligns[v] || 'center'
-  },
-})
 
-// --- Watchers ---
-// Auto-reset position to Left when switching to Classic from Top/Bottom
-watch(sidebarStyle, (newStyle) => {
-  if (
-    newStyle === 'classic' &&
-    (sidebarPosition.value === 'top' || sidebarPosition.value === 'bottom')
-  ) {
-    sidebarPosition.value = 'left'
-  }
-})
 </script>
 
 <style scoped>
