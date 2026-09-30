@@ -6,6 +6,23 @@
       :show-minecraft="showMinecraft"
       auto-select-latest-on-click
     />
+    <!-- Disco: opt-in WSkinLoader (custom cape in-game) — fabric only -->
+    <v-list-item v-if="isManual && wskinLoaderAvailable" class="pt-0 pb-2 px-0" density="compact">
+      <v-checkbox
+        data-testid="add-instance-wskinloader"
+        v-model="data.wskinLoader"
+        hide-details
+        density="compact"
+      >
+        <template #label>
+          <v-icon start>checkroom</v-icon>
+          {{ t('instances.wskinLoader') }}
+          <v-icon size="tiny" class="ml-1" v-shared-tooltip="() => t('instances.wskinLoaderHint')">
+            question_mark
+          </v-icon>
+        </template>
+      </v-checkbox>
+    </v-list-item>
     <!-- Advanced Settings -->
     <v-list-subheader data-testid="add-instance-advanced" class="my-4">
       {{ t('setting.advancedSettings') }}
@@ -129,7 +146,7 @@ defineProps({
   },
 })
 
-const { data, linkPreferences, isManual } = injection(kInstanceCreation)
+const { data, linkPreferences, isManual, wskinLoaderAvailable } = injection(kInstanceCreation)
 const { t } = useI18n()
 const { versions } = injection(kLocalVersions)
 

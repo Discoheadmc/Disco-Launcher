@@ -37,7 +37,8 @@ export function useTutorialModel() {
       },
     },
     {
-      element: '#launch-button',
+      // Disco: header launch pill removed; point at the side panel button.
+      element: '[data-testid="panel-launch"]',
       popover: {
         title: t('launch.launch'),
         description: t('tutorial.launchDescription'),
