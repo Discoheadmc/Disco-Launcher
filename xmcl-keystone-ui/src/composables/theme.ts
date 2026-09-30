@@ -46,6 +46,12 @@ export interface UIThemeDataV1 {
     lightSuccessColor: string
     lightAccentColor: string
     lightCardColor: string
+    /**
+     * Disco: optional dedicated color for the instance "launch" button.
+     * Empty string means "not customized" - the button keeps its built-in
+     * hardcoded styling. Applies to both dark and light modes.
+     */
+    launchButtonColor?: string
   }
 
   blur: {
@@ -104,7 +110,8 @@ export function getDefaultTheme(): UIThemeDataV1 {
       lightWarningColor: '#FB8C00',
       lightSuccessColor: '#4CAF50',
       lightAccentColor: '#7C8CF8',
-      lightCardColor: '#e0e0e080' },
+      lightCardColor: '#e0e0e080',
+      launchButtonColor: '' },
     backgroundColorOverlay: true,
     backgroundVolume: 1,
     backgroundImage: undefined,
@@ -331,6 +338,10 @@ export function useThemeWritter(
     save()
   }, 800)
 
+  // Disco: dedicated launch-button color, bound directly on the launch button
+  // (InstanceActionsPanel). Empty (or fully transparent) value = not
+  // customized - the button keeps its built-in green styling.
+
   const isDark = useIsDark(currentTheme)
   const dark = computed({
     get: () => currentTheme.value.dark,
@@ -552,6 +563,19 @@ export function useThemeWritter(
       }
       writeTheme()
     } })
+  // Disco: dedicated launch-button color. Mode-independent (single field):
+  // empty string = not customized, the button uses its built-in style. A fully
+  // transparent value (alpha 00) is treated as "cleared" so the picker's
+  // alpha slider cannot leave the button invisible.
+  const launchButtonColor = computed({
+    get: () => {
+      const v = currentTheme.value.colors.launchButtonColor ?? ''
+      return v && isTransparentHex(v) ? '' : v
+    },
+    set: (v: string) => {
+      currentTheme.value.colors.launchButtonColor = v && isTransparentHex(v) ? '' : v
+      writeTheme()
+    } })
   const font = computed(() => currentTheme.value.font)
   const fontSize = computed({
     get() {
@@ -584,6 +608,7 @@ export function useThemeWritter(
     colors.darkSuccessColor = defaultColors.darkSuccessColor
     colors.darkAccentColor = defaultColors.darkAccentColor
     colors.darkCardColor = defaultColors.darkCardColor
+    colors.launchButtonColor = defaultColors.launchButtonColor
     writeTheme()
   }
 
@@ -600,6 +625,7 @@ export function useThemeWritter(
     colors.lightSuccessColor = defaultColors.lightSuccessColor
     colors.lightAccentColor = defaultColors.lightAccentColor
     colors.lightCardColor = defaultColors.lightCardColor
+    colors.launchButtonColor = defaultColors.launchButtonColor
     writeTheme()
   }
 
@@ -760,6 +786,7 @@ export function useThemeWritter(
     successColor,
     accentColor,
     cardColor,
+    launchButtonColor,
     font,
     fontSize,
     borderRadiusEnabled,
@@ -781,6 +808,15 @@ export function useThemeWritter(
 }
 
 /**
+ * Disco: a fully transparent 8-digit hex (alpha 00) means "not customized".
+ * Opaque colors that merely end in 00 (e.g. #FFCC00) are NOT cleared, hence
+ * the length guard. Alpha hex digits have no case, so no /i needed.
+ */
+function isTransparentHex(v: string) {
+  return v.length >= 9 && v.endsWith('00')
+}
+
+/**
  * Normalize 6-digit hex colors to 8-digit (append opaque alpha) so the
  * alpha-aware CSS variables render consistently. Mutates and returns `theme`.
  */
@@ -795,6 +831,10 @@ function normalizeThemeColors(theme: UIThemeDataV1) {
   c.lightSideBarColor = ensureRGBAHex(c.lightSideBarColor)
   c.lightBackground = ensureRGBAHex(c.lightBackground)
   c.lightCardColor = ensureRGBAHex(c.lightCardColor)
+  // Disco: a fully transparent launch-button color means "not customized".
+  if (c.launchButtonColor && isTransparentHex(c.launchButtonColor)) {
+    c.launchButtonColor = ''
+  }
   return theme
 }
 
@@ -945,6 +985,13 @@ export function useTheme(
   const cardColor = computed(() =>
     isDark.value ? colors.value.darkCardColor : (colors.value.lightCardColor ?? ''),
   )
+  // Disco: dedicated launch-button color. Mode-independent single field;
+  // empty (or fully transparent) = not customized (button keeps its
+  // built-in style).
+  const launchButtonColor = computed(() => {
+    const v = colors.value.launchButtonColor ?? ''
+    return v && isTransparentHex(v) ? '' : v
+  })
   const font = computed(() => targetTheme.value.font)
   const fontSize = computed(() => targetTheme.value.fontSize ?? 16)
   const borderRadiusEnabled = computed(() => targetTheme.value.borderRadiusEnabled ?? true)
@@ -1096,6 +1143,7 @@ export function useTheme(
     successColor,
     accentColor,
     cardColor,
+    launchButtonColor,
     font,
     fontSize,
     borderRadiusEnabled,

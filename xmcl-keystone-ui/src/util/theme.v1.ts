@@ -93,6 +93,8 @@ export function deserialize(data: ThemeData): UIThemeDataV1 {
       lightSuccessColor: data.colors?.lightSuccessColor ?? defaultColors.lightSuccessColor,
       lightAccentColor: data.colors?.lightAccentColor ?? defaultColors.lightAccentColor,
       lightCardColor: data.colors?.lightCardColor ?? defaultColors.lightCardColor,
+      // Disco: dedicated launch-button color; absent = not customized ('').
+      launchButtonColor: data.colors?.launchButtonColor ?? defaultColors.launchButtonColor,
     },
     backgroundMusic: [],
     backgroundMusicPlayOrder: 'sequential',

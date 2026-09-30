@@ -20,6 +20,8 @@
     <button
       type="button"
       class="action-btn action-btn--primary"
+      :class="{ 'action-btn--primary--custom': !!launchButtonColor }"
+      :style="launchBtnStyle"
       data-testid="panel-launch"
       :aria-label="t('launch.launch')"
       @click="onLaunch"
@@ -113,6 +115,7 @@ import { useDialog } from '@/composables/dialog'
 import { kEnvironment } from '@/composables/environment'
 import { kInstance } from '@/composables/instance'
 import { kInstanceLaunch } from '@/composables/instanceLaunch'
+import { kTheme } from '@/composables/theme'
 import { kUserContext } from '@/composables/user'
 import { useLaunchButton } from '@/composables/launchButton'
 import { join } from '@/util/basename'
@@ -122,6 +125,18 @@ import { BaseServiceKey, InstanceServiceKey, LaunchServiceKey } from '@xmcl/runt
 
 const { t } = useI18n()
 const router = useRouter()
+
+// Disco: optional theme color dedicated to the launch button. Empty = the
+// button keeps its built-in hardcoded styling (default behavior preserved).
+// Bound directly (not via a global CSS variable) so it never depends on a
+// style tag that only exists while the settings page is mounted. The local
+// custom property also drives the hover tint in the scoped CSS below.
+const { launchButtonColor } = injection(kTheme)
+const launchBtnStyle = computed(() =>
+  launchButtonColor.value
+    ? { background: launchButtonColor.value, '--launch-btn-custom-bg': launchButtonColor.value }
+    : undefined,
+)
 
 const { instance, path, name } = injection(kInstance)
 const { kill, count } = injection(kInstanceLaunch)
@@ -233,6 +248,13 @@ const onCreateShortcut = async () => {
 
 .action-btn--primary:hover {
   background: rgba(150, 219, 89, 0.25) !important;
+}
+
+/* Disco: when a dedicated launch-button color is customized in the theme,
+   the inline background wins and the hover state derives a slightly
+   stronger tint from the same custom color. */
+.action-btn--primary--custom:hover {
+  background: color-mix(in srgb, var(--launch-btn-custom-bg) 85%, white) !important;
 }
 
 .action-btn--danger:hover:not(:disabled) {
