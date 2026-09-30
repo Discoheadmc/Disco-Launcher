@@ -1316,36 +1316,14 @@ setting:
     name: Подогнать
   backgroundImageUrl: URL-адрес изображения
   backgroundImageUrlPlaceholder: Введите URL-адрес HTTP/HTTPS для изображения
-  backgroundMusic: Фоновая музыка
-  backgroundMusicUrl: URL-адрес музыки
-  backgroundMusicUrlPlaceholder: Введите URL-адрес HTTP/HTTPS для музыки
   backgroundType: Фоновой эффект
   backgroundTypeDescription: >-
     Показывать специальный эффект на фоне (это может повлиять на производительность).
   backgroundTypes:
-    halo: Ореол
     image: Изображение
     none: Нет
-    particle: Частицы
-    video: Видео
-  backgroundVideo: Фоновое видео
-  backgroundVideoDescription: Изменить или очистить видео.
-  backgroundVideoUrl: URL-адрес видео
-  backgroundVideoUrlPlaceholder: Введите URL-адрес HTTP/HTTPS для видео
-  backgroundVideoVolume: Громкость
-  backgroundVideoVolumeDescription: Перетащите, чтобы отрегулировать громкость.
   browseRoot: Изменить
   checkUpdate: Проверить обновление
-  colorTheme:
-    appBarColor: Цвет панели приложения
-    backgroundColor: Цвет фона
-    cardColor: Цвет карточки
-    description: Изменить цвета в теме
-    errorColor: Цвет ошибки
-    name: Цвет темы и размытие
-    primaryColor: Основной цвет
-    sideBarColor: Цвет боковой панели
-    warningColor: Цвет предупреждения
   darkTheme: Тема
   darkThemeDescription: Выберите тёмную или светлую тему.
   devModeLabel: РАЗРАБОТКА
@@ -1406,13 +1384,6 @@ setting:
   network: Настройки сети
   newsPosition: Переместить раздел новостей
   officialWebsite: Официальный сайт
-  particleMode:
-    bubble: Надувание
-    name: Поведение частиц
-    push: Добавление
-    remove: Удаление
-    repulse: Отталкивание
-  particleModeDescription: Выберите поведение частиц при нажатии.
   quickLaunchSettings: Быстрый запуск
   replaceNative: Заменить нативные библиотеки
   replaceNativeDescription: >-
@@ -1435,17 +1406,9 @@ setting:
   settingsReloadHint: Лаунчер перезагрузится для применения всех настроек.
   showNewsHeader: Показать витрину новостей
   showRoot: Открыть папку
-  sidebarAlign: Выравнивание боковой панели
-  sidebarAutoHide: Авто-скрытие боковой панели
-  sidebarAutoHideHint: Скрывать боковую панель автоматически и показывать при наведении
-  sidebarClassic: Классический
-  sidebarNotch: Notch
   sidebarPosition: Положение боковой панели
-  sidebarScale: Масштаб боковой панели
   sidebarShowOnlyPinned: Показывать только закрепленные экземпляры
   sidebarShowOnlyPinnedHint: Отображать только закрепленные экземпляры на боковой панели
-  sidebarStyle: Стиль боковой панели
-  sidebarStyleHint: Выберите между классическим и современным дизайном Notch
   streamerMode: Режим стримера
   streamerModeDescription: >-
     Эта опция скроет вашу личную информацию, такую как электронная почта, в лаунчере.
@@ -1454,8 +1417,6 @@ setting:
     light: Светлая тема
     system: Использовать системную тему
   themeExport: Экспортировать тему
-  themeBorderRadius: Скругленные углы
-  themeBorderRadiusDescription: Включить или отключить скругленные углы для карточек, диалогов, меню и панелей.
   themeFont: Шрифт
   themeFontDescription: Изменить шрифт лаунчера.
   themeFontUrl: URL-адрес шрифта
@@ -1471,7 +1432,6 @@ setting:
   useBmclAPIDescription: Скачайте Minecraft в Китае с помощью BMCL-API
   useProxy: HTTP-прокси
   useProxyDescription: Адрес прокси-сервера для http-запроса
-  viewBackgroundMusic: Просмотр музыки
   setAsBackground:
     global: Сделать фоном лаунчера
     instance: Сделать фоном экземпляра

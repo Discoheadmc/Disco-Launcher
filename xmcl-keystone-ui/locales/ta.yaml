@@ -1520,35 +1520,13 @@ setting:
     name: படம் பொருத்துதல்
   backgroundImageUrl: பட URL
   backgroundImageUrlPlaceholder: படத்திற்கான HTTP/HTTPS URL-ஐ உள்ளிடவும்
-  backgroundMusic: தீம் பின்னணி இசை
-  backgroundMusicUrl: இசை URL
-  backgroundMusicUrlPlaceholder: இசைக்கான HTTP/HTTPS URL-ஐ உள்ளிடவும்
   backgroundType: பின்னணி வகை
   backgroundTypeDescription: பின்னணியில் சிறப்பு விளைவைக் காட்டு (இது செயல்திறனைப் பாதிக்கலாம்)
   backgroundTypes:
-    halo: ஒளிவட்டம் (Halo)
     image: படம்
     none: ஏதுமில்லை
-    particle: துகள்
-    video: வீடியோ
-  backgroundVideo: பின்னணி வீடியோ
-  backgroundVideoDescription: வீடியோவைத் தேர்ந்தெடுக்கவும் அல்லது நீக்கவும்
-  backgroundVideoUrl: வீடியோ URL
-  backgroundVideoUrlPlaceholder: வீடியோவிற்கான HTTP/HTTPS URL-ஐ உள்ளிடவும்
-  backgroundVideoVolume: ஒலி அளவு
-  backgroundVideoVolumeDescription: ஒலி அளவை சரிசெய்ய இழுக்கவும்
   browseRoot: உலாவுக
   checkUpdate: புதுப்பிப்பைச் சரிபார்
-  colorTheme:
-    appBarColor: ஆப் பார்
-    backgroundColor: பின்னணி நிறம்
-    cardColor: கார்டு நிறம்
-    description: தீமில் உள்ள நிறங்களை மாற்றவும்
-    errorColor: பிழை நிறம்
-    name: தீம் நிறம் மற்றும் மங்கல்
-    primaryColor: முதன்மை நிறம்
-    sideBarColor: பக்கப் பட்டி
-    warningColor: எச்சரிக்கை நிறம்
   customCss:
     advancedDescription: துவக்கியின் தற்போதைய பாணியை உங்கள் சொந்த CSS மூலம் மேலெழுதவும்.
     assistantHint: உங்களுக்குத் தேவையான தோற்றத்தை விவரிக்கவும், உங்களுக்காக நான் CSS எழுதுவேன்.
@@ -1613,13 +1591,6 @@ setting:
   network: பிணைய அமைப்புகள்
   newsPosition: செய்திப் பகுதியை நகர்த்து
   officialWebsite: அதிகாரப்பூர்வ வலைத்தளம்
-  particleMode:
-    bubble: குமிழி
-    name: துகள் பயன்முறை
-    push: தள்ளு
-    remove: அகற்று
-    repulse: விரட்டு
-  particleModeDescription: துகள் கிளிக் நடப்பதைத் தேர்ந்தெடுக்கவும்
   quickLaunchSettings: விரைவுத் தொடக்கம்
   replaceNative: சொந்த நூலகங்களை மாற்றவும்
   replaceNativeDescription: அமைப்புகளின் கட்டமைப்பிற்கு ஏற்ப சொந்த நூலகங்களை மாற்றவும்.
@@ -1646,17 +1617,9 @@ setting:
   settingsReloadHint: அனைத்து அமைப்புகளையும் பயன்படுத்த துவக்கி மீண்டும் தொடங்கும்.
   showNewsHeader: செய்தி காட்சிப் பெட்டியை மீண்டும் காட்டு
   showRoot: காட்டு
-  sidebarAlign: பக்கப்பட்டி சீரமைப்பு
-  sidebarAutoHide: பக்கப்பட்டியைத் தானாக மறை
-  sidebarAutoHideHint: பக்கப்பட்டியைத் தானாக மறைத்து, மவுஸை மேலே கொண்டு செல்லும்போது காட்டவும்
-  sidebarClassic: கிளாசிக்
-  sidebarNotch: நாட்ச்
   sidebarPosition: பக்கப்பட்டி நிலை
-  sidebarScale: பக்கப்பட்டி அளவு
   sidebarShowOnlyPinned: பின் செய்யப்பட்ட நிகழ்வுகளை மட்டும் காட்டு
   sidebarShowOnlyPinnedHint: பக்கப்பட்டியில் பின் செய்யப்பட்ட நிகழ்வுகளை மட்டுமே காண்பி
-  sidebarStyle: பக்கப்பட்டி பாணி
-  sidebarStyleHint: கிளாசிக் மற்றும் நவீன நாட்ச் வடிவமைப்பிற்கு இடையே தேர்வு செய்யவும்
   streamerMode: ஸ்ட்ரீமிங் பயன்முறை
   streamerModeDescription: இது துவக்கியில் மின்னஞ்சல் போன்ற உங்கள் தனிப்பட்ட தகவல்களை மறைக்கும்.
   theme:
@@ -1664,8 +1627,6 @@ setting:
     light: ஒளி தீம்
     system: கணினி தீமைப் பயன்படுத்து
   themeExport: தீமை ஏற்றுமதி செய்
-  themeBorderRadius: வட்டமான மூலைகள்
-  themeBorderRadiusDescription: கார்டுகள், உரையாடல்கள், மெனுக்கள் மற்றும் பேனல்களுக்கான வட்டமான மூலைகளை இயக்கவும் அல்லது முடக்கவும்.
   themeFont: எழுத்துரு
   themeFontDescription: துவக்கியின் எழுத்துருவை மாற்றவும்.
   themeFontUrl: எழுத்துரு URL
@@ -1693,7 +1654,6 @@ setting:
   useBmclAPIDescription: நீங்கள் சீனப் பெருநிலப்பரப்பில் இருக்கும்போது மைன்கிராஃப்ட்டை தரவிறக்க BMCLAPI-ஐப் பயன்படுத்தவும். (நீங்கள் சீனப் பெருநிலப்பரப்பில் இல்லையென்றால் இது உங்களைப் பாதிக்காது)
   useProxy: HTTP பதிலியாளர்
   useProxyDescription: http கோரிக்கைக்கான ப்ராக்ஸி சர்வர் முகவரி
-  viewBackgroundMusic: இசைகளைப் பார்
 settingLabel:
   global: உலகளாவிய
   globalHint: இந்த அமைப்பு உலகளாவிய அமைப்பைப் பின்பற்றும்

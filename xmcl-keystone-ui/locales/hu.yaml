@@ -1439,36 +1439,14 @@ setting:
     name: Illeszkedjen
   backgroundImageUrl: Kép URL-je
   backgroundImageUrlPlaceholder: Adja meg a kép HTTP/HTTPS URL-jét
-  backgroundMusic: Téma Háttérzene
-  backgroundMusicUrl: Zenei URL
-  backgroundMusicUrlPlaceholder: Írja be a zenéhez tartozó HTTP/HTTPS URL-t
   backgroundType: Háttérkép típusa
   backgroundTypeDescription: >-
     Speciális hatás megjelenítése a háttérben (Ez befolyásolhatja a teljesítményt)
   backgroundTypes:
-    halo: Halo
     image: Kép
     none: Nincs
-    particle: Részecskék
-    video: Videó
-  backgroundVideo: Háttér videó
-  backgroundVideoDescription: válassz vagy törölj videót
-  backgroundVideoUrl: Videó URL-je
-  backgroundVideoUrlPlaceholder: Adja meg a videó HTTP/HTTPS URL-címét
-  backgroundVideoVolume: hangerő
-  backgroundVideoVolumeDescription: húzd a hangerő beállításához
   browseRoot: Böngészés
   checkUpdate: Frissítés keresése
-  colorTheme:
-    appBarColor: Alkalmazás sáv
-    backgroundColor: Háttér színe
-    cardColor: Lap színe
-    description: A téma színeinek módosítása
-    errorColor: Hiba színe
-    name: Téma színe és elmosódása
-    primaryColor: Elsődleges szín
-    sideBarColor: Oldalsáv
-    warningColor: Figyelmeztetés színe
   darkTheme: Téma
   darkThemeDescription: Válaszd a sötét vagy világos témát
   developerMode: Fejlesztői mód
@@ -1527,13 +1505,6 @@ setting:
   network: Hálózati beállítások
   newsPosition: Hírek szekció áthelyezése
   officialWebsite: Hivatalos weboldal
-  particleMode:
-    bubble: Buborék
-    name: Részecske mód
-    push: Tolás
-    remove: Eltávolítás
-    repulse: Visszaverődés
-  particleModeDescription: Jelöld ki a részecske kattintási viselkedését
   quickLaunchSettings: Gyors indítás
   replaceNative: Natív könyvtárak helyettesítése
   replaceNativeDescription: Cserélje ki a natív könyvtárakat a számítógép archívumának megfelelően.
@@ -1556,17 +1527,9 @@ setting:
   settingsReloadHint: Az indító újraindul az összes beállítás alkalmazásához.
   showNewsHeader: Hírek kirakatának megjelenítése
   showRoot: Megjelenítés
-  sidebarAlign: Oldalsáv igazítása
-  sidebarAutoHide: Oldalsáv automatikus elrejtése
-  sidebarAutoHideHint: Az oldalsáv automatikus elrejtése, amikor az egér eltávozik
-  sidebarClassic: Klasszikus
-  sidebarNotch: Bevágás
   sidebarPosition: Oldalsáv pozíciója
-  sidebarScale: Oldalsáv méretezése
   sidebarShowOnlyPinned: Csak rögzítettek megjelenítése
   sidebarShowOnlyPinnedHint: Csak a rögzített példányok megjelenítése az oldalsávon
-  sidebarStyle: Oldalsáv stílusa
-  sidebarStyleHint: Válassza ki az oldalsáv megjelenési stílusát
   streamerMode: Közvetítés mód
   streamerModeDescription: Ez elrejti a személyes adatait, például az e-mail címét az launcherben.
   theme:
@@ -1574,8 +1537,6 @@ setting:
     light: Világos téma
     system: Rendszer téma használata
   themeExport: Téma exportálása
-  themeBorderRadius: Lekerekített sarkok
-  themeBorderRadiusDescription: A kártyák, párbeszédablakok, menük és panelek lekerekített sarkainak be- vagy kikapcsolása.
   themeFont: Betűtípus
   themeFontDescription: Módosítsa az indító betűtípusát.
   themeFontUrl: Betűtípus URL-je
@@ -1592,7 +1553,6 @@ setting:
     Használd a BMCLAPI-t a Minecraft letöltéséhez, ha a kínai kontinensen tartózkodsz. (Ez nem befolyásolja, ha nem a kínai kontinensen tartózkodik.)
   useProxy: HTTP Proxy
   useProxyDescription: A http-kérés proxy-kiszolgálójának címe
-  viewBackgroundMusic: Zenék megtekintése
   setAsBackground:
     global: Beállítás indító háttereként
     instance: Beállítás példány háttereként

@@ -1717,9 +1717,6 @@ setting:
     name: 放置方式
   backgroundImageUrl: 图片网址
   backgroundImageUrlPlaceholder: 输入图像的 HTTP/HTTPS URL
-  backgroundMusic: 主题背景音乐
-  backgroundMusicUrl: 音乐网址
-  backgroundMusicUrlPlaceholder: 输入音乐的 HTTP/HTTPS URL
   backgroundType: 背景效果
   backgroundTypeDescription: 背景是否显示特效（如果觉得卡就可以关掉）
   setAsBackground:
@@ -1729,29 +1726,10 @@ setting:
     successInstance: 已更新实例背景图片。
     failed: 设置背景图片失败
   backgroundTypes:
-    halo: 光晕
     image: 图片
     none: 无
-    particle: 粒子
-    video: 视频
-  backgroundVideo: 背景视频
-  backgroundVideoDescription: 选择一个背景视频或清空当前
-  backgroundVideoUrl: 视频网址
-  backgroundVideoUrlPlaceholder: 输入视频的 HTTP/HTTPS URL
-  backgroundVideoVolume: 视频音量
-  backgroundVideoVolumeDescription: 拖动以调整音量
   browseRoot: 更改
   checkUpdate: 检查更新
-  colorTheme:
-    appBarColor: 顶端栏
-    backgroundColor: 背景颜色
-    cardColor: 卡片颜色
-    description: 改变主题中的配色
-    errorColor: 错误颜色
-    name: 主题颜色和模糊
-    primaryColor: 主要颜色
-    sideBarColor: 侧边栏
-    warningColor: 警告颜色
   customCss:
     advancedDescription: 使用你自己的 CSS 覆盖启动器当前的样式。
     assistantHint: 描述你想要的外观，我会为你编写 CSS。
@@ -1822,13 +1800,6 @@ setting:
   network: 网络设置
   newsPosition: 移动新闻区域
   officialWebsite: 官网地址
-  particleMode:
-    bubble: 气泡
-    name: 粒子特效
-    push: 增加
-    remove: 移除
-    repulse: 击退
-  particleModeDescription: 选择当您点击粒子时的特效
   quickLaunchSettings: 快速启动
   replaceNative: 替换库为 Native (原生)
   replaceNativeDescription: 根据您的计算机架构替换本机库。
@@ -1849,17 +1820,9 @@ setting:
   settingsReloadHint: 启动器将重新启动以应用所有设置。
   showNewsHeader: 取消隐藏新闻展示
   showRoot: 浏览
-  sidebarAlign: 侧边栏对齐
-  sidebarAutoHide: 自动隐藏侧边栏
-  sidebarAutoHideHint: 自动隐藏侧边栏，鼠标悬停时显示
-  sidebarClassic: 经典
-  sidebarNotch: 凹槽
   sidebarPosition: 侧边栏位置
-  sidebarScale: 侧边栏缩放
   sidebarShowOnlyPinned: 仅显示固定的实例
   sidebarShowOnlyPinnedHint: 仅在侧边栏中显示固定的实例
-  sidebarStyle: 侧边栏样式
-  sidebarStyleHint: 在经典和现代凹槽设计之间选择
   streamerMode: 屏幕共享屏蔽
   streamerModeDescription: 此功能可以保护您的隐私。打开后，您的邮箱地址等隐私信息将会被隐藏。
   theme:
@@ -1867,8 +1830,6 @@ setting:
     light: 亮色主题
     system: 跟随系统
   themeExport: 导出主题
-  themeBorderRadius: 圆角
-  themeBorderRadiusDescription: 为卡片、对话框、菜单和面板启用或禁用圆角。
   themeFont: 字体
   themeFontDescription: 更改启动器的字体。
   themeFontUrl: 字体网址
@@ -1885,7 +1846,6 @@ setting:
     "BMCLAPI是由bangbang93创建的镜像服务。这个服务由bangbang93和OpenBMCLAPI社区共同提供。它通过提供国内下载服务器来改善从Mojang官方S3对象存储下载文件慢的问题。由于MCBBS源已停服，BMCLAPI会在下载高峰期时下载缓慢。有关OpenBMCLAPI服务器的服务状态，请访问OpenBMCLAPI榜单网站bd.bangbang93.com"
   useProxy: HTTP 代理服务器设置
   useProxyDescription: 使用代理服务器可以某些服务的访问
-  viewBackgroundMusic: 查看背景音乐
 settingLabel:
   global: 全局配置
   globalHint: 此配置已使用全局配置

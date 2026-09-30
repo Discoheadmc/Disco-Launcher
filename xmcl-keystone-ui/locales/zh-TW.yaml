@@ -1456,35 +1456,13 @@ setting:
     name: 放置方式
   backgroundImageUrl: 圖片網址
   backgroundImageUrlPlaceholder: 輸入圖像的 HTTP/HTTPS URL
-  backgroundMusic: 主題背景音樂
-  backgroundMusicUrl: 音樂網址
-  backgroundMusicUrlPlaceholder: 輸入音樂的 HTTP/HTTPS URL
   backgroundType: 背景效果
   backgroundTypeDescription: 是否顯示背景特效（如果覺得卡頓可以將其關閉）
   backgroundTypes:
-    halo: 光暈
     image: 圖片
     none: 無
-    particle: 粒子
-    video: 影片
-  backgroundVideo: 背景影片
-  backgroundVideoDescription: 選擇一個背景影片或清空目前
-  backgroundVideoUrl: 視頻網址
-  backgroundVideoUrlPlaceholder: 輸入視頻的 HTTP/HTTPS URL
-  backgroundVideoVolume: 影片音量
-  backgroundVideoVolumeDescription: 拖動以調整音量
   browseRoot: 更改
   checkUpdate: 檢查更新
-  colorTheme:
-    appBarColor: 頂端欄
-    backgroundColor: 背景顏色
-    cardColor: 卡片顏色
-    description: 改變主題中的配色
-    errorColor: 錯誤顏色
-    name: 主題顏色和模糊
-    primaryColor: 主要顏色
-    sideBarColor: 側邊欄
-    warningColor: 警告顏色
   customCss:
     advancedDescription: 使用你自己的 CSS 覆蓋啟動器目前的樣式。
     assistantHint: 描述你想要的外觀，我會為你編寫 CSS。
@@ -1551,13 +1529,6 @@ setting:
   network: 網路設定
   newsPosition: 移動新聞區域
   officialWebsite: 官方網站網址
-  particleMode:
-    bubble: 氣泡
-    name: 粒子特效
-    push: 增加
-    remove: 移除
-    repulse: 擊退
-  particleModeDescription: 選擇當您按一下粒子時的特效
   quickLaunchSettings: 快速啟動
   replaceNative: 替換函式庫為 Native (原生)
   replaceNativeDescription: 根據您的電腦架構替換原生函式庫。
@@ -1578,17 +1549,9 @@ setting:
   settingsReloadHint: 啟動器將重新啟動以應用所有設定。
   showNewsHeader: 取消隱藏最新消息展示
   showRoot: 瀏覽
-  sidebarAlign: 側邊欄對齊
-  sidebarAutoHide: 自動隱藏側邊欄
-  sidebarAutoHideHint: 當滑鼠移開時自動隱藏側邊欄
-  sidebarClassic: 經典
-  sidebarNotch: 缺口
   sidebarPosition: 側邊欄位置
-  sidebarScale: 側邊欄縮放
   sidebarShowOnlyPinned: 僅顯示已固定
   sidebarShowOnlyPinnedHint: 僅在側邊欄中顯示已固定的實例
-  sidebarStyle: 側邊欄樣式
-  sidebarStyleHint: 選擇側邊欄的外觀樣式
   streamerMode: 螢幕分享模式
   streamerModeDescription: 此功能可以保護您的隱私。開啟後，您的電子郵件等隱私資訊將會被隱藏。
   theme:
@@ -1596,8 +1559,6 @@ setting:
     light: 亮色主題
     system: 跟隨系統
   themeExport: 匯出主題
-  themeBorderRadius: 圓角
-  themeBorderRadiusDescription: 為卡片、對話框、選單和面板啟用或停用圓角。
   themeFont: 字體
   themeFontDescription: 更改啟動器的字體。
   themeFontUrl: 字體網址
@@ -1614,7 +1575,6 @@ setting:
     "BMCLAPI 是由 bangbang93 建立的映象服務。這個服務由 bangbang93 和 OpenBMCLAPI 社群共同提供。它透過提供國內下載伺服器來改善從 Mojang 官方 S3 物件儲存下載檔案慢的問題。由於 MCBBS 源已停服，BMCLAPI 會在下載高峰期時下載緩慢。有關 OpenBMCLAPI 伺服器的服務狀態，請存取 OpenBMCLAPI 排行榜網站 bd.bangbang93.com"
   useProxy: HTTP 代理伺服器設定
   useProxyDescription: HTTP 請求的代理伺服器位址
-  viewBackgroundMusic: 檢視背景音樂
   setAsBackground:
     global: 設為啟動器背景
     instance: 設為實例背景

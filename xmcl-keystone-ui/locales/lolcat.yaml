@@ -1380,35 +1380,13 @@ setting:
     name: IMAGE FIT
   backgroundImageUrl: IMAGE URL
   backgroundImageUrlPlaceholder: ENTER HTTP/HTTPS URL FUR IMAG
-  backgroundMusic: THEME BACKGROUND MUSIC
-  backgroundMusicUrl: MUSIC URL
-  backgroundMusicUrlPlaceholder: ENTER HTTP/HTTPS URL FUR MUSIC
   backgroundType: BACKGROUND TYP
   backgroundTypeDescription: SHOW SPECIAL EFFECT ON BACKGROUND (THIS MAY IMPACT PERFORMANC)
   backgroundTypes:
-    halo: HALO
     image: IMAG
     none: NONE
-    particle: PARTICLE
-    video: VIDEO
-  backgroundVideo: BACKGROUND VIDEO
-  backgroundVideoDescription: PICK OR CLEAR VIDEO
-  backgroundVideoUrl: VIDEO URL
-  backgroundVideoUrlPlaceholder: ENTER HTTP/HTTPS URL FUR VIDEO
-  backgroundVideoVolume: VOLUME
-  backgroundVideoVolumeDescription: DRAG TO ADJUST VOLUME
   browseRoot: BROWSE
   checkUpdate: CHECK UPDAT
-  colorTheme:
-    appBarColor: APP BAR
-    backgroundColor: BACKGROUND COLOR
-    cardColor: CARD COLOR
-    description: CHANGE DA COLORZ IN DA THEEM
-    errorColor: OOPSIE COLOR
-    name: THEEM COLOR AN BLUR
-    primaryColor: PRIMARY COLOR
-    sideBarColor: SIDE BAR
-    warningColor: WARNING COLOR
   darkTheme: THEEM
   darkThemeDescription: PICK BETWEEN DARK OR LIGHT THEEM
   developerMode: DEVELOPR MODE
@@ -1464,13 +1442,6 @@ setting:
   network: NETWORK SETTINGZ
   newsPosition: MOVE NEWZ SECSHUN
   officialWebsite: OFFISHUL WEBSITE
-  particleMode:
-    bubble: BUBBLE
-    name: PARTICLE MODE
-    push: PUSH
-    remove: REMOVE
-    repulse: REPULSE
-  particleModeDescription: PICK DA PARTICLE CLICK BEHAVIOR
   quickLaunchSettings: QUICK LAUNCH
   replaceNative: REPLACE NATIVE LIBRAWRIES
   replaceNativeDescription: REPLACE NATIVE LIBRAWRIES ACCORDING TO UR COMPUTER'S ARCH.
@@ -1492,15 +1463,7 @@ setting:
   settingsReloadHint: TEH LAUNCHER WILL RESTART 2 APPLY ALL SETTINGS.
   showNewsHeader: UNHIDE NEWZ SHOWCASE
   showRoot: SHOW
-  sidebarAlign: SIDEBAR ALIGNMENT
-  sidebarAutoHide: AUTO-HIDE SIDEBAR
-  sidebarAutoHideHint: HIDE SIDEBAR AUTOMATICALLY AN SHOW ON HOVER
-  sidebarClassic: CLASSIC
-  sidebarNotch: NOTCH
   sidebarPosition: SIDEBAR POSISHUN
-  sidebarScale: SIDEBAR SCALE
-  sidebarStyle: SIDEBAR STYLE
-  sidebarStyleHint: PICK BETWEEN CLASSIC AN MODERN NOTCH DESIGN
   streamerMode: STREAMING MODE
   streamerModeDescription: THIS WILL HIDE UR PRIVATE INFORMASHUN LIKE EMAIL IN LAUNCHER.
   theme:
@@ -1508,8 +1471,6 @@ setting:
     light: LIGHT THEEM
     system: USE SYSTEM THEEM
   themeExport: EXPORT THEEM
-  themeBorderRadius: ROUNDED CORNERZ
-  themeBorderRadiusDescription: TOGGLE ROUNDED CORNERZ FOR CARDZ, DIALOGZ, MENUZ, AN PANELS.
   themeFont: FONT
   themeFontDescription: CHANGE DA FONT OF DA LAUNCHER.
   themeFontUrl: FONT URL
@@ -1526,7 +1487,6 @@ setting:
     USE BMCLAPI TO DOWNLOD MINECWAFT WHEN U R IN CHINESE MAINLAND. (THIS WONT AFFECT U IF U R NOT IN CHINESE MAINLAND)
   useProxy: HTTP PROXY
   useProxyDescription: TEH PROXY SERVR ADDWESS FUR DA HTTP REQUEST
-  viewBackgroundMusic: VUE MUSICS
   setAsBackground:
     global: MAEK LANCHRZ BAKGROUND
     instance: MAEK INSTNCE BAKGROUND

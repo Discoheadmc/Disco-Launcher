@@ -1520,35 +1520,13 @@ setting:
     name: ইমেজ ফিট
   backgroundImageUrl: ইমেজ ইউআরএল
   backgroundImageUrlPlaceholder: ইমেজের জন্য HTTP/HTTPS ইউআরএল প্রবেশ করান
-  backgroundMusic: থিম ব্যাকগ্রাউন্ড মিউজিক
-  backgroundMusicUrl: মিউজিক ইউআরএল
-  backgroundMusicUrlPlaceholder: মিউজিকের জন্য HTTP/HTTPS ইউআরএল প্রবেশ করান
   backgroundType: ব্যাকগ্রাউন্ড টাইপ
   backgroundTypeDescription: ব্যাকগ্রাউন্ডে বিশেষ ইফেক্ট দেখান (এটি কর্মক্ষমতা প্রভাবিত করতে পারে)
   backgroundTypes:
-    halo: হ্যালো
     image: ইমেজ
     none: কোনোটিই নয়
-    particle: পার্টিকেল
-    video: ভিডিও
-  backgroundVideo: ব্যাকগ্রাউন্ড ভিডিও
-  backgroundVideoDescription: ভিডিও নির্বাচন করুন বা সাফ করুন
-  backgroundVideoUrl: ভিডিও ইউআরএল
-  backgroundVideoUrlPlaceholder: ভিডিওর জন্য HTTP/HTTPS ইউআরএল প্রবেশ করান
-  backgroundVideoVolume: ভলিউম
-  backgroundVideoVolumeDescription: ভলিউম সামঞ্জস্য করতে ড্র্যাগ করুন
   browseRoot: ব্রাউজ করুন
   checkUpdate: আপডেট চেক করুন
-  colorTheme:
-    appBarColor: অ্যাপ বার
-    backgroundColor: ব্যাকগ্রাউন্ড কালার
-    cardColor: কার্ড কালার
-    description: থিমের কালার পরিবর্তন করুন
-    errorColor: এরর কালার
-    name: থিম কালার এবং ব্লার
-    primaryColor: প্রাইমারি কালার
-    sideBarColor: সাইড বার
-    warningColor: ওয়ার্নিং কালার
   customCss:
     advancedDescription: আপনাক নিজস্ব সিএসএস (CSS) দিয়ে লঞ্চারের বর্তমান স্টাইলিং ওভাররাইড করুন।
     assistantHint: আপনি যে রূপ চান তা বর্ণনা করুন এবং আমি আপনার জন্য সিএসএস লিখে দেব।
@@ -1613,13 +1591,6 @@ setting:
   network: নেটওয়ার্ক সেটিংস
   newsPosition: খবর বিভাগ স্থানান্তর করুন
   officialWebsite: অফিসিয়াল ওয়েবসাইট
-  particleMode:
-    bubble: বাবল
-    name: পার্টিকেল মোড
-    push: পুশ
-    remove: রিমুভ
-    repulse: রিপালস
-  particleModeDescription: পার্টিকেল ক্লিক আচরণ নির্বাচন করুন
   quickLaunchSettings: কুইক লঞ্চ
   replaceNative: নেটিভ লাইব্রেরি প্রতিস্থাপন করুন
   replaceNativeDescription: আপনার কম্পিউটারের আর্কিটেকচার অনুযায়ী নেটিভ লাইব্রেরি প্রতিস্থাপন করুন।
@@ -1646,17 +1617,9 @@ setting:
   settingsReloadHint: সব সেটিংস প্রয়োগ করতে লঞ্চারটি পুনরায় চালু হবে।
   showNewsHeader: খবরের শোকেস আনহাইড করুন
   showRoot: দেখান
-  sidebarAlign: সাইডবার অ্যালাইনমেন্ট
-  sidebarAutoHide: সাইডবার অটো-হাইড করুন
-  sidebarAutoHideHint: সাইডবার স্বয়ংক্রিয়ভাবে হাইড করুন এবং কার্সার উপরে আনলে দেখান
-  sidebarClassic: ক্লাসিক
-  sidebarNotch: নচ
   sidebarPosition: সাইডবারের অবস্থান
-  sidebarScale: সাইডবার স্কেল
   sidebarShowOnlyPinned: শুধুমাত্র পিন করা ইনস্ট্যান্সগুলো দেখান
   sidebarShowOnlyPinnedHint: সাইডবারে শুধুমাত্র পিন করা ইনস্ট্যান্সগুলো প্রদর্শন করুন
-  sidebarStyle: সাইডবারের স্টাইল
-  sidebarStyleHint: ক্লাসিক এবং আধুনিক নচ ডিজাইনের মধ্যে বেছে নিন
   streamerMode: স্ট্রিমিং মোড
   streamerModeDescription: এটি লঞ্চারে আপনার ইমেলের মতো ব্যক্তিগত তথ্য লুকিয়ে রাখবে।
   theme:
@@ -1664,8 +1627,6 @@ setting:
     light: লাইট থিম
     system: সিস্টেম থিম ব্যবহার করুন
   themeExport: থিম এক্সপোর্ট করুন
-  themeBorderRadius: গোলাকার কোণ
-  themeBorderRadiusDescription: কার্ড, ডায়ালগ, মেনু এবং প্যানেলের জন্য গোলাকার কোণ সক্রিয় বা নিষ্ক্রিয় করুন।
   themeFont: ফন্ট
   themeFontDescription: লঞ্চারের ফন্ট পরিবর্তন করুন।
   themeFontUrl: ফন্ট ইউআরএল (URL)
@@ -1693,7 +1654,6 @@ setting:
   useBmclAPIDescription: আপনি যখন চীনের মূল ভূখণ্ডে থাকবেন তখন মাইনক্রাফ্ট ডাউনলোড করতে BMCLAPI ব্যবহার করুন। (আপনি চীনের মূল ভূখণ্ডে না থাকলে এটি আপনাকে প্রভাবিত করবে না)
   useProxy: HTTP প্রক্সি
   useProxyDescription: http অনুরোধের জন্য প্রক্সি সার্ভার ঠিকানা
-  viewBackgroundMusic: মিউজিক দেখুন
 settingLabel:
   global: গ্লোবাল
   globalHint: এই সেটিংটি গ্লোবাল সেটিং অনুসরণ করবে

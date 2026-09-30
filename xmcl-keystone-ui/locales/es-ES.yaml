@@ -1665,23 +1665,11 @@ setting:
     name: Ajuste de imagen
   backgroundImageUrl: URL de la imagen
   backgroundImageUrlPlaceholder: Ingrese la URL HTTP/HTTPS para la imagen
-  backgroundMusic: Música de fondo del tema
-  backgroundMusicUrl: URL de música
-  backgroundMusicUrlPlaceholder: Ingrese la URL HTTP/HTTPS para música
   backgroundType: Tipo de Fondo
   backgroundTypeDescription: Muestra efectos especiales en el fondo (esto puede afectar el rendimiento)
   backgroundTypes:
-    halo: Halo
     image: Imagen
     none: Ninguno
-    particle: Partícula
-    video: Video
-  backgroundVideo: Video de Fondo
-  backgroundVideoDescription: selecciona o borra el video
-  backgroundVideoUrl: URL del vídeo
-  backgroundVideoUrlPlaceholder: Ingrese la URL HTTP/HTTPS para el video
-  backgroundVideoVolume: Volumen
-  backgroundVideoVolumeDescription: arrastra para ajustar el volumen
   browseRoot: Navegar
   checkUpdate: Comprobar Actualización
   customCss:
@@ -1699,16 +1687,6 @@ setting:
       El CSS personalizado te permite personalizar cualquier aspecto del
       lanzador. Ten cuidado al pegar CSS de fuentes no confiables, ya que puede
       modificar el diseño de la interfaz.
-  colorTheme:
-    appBarColor: Color de la Barra de Aplicaciones
-    backgroundColor: Color de Fondo
-    cardColor: Color de Tarjeta
-    description: Cambiar los colores en el tema
-    errorColor: Color de Error
-    name: Color y desenfoque del tema
-    primaryColor: Color Principal
-    sideBarColor: Color de la Barra Lateral
-    warningColor: Color de Advertencia
   darkTheme: Tema
   darkThemeDescription: Elige entre tema oscuro o claro
   devModeLabel: DEV
@@ -1770,13 +1748,6 @@ setting:
   network: Configuración de la red
   newsPosition: Mover sección de noticias
   officialWebsite: Sitio Web Oficial
-  particleMode:
-    bubble: Burbuja
-    name: Modo de Partículas
-    push: Empujar
-    remove: Eliminar
-    repulse: Repulsar
-  particleModeDescription: Selecciona el comportamiento al hacer clic en las partículas
   quickLaunchSettings: Inicio rápido
   replaceNative: Reemplazar bibliotecas nativas
   replaceNativeDescription: Reemplace las bibliotecas nativas según el arco de su computadora.
@@ -1799,17 +1770,9 @@ setting:
   settingsReloadHint: El launcher se reiniciará para aplicar toda la configuración.
   showNewsHeader: Mostrar escaparate de noticias
   showRoot: Mostrar
-  sidebarAlign: Alineación de la barra lateral
-  sidebarAutoHide: Ocultar barra lateral automáticamente
-  sidebarAutoHideHint: Oculta automáticamente la barra lateral cuando el ratón se aleja
-  sidebarClassic: Clásico
-  sidebarNotch: Muesca
   sidebarPosition: Posición de la barra lateral
-  sidebarScale: Escala de la barra lateral
   sidebarShowOnlyPinned: Mostrar solo fijados
   sidebarShowOnlyPinnedHint: Mostrar solo las instancias fijadas en la barra lateral
-  sidebarStyle: Estilo de la barra lateral
-  sidebarStyleHint: Elige el estilo de apariencia de la barra lateral
   streamerMode: Modo de transmisión
   streamerModeDescription: >-
     Esto ocultará su información privada, como el correo electrónico, en el iniciador.
@@ -1818,8 +1781,6 @@ setting:
     light: Tema Claro
     system: Usar Tema del Sistema
   themeExport: Exportar un tema
-  themeBorderRadius: Esquinas redondeadas
-  themeBorderRadiusDescription: Activa o desactiva las esquinas redondeadas para tarjetas, diálogos, menús y paneles.
   themeFont: Fuente
   themeFontDescription: Cambia la fuente del lanzador.
   themeFontUrl: URL de fuente
@@ -1836,7 +1797,6 @@ setting:
     Usar BMCLAPI para descargar Minecraft cuando te encuentres en la China continental. (Esto no afectará si no estás en la China continental)
   useProxy: Proxy HTTP
   useProxyDescription: La dirección del servidor proxy para las solicitudes HTTP
-  viewBackgroundMusic: Ver músicas
   setAsBackground:
     global: Establecer como fondo del lanzador
     instance: Establecer como fondo de la instancia

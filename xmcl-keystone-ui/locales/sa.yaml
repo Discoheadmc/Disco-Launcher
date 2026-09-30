@@ -1518,35 +1518,13 @@ setting:
     name: चित्रसमायोजनम्
   backgroundImageUrl: चित्रसङ्केतः
   backgroundImageUrlPlaceholder: चित्राय HTTP/HTTPS सङ्केतं लिखतु
-  backgroundMusic: प्रसङ्ग-पृष्ठभूमिध्वनिः
-  backgroundMusicUrl: ध्वनिसङ्केतः
-  backgroundMusicUrlPlaceholder: ध्वनये HTTP/HTTPS सङ्केतं लिखतु
   backgroundType: पृष्ठभूमिप्रकारः
   backgroundTypeDescription: पृष्ठभूमौ विशिष्टप्रभावान् दर्शयतु
   backgroundTypes:
-    halo: मण्डलम् (Halo)
     image: चित्रम्
     none: किमपि न
-    particle: कणः (Particle)
-    video: चलचित्रम्
-  backgroundVideo: पृष्ठभूमिचलचित्रम्
-  backgroundVideoDescription: चलचित्रं चिनोतु मार्जयतु वा
-  backgroundVideoUrl: चलचित्रसङ्केतः
-  backgroundVideoUrlPlaceholder: चलचित्राय HTTP/HTTPS सङ्केतं लिखतु
-  backgroundVideoVolume: ध्वनिप्रमाणम्
-  backgroundVideoVolumeDescription: ध्वनिप्रमाणसमायोजनाय कर्षतु
   browseRoot: अन्वेषणम्
   checkUpdate: नवीकरणं परीक्षताम्
-  colorTheme:
-    appBarColor: अनुप्रयोगपट्टिका
-    backgroundColor: पृष्ठभूमिवर्णः
-    cardColor: पत्रवर्णः
-    description: प्रसङ्गे वर्णान् परिवर्तयतु
-    errorColor: दोषवर्णः
-    name: प्रसङ्गवर्णः अस्पष्टता च
-    primaryColor: मुख्यवर्णः
-    sideBarColor: पार्श्वपट्टिका
-    warningColor: चेतावनीवर्णः
   customCss:
     advancedDescription: स्वकीयेन CSS द्वारा प्रवर्तकस्य शैल्याः अतिलेखनं करोतु।
     assistantHint: भवतः इच्छितं रूपं वर्णयतु, अहं भवतः कृते CSS लेखिष्यामि।
@@ -1611,13 +1589,6 @@ setting:
   network: जालविकल्पाः
   newsPosition: वृत्तान्तभागं स्थानान्तरयतु
   officialWebsite: आधिकारिकं जालस्थानम्
-  particleMode:
-    bubble: बुद्बुदः (Bubble)
-    name: कणप्रणाली
-    push: नुदतु (Push)
-    remove: निष्कासयतु
-    repulse: प्रतिकर्षतु (Repulse)
-  particleModeDescription: कण-नुदन-व्यवहारं चिनोतु
   quickLaunchSettings: त्वरितप्रवर्तनम्
   replaceNative: स्थानिकग्रन्थालयान् प्रतिस्थापयतु
   replaceNativeDescription: सङ्गणकस्य वास्तुकला आधारेण स्थानिकग्रन्थालयान् प्रतिस्थापयतु।
@@ -1644,17 +1615,9 @@ setting:
   settingsReloadHint: सर्वविकल्पप्रयोगाय प्रवर्तकः पुनः आरप्स्यते।
   showNewsHeader: वृत्तान्तप्रदर्शनं दर्शयतु
   showRoot: दर्शयतु
-  sidebarAlign: पार्श्वपट्टिकासमायोजनम्
-  sidebarAutoHide: पार्श्वपट्टिकां स्वयमेव गोपयतु
-  sidebarAutoHideHint: पार्श्वपट्टिकां स्वयं गोपयित्वा स्पर्शकाले दर्शयतु
-  sidebarClassic: पारम्परिकम्
-  sidebarNotch: नॉच (Notch)
   sidebarPosition: पार्श्वपट्टिकास्थानम्
-  sidebarScale: पार्श्वपट्टिकामानम्
   sidebarShowOnlyPinned: केवलम् कीलितान् क्षणान् दर्शयतु
   sidebarShowOnlyPinnedHint: पार्श्वपट्टिकां केवलं कीलितान् क्षणान् दर्शयतु
-  sidebarStyle: पार्श्वपट्टिकाशैली
-  sidebarStyleHint: पारम्परिक-आधुनिकयोः मध्ये चिनोतु
   streamerMode: प्रसारणप्रणाली (Streamer Mode)
   streamerModeDescription: एतेन भवतः व्यक्तिगतसूचना (यथा विद्युत्पत्रम्) गोप्यते।
   theme:
@@ -1662,8 +1625,6 @@ setting:
     light: श्वेतप्रसङ्गः
     system: तन्त्रप्रसङ्गं प्रयुङ्क्त
   themeExport: प्रसङ्गं निर्यातयतु
-  themeBorderRadius: गोलाकार-कोणाः
-  themeBorderRadiusDescription: पत्राणां संवादानां च कोणानां गोलाकारत्वं सक्रियं निष्क्रियं वा करोतु।
   themeFont: अक्षरमुद्रा
   themeFontDescription: प्रवर्तकस्य अक्षरमुद्रां परिवर्तयतु।
   themeFontUrl: अक्षरमुद्रासङ्केतः
@@ -1691,7 +1652,6 @@ setting:
   useBmclAPIDescription: माइनक्राफ्ट् अवतारेतुं BMCLAPI प्रयुङ्क्त।
   useProxy: HTTP प्रॉक्सी
   useProxyDescription: HTTP अनुरोधाय प्रॉक्सीसङ्केतः
-  viewBackgroundMusic: ध्वनीन् पश्यतु
 settingLabel:
   global: वैश्विकम्
   globalHint: एषः विकल्पः वैश्विकविकल्पम् अनुसरेत्

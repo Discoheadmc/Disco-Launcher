@@ -1518,35 +1518,13 @@ setting:
     name: ملاءمة الصورة
   backgroundImageUrl: رابط الصورة
   backgroundImageUrlPlaceholder: اكتب رابط HTTP/HTTPS للصورة
-  backgroundMusic: موسيقى الخلفية للمظهر
-  backgroundMusicUrl: رابط الموسيقى
-  backgroundMusicUrlPlaceholder: اكتب رابط HTTP/HTTPS للموسيقى
   backgroundType: نوع الخلفية
   backgroundTypeDescription: عرض تأثيرات خاصة على الخلفية (ده ممكن يؤثر على الأداء)
   backgroundTypes:
-    halo: توهج (Halo)
     image: صورة
     none: بدون
-    particle: جزيئات متحركة (Particle)
-    video: فيديو
-  backgroundVideo: فيديو الخلفية
-  backgroundVideoDescription: اختر فيديو أو امسحه
-  backgroundVideoUrl: رابط الفيديو
-  backgroundVideoUrlPlaceholder: اكتب رابط HTTP/HTTPS للفيديو
-  backgroundVideoVolume: مستوى الصوت
-  backgroundVideoVolumeDescription: اسحب لضبط مستوى الصوت
   browseRoot: تصفح
   checkUpdate: التحقق من وجود تحديثات
-  colorTheme:
-    appBarColor: شريط التطبيق (App Bar)
-    backgroundColor: لون الخلفية
-    cardColor: لون الكروت
-    description: تغيير الألوان في المظهر
-    errorColor: لون الخطأ
-    name: ألوان المظهر والتغبيش
-    primaryColor: اللون الأساسي
-    sideBarColor: الشريط الجانبي (Side Bar)
-    warningColor: لون التحذير
   customCss:
     advancedDescription: تجاوز التصميم الحالي للانشر باستخدام كود CSS الخاص بك.
     assistantHint: اوصف الشكل اللي عاوزه وأنا هكتب لك كود الـ CSS.
@@ -1611,13 +1589,6 @@ setting:
   network: إعدادات الشبكة
   newsPosition: نقل قسم الأخبار
   officialWebsite: الموقع الرسمي
-  particleMode:
-    bubble: فقاعات (Bubble)
-    name: نمط الجزيئات
-    push: دفع (Push)
-    remove: إزالة
-    repulse: تنافر (Repulse)
-  particleModeDescription: اختر سلوك الجزيئات عند الضغط بالماوس
   quickLaunchSettings: التشغيل السريع
   replaceNative: استبدال المكتبات الأصلية (Natives)
   replaceNativeDescription: استبدال المكتبات الأصلية بناءً على معمارية كمبيوترك.
@@ -1644,17 +1615,9 @@ setting:
   settingsReloadHint: اللانشر هيرستر لتطبيق كل الإعدادات الجديدة.
   showNewsHeader: إظهار قسم الأخبار
   showRoot: عرض
-  sidebarAlign: محاذاة الشريط الجانبي
-  sidebarAutoHide: إخفاء الشريط الجانبي تلقائياً
-  sidebarAutoHideHint: إخفاء الشريط الجانبي تلقائياً وإظهاره عند تمرير الماوس فوقه
-  sidebarClassic: كلاسيكي
-  sidebarNotch: نوتش حديث (Notch)
   sidebarPosition: مكان الشريط الجانبي
-  sidebarScale: حجم الشريط الجانبي
   sidebarShowOnlyPinned: عرض النسخ المثبتة بس
   sidebarShowOnlyPinnedHint: عرض النسخ المثبتة بس في الشريط الجانبي
-  sidebarStyle: نمط الشريط الجانبي
-  sidebarStyleHint: اختر بين التصميم الكلاسيكي أو النوتش الحديث
   streamerMode: وضع البث (Streamer Mode)
   streamerModeDescription: الخيار ده هيخفي معلوماتك الخاصة زي الإيميل جوة اللانشر.
   theme:
@@ -1662,8 +1625,6 @@ setting:
     light: المظهر الفاتح
     system: استخدام مظهر النظام الافتراضي
   themeExport: تصدير المظهر
-  themeBorderRadius: حواف مستديرة
-  themeBorderRadiusDescription: تفعيل أو تعطيل الحواف المستديرة للكروت، والنوافذ، والقوائم، واللوحات.
   themeFont: الخط
   themeFontDescription: تغيير خط اللانشر.
   themeFontUrl: رابط الخط
@@ -1691,7 +1652,6 @@ setting:
   useBmclAPIDescription: استخدم BMCLAPI لتنزيل ماينكرافت لو أنت في الصين. (الخيار ده مش هيؤثر عليك لو برة الصين)
   useProxy: بروكسي HTTP (Proxy)
   useProxyDescription: عنوان سيرفر البروكسي لطلبات الـ HTTP
-  viewBackgroundMusic: عرض الأغاني والموسيقى
 settingLabel:
   global: عالمي
   globalHint: الإعداد ده هيتبع الإعداد العالمي المشترك

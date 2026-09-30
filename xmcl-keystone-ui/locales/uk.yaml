@@ -1441,35 +1441,13 @@ setting:
     name: Підгонка зображення
   backgroundImageUrl: URL зображення
   backgroundImageUrlPlaceholder: Введіть URL-адресу HTTP/HTTPS для зображення
-  backgroundMusic: Фонова музика теми
-  backgroundMusicUrl: URL-адреса музики
-  backgroundMusicUrlPlaceholder: Введіть URL-адресу HTTP/HTTPS для музики
   backgroundType: Тип фону
   backgroundTypeDescription: Показати спеціальний ефект на фоні (це може вплинути на продуктивність)
   backgroundTypes:
-    halo: Гало
     image: Зображення
     none: Немає
-    particle: Частинки
-    video: Відео
-  backgroundVideo: Фонове відео
-  backgroundVideoDescription: вибрати або очистити відео
-  backgroundVideoUrl: URL відео
-  backgroundVideoUrlPlaceholder: Введіть URL-адресу HTTP/HTTPS для відео
-  backgroundVideoVolume: гучність
-  backgroundVideoVolumeDescription: перетягніть для налаштування гучності
   browseRoot: Огляд
   checkUpdate: Перевірити оновлення
-  colorTheme:
-    appBarColor: Колір панелі додатків
-    backgroundColor: Колір фону
-    cardColor: Колір картки
-    description: Змінити кольори в темі
-    errorColor: Колір помилки
-    name: Колір теми та розмиття
-    primaryColor: Основний колір
-    sideBarColor: Колір бічної панелі
-    warningColor: Колір попередження
   darkTheme: Тема
   darkThemeDescription: Виберіть між темною або світлою темою
   developerMode: Режим розробника
@@ -1527,13 +1505,6 @@ setting:
   network: Мережеві налаштування
   newsPosition: Перемістити розділ новин
   officialWebsite: Офіційний вебсайт
-  particleMode:
-    bubble: Бульбашка
-    name: Режим частинок
-    push: Відштовхування
-    remove: Видалення
-    repulse: Відштовхування (сильне)
-  particleModeDescription: Виберіть поведінку частинок при натисканні
   quickLaunchSettings: Швидкий запуск
   replaceNative: Замінити нативні бібліотеки
   replaceNativeDescription: Замінити нативні бібліотеки відповідно до архітектури вашого комп'ютера.
@@ -1555,17 +1526,9 @@ setting:
   settingsReloadHint: Лаунчер перезавантажиться для застосування всіх налаштувань.
   showNewsHeader: Показати вітрину новин
   showRoot: Показати
-  sidebarAlign: Вирівнювання бічної панелі
-  sidebarAutoHide: Автоматично приховувати бічну панель
-  sidebarAutoHideHint: Автоматично приховує бічну панель, коли миша віддаляється
-  sidebarClassic: Класичний
-  sidebarNotch: Notch
   sidebarPosition: Позиція бічної панелі
-  sidebarScale: Масштаб бічної панелі
   sidebarShowOnlyPinned: Показувати лише закріплені
   sidebarShowOnlyPinnedHint: Показувати лише закріплені екземпляри на бічній панелі
-  sidebarStyle: Стиль бічної панелі
-  sidebarStyleHint: Виберіть між класичним та сучасним дизайном
   streamerMode: Режим стрімера
   streamerModeDescription: Це приховає вашу приватну інформацію, таку як електронна пошта, в лаунчері.
   theme:
@@ -1573,8 +1536,6 @@ setting:
     light: Світла тема
     system: Використовувати системну тему
   themeExport: Експортувати тему
-  themeBorderRadius: Закруглені кути
-  themeBorderRadiusDescription: Увімкнути або вимкнути закруглені кути для карток, діалогів, меню та панелей.
   themeFont: Шрифт
   themeFontDescription: Змінити шрифт лаунчера.
   themeFontUrl: URL-адреса шрифту
@@ -1591,7 +1552,6 @@ setting:
     Використовуйте BMCLAPI для завантаження Minecraft, якщо ви перебуваєте в материковому Китаї. (Це не вплине на вас, якщо ви не в материковому Китаї)
   useProxy: HTTP-проксі
   useProxyDescription: Адреса проксі-сервера для HTTP-запитів
-  viewBackgroundMusic: Переглянути музику
   setAsBackground:
     global: Встановити як тло лаунчера
     instance: Встановити як тло інстансу

@@ -1395,35 +1395,13 @@ setting:
     name: Сурет сәйкестігі
   backgroundImageUrl: Сурет URL-і
   backgroundImageUrlPlaceholder: Сурет үшін HTTP/HTTPS URL-ін енгізіңіз
-  backgroundMusic: Тақырыптық фондық музыка
-  backgroundMusicUrl: Музыка URL-і
-  backgroundMusicUrlPlaceholder: Музыка үшін HTTP/HTTPS URL-ін енгізіңіз
   backgroundType: Фон түрі
   backgroundTypeDescription: Фонда арнайы эффектілерді көрсету (Бұл өнімділікке әсер етуі мүмкін)
   backgroundTypes:
-    halo: Гало
     image: Сурет
     none: Жоқ
-    particle: Бөлшек
-    video: Видео
-  backgroundVideo: Фондық видео
-  backgroundVideoDescription: Видеоны таңдаңыз немесе тазалаңыз
-  backgroundVideoUrl: Видео URL-і
-  backgroundVideoUrlPlaceholder: Видео үшін HTTP/HTTPS URL-ін енгізіңіз
-  backgroundVideoVolume: дыбыс деңгейі
-  backgroundVideoVolumeDescription: дыбыс деңгейін реттеу үшін тартыңыз
   browseRoot: Шолу
   checkUpdate: Жаңартуды тексеру
-  colorTheme:
-    appBarColor: Қосымша тақтасы
-    backgroundColor: Фон түсі
-    cardColor: Карта түсі
-    description: Тақырыптағы түстерді өзгерту
-    errorColor: Қате түсі
-    name: Тақырып түсі және бұлдырлау
-    primaryColor: Негізгі түс
-    sideBarColor: Бүйір тақта
-    warningColor: Ескерту түсі
   darkTheme: Тақырып
   darkThemeDescription: Қараңғы немесе жарық тақырыпты таңдаңыз
   developerMode: Әзірлеуші режимі
@@ -1479,13 +1457,6 @@ setting:
   network: Желі баптаулары
   newsPosition: Жаңалықтар бөлімін жылжыту
   officialWebsite: Ресми веб-сайт
-  particleMode:
-    bubble: Көпіршік
-    name: Бөлшек режимі
-    push: Итеру
-    remove: Жою
-    repulse: Тебу
-  particleModeDescription: Бөлшекті басу мінез-құлқын таңдаңыз
   quickLaunchSettings: Жылдам іске қосу
   replaceNative: Түпнұсқалы кітапханаларды алмастыру
   replaceNativeDescription: >-
@@ -1508,15 +1479,7 @@ setting:
   settingsReloadHint: Барлық баптауларды қолдану үшін іске қосқыш қайта қосылады.
   showNewsHeader: Жаңалықтар көрмесін
   showRoot: Көрсету
-  sidebarAlign: Бүйір тақтаны туралау
-  sidebarAutoHide: Бүйір тақтаны автоматты түрде жасыру
-  sidebarAutoHideHint: Бүйір тақтаны автоматты түрде жасырып, үстінен өткенде көрсету
-  sidebarClassic: Классикалық
-  sidebarNotch: Ойық
   sidebarPosition: Бүйір тақта орналасуы
-  sidebarScale: Бүйір тақта масштабы
-  sidebarStyle: Бүйір тақта стилі
-  sidebarStyleHint: Классикалық және заманауи ойық дизайн арасында таңдаңыз
   streamerMode: Стриминг режимі
   streamerModeDescription: Бұл launcher-да электрондық пошта сияқты жеке ақпаратты жасырады.
   theme:
@@ -1524,8 +1487,6 @@ setting:
     light: Жарық тақырып
     system: Жүйелік тақырыпты қолдану
   themeExport: Тақырыпты экспорттау
-  themeBorderRadius: Дөңгелектелген бұрыштар
-  themeBorderRadiusDescription: Карталар, диалогтар, мәзірлер және панельдер үшін дөңгелектелген бұрыштарды қосу немесе өшіру.
   themeFont: Қаріп
   themeFontDescription: Іске қосқыштың қарібін өзгертіңіз.
   themeFontUrl: Қаріп URL-і
@@ -1542,7 +1503,6 @@ setting:
     Қытай материгінде болған кезде Minecraft-ты жүктеп алу үшін BMCLAPI-ны қолданыңыз. (Бұл сіз Қытай материгінде болмасаңыз, әсер етпейді)
   useProxy: HTTP прокси
   useProxyDescription: HTTP сұраныстары үшін прокси сервер мекенжайы
-  viewBackgroundMusic: Музыкаларды қарау
   setAsBackground:
     global: Іске қосушының фоны етіп орнату
     instance: Дана фоны етіп орнату

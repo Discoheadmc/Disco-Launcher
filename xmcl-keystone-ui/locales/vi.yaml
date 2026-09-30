@@ -1520,35 +1520,13 @@ setting:
     name: Chế độ vừa màn hình
   backgroundImageUrl: URL hình ảnh
   backgroundImageUrlPlaceholder: Nhập URL HTTP/HTTPS cho hình ảnh
-  backgroundMusic: Nhạc nền chủ đề
-  backgroundMusicUrl: URL âm nhạc
-  backgroundMusicUrlPlaceholder: Nhập URL HTTP/HTTPS cho nhạc
   backgroundType: Loại hình nền
   backgroundTypeDescription: Hiển thị hiệu ứng đặc biệt trên nền (Điều này có thể ảnh hưởng đến hiệu năng)
   backgroundTypes:
-    halo: Hào quang (Halo)
     image: Hình ảnh
     none: Không có
-    particle: Hạt (Particle)
-    video: Video
-  backgroundVideo: Video nền
-  backgroundVideoDescription: Chọn hoặc xóa video
-  backgroundVideoUrl: URL video
-  backgroundVideoUrlPlaceholder: Nhập URL HTTP/HTTPS cho video
-  backgroundVideoVolume: âm lượng
-  backgroundVideoVolumeDescription: kéo để điều chỉnh âm lượng
   browseRoot: Duyệt tìm
   checkUpdate: Kiểm tra cập nhật
-  colorTheme:
-    appBarColor: Thanh ứng dụng
-    backgroundColor: Màu nền
-    cardColor: Màu thẻ (Card)
-    description: Thay đổi màu sắc trong chủ đề
-    errorColor: Màu lỗi
-    name: Màu sắc chủ đề và Độ mờ
-    primaryColor: Màu chính
-    sideBarColor: Thanh bên (Sidebar)
-    warningColor: Màu cảnh báo
   customCss:
     advancedDescription: Ghi đè phong cách hiện tại của trình khởi chạy bằng mã CSS của riêng bạn.
     assistantHint: Mô tả giao diện bạn muốn và tôi sẽ viết CSS cho bạn.
@@ -1613,13 +1591,6 @@ setting:
   network: Cài đặt mạng
   newsPosition: Di chuyển phần Tin tức
   officialWebsite: Trang web chính thức
-  particleMode:
-    bubble: Bong bóng (Bubble)
-    name: Chế độ hạt
-    push: Đẩy (Push)
-    remove: Xóa (Remove)
-    repulse: Đẩy ra (Repulse)
-  particleModeDescription: Chọn hành vi khi nhấp chuột vào các hạt
   quickLaunchSettings: Khởi chạy nhanh
   replaceNative: Thay thế thư viện gốc (Native Libraries)
   replaceNativeDescription: Thay thế các thư viện gốc tùy thuộc vào kiến trúc máy tính của bạn.
@@ -1646,17 +1617,9 @@ setting:
   settingsReloadHint: Trình khởi chạy sẽ khởi động lại để áp dụng toàn bộ cài đặt.
   showNewsHeader: Hiện phần hiển thị Tin tức
   showRoot: Hiển thị
-  sidebarAlign: Căn chỉnh thanh bên
-  sidebarAutoHide: Tự động ẩn thanh bên
-  sidebarAutoHideHint: Tự động ẩn thanh bên và hiện khi di chuột lên
-  sidebarClassic: Cổ điển
-  sidebarNotch: Tai thỏ (Notch)
   sidebarPosition: Vị trí thanh bên
-  sidebarScale: Tỷ lệ thanh bên
   sidebarShowOnlyPinned: Chỉ hiển thị phiên bản đã ghim
   sidebarShowOnlyPinnedHint: Chỉ hiển thị các phiên bản đã ghim trên thanh bên
-  sidebarStyle: Kiểu thanh bên
-  sidebarStyleHint: Chọn giữa thiết kế cổ điển và thiết kế tai thỏ (notch) hiện đại
   streamerMode: Chế độ phát trực tuyến (Streamer)
   streamerModeDescription: Điều này sẽ ẩn thông tin cá nhân của bạn như email trên trình khởi chạy.
   theme:
@@ -1664,8 +1627,6 @@ setting:
     light: Chủ đề sáng
     system: Sử dụng chủ đề hệ thống
   themeExport: Xuất chủ đề
-  themeBorderRadius: Góc bo tròn
-  themeBorderRadiusDescription: Bật hoặc tắt các góc bo tròn cho thẻ, hộp thoại, menu và bảng điều khiển.
   themeFont: Phông chữ (Font)
   themeFontDescription: Thay đổi phông chữ của trình khởi chạy.
   themeFontUrl: Đường dẫn phông chữ
@@ -1693,7 +1654,6 @@ setting:
   useBmclAPIDescription: Sử dụng BMCLAPI để tải xuống Minecraft khi bạn ở Trung Quốc Đại Lục. (Điều này không ảnh hưởng đến bạn nếu bạn không ở Trung Quốc Đại Lục)
   useProxy: Proxy HTTP
   useProxyDescription: Địa chỉ máy chủ proxy cho các yêu cầu http
-  viewBackgroundMusic: Xem danh sách nhạc
 settingLabel:
   global: Toàn cục
   globalHint: Cài đặt này sẽ áp dụng theo cài đặt toàn cục

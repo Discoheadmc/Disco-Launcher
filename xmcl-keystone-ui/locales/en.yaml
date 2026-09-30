@@ -664,6 +664,7 @@ instanceUpdate:
   update: Start Update
 instances:
   add: Create Game
+  title: Instance | Instances
   instanceCount: '{count} instances'
   addCurseForgeDescription: >-
     Import from curseforge data folder. You need to select curseforge's root
@@ -699,6 +700,11 @@ instances:
     a copy — changes made in one instance appear in all of them. Unchecked
     folders stay private to this instance.
   linkFailed: Failed to link the {folder} folder to the shared folder
+  wskinLoader: WSkinLoader (custom cape in-game)
+  wskinLoaderHint: >-
+    Installs a fabric mod so this instance shows your custom cape in-game.
+    Own view only; official capes are never affected. Fabric only.
+  wskinLoaderApplyFailed: WSkinLoader setup could not be applied, it will be retried at launch
 items:
   count: '{count} items'
   total: '{total} total'
@@ -1932,23 +1938,11 @@ setting:
     name: Image Fit
   backgroundImageUrl: Image URL
   backgroundImageUrlPlaceholder: Enter HTTP/HTTPS URL for image
-  backgroundMusic: Theme Background Music
-  backgroundMusicUrl: Music URL
-  backgroundMusicUrlPlaceholder: Enter HTTP/HTTPS URL for music
   backgroundType: Background Type
   backgroundTypeDescription: Show special effect on background (This may impact performance)
   backgroundTypes:
-    halo: Halo
     image: Image
     none: None
-    particle: Particle
-    video: Video
-  backgroundVideo: Background Video
-  backgroundVideoDescription: Select or clear video
-  backgroundVideoUrl: Video URL
-  backgroundVideoUrlPlaceholder: Enter HTTP/HTTPS URL for video
-  backgroundVideoVolume: volume
-  backgroundVideoVolumeDescription: drag to adjust volume
   browseRoot: Browse
   checkUpdate: Check Update
   colorTheme:
@@ -1957,7 +1951,8 @@ setting:
     cardColor: Card Color
     description: Change the colors in the theme
     errorColor: Error Color
-    name: Theme Color and Blur
+    launchButtonColor: Launch Button
+    name: Theme Colors
     primaryColor: Primary Color
     sideBarColor: Side Bar
     warningColor: Warning Color
@@ -1990,6 +1985,12 @@ setting:
   exportSettings: Export Settings
   exportSettingsHint: Save your current settings to a file
   general: General
+  groupApp: Language & Data Location
+  groupConnection: Network & Connection
+  groupDownload: Network & Downloads
+  groupPrivacy: Privacy & Presence
+  groupRun: Launch
+  groupSecurity: Account Security
   githubRelease: Github Release
   globalJava: Preferred Java
   globalJavaHint: >-
@@ -2037,15 +2038,16 @@ setting:
   minecraftOptions: Minecraft Options
   name: Global Setting | Global Settings
   network: Network Settings
+  apiKeys:
+    name: API Keys
+    curseforge: CurseForge API Key
+    curseforgeLabel: CurseForge API key
+    curseforgeDescription: Required to browse and install CurseForge content in the Mod Pack Market. The key is never bundled with the launcher and is stored only on this machine.
+    curseforgeHint: Get a free key from the CurseForge developer console.
+    curseforgeConsole: console.curseforge.com
+    save: Save
   newsPosition: Move News Section
   officialWebsite: Official Website
-  particleMode:
-    bubble: Bubble
-    name: Particle Mode
-    push: Push
-    remove: Remove
-    repulse: Repulse
-  particleModeDescription: Select the particle click behavior
   quickLaunchSettings: Quick Launch
   replaceNative: Replace Native Libraries
   replaceNativeDescription: Replace native libraries according to your computer's arch.
@@ -2074,17 +2076,9 @@ setting:
   settingsReloadHint: The launcher will restart to apply all settings.
   showNewsHeader: Unhide News showcase
   showRoot: Show
-  sidebarAlign: Sidebar Alignment
-  sidebarAutoHide: Auto-hide Sidebar
-  sidebarAutoHideHint: Hide sidebar automatically and show on hover
-  sidebarClassic: Classic
-  sidebarNotch: Notch
   sidebarPosition: Sidebar Position
-  sidebarScale: Sidebar Scale
   sidebarShowOnlyPinned: Show Only Pinned Instances
   sidebarShowOnlyPinnedHint: Only display pinned instances in the sidebar
-  sidebarStyle: Sidebar Style
-  sidebarStyleHint: Choose between classic and modern notch design
   streamerMode: Streaming Mode
   streamerModeDescription: This will hide your private information like email in launcher.
   theme:
@@ -2092,8 +2086,6 @@ setting:
     light: Light Theme
     system: Use System Theme
   themeExport: Export Theme
-  themeBorderRadius: Rounded Corners
-  themeBorderRadiusDescription: Enable or disable rounded corners for cards, dialogs, menus, and panels.
   themeFont: Font
   themeFontDescription: Change the font of the launcher.
   themeFontUrl: Font URL
@@ -2125,7 +2117,6 @@ setting:
     won't affect you if you're not in Chinese Mainland)
   useProxy: HTTP Proxy
   useProxyDescription: The proxy server address for the http request
-  viewBackgroundMusic: View Musics
 settingLabel:
   global: Global
   globalHint: This setting will follow the global setting
@@ -2253,6 +2244,7 @@ store:
   empty: No Modpacks Found
   emptyHint: Try adjusting your filters or search query.
   latestMinecraft: Latest Minecraft Version
+  latestVersionBar: Latest Version
   name: Modpack Market
   popularity: Popularity / follows
   searchHint: Search mods, modpacks, resource packs...
@@ -2468,6 +2460,17 @@ userCape:
     campaigns, and other happy happenings. Here you can choose between the capes
     you currently own:
   noCape: No Cape
+  customTitle: Custom Cape
+  customPick: Pick PNG
+  customChange: Change
+  customRemove: Remove custom cape
+  customImportTitle: Pick a custom cape PNG
+  customApplied: Custom cape applied!
+  customFailed: Failed to apply the custom cape
+  customOnlyHere: Only visible in this launcher — independent from official Mojang capes
+  customCancel: Cancel
+  customApply: Apply
+  customDescription: This custom cape is only visible to players using Disco Launcher. It does not touch the official Mojang cape system — the PNG never leaves your device or gets sent to Mojang.
 userService:
   add: Add More Services
   authlibInjectorMetadata: Authlib-Injector metadata

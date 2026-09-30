@@ -1397,35 +1397,13 @@ setting:
     name: 이미지 맞춤
   backgroundImageUrl: 이미지 URL
   backgroundImageUrlPlaceholder: 이미지의 HTTP/HTTPS URL을 입력하세요.
-  backgroundMusic: 테마 배경 음악
-  backgroundMusicUrl: 음악 URL
-  backgroundMusicUrlPlaceholder: 음악에 대한 HTTP/HTTPS URL을 입력하세요.
   backgroundType: 배경 유형
   backgroundTypeDescription: 배경에 특수 효과 표시 (성능에 영향을 줄 수 있음)
   backgroundTypes:
-    halo: 후광
     image: 이미지
     none: 없음
-    particle: 파티클
-    video: 비디오
-  backgroundVideo: 배경 비디오
-  backgroundVideoDescription: 비디오 선택 또는 지우기
-  backgroundVideoUrl: 비디오 URL
-  backgroundVideoUrlPlaceholder: 동영상의 HTTP/HTTPS URL을 입력하세요.
-  backgroundVideoVolume: 볼륨
-  backgroundVideoVolumeDescription: 드래그하여 볼륨 조절
   browseRoot: 찾아보기
   checkUpdate: 업데이트 확인
-  colorTheme:
-    appBarColor: 앱 바
-    backgroundColor: 배경색
-    cardColor: 카드 색상
-    description: 테마의 색상 변경
-    errorColor: 오류 색상
-    name: 테마 색상 및 블러
-    primaryColor: 기본 색상
-    sideBarColor: 사이드바
-    warningColor: 경고 색상
   darkTheme: 테마
   darkThemeDescription: 다크 또는 라이트 테마 중 선택
   devModeLabel: 개발
@@ -1482,13 +1460,6 @@ setting:
   network: 네트워크 설정
   newsPosition: 뉴스 섹션 이동
   officialWebsite: 공식 웹사이트
-  particleMode:
-    bubble: 거품
-    name: 파티클 모드
-    push: 밀기
-    remove: 제거
-    repulse: 밀어내기
-  particleModeDescription: 파티클 클릭 동작 선택
   quickLaunchSettings: 빠른 실행
   replaceNative: 시스템 라이브러리
   replaceNativeDescription: '사용 중인 컴퓨터 환경(예: 32비트/64비트)에 맞게 필요한 라이브러리를 교체합니다.'
@@ -1509,17 +1480,9 @@ setting:
   settingsReloadHint: 모든 설정을 적용하기 위해 런처를 다시 시작합니다.
   showNewsHeader: 뉴스 쇼케이스 표시
   showRoot: 표시
-  sidebarAlign: 사이드바 정렬
-  sidebarAutoHide: 사이드바 자동 숨김
-  sidebarAutoHideHint: 사이드바를 자동으로 숨기고 마우스 오버 시 표시
-  sidebarClassic: 클래식
-  sidebarNotch: 노치
   sidebarPosition: 사이드바 위치
-  sidebarScale: 사이드바 크기
   sidebarShowOnlyPinned: 고정된 인스턴스만 표시
   sidebarShowOnlyPinnedHint: 사이드바에 고정된 인스턴스만 표시
-  sidebarStyle: 사이드바 스타일
-  sidebarStyleHint: 클래식과 모던 노치 디자인 중 선택
   streamerMode: 스트리밍 모드
   streamerModeDescription: 런처에서 이메일과 같은 개인 정보를 숨깁니다.
   theme:
@@ -1527,8 +1490,6 @@ setting:
     light: 라이트 테마
     system: 시스템 테마 사용
   themeExport: 테마 내보내기
-  themeBorderRadius: 둥근 모서리
-  themeBorderRadiusDescription: 카드, 대화상자, 메뉴, 패널의 둥근 모서리를 켜거나 끕니다.
   themeFont: 폰트
   themeFontDescription: 런처의 폰트를 변경합니다.
   themeFontUrl: 글꼴 URL
@@ -1544,7 +1505,6 @@ setting:
   useBmclAPIDescription: 중국 본토에 있을 때 BMCLAPI를 사용하여 마인크래프트를 다운로드합니다. (중국 본토에 있지 않다면 영향을 받지 않습니다)
   useProxy: HTTP 프록시
   useProxyDescription: HTTP 요청을 위한 프록시 서버 주소
-  viewBackgroundMusic: 음악 보기
   setAsBackground:
     global: 런처 배경으로 설정
     instance: 인스턴스 배경으로 설정

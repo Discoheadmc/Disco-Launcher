@@ -1737,35 +1737,13 @@ setting:
     name: Image Fit
   backgroundImageUrl: Image URL
   backgroundImageUrlPlaceholder: Enter HTTP/HTTPS URL for image
-  backgroundMusic: Theme Background Music
-  backgroundMusicUrl: Music URL
-  backgroundMusicUrlPlaceholder: Enter HTTP/HTTPS URL for music
   backgroundType: Background Type
   backgroundTypeDescription: Show special effect on background (This may impact performance)
   backgroundTypes:
-    halo: Halo
     image: Image
     none: None
-    particle: Particle
-    video: Video
-  backgroundVideo: Background Video
-  backgroundVideoDescription: Select or clear video
-  backgroundVideoUrl: Video URL
-  backgroundVideoUrlPlaceholder: Enter HTTP/HTTPS URL for video
-  backgroundVideoVolume: volume
-  backgroundVideoVolumeDescription: drag to adjust volume
   browseRoot: Browse
   checkUpdate: Check Update
-  colorTheme:
-    appBarColor: App Bar
-    backgroundColor: Background Color
-    cardColor: Card Color
-    description: Change the colors in the theme
-    errorColor: Error Color
-    name: Theme Color and Blur
-    primaryColor: Primary Color
-    sideBarColor: Side Bar
-    warningColor: Warning Color
   customCss:
     advancedDescription: Override the launcher's current styling with your own CSS.
     assistantHint: Describe the look you want and I'll write the CSS for you.
@@ -1842,13 +1820,6 @@ setting:
   network: Network Settings
   newsPosition: Move News Section
   officialWebsite: Official Website
-  particleMode:
-    bubble: Bubble
-    name: Particle Mode
-    push: Push
-    remove: Remove
-    repulse: Repulse
-  particleModeDescription: Select the particle click behavior
   quickLaunchSettings: Quick Launch
   replaceNative: Replace Native Libraries
   replaceNativeDescription: Replace native libraries according to your computer's arch.
@@ -1877,17 +1848,9 @@ setting:
   settingsReloadHint: The launcher will restart to apply all settings.
   showNewsHeader: Unhide News showcase
   showRoot: Show
-  sidebarAlign: Sidebar Alignment
-  sidebarAutoHide: Auto-hide Sidebar
-  sidebarAutoHideHint: Hide sidebar automatically and show on hover
-  sidebarClassic: Classic
-  sidebarNotch: Notch
   sidebarPosition: Sidebar Position
-  sidebarScale: Sidebar Scale
   sidebarShowOnlyPinned: Show Only Pinned Instances
   sidebarShowOnlyPinnedHint: Only display pinned instances in the sidebar
-  sidebarStyle: Sidebar Style
-  sidebarStyleHint: Choose between classic and modern notch design
   streamerMode: Streaming Mode
   streamerModeDescription: This will hide your private information like email in launcher.
   theme:
@@ -1895,8 +1858,6 @@ setting:
     light: Light Theme
     system: Use System Theme
   themeExport: Export Theme
-  themeBorderRadius: Rounded Corners
-  themeBorderRadiusDescription: Enable or disable rounded corners for cards, dialogs, menus, and panels.
   themeFont: Font
   themeFontDescription: Change the font of the launcher.
   themeFontUrl: Font URL
@@ -1928,7 +1889,6 @@ setting:
     won't affect you if you're not in Chinese Mainland)
   useProxy: HTTP Proxy
   useProxyDescription: The proxy server address for the http request
-  viewBackgroundMusic: View Musics
 settingLabel:
   global: Global
   globalHint: This setting will follow the global setting

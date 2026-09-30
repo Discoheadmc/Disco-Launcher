@@ -1406,35 +1406,13 @@ setting:
     name: Afbeeldingspassing
   backgroundImageUrl: Afbeelding URL
   backgroundImageUrlPlaceholder: Voer HTTP/HTTPS URL in voor afbeelding
-  backgroundMusic: Thema Achtergrondmuziek
-  backgroundMusicUrl: Muziek URL
-  backgroundMusicUrlPlaceholder: Voer HTTP/HTTPS URL in voor muziek
   backgroundType: Achtergrondtype
   backgroundTypeDescription: Toon speciaal effect op achtergrond (Dit kan de prestaties beïnvloeden)
   backgroundTypes:
-    halo: Halo
     image: Afbeelding
     none: Geen
-    particle: Deeltje
-    video: Video
-  backgroundVideo: Achtergrondvideo
-  backgroundVideoDescription: Selecteer of wis video
-  backgroundVideoUrl: Video URL
-  backgroundVideoUrlPlaceholder: Voer HTTP/HTTPS URL in voor video
-  backgroundVideoVolume: volume
-  backgroundVideoVolumeDescription: sleep om het volume aan te passen
   browseRoot: Bladeren
   checkUpdate: Controleer Update
-  colorTheme:
-    appBarColor: App Balk
-    backgroundColor: Achtergrondkleur
-    cardColor: Kaartkleur
-    description: Verander de kleuren in het thema
-    errorColor: Foutkleur
-    name: Themakleur en Vervaging
-    primaryColor: Primaire Kleur
-    sideBarColor: Zijbalk
-    warningColor: Waarschuwingskleur
   darkTheme: Thema
   darkThemeDescription: Kies tussen een donker of licht thema
   developerMode: Ontwikkelaarsmodus
@@ -1490,13 +1468,6 @@ setting:
   network: Netwerk Instellingen
   newsPosition: Verplaats Nieuws Sectie
   officialWebsite: Officiële Website
-  particleMode:
-    bubble: Bel
-    name: Deeltjes Modus
-    push: Duwen
-    remove: Verwijderen
-    repulse: Afstoten
-  particleModeDescription: Selecteer het deeltjes klikgedrag
   quickLaunchSettings: Snel Starten
   replaceNative: Vervang Native Bibliotheken
   replaceNativeDescription: Vervang native bibliotheken volgens de architectuur van uw computer.
@@ -1518,15 +1489,7 @@ setting:
   settingsReloadHint: De launcher zal opnieuw opstarten om alle instellingen toe te passen.
   showNewsHeader: Nieuws showcase tonen
   showRoot: Tonen
-  sidebarAlign: Uitlijning van de zijbalk
-  sidebarAutoHide: Zijbalk automatisch verbergen
-  sidebarAutoHideHint: Verberg de zijbalk automatisch en toon bij hover
-  sidebarClassic: Klassiek
-  sidebarNotch: Inkeping
   sidebarPosition: Positie van de zijbalk
-  sidebarScale: Schaal van de zijbalk
-  sidebarStyle: Stijl van de zijbalk
-  sidebarStyleHint: Kies tussen klassiek en modern inkeping ontwerp
   streamerMode: Streamer Modus
   streamerModeDescription: Dit zal uw privé-informatie zoals e-mail in de launcher verbergen.
   theme:
@@ -1534,8 +1497,6 @@ setting:
     light: Licht Thema
     system: Gebruik Systeem Thema
   themeExport: Thema Exporteren
-  themeBorderRadius: Afgeronde hoeken
-  themeBorderRadiusDescription: Schakel afgeronde hoeken in of uit voor kaarten, dialogen, menus en panelen.
   themeFont: Lettertype
   themeFontDescription: Wijzig het lettertype van de launcher.
   themeFontUrl: Lettertype URL
@@ -1552,7 +1513,6 @@ setting:
     Gebruik BMCLAPI om Minecraft te downloaden wanneer u in het vasteland van China bent. (Dit heeft geen invloed op u als u niet in het vasteland van China bent)
   useProxy: HTTP Proxy
   useProxyDescription: Het adres van de proxyserver voor het http-verzoek
-  viewBackgroundMusic: Muziek Bekijken
   setAsBackground:
     global: Instellen als achtergrond van launcher
     instance: Instellen als achtergrond van instantie

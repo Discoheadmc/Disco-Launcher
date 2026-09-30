@@ -1392,35 +1392,13 @@ setting:
     name: Adatta immagine
   backgroundImageUrl: URL dell'immagine
   backgroundImageUrlPlaceholder: Inserisci l'URL HTTP/HTTPS per l'immagine
-  backgroundMusic: Tema musica di sottofondo
-  backgroundMusicUrl: URL della musica
-  backgroundMusicUrlPlaceholder: Inserisci l'URL HTTP/HTTPS per la musica
   backgroundType: Tipo di sfondo
   backgroundTypeDescription: Mostra effetti speciali sullo sfondo (potrebbe influire sulle prestazioni)
   backgroundTypes:
-    halo: Alone
     image: Immagine
     none: Nessuno
-    particle: Particella
-    video: video
-  backgroundVideo: Video di sfondo
-  backgroundVideoDescription: seleziona o cancella il video
-  backgroundVideoUrl: URL del video
-  backgroundVideoUrlPlaceholder: Inserisci l'URL HTTP/HTTPS per il video
-  backgroundVideoVolume: volume
-  backgroundVideoVolumeDescription: trascina per regolare il volume
   browseRoot: Sfoglia
   checkUpdate: Controlla aggiornamenti
-  colorTheme:
-    appBarColor: Barra dell'app
-    backgroundColor: Colore di sfondo
-    cardColor: Colore della carta
-    description: Cambia i colori del tema
-    errorColor: Colore dell'errore
-    name: Colore e sfocatura del tema
-    primaryColor: Colore primario
-    sideBarColor: Barra laterale
-    warningColor: Colore di avviso
   darkTheme: Tema scuro
   darkThemeDescription: Scegli il tema chiaro o scuro
   developerMode: Modalità sviluppatore
@@ -1478,13 +1456,6 @@ setting:
   network: Impostazioni di rete
   newsPosition: Sposta sezione notizie
   officialWebsite: Sito ufficiale
-  particleMode:
-    bubble: Bolla
-    name: Modalità particella
-    push: Spingi
-    remove: Rimuovi
-    repulse: Ripulsa
-  particleModeDescription: Seleziona il comportamento del clic della particella
   quickLaunchSettings: Avvio rapido
   replaceNative: Sostituisci librerie native
   replaceNativeDescription: Sostituisci le librerie native in base all'architettura del tuo computer.
@@ -1506,17 +1477,9 @@ setting:
   settingsReloadHint: Il launcher si riavvierà per applicare tutte le impostazioni.
   showNewsHeader: Mostra lo showcase delle notizie
   showRoot: Mostra
-  sidebarAlign: Allineamento barra laterale
-  sidebarAutoHide: Nascondi barra laterale automaticamente
-  sidebarAutoHideHint: Nascondi automaticamente la barra laterale quando il mouse si allontana
-  sidebarClassic: Classico
-  sidebarNotch: Tacca
   sidebarPosition: Posizione barra laterale
-  sidebarScale: Scala barra laterale
   sidebarShowOnlyPinned: Mostra solo fissati
   sidebarShowOnlyPinnedHint: Mostra solo le istanze fissate nella barra laterale
-  sidebarStyle: Stile barra laterale
-  sidebarStyleHint: Scegli lo stile di aspetto della barra laterale
   streamerMode: Modalità streaming
   streamerModeDescription: >-
     "Questa opzione nasconde le tue informazioni private, come l'email, nel launcher."
@@ -1525,8 +1488,6 @@ setting:
     light: Tema chiaro
     system: Usa il tema di sistema
   themeExport: Esporta tema
-  themeBorderRadius: Angoli arrotondati
-  themeBorderRadiusDescription: Abilita o disabilita gli angoli arrotondati per carte, finestre di dialogo, menu e pannelli.
   themeFont: Font
   themeFontDescription: Cambia il font del launcher.
   themeFontUrl: URL del carattere
@@ -1543,7 +1504,6 @@ setting:
     Usa BMCLAPI per scaricare Minecraft quando ti trovi nella Cina continentale. (Questo non influenzerà se non ti trovi in Cina)
   useProxy: Proxy HTTP
   useProxyDescription: L'indirizzo del server proxy per la richiesta http
-  viewBackgroundMusic: Visualizza musiche
   setAsBackground:
     global: Imposta come sfondo del launcher
     instance: Imposta come sfondo dell'istanza

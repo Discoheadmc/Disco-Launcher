@@ -1379,35 +1379,13 @@ setting:
     name: Dopasowanie obrazu
   backgroundImageUrl: Adres URL obrazu
   backgroundImageUrlPlaceholder: Wprowadź adres URL HTTP/HTTPS dla obrazu
-  backgroundMusic: Muzyka w tle
-  backgroundMusicUrl: Adres URL muzyki
-  backgroundMusicUrlPlaceholder: Wprowadź adres URL HTTP/HTTPS dla muzyki
   backgroundType: Typ tła
   backgroundTypeDescription: Wyświetlanie efektów specjalnych w tle (może to mieć wpływ na wydajność)
   backgroundTypes:
-    halo: Halo
     image: Obraz
     none: Brak
-    particle: Cząsteczka
-    video: wideo
-  backgroundVideo: Wideo w tle
-  backgroundVideoDescription: Wybierz lub wyczyść wideo
-  backgroundVideoUrl: Adres URL filmu
-  backgroundVideoUrlPlaceholder: Wprowadź adres URL HTTP/HTTPS dla wideo
-  backgroundVideoVolume: objętość
-  backgroundVideoVolumeDescription: przeciągnij, aby dostosować głośność
   browseRoot: Przeglądaj
   checkUpdate: Sprawdź aktualizację
-  colorTheme:
-    appBarColor: App Bar
-    backgroundColor: Kolor tła
-    cardColor: Kolor karty
-    description: Zmiana kolorów w motywie
-    errorColor: Kolor błędu
-    name: Kolor motywu i rozmycie
-    primaryColor: Kolor podstawowy
-    sideBarColor: Pasek boczny
-    warningColor: Kolor ostrzeżenia
   darkTheme: Temat
   darkThemeDescription: Wybierz ciemny lub jasny motyw
   developerMode: Tryb dewelopera
@@ -1466,13 +1444,6 @@ setting:
   network: Ustawienia sieciowe
   newsPosition: Przesuń sekcję aktualności
   officialWebsite: Oficjalna strona internetowa
-  particleMode:
-    bubble: Bańka
-    name: Tryb cząsteczek
-    push: Push
-    remove: Usunąć
-    repulse: Odpychanie
-  particleModeDescription: Wybierz zachowanie kliknięcia cząsteczki
   quickLaunchSettings: Szybkie uruchomienie
   replaceNative: Zastąp biblioteki natywne
   replaceNativeDescription: Zastąp natywne biblioteki zgodnie z architekturą komputera.
@@ -1495,17 +1466,9 @@ setting:
   settingsReloadHint: Launcher zostanie ponownie uruchomiony, aby zastosować wszystkie ustawienia.
   showNewsHeader: Odkryj wizytówkę wiadomości
   showRoot: Pokaż
-  sidebarAlign: Wyrównanie paska bocznego
-  sidebarAutoHide: Automatycznie ukryj pasek boczny
-  sidebarAutoHideHint: Automatycznie ukrywa pasek boczny, gdy mysz się oddala
-  sidebarClassic: Klasyczny
-  sidebarNotch: Wycięcie
   sidebarPosition: Pozycja paska bocznego
-  sidebarScale: Skala paska bocznego
   sidebarShowOnlyPinned: Pokaż tylko przypięte
   sidebarShowOnlyPinnedHint: Pokaż tylko przypięte instancje na pasku bocznym
-  sidebarStyle: Styl paska bocznego
-  sidebarStyleHint: Wybierz styl wyglądu paska bocznego
   streamerMode: Tryb przesyłania strumieniowego
   streamerModeDescription: >-
     Spowoduje to ukrycie prywatnych informacji, takich jak adres e-mail, w programie uruchamiającym.
@@ -1514,8 +1477,6 @@ setting:
     light: Motyw świetlny
     system: Umotyw systemowy
   themeExport: Motyw eksportu
-  themeBorderRadius: Zaokrąglone rogi
-  themeBorderRadiusDescription: Wlacz lub wylacz zaokraglone rogi dla kart, okien dialogowych, menu i paneli.
   themeFont: Czcionka
   themeFontDescription: Zmiana czcionki programu uruchamiającego.
   themeFontUrl: Adres URL czcionki
@@ -1532,7 +1493,6 @@ setting:
     Użyj BMCLAPI, aby pobrać Minecrafta, gdy jesteś w Chinach kontynentalnych. (To nie będzie miało wpływu, jeśli nie jesteś w Chinach kontynentalnych)
   useProxy: HTTP Proxy
   useProxyDescription: Adres serwera proxy dla żądania http
-  viewBackgroundMusic: Wyświetl muzykę
   setAsBackground:
     global: Ustaw jako tło launchera
     instance: Ustaw jako tło instancji

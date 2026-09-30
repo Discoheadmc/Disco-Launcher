@@ -1416,36 +1416,14 @@ setting:
     name: S'ajuster
   backgroundImageUrl: URL de l'image
   backgroundImageUrlPlaceholder: Saisissez l'URL HTTP/HTTPS pour l'image
-  backgroundMusic: Thème Musique de fond
-  backgroundMusicUrl: URL de la musique
-  backgroundMusicUrlPlaceholder: Saisissez l'URL HTTP/HTTPS pour la musique
   backgroundType: Type d'arrière-plan
   backgroundTypeDescription: >-
     Afficher un effet spécial sur l'arrière-plan (cela peut avoir un impact sur les performances)
   backgroundTypes:
-    halo: Halo
     image: Image
     none: Aucun
-    particle: Particule
-    video: Vidéo
-  backgroundVideo: Vidéo de fond
-  backgroundVideoDescription: sélectionner ou enlever la vidéo
-  backgroundVideoUrl: URL de la vidéo
-  backgroundVideoUrlPlaceholder: Saisissez l'URL HTTP/HTTPS pour la vidéo
-  backgroundVideoVolume: volume
-  backgroundVideoVolumeDescription: faites glisser pour régler le volume
   browseRoot: Parcourir
   checkUpdate: Vérifier les mises à jour
-  colorTheme:
-    appBarColor: Barre d'application
-    backgroundColor: Couleur d'arrière plan
-    cardColor: Couleur de la carte
-    description: Changer les couleurs du thème
-    errorColor: Couleur d'erreur
-    name: Couleur du thème et flou
-    primaryColor: Couleur primaire
-    sideBarColor: Barre latérale
-    warningColor: Couleur d'avertissement
   darkTheme: Thème
   darkThemeDescription: Choisissez le thème sombre ou clair
   devModeLabel: DEVELOPPEMENT
@@ -1508,13 +1486,6 @@ setting:
   network: Paramètres réseau
   newsPosition: Déplacer la section actualités
   officialWebsite: Site officiel
-  particleMode:
-    bubble: Bulles
-    name: Type de Particules
-    push: Pousser
-    remove: Éliminer
-    repulse: Repousser
-  particleModeDescription: Sélectionnez le comportement de clic des particules
   quickLaunchSettings: Lancement rapide
   replaceNative: Remplacer les bibliothèques natives
   replaceNativeDescription: >-
@@ -1538,25 +1509,15 @@ setting:
   settingsReloadHint: Le lanceur redémarrera pour appliquer tous les paramètres.
   showNewsHeader: Afficher la vitrine des actualités
   showRoot: Afficher
-  sidebarAlign: Alignement de la barre latérale
-  sidebarAutoHide: Masquer automatiquement la barre latérale
-  sidebarAutoHideHint: Masquer automatiquement la barre latérale et afficher au survol
-  sidebarClassic: Classique
-  sidebarNotch: Encoche
   sidebarPosition: Position de la barre latérale
-  sidebarScale: Échelle de la barre latérale
   sidebarShowOnlyPinned: Afficher uniquement les instances épinglées
   sidebarShowOnlyPinnedHint: Afficher uniquement les instances épinglées dans la barre latérale
-  sidebarStyle: Style de la barre latérale
-  sidebarStyleHint: Choisissez entre le design classique et moderne Notch
   streamerMode: Mode diffusion
   streamerModeDescription: Cela masquera vos informations privées comme les e-mails dans le lanceur.
   theme:
     dark: Thème sombre
     light: Thème clair
     system: Utiliser le thème système
-  themeBorderRadius: Coins arrondis
-  themeBorderRadiusDescription: Activer ou désactiver les coins arrondis pour les cartes, boîtes de dialogue, menus et panneaux.
   themeFont: Police de caractère
   themeFontDescription: Changez la police du lanceur.
   themeFontUrl: URL de la police
@@ -1572,7 +1533,6 @@ setting:
     Utilisez BMCLAPI pour télécharger Minecraft lorsque vous êtes en Chine continentale. (Cela n'affectera pas si vous n'êtes pas en Chine continentale)
   useProxy: Proxy HTTP
   useProxyDescription: L'adresse du serveur proxy pour la requête http
-  viewBackgroundMusic: Voir les musiques
   setAsBackground:
     global: Définir comme fond du lanceur
     instance: Définir comme fond de l'instance

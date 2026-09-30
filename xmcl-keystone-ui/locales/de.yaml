@@ -1480,36 +1480,14 @@ setting:
     name: Fit
   backgroundImageUrl: Bild-URL
   backgroundImageUrlPlaceholder: Geben Sie die HTTP/HTTPS-URL für das Bild ein
-  backgroundMusic: Thematische Hintergrundmusik
-  backgroundMusicUrl: Musik-URL
-  backgroundMusicUrlPlaceholder: Geben Sie die HTTP/HTTPS-URL für Musik ein
   backgroundType: Hintergrund Typ
   backgroundTypeDescription: >-
     Einen speziellen Effekt auf dem Hintergrund anzeigen (kann die Leistung beeinträchtigen)
   backgroundTypes:
-    halo: Halo
     image: Bild.
     none: Nichts
-    particle: Partikel
-    video: Video.
-  backgroundVideo: Hintergrund-Video
-  backgroundVideoDescription: Ein Video auswählen oder löschen
-  backgroundVideoUrl: Video-URL
-  backgroundVideoUrlPlaceholder: Geben Sie die HTTP/HTTPS-URL für das Video ein
-  backgroundVideoVolume: Band
-  backgroundVideoVolumeDescription: Ziehen, um die Lautstärke einzustellen
   browseRoot: Überblick.
   checkUpdate: Nach Aktualisierungen suchen
-  colorTheme:
-    appBarColor: Anwendungspanel
-    backgroundColor: Hintergrundfarbe
-    cardColor: Farbe der Karte
-    description: Farben im Thema ändern
-    errorColor: Farbe des Fehlers
-    name: Themenfarbe und Unschärfe
-    primaryColor: Hauptfarbe
-    sideBarColor: Seitenwand
-    warningColor: Warnfarbe
   darkTheme: Thema.
   darkThemeDescription: Wählen Sie ein dunkles oder helles Thema
   devModeLabel: ENTWICKLUNG
@@ -1573,13 +1551,6 @@ setting:
   network: Netzwerkeinstellungen
   newsPosition: Nachrichtenbereich verschieben
   officialWebsite: Offizielle Website
-  particleMode:
-    bubble: Blasen
-    name: Partikel-Modus
-    push: Schieben Sie
-    remove: entfernen
-    repulse: Abwehren
-  particleModeDescription: Wählen Sie das Verhalten des Partikels beim Anklicken
   quickLaunchSettings: Schnellstart
   replaceNative: Ersetzen Sie native Bibliotheken
   replaceNativeDescription: >-
@@ -1603,17 +1574,9 @@ setting:
   settingsReloadHint: Der Launcher wird neu gestartet, um alle Einstellungen anzuwenden.
   showNewsHeader: Nachrichtenpräsentation einblenden
   showRoot: ВідображатиAnzeige
-  sidebarAlign: Seitenleistenausrichtung
-  sidebarAutoHide: Seitenleiste automatisch ausblenden
-  sidebarAutoHideHint: Seitenleiste automatisch ausblenden und beim Hover anzeigen
-  sidebarClassic: Klassisch
-  sidebarNotch: Kerbe
   sidebarPosition: Seitenleistenposition
-  sidebarScale: Seitenleistenskalierung
   sidebarShowOnlyPinned: Nur angeheftete Instanzen anzeigen
   sidebarShowOnlyPinnedHint: Nur angeheftete Instanzen in der Seitenleiste anzeigen
-  sidebarStyle: Seitenleistenstil
-  sidebarStyleHint: Wählen Sie zwischen klassischem und modernem Notch-Design
   streamerMode: Streaming-Modus
   streamerModeDescription: >-
     Dadurch werden Ihre privaten Informationen wie E-Mails im Launcher ausgeblendet.
@@ -1622,8 +1585,6 @@ setting:
     light: Thema Licht
     system: Verwenden Sie das Systemthema
   themeExport: Ein Thema exportieren
-  themeBorderRadius: Abgerundete Ecken
-  themeBorderRadiusDescription: Abgerundete Ecken fur Karten, Dialoge, Menus und Panels ein- oder ausschalten.
   themeFont: Schriftart
   themeFontDescription: Ändern Sie die Schriftart des Launchers.
   themeFontUrl: Schriftart-URL
@@ -1641,7 +1602,6 @@ setting:
      (Funktioniert nicht, wenn Sie sich nicht auf dem chinesischen Festland befinden)
   useProxy: HTTP-Proxy
   useProxyDescription: Proxy-Server-Adresse für http-Anfrage
-  viewBackgroundMusic: Musik anzeigen
   setAsBackground:
     global: Als Launcher-Hintergrund festlegen
     instance: Als Instanz-Hintergrund festlegen

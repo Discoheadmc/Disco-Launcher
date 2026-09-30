@@ -1520,35 +1520,13 @@ setting:
     name: छवि फ़िट
   backgroundImageUrl: छवि यूआरएल
   backgroundImageUrlPlaceholder: छवि के लिए HTTP/HTTPS यूआरएल दर्ज करें
-  backgroundMusic: थीम पृष्ठभूमि संगीत
-  backgroundMusicUrl: संगीत यूआरएल
-  backgroundMusicUrlPlaceholder: संगीत के लिए HTTP/HTTPS यूआरएल दर्ज करें
   backgroundType: पृष्ठभूमि प्रकार
   backgroundTypeDescription: पृष्ठभूमि पर विशेष प्रभाव दिखाएं (यह प्रदर्शन को प्रभावित कर सकता है)
   backgroundTypes:
-    halo: हेलो (Halo)
     image: छवि
     none: कोई नहीं
-    particle: कण (Particle)
-    video: वीडियो
-  backgroundVideo: पृष्ठभूमि वीडियो
-  backgroundVideoDescription: वीडियो चुनें या साफ़ करें
-  backgroundVideoUrl: वीडियो यूआरएल
-  backgroundVideoUrlPlaceholder: वीडियो के लिए HTTP/HTTPS यूआरएल दर्ज करें
-  backgroundVideoVolume: आवाज
-  backgroundVideoVolumeDescription: आवाज को समायोजित करने के लिए खींचें
   browseRoot: ब्राउज़ करें
   checkUpdate: अपडेट जांचें
-  colorTheme:
-    appBarColor: ऐप बार
-    backgroundColor: पृष्ठभूमि रंग
-    cardColor: कार्ड रंग
-    description: थीम में रंग बदलें
-    errorColor: त्रुटि रंग
-    name: थीम रंग और धुंधलापन
-    primaryColor: प्राथमिक रंग
-    sideBarColor: साइड बार
-    warningColor: चेतावनी रंग
   customCss:
     advancedDescription: लॉन्चर की वर्तमान शैली को अपने स्वयं के सीएसएस (CSS) से ओवरराइड करें।
     assistantHint: उस लुक का वर्णन करें जिसे आप चाहते हैं और मैं आपके लिए सीएसएस लिखूँगा।
@@ -1613,13 +1591,6 @@ setting:
   network: नेटवर्क सेटिंग
   newsPosition: समाचार अनुभाग स्थानांतरित करें
   officialWebsite: आधिकारिक वेबसाइट
-  particleMode:
-    bubble: बुलबुला
-    name: कण (Particle) मोड
-    push: धकेलें (Push)
-    remove: हटाएं
-    repulse: प्रतिकर्षित करें
-  particleModeDescription: पार्टिकल क्लिक व्यवहार चुनें
   quickLaunchSettings: त्वरित लॉन्च
   replaceNative: नेटिव लाइब्रेरी बदलें
   replaceNativeDescription: आपके कंप्यूटर की आर्किटेक्चर के अनुसार नेटिव लाइब्रेरी बदलें।
@@ -1646,17 +1617,9 @@ setting:
   settingsReloadHint: सभी सेटिंग लागू करने के लिए लॉन्चर पुनः आरंभ होगा।
   showNewsHeader: समाचार शोकेस दिखाएँ
   showRoot: दिखाएँ
-  sidebarAlign: साइडबार संरेखण
-  sidebarAutoHide: Sidebar Auto-hide
-  sidebarAutoHideHint: साइडबार स्वतः छुपाएँ और होवर पर दिखाएँ
-  sidebarClassic: क्लासिक
-  sidebarNotch: नॉच
   sidebarPosition: साइडबार स्थिति
-  sidebarScale: साइडबार स्केल
   sidebarShowOnlyPinned: केवल पिन किए गए इंस्टेंस दिखाएँ
   sidebarShowOnlyPinnedHint: साइडबार में केवल पिन किए गए इंस्टेंस प्रदर्शित करें
-  sidebarStyle: साइडबार स्टाइल
-  sidebarStyleHint: क्लासिक और मॉडर्न नॉच डिज़ाइन के बीच चुनें
   streamerMode: स्ट्रीमिंग मोड
   streamerModeDescription: यह लॉन्चर में आपकी निजी जानकारी जैसे ईमेल को छुपा देगा।
   theme:
@@ -1664,8 +1627,6 @@ setting:
     light: लाइट थीम
     system: सिस्टम थीम उपयोग करें
   themeExport: थीम निर्यात करें
-  themeBorderRadius: गोलाकार कोने
-  themeBorderRadiusDescription: कार्ड, डायलॉग, मेनू और पैनल के लिए गोलाकार कोने सक्षम या अक्षम करें।
   themeFont: फ़ॉन्ट
   themeFontDescription: लॉन्चर का फ़ॉन्ट बदलें।
   themeFontUrl: फ़ॉन्ट URL
@@ -1693,7 +1654,6 @@ setting:
   useBmclAPIDescription: जब आप चीनी मुख्य भूमि में हों तो माइनक्राफ्ट डाउनलोड करने के लिए BMCLAPI का उपयोग करें। (यदि आप चीनी मुख्य भूमि में नहीं हैं तो यह आपको प्रभावित नहीं करेगा)
   useProxy: HTTP प्रॉक्सी
   useProxyDescription: http अनुरोध के लिए प्रॉक्सी सर्वर पता
-  viewBackgroundMusic: संगीत देखें
 settingLabel:
   global: वैश्विक
   globalHint: यह सेटिंग वैश्विक सेटिंग का अनुसरण करेगी

@@ -1520,35 +1520,13 @@ setting:
     name: Kesesuaian Gambar
   backgroundImageUrl: URL Gambar
   backgroundImageUrlPlaceholder: Masukkan URL HTTP/HTTPS untuk gambar
-  backgroundMusic: Musik Latar Belakang Tema
-  backgroundMusicUrl: URL Musik
-  backgroundMusicUrlPlaceholder: Masukkan URL HTTP/HTTPS untuk musik
   backgroundType: Tipe Latar Belakang
   backgroundTypeDescription: Tampilkan efek khusus pada latar belakang (Ini dapat memengaruhi kinerja)
   backgroundTypes:
-    halo: Halo
     image: Gambar
     none: Tidak Ada
-    particle: Partikel
-    video: Video
-  backgroundVideo: Video Latar Belakang
-  backgroundVideoDescription: Pilih atau bersihkan video
-  backgroundVideoUrl: URL Video
-  backgroundVideoUrlPlaceholder: Masukkan URL HTTP/HTTPS untuk video
-  backgroundVideoVolume: volume
-  backgroundVideoVolumeDescription: seret untuk menyesuaikan volume
   browseRoot: Telusuri
   checkUpdate: Periksa Pembaruan
-  colorTheme:
-    appBarColor: Bilah Aplikasi
-    backgroundColor: Warna Latar Belakang
-    cardColor: Warna Kartu
-    description: Ubah warna dalam tema
-    errorColor: Warna Kesalahan
-    name: Warna Tema dan Kabur
-    primaryColor: Warna Utama
-    sideBarColor: Bilah Samping
-    warningColor: Warna Peringatan
   customCss:
     advancedDescription: Tindih gaya peluncur saat ini dengan CSS Anda sendiri.
     assistantHint: Jelaskan tampilan yang Anda inginkan dan saya akan menulis CSS-nya untuk Anda.
@@ -1613,13 +1591,6 @@ setting:
   network: Pengaturan Jaringan
   newsPosition: Pindahkan Bagian Berita
   officialWebsite: Situs Web Resmi
-  particleMode:
-    bubble: Gelembung
-    name: Mode Partikel
-    push: Dorong
-    remove: Hapus
-    repulse: Tolak
-  particleModeDescription: Pilih perilaku klik partikel
   quickLaunchSettings: Peluncuran Cepat
   replaceNative: Ganti Pustaka Bawaan
   replaceNativeDescription: Ganti pustaka bawaan sesuai dengan arsitektur komputer Anda.
@@ -1646,17 +1617,9 @@ setting:
   settingsReloadHint: Peluncur akan dimulai ulang untuk menerapkan semua pengaturan.
   showNewsHeader: Tampilkan kembali bagian Berita
   showRoot: Tampilkan
-  sidebarAlign: Penyelarasan Bilah Samping
-  sidebarAutoHide: Sembunyikan Otomatis Bilah Samping
-  sidebarAutoHideHint: Sembunyikan bilah samping secara otomatis dan tampilkan saat didekati mouse
-  sidebarClassic: Klasik
-  sidebarNotch: Notch
   sidebarPosition: Posisi Bilah Samping
-  sidebarScale: Skala Bilah Samping
   sidebarShowOnlyPinned: Hanya Tampilkan Instansi yang Disematkan
   sidebarShowOnlyPinnedHint: Hanya tampilkan instansi yang disematkan di bilah samping
-  sidebarStyle: Gaya Bilah Samping
-  sidebarStyleHint: Pilih antara desain notch klasik dan modern
   streamerMode: Mode Streaming
   streamerModeDescription: Ini akan menyembunyikan informasi pribadi Anda seperti email di peluncur.
   theme:
@@ -1664,8 +1627,6 @@ setting:
     light: Tema Terang
     system: Gunakan Tema Sistem
   themeExport: Ekspor Tema
-  themeBorderRadius: Sudut Membulat
-  themeBorderRadiusDescription: Aktifkan atau nonaktifkan sudut membulat untuk kartu, dialog, menu, dan panel.
   themeFont: Font
   themeFontDescription: Ubah font peluncur.
   themeFontUrl: URL Font
@@ -1693,7 +1654,6 @@ setting:
   useBmclAPIDescription: Gunakan BMCLAPI untuk mengunduh Minecraft saat Anda berada di Tiongkok Daratan (Ini tidak akan memengaruhi Anda jika tidak berada di Tiongkok Daratan).
   useProxy: Proksi HTTP
   useProxyDescription: Alamat server proksi untuk permintaan HTTP
-  viewBackgroundMusic: Lihat Musik
 settingLabel:
   global: Global
   globalHint: Pengaturan ini akan mengikuti pengaturan global

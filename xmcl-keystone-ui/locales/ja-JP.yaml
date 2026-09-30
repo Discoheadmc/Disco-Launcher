@@ -1435,35 +1435,13 @@ setting:
     name: 合わせる
   backgroundImageUrl: 画像URL
   backgroundImageUrlPlaceholder: 画像のHTTP/HTTPS URLを入力してください
-  backgroundMusic: BGM
-  backgroundMusicUrl: 音楽URL
-  backgroundMusicUrlPlaceholder: 音楽のHTTP/HTTPS URLを入力してください
   backgroundType: 背景の種類
   backgroundTypeDescription: 背景に特殊効果を表示します (動作が重くなるかもしれあせん)
   backgroundTypes:
-    halo: ヘイロー
     image: 画像
     none: なし
-    particle: パーティクル
-    video: ビデオ
-  backgroundVideo: 背景のビデオ
-  backgroundVideoDescription: 映像を選ぶかクリアする
-  backgroundVideoUrl: 動画のURL
-  backgroundVideoUrlPlaceholder: ビデオのHTTP/HTTPS URLを入力してください
-  backgroundVideoVolume: 音量
-  backgroundVideoVolumeDescription: ドラッグして音量を調整
   browseRoot: 見る
   checkUpdate: アップデートを確認
-  colorTheme:
-    appBarColor: アプリバー
-    backgroundColor: 背景色
-    cardColor: カードの色
-    description: このテーマで色を変える
-    errorColor: エラーの色
-    name: テーマカラー
-    primaryColor: プライマリカラー
-    sideBarColor: サイドバー
-    warningColor: 警告の色
   darkTheme: テーマ
   darkThemeDescription: ダークテーマかライトテーマを選択してください
   devModeLabel: 開発
@@ -1520,13 +1498,6 @@ setting:
   network: ネットワーク設定
   newsPosition: ニュースセクションを移動
   officialWebsite: 公式サイト
-  particleMode:
-    bubble: バブル
-    name: パーティクルモード
-    push: プッシュ
-    remove: 削除
-    repulse: リパルス
-  particleModeDescription: パーティクルの挙動を選ぶ
   quickLaunchSettings: クイック起動
   replaceNative: ネイティブライブラリを置き換えます
   replaceNativeDescription: ネイティブライブラリをあなたのコンピューターアーキテクチャに合わせて置き換えます
@@ -1547,17 +1518,9 @@ setting:
   settingsReloadHint: ランチャーは再起動して、すべての設定を適用します。
   showNewsHeader: ニュースを隠さない
   showRoot: 見る
-  sidebarAlign: サイドバーの配置
-  sidebarAutoHide: サイドバーを自動的に隠す
-  sidebarAutoHideHint: サイドバーを自動的に隠し、ホバー時に表示する
-  sidebarClassic: クラシック
-  sidebarNotch: ノッチ
   sidebarPosition: サイドバーの位置
-  sidebarScale: サイドバーのスケール
   sidebarShowOnlyPinned: ピン留めされたインスタンスのみを表示
   sidebarShowOnlyPinnedHint: サイドバーにピン留めされたインスタンスのみを表示する
-  sidebarStyle: サイドバーのスタイル
-  sidebarStyleHint: クラシックとモダンなノッチデザインから選択
   streamerMode: ストリーミングモード
   streamerModeDescription: ランチャーでメールアドレスのような機密性の高い情報を隠します。
   theme:
@@ -1565,8 +1528,6 @@ setting:
     light: ライトテーマ
     system: システムのテーマを使う
   themeExport: テーマをエクスポート
-  themeBorderRadius: 角丸
-  themeBorderRadiusDescription: カード、ダイアログ、メニュー、パネルの角丸を有効または無効にします。
   themeFont: フォント
   themeFontDescription: ランチャーのフォントを変更します。
   themeFontUrl: フォントURL
@@ -1582,7 +1543,6 @@ setting:
   useBmclAPIDescription: 中国本土にいる場合 BMCLAPI を用いてMinecraftをダウンロードします (中国本土に居ない場合機能しません)
   useProxy: HTTPプロキシ
   useProxyDescription: HTTPリクエストのためのプロキシサーバーのアドレス
-  viewBackgroundMusic: BGMフォルダを見る
   setAsBackground:
     global: ランチャーの背景に設定
     instance: インスタンスの背景に設定

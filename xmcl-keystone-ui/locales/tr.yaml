@@ -490,6 +490,7 @@ instanceUpdate:
   noFiles: Dosya değişikliği yok
 instances:
   add: Oyun Oluştur
+  title: Oyun | Oyunlar
   addCurseForgeDescription: Curseforge veri klasöründen içe aktar. Curseforge'un kök veri klasörünü seçmeniz gerekir
   addDescription: Sıfırdan yeni bir instance oluştur
   addMMCDescription: Mevcut MultiMC instance'ını içe aktar. MultiMC'den veri klasörünü seçmeniz gerekir.
@@ -516,6 +517,11 @@ instances:
     paylaşır. Bu bir kopya değildir — bir örnekte yapılan değişiklikler tümünde
     görünür. İşaretlenmemiş klasörler bu örneğe özel kalır.
   linkFailed: '{folder} klasörü paylaşılan klasöre bağlanamadı'
+  wskinLoader: WSkinLoader (özel pelerin oyun içinde)
+  wskinLoaderHint: >-
+    Fabric modu kurarak bu örnek kendi özel pelerinini oyun içinde görüntüler.
+    Yalnızca kendi görüşünüz; resmi pelerinler etkilenmez. Yalnızca Fabric için.
+  wskinLoaderApplyFailed: WSkinLoader kurulumu uygulanamadı, başlatma sırasında yeniden denenecek
   addPrismDescription: Mevcut PrismLauncher örneğini içe aktar.
 items:
   count: '{count} öğe'
@@ -1410,23 +1416,11 @@ setting:
     name: Resim Uyumu
   backgroundImageUrl: Resim URL'si
   backgroundImageUrlPlaceholder: Resim için HTTP/HTTPS URL'si girin
-  backgroundMusic: Tema Arka Plan Müziği
-  backgroundMusicUrl: Müzik URL'si
-  backgroundMusicUrlPlaceholder: Müzik için HTTP/HTTPS URL'si girin
   backgroundType: Arka Plan Türü
   backgroundTypeDescription: Arka planda özel efekt göster (Bu performansı etkileyebilir)
   backgroundTypes:
-    halo: Halo
     image: Resim
     none: Yok
-    particle: Parçacık
-    video: Video
-  backgroundVideo: Arka Plan Videosu
-  backgroundVideoDescription: Video seçin veya temizleyin
-  backgroundVideoUrl: Video URL'si
-  backgroundVideoUrlPlaceholder: Video için HTTP/HTTPS URL'si girin
-  backgroundVideoVolume: ses seviyesi
-  backgroundVideoVolumeDescription: ses seviyesini ayarlamak için sürükleyin
   browseRoot: Gözat
   checkUpdate: Güncellemeyi Kontrol Et
   colorTheme:
@@ -1435,7 +1429,8 @@ setting:
     cardColor: Kart Rengi
     description: Temadaki renkleri değiştirin
     errorColor: Hata Rengi
-    name: Tema Rengi ve Bulanıklık
+    launchButtonColor: Başlat Butonu
+    name: Tema Renkleri
     primaryColor: Birincil Renk
     sideBarColor: Kenar Çubuğu
     warningColor: Uyarı Rengi
@@ -1453,6 +1448,12 @@ setting:
   exportSettings: Ayarları Dışa Aktar
   exportSettingsHint: Mevcut ayarlarınızı bir dosyaya kaydedin
   general: Genel
+  groupApp: Dil ve Veri Konumu
+  groupConnection: Ağ ve Bağlantı
+  groupDownload: Ağ ve İndirme
+  groupPrivacy: Gizlilik ve Durum
+  groupRun: Çalıştırma
+  groupSecurity: Hesap Güvenliği
   githubRelease: Github Yayını
   globalJava: Tercih edilen Java
   globalJavaHint: "Otomatik modda önce bu Java denenir ve yalnızca oyun sürümüyle uyumlu olmadığında otomatik algılamaya geri dönülür."
@@ -1487,15 +1488,16 @@ setting:
   minecraftOptions: Minecraft Seçenekleri
   name: Global Ayar | Global Ayarlar
   network: Ağ Ayarları
+  apiKeys:
+    name: API Anahtarları
+    curseforge: CurseForge API Anahtarı
+    curseforgeLabel: CurseForge API anahtarı
+    curseforgeDescription: Mod Paketi Pazarı'nda CurseForge içeriğini listeleyip kurmak için gereklidir. Anahtarın koda gömülmez, yalnızca bu bilgisayarda saklanır.
+    curseforgeHint: Anahtarı CurseForge geliştirici konsolundan (ücretsiz) alabilirsin.
+    curseforgeConsole: console.curseforge.com
+    save: Kaydet
   newsPosition: Haber Bölümünü Taşı
   officialWebsite: Resmi Web Sitesi
-  particleMode:
-    bubble: Baloncuk
-    name: Parçacık Modu
-    push: İt (Push)
-    remove: Kaldır
-    repulse: Püskürt (Repulse)
-  particleModeDescription: Parçacık tıklama davranışını seçin
   quickLaunchSettings: Hızlı Başlatma
   replaceNative: Yerel Kütüphaneleri Değiştir
   replaceNativeDescription: Yerel kütüphaneleri bilgisayarınızın mimarisine göre değiştirin.
@@ -1516,15 +1518,7 @@ setting:
   settingsReloadHint: Tüm ayarları uygulamak için başlatıcı yeniden başlatılacak.
   showNewsHeader: Haber vitrinini göster
   showRoot: Göster
-  sidebarAlign: Kenar Çubuğu Hizalaması
-  sidebarAutoHide: Kenar Çubuğunu Otomatik Gizle
-  sidebarAutoHideHint: Kenar çubuğunu otomatik olarak gizle ve üzerine gelindiğinde göster
-  sidebarClassic: Klasik
-  sidebarNotch: Çentik
   sidebarPosition: Kenar Çubuğu Konumu
-  sidebarScale: Kenar Çubuğu Ölçeği
-  sidebarStyle: Kenar Çubuğu Stili
-  sidebarStyleHint: Klasik ve modern çentik tasarımı arasında seçim yapın
   streamerMode: Yayıncı Modu
   streamerModeDescription: Bu, başlatıcıda e-posta gibi özel bilgilerinizi gizleyecektir.
   theme:
@@ -1532,8 +1526,6 @@ setting:
     light: Açık Tema
     system: Sistem Temasını Kullan
   themeExport: Temayı Dışa Aktar
-  themeBorderRadius: Yuvarlatılmış köşeler
-  themeBorderRadiusDescription: Kartlar, diyaloglar, menüler ve paneller için yuvarlatılmış köşeleri açın veya kapatın.
   themeFont: Yazı Tipi
   themeFontDescription: Başlatıcının yazı tipini değiştirin.
   themeFontUrl: Yazı Tipi URL'si
@@ -1549,7 +1541,6 @@ setting:
   useBmclAPIDescription: Çin Anakarasındayken Minecraft indirmek için BMCLAPI kullanın. (Çin Anakarasında değilseniz bu sizi etkilemez)
   useProxy: HTTP Proxy
   useProxyDescription: Http isteği için proxy sunucu adresi
-  viewBackgroundMusic: Müzikleri Görüntüle
   setAsBackground:
     global: Başlatıcı arka planı yap
     instance: Örnek arka planı yap
@@ -1684,6 +1675,7 @@ store:
   popularity: Popülerlik / takip sayısı
   discover: Keşfetmek
   latestMinecraft: En Son Minecraft Sürümü
+  latestVersionBar: En Son Sürüm
   name: Mod Paketi Pazarı
   searchResult: Arama Sonucu
   trending: Trend olan
@@ -1868,6 +1860,17 @@ userCape:
   changeTitle: Pelerininizi değiştirin
   description: 'Pelerinler, oyuncuların farklı etkinlikler, kampanyalar ve diğer mutlu olaylar aracılığıyla açabileceği özel ödüllerdir. Burada şu anda sahip olduğunuz pelerinler arasından seçim yapabilirsiniz:'
   noCape: Pelerin Yok
+  customTitle: Özel Pelerin
+  customPick: PNG Seç
+  customChange: Değiştir
+  customRemove: Özel pelerini kaldır
+  customImportTitle: Özel Pelerin PNG Seç
+  customApplied: Özel pelerin uygulandı!
+  customFailed: Özel pelerin uygulanamadı
+  customOnlyHere: Sadece bu başlatıcıda görünür — resmî Mojang pelerininden bağımsızdır
+  customCancel: İptal
+  customApply: Uygula
+  customDescription: Bu özel pelerin yalnızca Disco Launcher kullanan oyuncular tarafından görünür. Resmî Mojang pelerin sisteminizi hiçbir şekilde etkilemez — PNG cihazınızdan çıkmaz, Mojang'a gönderilmez.
 userService:
   add: Daha Fazla Servis Ekle
   authlibInjectorMetadata: Authlib-Injector meta verileri
