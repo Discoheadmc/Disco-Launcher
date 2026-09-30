@@ -32,6 +32,7 @@ import { validateDirectory } from '~/util/validate'
 import { LauncherApp } from '../app/LauncherApp'
 import { ENOENT_ERROR, exists, isDirectory, isPathDiskRootPath, linkOrCopyFile, readdirEnsured } from '../util/fs'
 import { getMediaIconPath, resolveInstanceIcon, serializeInstanceIcon, toMediaIconUrl } from './instanceIcon'
+import { installWSkinLoaderMods } from './wskinloader'
 import { requireObject, requireString } from '../util/object'
 import { getTracker } from '~/util/taskHelper'
 import { setTimeout } from 'timers/promises'
@@ -356,6 +357,20 @@ export class InstanceService extends StatefulService<InstanceState> implements I
 
     this.log('Created instance with option')
     this.log(JSON.stringify(instance, null, 4))
+
+    // Disco: opt-in WSkinLoader (custom cape in-game) support. Applies right
+    // after the instance folder exists so a flagged instance launches with
+    // the mod chain ready. The per-launch `config/wskinloader.json` (which
+    // embeds the launching account) is written by the launch middleware.
+    if (instance.wskinLoader && instance.edition !== 'bedrock') {
+      try {
+        await installWSkinLoaderMods(instance.path, (m) => this.log(m))
+      } catch (e) {
+        // Non-fatal: the launch middleware re-verifies the files anyway.
+        this.warn(`Failed to install WSkinLoader mods for ${instance.path}`)
+        this.warn(e as Error)
+      }
+    }
 
     return instance.path
   }

@@ -1,4 +1,4 @@
-import { createSharedComposable } from '@vueuse/core'
+import { createGlobalState } from '@vueuse/core'
 import { computed, onMounted, ref } from 'vue'
 import { LocalSkin, LocalSkinServiceKey } from '@xmcl/runtime-api'
 import { useService } from '@/composables'
@@ -7,7 +7,7 @@ export type SkinLibraryItem = LocalSkin
 
 export const PRESET_SKINS: SkinLibraryItem[] = []
 
-export const useUserSkinLibrary = createSharedComposable(() => {
+export const useUserSkinLibrary = createGlobalState(() => {
   const service = useService(LocalSkinServiceKey)
   const customSkins = ref<SkinLibraryItem[]>([])
   const equippedSkinIds = ref<Record<string, string>>({})

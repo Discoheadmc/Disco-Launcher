@@ -295,6 +295,12 @@ export const InstanceDataSchema = z.object({
   showLog: z.boolean().optional().catch(undefined),
   hideLauncher: z.boolean().optional().catch(undefined),
   fastLaunch: z.boolean().optional().catch(undefined),
+  /**
+   * Disco: opt-in flag (chosen at instance creation) to install the bundled
+   * WSkinLoader client mod (fabric) so the launcher-local custom cape is
+   * visible in-game. When false/absent the instance stays untouched.
+   */
+  wskinLoader: z.boolean().optional().catch(undefined),
   disableElybyAuthlib: z.boolean().optional().catch(undefined),
   disableAuthlibInjector: z.boolean().optional().catch(undefined),
   /** Use latest version settings */

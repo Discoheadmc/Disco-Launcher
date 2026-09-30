@@ -25,6 +25,7 @@ import { pluginNetworkInterface } from '@xmcl/runtime/network/pluginNetworkInter
 import { pluginUndiciLogger } from '@xmcl/runtime/network/pluginUndiciLogger'
 import { pluginUserPlaytime } from '@xmcl/runtime/playTime/pluginUserPlaytime'
 import { pluginResourceWorker } from '@xmcl/runtime/resource/pluginResourceWorker'
+import { pluginCustomCapeInGame } from '@xmcl/runtime/launch/pluginCustomCapeInGame'
 import { pluginResourcePackLink } from '@xmcl/runtime/resourcePack/pluginResourcePackLink'
 import { pluginSaveWorker } from '@xmcl/runtime/save/pluginSaveWorker'
 import { pluginServicesHandler } from '@xmcl/runtime/service/pluginServicesHandler'
@@ -33,6 +34,7 @@ import { pluginSetup } from '@xmcl/runtime/setup/pluginSetup'
 import { pluginModrinthAccess } from '@xmcl/runtime/user/pluginModrinthAccess'
 import { pluginOfficialUserApi } from '@xmcl/runtime/user/pluginOfficialUserApi'
 import { pluginOffineUser } from '@xmcl/runtime/user/pluginOfflineUser'
+import { pluginLocalYggdrasilHandler } from '@xmcl/runtime/user/pluginLocalYggdrasilHandler'
 import { pluginUserTokenStorage } from '@xmcl/runtime/user/pluginUserTokenStorage'
 
 import { LauncherAppPlugin } from '~/app'
@@ -57,6 +59,7 @@ export const definedPlugins: LauncherAppPlugin[] = [
 
   pluginMediaProtocol,
   pluginResourcePackLink,
+  pluginCustomCapeInGame,
   pluginUserPlaytime,
   pluginClientToken,
   pluginServicesHandler(definedServices),
@@ -72,6 +75,7 @@ export const definedPlugins: LauncherAppPlugin[] = [
   pluginUserTokenStorage,
   pluginOfficialUserApi,
   pluginOffineUser,
+  pluginLocalYggdrasilHandler,
   pluginUndiciLogger,
 
   pluginModrinthAccess,

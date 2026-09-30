@@ -6,7 +6,7 @@ import { isAbsolute, join, relative } from 'path'
 import { fileURLToPath } from 'url'
 import { Inject, LauncherApp, LauncherAppKey } from '~/app'
 import { AbstractService, ExposeServiceKey } from '~/service'
-import { kYggdrasilSeriveRegistry, YggdrasilSeriveRegistry } from './YggdrasilSeriveRegistry'
+import { YggdrasilSeriveRegistry } from './YggdrasilSeriveRegistry'
 
 const LOCAL_SKIN_LOCK = 'local-skin-service'
 
@@ -24,7 +24,12 @@ export class LocalSkinService extends AbstractService implements ILocalSkinServi
 
   constructor(
     @Inject(LauncherAppKey) app: LauncherApp,
-    @Inject(kYggdrasilSeriveRegistry) private readonly yggdrasilRegistry: YggdrasilSeriveRegistry,
+    // The yggdrasil registry is registered by pluginYggdrasilApi, which is
+    // not loaded in this build (third-party accounts removed). It must stay
+    // optional: a hard DI dependency on an unregistered symbol key would
+    // hang getOrCreate forever (symbols never fail fast) and block every
+    // closet call from the renderer.
+    private readonly yggdrasilRegistry?: YggdrasilSeriveRegistry,
   ) {
     super(app, async () => {
       await ensureDir(this.closetPath)
@@ -135,7 +140,7 @@ export class LocalSkinService extends AbstractService implements ILocalSkinServi
       profile = await profileResponse.json() as PlayerProfile
       profile = await this.fetchProfile(AUTHORITY_MICROSOFT, profile.id)
     } else {
-      if (!this.yggdrasilRegistry.getYggdrasilServices().some(service => service.url === authority)) {
+      if (!this.yggdrasilRegistry?.getYggdrasilServices().some(service => service.url === authority)) {
         throw new Error(`Unknown Yggdrasil authority ${authority}`)
       }
       const api = new URL(authority)

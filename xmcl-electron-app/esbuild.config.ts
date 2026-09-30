@@ -41,6 +41,7 @@ const config = {
     '.vbs': 'text',
     '.ico': 'file',
     '.class': 'binary',
+    '.jar': 'binary',
     '.html': 'file',
     '.wasm': 'file',
   },

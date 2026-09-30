@@ -4,6 +4,16 @@
     font-weight: 400;
     src: url(flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
 }
+
+/* Minecraft-style pixel font used by skinview3d name tags.
+   Bundled with skinview3d (MIT), so the 3D preview's name tag paints with
+   its intended look instead of a serif fallback. */
+@font-face {
+    font-family: 'Minecraft';
+    font-style: normal;
+    font-weight: 400;
+    src: url(minecraft.woff2) format('woff2');
+}
 @font-face {
   font-family: 'Material Icons Outlined';
   font-style: normal;

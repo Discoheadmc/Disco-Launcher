@@ -331,6 +331,17 @@ export class PlayerModel {
     }
     this.materialCape.visible = true
     const img = await ensureImage(cape)
+    // Cape textures must follow one of the standard cape atlas layouts
+    // (2:1, 22:17 or 46:23). Anything else (e.g. a large avatar image handed
+    // to us by a profile with a non-standard CAPE url) would draw garbage
+    // onto the cape mesh — hide the cape instead of rendering noise.
+    const isKnownCapeLayout = img.width === 2 * img.height
+      || img.width * 17 === img.height * 22
+      || img.width * 11 === img.height * 23
+    if (!isKnownCapeLayout) {
+      this.materialCape.visible = false
+      return
+    }
     const texture = this.textureCape
     texture.image = img
     texture.needsUpdate = true

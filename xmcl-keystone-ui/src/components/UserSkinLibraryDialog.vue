@@ -425,7 +425,16 @@ const savingCurrentSkinCount = ref(0)
 const currentSkinSaves = new Map<string, Promise<SkinLibraryItem>>()
 let selectionRequest = 0
 
-const currentCape = computed(() => skinModel?.cape.value)
+// Closet preview must match the panel preview: when no library skin is
+// selected, show the account's active profile skin and keep the shared
+// skin model's cape (which carries the launcher-local custom cape override).
+const activeProfileCapeUrl = computed(() => (props.profile?.capes ? props.profile.capes.find(c => c.state === 'ACTIVE')?.url : undefined) || props.profile?.textures?.CAPE?.url)
+const previewCape = computed(() => {
+  if (isEditorOpen.value) return undefined
+  if (!selectedSkin.value && activeProfileSkinUrl.value) return skinModel?.cape.value || activeProfileCapeUrl.value
+  return skinModel?.cape.value
+})
+const currentCape = computed(() => previewCape.value)
 const authorityItems = computed(() => [
   {
     title: 'Minecraft',
@@ -440,7 +449,7 @@ const authorityItems = computed(() => [
       icon: metadata.favicon || '',
     })),
 ])
-const previewUrl = computed(() => isEditorOpen.value ? draftUrl.value : selectedSkin.value?.url || '')
+const previewUrl = computed(() => isEditorOpen.value ? draftUrl.value : selectedSkin.value?.url || activeProfileSkinUrl.value || '')
 const previewSlim = computed(() => isEditorOpen.value ? draftSlim.value : selectedSkin.value?.slim || false)
 const previewName = computed(() => isEditorOpen.value ? draftName.value : selectedSkin.value?.name || '')
 const canSaveDraft = computed(() => !!draftUrl.value && !!draftName.value.trim())

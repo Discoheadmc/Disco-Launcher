@@ -33,7 +33,7 @@
         </v-btn>
       </div>
 
-      <!-- Cape row -->
+      <!-- Official cape row (Microsoft-owned capes only) -->
       <div v-if="capes.length > 0" class="cape-row px-3 py-2.5"
         style="border-top: 1px solid rgba(var(--v-theme-on-surface), 0.08);"
       >
@@ -88,18 +88,49 @@
               <PlayerCape :src="c.url" />
             </div>
           </div>
+          <!-- Custom cape: opens the launcher-local cape picker (same size as official cape thumbs) -->
+          <div
+            v-shared-tooltip.top="() => customCapeSet ? t('userCape.customChange') : t('userCape.customPick')"
+            class="cape-thumb flex-shrink-0 cursor-pointer border transition-colors flex items-center justify-center"
+            :class="customSelected
+              ? 'border-primary bg-primary/10'
+              : 'border-transparent hover:border-[rgba(var(--v-theme-on-surface),0.2)]'"
+            role="button"
+            tabindex="0"
+            :aria-checked="customSelected"
+            :aria-label="customCapeSet ? t('userCape.customChange') : t('userCape.customPick')"
+            @click="isCustomCapeDialogOpen = true"
+            @keydown.enter.prevent="isCustomCapeDialogOpen = true"
+            @keydown.space.prevent="isCustomCapeDialogOpen = true"
+          >
+            <v-icon size="16" aria-hidden="true">{{ customCapeSet ? 'auto_awesome' : 'add' }}</v-icon>
+          </div>
+        </div>
+        <div v-if="customCapeSet" class="mt-1.5 text-[10px] opacity-50 truncate">
+          {{ t('userCape.customOnlyHere') }}
         </div>
       </div>
     </div>
+
+    <UserSkinLibraryDialog
+      v-model="isSkinLibraryOpen"
+      :user="userProfile"
+      :profile="gameProfile"
+    />
+
+    <CustomCapeDialog v-model="isCustomCapeDialogOpen" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import PlayerCape from '@/components/PlayerCape.vue'
-import SkinView from '@/components/SkinView.vue'
 import UserAccountSwitcher from '@/components/UserAccountSwitcher.vue'
 import UserSkin from '@/components/UserSkin.vue'
 import UserSkinLibraryDialog from '@/components/UserSkinLibraryDialog.vue'
+import CustomCapeDialog from '@/components/CustomCapeDialog.vue'
+import { useNotifier } from '@/composables/notifier'
+import { useLocaleError } from '@/composables/error'
+import { useAccountCustomCape } from '@/composables/userCape'
 import { kUserContext } from '@/composables/user'
 import { UserSkinModel, UserSkinRenderPaused, useUserSkin } from '@/composables/userSkin'
 import { vRovingTabindex } from '@/directives/rovingTabindex'
@@ -107,6 +138,8 @@ import { vSharedTooltip } from '@/directives/sharedTooltip'
 import { injection } from '@/util/inject'
 
 const { t } = useI18n()
+const { notify } = useNotifier()
+const toLocaleError = useLocaleError()
 
 const { userProfile, gameProfile } = injection(kUserContext)
 
@@ -118,12 +151,40 @@ const skinModel = useUserSkin(
   computed(() => userProfile.value),
 )
 provide(UserSkinModel, skinModel)
+
+// The custom cape overrides the official one in the launcher's own 3D
+// preview. When the user picks a custom cape the preview switches to it
+// through this watch; removing it restores the official cape (if any).
+const customCapeAccountKey = computed(() => `${userProfile.value.id}:${gameProfile.value.id}`)
+const customCape = useAccountCustomCape(customCapeAccountKey)
+const officialCapeUrl = computed(() => (gameProfile.value?.capes ? gameProfile.value.capes.find(c => c.state === 'ACTIVE')?.url : undefined) || gameProfile.value?.textures?.CAPE?.url)
+// Re-apply the override whenever it arrives (service refresh) or the profile
+// changes, because useUserSkin's reset() runs on those transitions and would
+// otherwise clobber the override back to the official cape.
+watch([customCape.capeUrl, () => gameProfile.value?.id], async ([url, _id], [oldUrl]) => {
+  await nextTick() // let reset() settle first
+  if (url) {
+    // Launcher-local override: every preview reading the shared skin model
+    // (panel 3D view + closet dialog) now renders the custom cape.
+    skinModel.cape.value = url
+  } else if (oldUrl && skinModel.cape.value === oldUrl) {
+    // Removed while active: fall back to the official cape selection.
+    skinModel.cape.value = officialCapeUrl.value
+  }
+}, { immediate: true })
+// The custom thumb is only "selected" while the preview actually shows the
+// stored custom cape (an official cape click switches the preview away).
+const customSelected = computed(() => !!customCape.capeUrl.value && skinModel.cape.value === customCape.capeUrl.value)
 const { canUploadSkin } = skinModel
 
 const isSkinLibraryOpen = ref(false)
+const isCustomCapeDialogOpen = ref(false)
 
 const capes = computed(() => gameProfile.value?.capes ?? [])
 const capeScroller = ref<HTMLElement | null>(null)
+
+// Custom cape: launcher-local overlay, per account+profile.
+const customCapeSet = computed(() => !!customCape.capeUrl.value)
 
 function selectCape(url: string | undefined) {
   skinModel.cape.value = url

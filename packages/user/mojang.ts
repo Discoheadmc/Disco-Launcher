@@ -168,6 +168,7 @@ export class SetSkinError extends Error {
   constructor(message: string, err: any) {
     super(message)
     this.name = 'SetSkinError'
+    err = err || {}
     this.path = err.path
     this.errorType = err.errorType
     this.error = err.error
@@ -356,18 +357,31 @@ export class MojangClient {
       signal,
     })
 
-    const profileResponse: MinecraftProfileResponse | MinecraftProfileErrorResponse =
-      (await resp.json()) as any
+    // The response body is a one-shot stream. Read it exactly once: a second
+    // resp.json() here either throws SyntaxError on an empty body (the API can
+    // reply 200/204 with no content) or consumes the stream so the error branch
+    // below sees nothing. Cache the parsed value (or the parse failure) and
+    // reuse it for both the success and error paths.
+    const parseBody = async (): Promise<any> => {
+      try {
+        return await resp.json()
+      } catch {
+        // Empty or non-JSON body. A 2xx status here means the upload itself
+        // succeeded and the caller will refetch the profile.
+        return resp.ok ? undefined : {}
+      }
+    }
+    const parsedBody = await parseBody()
 
     if (resp.status === 401) {
-      throw new UnauthorizedError(await resp.json())
+      throw new UnauthorizedError(parsedBody)
     }
 
-    if ('error' in profileResponse || 'errorMessage' in profileResponse) {
-      throw new SetSkinError(`Fail to set skin ${profileResponse.errorMessage}`, profileResponse)
+    if (parsedBody && ('error' in parsedBody || 'errorMessage' in parsedBody)) {
+      throw new SetSkinError(`Fail to set skin ${parsedBody.errorMessage ?? resp.statusText}`, parsedBody)
     }
 
-    return profileResponse
+    return parsedBody
   }
 
   async resetSkin(token: string, signal?: AbortSignal) {

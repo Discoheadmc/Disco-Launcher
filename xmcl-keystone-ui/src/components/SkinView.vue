@@ -95,7 +95,12 @@ onMounted(() => {
 
   loadSkin()
   if (props.cape) {
-    lastCapeLoad = viewer.loadCape(props.cape)
+    lastCapeLoad = viewer.loadCape(props.cape).catch((e) => {
+      // A cape texture that skinview-utils cannot parse (wrong dimensions —
+      // e.g. a 2560x1440 user avatar) must not bubble an unhandled rejection;
+      // the 3D preview simply renders without the cape.
+      console.warn('[SkinView] Failed to load cape texture:', e)
+    })
   }
 })
 
@@ -110,7 +115,9 @@ watch(() => props.cape, (v) => {
   const activeViewer = viewer
   if (!activeViewer) return
   if (v) {
-    lastCapeLoad = lastCapeLoad.finally(() => activeViewer.loadCape(v))
+    lastCapeLoad = lastCapeLoad.finally(() => activeViewer.loadCape(v).catch((e) => {
+      console.warn('[SkinView] Failed to load cape texture:', e)
+    }))
   } else {
     activeViewer.resetCape()
   }
