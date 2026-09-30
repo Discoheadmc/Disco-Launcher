@@ -6,14 +6,19 @@
       'background-image': `linear-gradient(${appBarColor} 0%, color-mix(in srgb, ${appBarColor}, transparent) 65%, transparent 100%)`
     }">
     </div>
-    <AppSystemBar :back="sidebarStyle === 'notch'" />
+    <AppSystemBar :back="false" />
     <AppMenuBar />
     <div
       class="app-layout flex-grow relative flex overflow-auto"
       :class="[layoutClasses, { 'workspace-side-panel-attached': hasAttachedWorkspacePanel }]"
     >
-      <AppSideBarClassic v-if="sidebarStyle === 'classic'" />
-      <AppSideBarNotch v-else />
+      <!-- Disco (task 4): the sidebar renders in the Classic style only.
+           The conditional Notch render was removed with the "Sidebar Style"
+           setting. The Notch implementation itself is kept untouched:
+           <AppSideBarClassic v-if="sidebarStyle === 'classic'" />
+           <AppSideBarNotch v-else />
+      -->
+      <AppSideBarClassic />
       <main class="relative flex max-h-full flex-1 flex-col overflow-auto" :class="mainClasses">
         <router-view v-slot="{ Component }">
           <transition name="fade-transition" mode="out-in">
@@ -76,7 +81,6 @@ import AppUnauthenticatedWarningDialog from '@/views/AppUnauthenticatedWarningDi
 import UserProfileDialog from '@/components/UserProfileDialog.vue'
 import AppNotifier from '@/views/AppNotifier.vue'
 import AppSideBarClassic from '@/views/AppSideBarClassic.vue'
-import AppSideBarNotch from '@/views/AppSideBarNotch.vue'
 import AppSystemBar from '@/views/AppSystemBar.vue'
 import AppMenuBar from '@/views/AppMenuBar.vue'
 import Setup from '@/views/Setup.vue'
@@ -87,6 +91,7 @@ import { UserSkinRenderPaused } from '@/composables/userSkin'
 import AppSideBarGroupSettingDialog from '@/views/AppSideBarGroupSettingDialog.vue'
 import AppGamepadPrompt from '@/views/AppGamepadPrompt.vue'
 import { useInstanceGroupDefaultColor } from '@/composables/instanceGroup'
+import { kUpdateSettings, useUpdateSettings } from '@/composables/setting'
 
 const lazyDialogComponents = {
   'task': defineAsyncComponent(() => import('@/views/AppTaskDialog.vue')),
@@ -114,6 +119,11 @@ const developerMode = computed(() => state.value?.developerMode ?? false)
 provide('streamerMode', useLocalStorage('streamerMode', false, { writeDefaults: false }))
 provide(kLocalizedContent, useLocalizedContentControl())
 provide(kInstanceLauncher, useInstanceLauncher())
+// Disco (fix): the backup-cleanup commit removed the kUpdateSettings provide
+// from Setting.vue but AppMenuBar (added in the same commit) still injects it,
+// so the menu bar crashed on every app start. Provide it app-wide here so
+// AppMenuBar and the update settings UI share one instance.
+provide(kUpdateSettings, useUpdateSettings())
 
 // User profile dialog — moved from AppSystemBarUserMenu to App root
 const userMenu = useUserMenuControl()
@@ -157,7 +167,6 @@ provide(kInstanceLaunchCoordinator, useInstanceLaunchCoordinator())
 const sidebarSettings = useSidebarSettings()
 provide(kSidebarSettings, sidebarSettings)
 const sidebarPosition = computed(() => sidebarSettings.position.value)
-const sidebarStyle = computed(() => sidebarSettings.style.value)
 
 const layoutClasses = computed(() => ({
   'flex-row': sidebarPosition.value === 'left' || sidebarPosition.value === 'right',

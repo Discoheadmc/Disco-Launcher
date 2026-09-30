@@ -204,54 +204,55 @@ export default defineComponent({
     const surfaceTokens = useSurfaceTokens()
     provide(kSurfaceTokens, surfaceTokens)
 
-    watchEffect(() => {
-      const enabled = theme.currentTheme.value.borderRadiusEnabled ?? true
-      surfaceTokens.radius.value = enabled ? DEFAULT_SURFACE_RADIUS : 0
-      surfaceTokens.dialogRadius.value = enabled ? DEFAULT_SURFACE_DIALOG_RADIUS : 0
-      surfaceTokens.menuItemRadius.value = enabled ? DEFAULT_SURFACE_MENU_ITEM_RADIUS : 0
-      surfaceTokens.cardRadius.value = enabled ? DEFAULT_CARD_RADIUS : 0
-      surfaceTokens.cardSubsectionRadius.value = enabled ? DEFAULT_CARD_SUBSECTION_RADIUS : 0
-      surfaceTokens.cardItemRadius.value = enabled ? DEFAULT_CARD_ITEM_RADIUS : 0
-      surfaceTokens.panelRadius.value = enabled ? DEFAULT_PANEL_RADIUS : 0
-      surfaceTokens.cardProminentRadius.value = enabled ? DEFAULT_CARD_PROMINENT_RADIUS : 0
-      surfaceTokens.cardClickableRadius.value = enabled ? DEFAULT_CARD_CLICKABLE_RADIUS : 0
-      surfaceTokens.tooltipRadius.value = enabled ? DEFAULT_SURFACE_TOOLTIP_RADIUS : 0
-      surfaceTokens.pillRadius.value = enabled ? DEFAULT_SURFACE_PILL_RADIUS : 0
-      vuetify.defaults.value = {
-        ...vuetify.defaults.value,
+    // Disco (task 5): the "Rounded Corners" theme setting was removed — the
+    // minimal Prism-style design defines its corner rounding in fixed surface
+    // tokens. The radii are always the defaults now; the old on/off token
+    // plumbing (which zeroed every radius when disabled) is gone.
+    surfaceTokens.radius.value = DEFAULT_SURFACE_RADIUS
+    surfaceTokens.dialogRadius.value = DEFAULT_SURFACE_DIALOG_RADIUS
+    surfaceTokens.menuItemRadius.value = DEFAULT_SURFACE_MENU_ITEM_RADIUS
+    surfaceTokens.cardRadius.value = DEFAULT_CARD_RADIUS
+    surfaceTokens.cardSubsectionRadius.value = DEFAULT_CARD_SUBSECTION_RADIUS
+    surfaceTokens.cardItemRadius.value = DEFAULT_CARD_ITEM_RADIUS
+    surfaceTokens.panelRadius.value = DEFAULT_PANEL_RADIUS
+    surfaceTokens.cardProminentRadius.value = DEFAULT_CARD_PROMINENT_RADIUS
+    surfaceTokens.cardClickableRadius.value = DEFAULT_CARD_CLICKABLE_RADIUS
+    surfaceTokens.tooltipRadius.value = DEFAULT_SURFACE_TOOLTIP_RADIUS
+    surfaceTokens.pillRadius.value = DEFAULT_SURFACE_PILL_RADIUS
+    vuetify.defaults.value = {
+      ...vuetify.defaults.value,
+      VBtn: {
+        ...vuetify.defaults.value?.VBtn,
+        rounded: DEFAULT_SURFACE_BUTTON_RADIUS,
+      },
+      VBtnGroup: {
+        ...vuetify.defaults.value?.VBtnGroup,
+        rounded: DEFAULT_SURFACE_BUTTON_RADIUS,
         VBtn: {
-          ...vuetify.defaults.value?.VBtn,
-          rounded: enabled ? DEFAULT_SURFACE_BUTTON_RADIUS : 0,
+          rounded: null,
         },
-        VBtnGroup: {
-          ...vuetify.defaults.value?.VBtnGroup,
-          rounded: enabled ? DEFAULT_SURFACE_BUTTON_RADIUS : 0,
-          VBtn: {
-            rounded: null,
-          },
-        },
-        VBtnToggle: {
-          ...vuetify.defaults.value?.VBtnToggle,
-          rounded: enabled ? DEFAULT_SURFACE_BUTTON_RADIUS : 0,
-        },
-        VChip: {
-          ...vuetify.defaults.value?.VChip,
-          rounded: enabled ? DEFAULT_SURFACE_BUTTON_RADIUS : 0,
-        },
-        VTextField: {
-          ...vuetify.defaults.value?.VTextField,
-          rounded: enabled ? DEFAULT_SURFACE_BUTTON_RADIUS : 0,
-        },
-        VSelect: {
-          ...vuetify.defaults.value?.VSelect,
-          rounded: enabled ? DEFAULT_SURFACE_BUTTON_RADIUS : 0,
-        },
-        VSwitch: {
-          ...vuetify.defaults.value?.VSwitch,
-          rounded: enabled ? undefined : 0,
-        },
-      }
-    })
+      },
+      VBtnToggle: {
+        ...vuetify.defaults.value?.VBtnToggle,
+        rounded: DEFAULT_SURFACE_BUTTON_RADIUS,
+      },
+      VChip: {
+        ...vuetify.defaults.value?.VChip,
+        rounded: DEFAULT_SURFACE_BUTTON_RADIUS,
+      },
+      VTextField: {
+        ...vuetify.defaults.value?.VTextField,
+        rounded: DEFAULT_SURFACE_BUTTON_RADIUS,
+      },
+      VSelect: {
+        ...vuetify.defaults.value?.VSelect,
+        rounded: DEFAULT_SURFACE_BUTTON_RADIUS,
+      },
+      VSwitch: {
+        ...vuetify.defaults.value?.VSwitch,
+        rounded: undefined,
+      },
+    }
 
     provide(
       kCustomCss,
