@@ -105,20 +105,6 @@
 
     <div class="flex-grow" />
 
-    <!-- Update -->
-    <v-btn
-      variant="text"
-      size="small"
-      class="menu-btn non-moveable"
-      data-testid="menu-update"
-      :loading="checkingUpdate"
-      :aria-label="t('setting.checkUpdate')"
-      @click="checkUpdate"
-    >
-      <v-icon size="18" class="mr-1">autorenew</v-icon>
-      {{ t('setting.checkUpdate') }}
-    </v-btn>
-
     <div class="flex-grow-0 flex items-center pl-2">
       <AppMenuBarUserButton />
     </div>
@@ -130,11 +116,10 @@ import { useService } from '@/composables'
 import { useDialog } from '@/composables/dialog'
 import { kEnvironment } from '@/composables/environment'
 import { kInstance } from '@/composables/instance'
-import { kUpdateSettings } from '@/composables/setting'
 import { kTheme } from '@/composables/theme'
 import { kUserContext } from '@/composables/user'
 import { join } from '@/util/basename'
-import { getInstanceIcon } from '@/util/favicon'
+import { getInstanceIcon, toPngIconUrl } from '@/util/favicon'
 import { injection } from '@/util/inject'
 import { BaseServiceKey, LaunchServiceKey } from '@xmcl/runtime-api'
 import { vSharedTooltip } from '@/directives/sharedTooltip'
@@ -151,7 +136,6 @@ const router = useRouter()
 const { openDirectory, getDesktopDirectory, getGameDataDirectory } = useService(BaseServiceKey)
 const { createLaunchShortcut } = useService(LaunchServiceKey)
 const { show: showFeedbackDialog } = useDialog('feedback')
-const { checkUpdate, checkingUpdate } = injection(kUpdateSettings)
 
 function goMe() {
   router.push('/me')
@@ -176,27 +160,11 @@ const onCreateShortcut = async () => {
     properties: ['createDirectory', 'showOverwriteConfirmation'],
   })
   if (!filePath) return
-  let icon = getInstanceIcon(instance.value, undefined)
-  if (icon.endsWith('.webp')) {
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
-    const img = new Image()
-    img.src = icon
-    await new Promise((resolve) => {
-      img.onload = () => {
-        canvas.width = img.width
-        canvas.height = img.height
-        ctx?.drawImage(img, 0, 0)
-        resolve(true)
-      }
-    })
-    icon = canvas.toDataURL('image/png')
-  }
   await createLaunchShortcut({
     instancePath: path.value,
     destination: filePath,
     userId: userProfile.value.id,
-    icon,
+    icon: await toPngIconUrl(getInstanceIcon(instance.value, undefined)),
   })
 }
 </script>

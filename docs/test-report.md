@@ -14,7 +14,7 @@
 | UI duman testleri (yeni + eski özellikler) | **18 / 18 GEÇTİ** |
 | Gerçek tıklama etkileşim testleri | 4 / 5 (tek "hata" test bekleme süresi kaynaklı; diyalog ekran görüntüsüyle doğrulandı) |
 | Yeni özellik birim testleri (LocalSkinService) | **6 / 6 GEÇTİ** |
-| Tüm repo birim testleri | 1753 geçti / 5 hata / 13 atlandı — **5 hata önceden var olan** (git stash ile doğrulandı) |
+| Tüm repo birim testleri | 1753 geçti / 6 hata / 13 atlandı — **6 hata önceden var olan** (git stash ile doğrulandı) |
 | Typecheck (`pnpm check` × 4 paket) | Temiz |
 | Lint | Temiz (1 adet önceden var olan uyarı) |
 | Üretim derlemesi (`pnpm build`) | Başarılı (~60 sn, NSIS + win-unpacked 303 MB) |
@@ -101,14 +101,14 @@
 | `pnpm check` (runtime-api, runtime, electron-app, keystone-ui) | temiz |
 | `pnpm lint` | temiz (1 önceden var olan uyarı: UserService.ts:166) |
 | `pnpm build` | ~60 sn, başarılı |
-| `pnpm test` | 1753 ✓ / 5 ✗ / 13 atlandı, 228 dosya |
+| `pnpm test` | 1753 ✓ / 6 ✗ / 13 atlandı, 228 dosya |
 
 ---
 
 ## 5. Bilinen Başarısızlıklar ve Kapsamları
 
-### Önceden var olan 5 birim test hatası (bu oturumdan bağımsız)
-`git stash` ile temiz ağaçta doğrulandı — aynı 5 hata:
+### Önceden var olan 6 birim test hatası (bu oturumdan bağımsız)
+`git stash` ile temiz ağaçta doğrulandı — aynı 6 hata:
 
 1. `BaseService.update.test.ts` ×2 — otomatik güncelleme kaldırma çalışmasının kalıntıları
 2. `pluginSettings.test.ts` ×2 — fixture'larda kaldırılmış `agentEndpoint` anahtarları

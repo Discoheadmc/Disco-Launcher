@@ -126,7 +126,6 @@
 
 <script lang="ts" setup>
 import ModloaderSelector from '@/components/ModloaderSelector.vue'
-import SettingItemCheckbox from '@/components/SettingItemCheckbox.vue'
 import { kInstanceCreation } from '../composables/instanceCreation'
 import { kJavaContext } from '../composables/java'
 

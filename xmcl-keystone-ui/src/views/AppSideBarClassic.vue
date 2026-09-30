@@ -67,18 +67,9 @@
         to="/setting"
         :aria-label="settingsAriaLabel"
       >
-        <v-badge
-          right
-          overlap
-          :model-value="false"
-        >
-          <template #badge>
-            <span aria-hidden="true">{{ 1 }}</span>
-          </template>
-          <v-icon class="sidebar-item__icon">
-            settings
-          </v-icon>
-        </v-badge>
+        <v-icon class="sidebar-item__icon">
+          settings
+        </v-icon>
       </AppSideBarItem>
     </div>
   </div>
@@ -139,7 +130,14 @@
     <div v-roving-tabindex role="group" class="flex flex-row items-center flex-grow-0">
       <v-divider vertical class="mx-2 h-6" />
 
-      <v-divider vertical class="mx-2 h-6" />
+      <AppSideBarItem
+        data-testid="nav-settings"
+        v-shared-tooltip.right="() => t('setting.name', 2)"
+        to="/setting"
+        :aria-label="settingsAriaLabel"
+      >
+        <v-icon :size="28">settings</v-icon>
+      </AppSideBarItem>
     </div>
   </div>
 </template>

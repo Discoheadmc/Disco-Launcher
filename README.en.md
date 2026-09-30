@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>A fast, lightweight, privacy-friendly Minecraft launcher — built for low-end machines.</strong><br>
-  Hızlı, hafif ve gizlilik dostu bir Minecraft launcher'ı — <a href="README.md">Türkçe sürüm</a>
+  Hızlı, hafif ve gizlilik dostu bir Minecraft launcher'ı
 </p>
 
 <p align="center">
@@ -15,7 +15,8 @@
   <a href="#-how-is-it-different-from-xmcl">Differences from XMCL</a> ·
   <a href="#-install">Install</a> ·
   <a href="#-development">Development</a> ·
-  <a href="#-license">License</a>
+  <a href="#-license">License</a><br>
+  <a href="README.md">🇹🇷 Türkçe sürüm</a>
 </p>
 
 <p align="center">
@@ -57,6 +58,8 @@
 <p align="center"><em>Modpack market — CurseForge, Modrinth and FTB; the discover grid</em></p>
 
 ## 🆚 How Is It Different from XMCL?
+
+Disco Launcher started as an optimization fork of XMCL. The deliberate differences:
 
 | Area | XMCL | Disco Launcher |
 | --- | --- | --- |

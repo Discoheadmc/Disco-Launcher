@@ -18,11 +18,11 @@
       >
         <span class="sidebar-instance-menu__content">
           <v-img
-            v-if="activeFavicon"
+            v-if="activeFaviconWithStatus || activeFavicon"
             class="sidebar-instance-menu__image"
             :width="32"
             :height="32"
-            :src="activeFavicon"
+            :src="activeFaviconWithStatus || activeFavicon"
             draggable="false"
           />
           <v-icon v-else class="sidebar-item__icon" :size="26">
@@ -96,7 +96,7 @@
 <script lang="ts" setup>
 import { useDialog } from '@/composables/dialog'
 import { kInstance } from '@/composables/instance'
-import { useInstanceGroup } from '@/composables/instanceGroup'
+import { useInstanceGroupOps } from '@/composables/instanceGroup'
 import { AddInstanceDialogKey } from '@/composables/instanceTemplates'
 import { kInstances } from '@/composables/instances'
 import { useInjectSidebarSettings } from '@/composables/sidebarSettings'
@@ -135,7 +135,7 @@ const menuEntries = computed(() => {
 
 // Keep the pinned/group order from the existing sidebar grouping when the
 // group data is available; fall back to the plain instance list.
-const { groups } = useInstanceGroup()
+const { groups } = useInstanceGroupOps()
 const { pinnedInstances, showOnlyPinned } = useInjectSidebarSettings()
 
 const flatItems = computed<MenuItem[]>(() => {
@@ -162,11 +162,16 @@ const flatItems = computed<MenuItem[]>(() => {
 const activeEntry = computed(() => flatItems.value.find(i => i.path === selectedInstance.value))
 const activeFavicon = computed(() => activeEntry.value?.favicon || '')
 
-const { status } = useInstanceServerStatus(computed(() => instances.value.find(i => i.path === selectedInstance.value)))
+const { status, refreshIfStale } = useInstanceServerStatus(computed(() => instances.value.find(i => i.path === selectedInstance.value)))
+// The live server favicon is the authoritative icon once a ping succeeds;
+// `activeFavicon` remains the fallback until then.
 const activeFaviconWithStatus = computed(() => {
   const inst = instances.value.find(i => i.path === selectedInstance.value)
   if (!inst) return ''
   return getInstanceIcon(inst, inst.server ? status.value : undefined)
+})
+onMounted(() => {
+  refreshIfStale()
 })
 
 const activeInstanceActive = computed(() => router.currentRoute.value.matched[0]?.path === '/')

@@ -21,7 +21,7 @@ The first public release of Disco Launcher: an XMCL-based, Windows-focused, ligh
 
 ### Stripping It Down
 
-Deliberate removals from upstream XMCL: the P2P multiplayer stack, third-party accounts (ely.by, LittleSkin, xmcl.org), the AI agent backend, the auto-update infrastructure and telemetry exporters were all removed; the News section and Minecraft friends were deleted; 17+ unused dependencies were pruned. **Result:** installer 93.85 → 91.30 MB, fewer background processes, faster startup.
+Deliberate removals from upstream XMCL: the P2P multiplayer stack, third-party accounts (ely.by, LittleSkin, xmcl.org), the AI agent backend, the auto-update infrastructure and telemetry exporters were all removed; the News section and Minecraft friends were deleted; 17+ unused dependencies were pruned. **Result:** installer 93.85 → 91.5 MB, fewer background processes, faster startup.
 
 ### Performance & Networking
 
@@ -83,7 +83,7 @@ Deliberate removals from upstream XMCL: the P2P multiplayer stack, third-party a
 
 ## 🔗 Links
 
-- 📖 [README](../../blob/master/README.en.md) · 🇹🇷 [Türkçe](../../blob/master/README.md)
+- 📖 [README](../README.en.md) · 🇹🇷 [Türkçe](../README.md)
 - 🛠 Upstream: [X Minecraft Launcher (XMCL)](https://github.com/Voxelum/x-minecraft-launcher) — thank you for the MIT-licensed foundation
 
-**Full changelog and development categories:** [docs/Disco-Launcher-Gelistirme-Sunumu.md](../../blob/master/docs/Disco-Launcher-Gelistirme-Sunumu.md)
+**Full changelog and development categories:** [docs/Disco-Launcher-Gelistirme-Sunumu.md](./Disco-Launcher-Gelistirme-Sunumu.md)

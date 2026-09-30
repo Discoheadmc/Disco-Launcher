@@ -4,7 +4,7 @@
 >
 > **Bu sunum neyi kapsıyor?** Upstream XMCL'den çatallanma noktasından bugüne yapılan **13 commit** ve son dönemdeki **commit'lenmemiş geliştirme turu** (75 dosya, +1.193 / −2.098 satır). Tüm maddeler git geçmişi ve çalışma dizini diff'leriyle doğrulanmıştır.
 >
-> **Toplam:** 8 kategori altında **30+ geliştirme** — 28.000'den fazla satır temizlendi, kurulum boyutu 93,85 → 91,30 MB, başlatma hızlandırıldı, arayüz Prism-minimal temaya geçirildi.
+> **Toplam:** 8 kategori altında **30+ geliştirme** — 28.000'den fazla satır temizlendi, kurulum boyutu 93,85 → 91,5 MB, başlatma hızlandırıldı, arayüz Prism-minimal temaya geçirildi.
 
 ---
 

@@ -117,9 +117,9 @@ import { kInstance } from '@/composables/instance'
 import { kInstanceLaunch } from '@/composables/instanceLaunch'
 import { kTheme } from '@/composables/theme'
 import { kUserContext } from '@/composables/user'
-import { useLaunchButton } from '@/composables/launchButton'
+import { kLaunchButton } from '@/composables/launchButton'
 import { join } from '@/util/basename'
-import { getInstanceIcon } from '@/util/favicon'
+import { getInstanceIcon, toPngIconUrl } from '@/util/favicon'
 import { injection } from '@/util/inject'
 import { BaseServiceKey, InstanceServiceKey, LaunchServiceKey } from '@xmcl/runtime-api'
 
@@ -140,7 +140,11 @@ const launchBtnStyle = computed(() =>
 
 const { instance, path, name } = injection(kInstance)
 const { kill, count } = injection(kInstanceLaunch)
-const { onClick: onLaunch } = useLaunchButton()
+// Use the app-root launch button, not a private `useLaunchButton()` instance:
+// the root owns the preclick listeners (unauthenticated warning, debounced
+// instance-edit flush). A private instance has an empty listener set, so
+// launching from this panel would skip those guards.
+const { onClick: onLaunch } = injection(kLaunchButton)
 const { duplicateInstance } = useService(InstanceServiceKey)
 const { openDirectory, getDesktopDirectory } = useService(BaseServiceKey)
 const { createLaunchShortcut } = useService(LaunchServiceKey)
@@ -170,7 +174,7 @@ const onCreateShortcut = async () => {
     instancePath: path.value,
     destination: filePath,
     userId: userProfile.value.id,
-    icon: getInstanceIcon(instance.value, undefined),
+    icon: await toPngIconUrl(getInstanceIcon(instance.value, undefined)),
   })
 }
 </script>

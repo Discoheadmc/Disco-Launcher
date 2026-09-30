@@ -18,22 +18,31 @@ import { kSettings } from '~/settings/settings'
 export const pluginApiFallback: LauncherAppPlugin = (app) => {
   const logger = app.getLogger('ApiFallback')
 
+  // The protocol handler must be registered exactly once. Registering it per
+  // key change leaked a handler on every settings write, and because
+  // `LauncherProtocolHandler` runs handlers in registration order the oldest
+  // (stale) key always won. Keep a single handler closing over a mutable key.
+  let currentKey = ''
+  const handler: Handler = ({ request }) => {
+    if (currentKey && request.url.host === 'api.curseforge.com') {
+      request.headers['x-api-key'] = request.headers['x-api-key'] || currentKey
+    }
+  }
+  app.protocol.registerHandler('https', handler)
+
   const applyKey = (key: string) => {
     const trimmed = (key || '').trim()
-    if (!trimmed) return
-    // Renderer/store requests to api.curseforge.com go through the launcher
-    // protocol; stamp the user key unless the request already carries one.
-    const handler: Handler = ({ request }) => {
-      if (request.url.host === 'api.curseforge.com') {
-        request.headers['x-api-key'] = request.headers['x-api-key'] || trimmed
-      }
-    }
-    app.protocol.registerHandler('https', handler)
+    currentKey = trimmed
 
     // Shared client used by the market provider (project details, files,
-    // install flows). `headers` is read on every request.
+    // install flows). `headers` is read on every request, so an empty key must
+    // actively remove the header instead of leaving the previous one behind.
     app.registry.get(CurseforgeV1Client).then((client) => {
-      client.headers['x-api-key'] = trimmed
+      if (trimmed) {
+        client.headers['x-api-key'] = trimmed
+      } else {
+        delete client.headers['x-api-key']
+      }
     }).catch(() => undefined)
   }
 
@@ -45,13 +54,17 @@ export const pluginApiFallback: LauncherAppPlugin = (app) => {
   app.registry.get(kSettings).then((state) => {
     let last = ''
     const sync = () => {
-      const key = state.curseforgeApiKey || ''
+      const key = (state.curseforgeApiKey || '').trim()
       if (key === last) return
       last = key
+      // Apply unconditionally: clearing the key in settings must revoke the
+      // previously stored one, otherwise requests keep the old credentials.
       if (key) {
         logger.log('Applied user CurseForge API key from settings')
-        applyKey(key)
+      } else {
+        logger.log('Cleared user CurseForge API key')
       }
+      applyKey(key)
     }
     sync()
     state.subscribeAll(sync)

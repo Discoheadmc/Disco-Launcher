@@ -61,7 +61,7 @@ import { kEnvironment } from '@/composables/environment';
 import { kInstance } from '@/composables/instance';
 import { kUserContext } from '@/composables/user';
 import { join } from '@/util/basename';
-import { getInstanceIcon } from '@/util/favicon';
+import { getInstanceIcon, toPngIconUrl } from '@/util/favicon';
 import { injection } from '@/util/inject'
 import { BaseServiceKey, BedrockServiceKey, BedrockStoragePaths, LaunchServiceKey } from '@xmcl/runtime-api';
 import { isBedrockInstance } from '@xmcl/instance';
@@ -105,24 +105,7 @@ const onCreateShortcut = async () => {
   if (!filePath) {
     return
   }
-  let icon = getInstanceIcon(instance.value, undefined)
-  if (icon.endsWith('.webp')) {
-    // render webp to png
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
-    const img = new Image()
-    img.src = icon
-    await new Promise((resolve) => {
-      img.onload = () => {
-        canvas.width = img.width
-        canvas.height = img.height
-        ctx?.drawImage(img, 0, 0)
-        resolve(true)
-      }
-    })
-    const dataUrl = canvas.toDataURL('image/png')
-    icon = dataUrl
-  }
+  const icon = await toPngIconUrl(getInstanceIcon(instance.value, undefined))
   await createLaunchShortcut({
     instancePath: path.value,
     destination: filePath,

@@ -74,8 +74,7 @@ useGamepadInnerNav({
   disabled: () => !HOME_GROUP.includes(router.currentRoute.value.path),
 })
 
-const removeAfterEach = router.afterEach((r) => {
-  document.title = `Disco Launcher - ${r.fullPath}`
+const removeAfterEach = router.afterEach(() => {
   if (containerRef.value) {
     containerRef.value.scrollTop = 0
   }

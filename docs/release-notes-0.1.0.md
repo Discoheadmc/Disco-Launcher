@@ -21,7 +21,7 @@ Disco Launcher'ın ilk genel sürümü: XMCL tabanlı, Windows odaklı, Türkçe
 
 ### Sadeleştirme ve Hafifletme
 
-Upstream XMCL'den bilinçli çıkarımlar: P2P çok oyunculu sistem, üçüncü parti hesaplar (ely.by, LittleSkin, xmcl.org), AI agent arka ucu, otomatik güncelleme altyapısı ve telemetri ihracatçıları kaldırıldı; haber bölümü ve Minecraft arkadaşları silindi; kullanılmayan 17+ bağımlılık budandı. **Sonuç:** installer 93,85 → 91,30 MB, daha az arka plan süreci, daha hızlı başlatma.
+Upstream XMCL'den bilinçli çıkarımlar: P2P çok oyunculu sistem, üçüncü parti hesaplar (ely.by, LittleSkin, xmcl.org), AI agent arka ucu, otomatik güncelleme altyapısı ve telemetri ihracatçıları kaldırıldı; haber bölümü ve Minecraft arkadaşları silindi; kullanılmayan 17+ bağımlılık budandı. **Sonuç:** installer 93,85 → 91,5 MB, daha az arka plan süreci, daha hızlı başlatma.
 
 ### Performans ve Ağ
 
@@ -52,8 +52,8 @@ Upstream XMCL'den bilinçli çıkarımlar: P2P çok oyunculu sistem, üçüncü 
 ### Kaplama ve Pelerin
 
 - **Yerel Kaplama Dolabı:** PNG/URL/oyuncu adıyla kaplama al, hesap başına giy (Microsoft + çevrimdışı)
-- **Özel pelerin:** kendi PNG'n — tamamen makinennde, hesap başına; Microsoft hesapları resmi pelerinlerini yanında kullanır
-- **Oyunda görünür:** launcher-yerel yggdrasil ucu authlib-injector ile çevrimdışı kaplamasını oyuna servis eder; opsiyonel paketli WSkinLoader Fabric modu custom cape'i oyun içi görünür kılar
+- **Özel pelerin:** kendi PNG'n — tamamen makinede, hesap başına; Microsoft hesapları resmi pelerinlerini yanında kullanır
+- **Oyunda görünür:** launcher-yerel yggdrasil uç noktası authlib-injector ile çevrimdışı kaplamasını oyuna servis eder; opsiyonel paketli WSkinLoader Fabric modu custom cape'i oyun içi görünür kılar
 
 ### Markalaşma
 
@@ -75,7 +75,7 @@ Upstream XMCL'den bilinçli çıkarımlar: P2P çok oyunculu sistem, üçüncü 
 | --- | --- |
 | `DiscoLauncher-Setup-0.1.0.exe` (≈ 91,5 MB) | `c78cda94b6e915c93667b3432d7b1d5f6555ab78b1f6237d4cd57565422c93f5` |
 
-**Platformlar:** Windows (NSIS) birincil ve aktif test edilen hedef · macOS (dmg) ve Linux (deb/rpm/AppImage/tar.xz/pacman) hedefleri yapılandırılı
+**Platformlar:** Windows (NSIS) birincil ve aktif test edilen hedef · macOS (dmg) ve Linux (deb/rpm/AppImage/tar.xz/pacman) hedefleri yapılandırıldı
 
 **Gereksinimler:** Java 8+ (oyun sürümüne göre) — launcher gerekli Java'yı otomatik yönetebilir
 
@@ -83,7 +83,7 @@ Upstream XMCL'den bilinçli çıkarımlar: P2P çok oyunculu sistem, üçüncü 
 
 ## 🔗 Bağlantılar
 
-- 📖 [README](../../blob/master/README.md) · 🇬🇧 [English](../../blob/master/README.en.md)
+- 📖 [README](../README.md) · 🇬🇧 [English](../README.en.md)
 - 🛠 Upstream: [X Minecraft Launcher (XMCL)](https://github.com/Voxelum/x-minecraft-launcher) — MIT lisansıyla tüm temel için teşekkürler
 
-**Tam değişiklik günlüğü ve geliştirme kategorileri için:** [docs/Disco-Launcher-Gelistirme-Sunumu.md](../../blob/master/docs/Disco-Launcher-Gelistirme-Sunumu.md)
+**Tam değişiklik günlüğü ve geliştirme kategorileri için:** [docs/Disco-Launcher-Gelistirme-Sunumu.md](./Disco-Launcher-Gelistirme-Sunumu.md)

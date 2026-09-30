@@ -12,6 +12,7 @@ import {
   installWSkinLoaderMods,
 } from '~/instance/wskinloader'
 import { VersionInstallService } from '~/install/InstallService'
+import { JavaService } from '~/java'
 import { LaunchService } from '~/launch'
 import { LocalCapeService } from '~/user/LocalCapeService'
 
@@ -134,13 +135,25 @@ export const pluginCustomCapeInGame: LauncherAppPlugin = (app) => {
           }
 
           // Java gate (the mod needs java >= 25).
-          const javaMajor = Number.parseInt(
-            instance.java?.match(/(?:java-|jdk-)?(\d+)(?:\.\d+)*$/i)?.[1] ?? '',
-            10,
-          )
-          if (Number.isFinite(javaMajor) && javaMajor < MOD_JAVA) {
+          //
+          // The previous implementation read `instance.java`, which is empty
+          // for the very common "auto" Java case. `Number.parseInt('')` is
+          // NaN and `Number.isFinite(NaN)` is false, so the guard silently
+          // passed and the mod was injected into a Java 21 launch, crashing
+          // in-game with nothing in the log. `input.java` is the java path
+          // XMCL actually resolved and will spawn, so ask the Java service for
+          // its real major version instead of regexing a path string.
+          const javaService = await app.registry.getOrCreate(JavaService)
+          await javaService.initialize()
+          const cached = javaService.state.all.find((j) => j.path === input.java && j.valid)
+          const javaMajor = cached?.majorVersion
+            ?? (await javaService.resolveJava(input.java))?.majorVersion
+          if (javaMajor && javaMajor < MOD_JAVA) {
             logger.log(`Custom cape in-game skipped (java ${javaMajor} < ${MOD_JAVA}) for ${instancePath}`)
             return
+          }
+          if (!javaMajor) {
+            logger.log(`Custom cape in-game: could not determine java major for ${input.java}, proceeding for ${instancePath}`)
           }
 
           // Defensive: an old flagged instance without a fabric runtime can
