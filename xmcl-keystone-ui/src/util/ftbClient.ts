@@ -38,6 +38,20 @@ export class FTBClient {
     return result
   }
 
+  /**
+   * The complete FTB modpack list (`/public/modpack/all`). The featured
+   * endpoint only ever returns a handful of packs (~5), so the store browse
+   * view uses this to list every FTB modpack (no API key required).
+   */
+  async getAllModpacks(): Promise<FTBModpacksResult> {
+    const response = await fetch(`${this.endpoint}/public/modpack/all`)
+    if (!response.ok) {
+      throw new Error(`Fail to list modpacks: ${response.statusText}`)
+    }
+    const result: FTBModpacksResult = await response.json()
+    return result
+  }
+
   async getModpackManifest(id: number): Promise<FTBModpackManifest> {
     const response = await fetch(`${this.endpoint}/public/modpack/${id}`)
     if (!response.ok) {

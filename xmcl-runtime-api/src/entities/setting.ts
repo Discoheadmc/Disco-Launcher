@@ -66,6 +66,9 @@ export class Settings implements SettingSchema {
 
   httpProxyEnabled = false
 
+  /** User-provided CurseForge API key (Settings > Network > API Keys). */
+  curseforgeApiKey = ''
+
   maxSockets = 0
 
   maxAPISockets = 0
@@ -93,6 +96,7 @@ export class Settings implements SettingSchema {
     this.apiSetsPreference = config.apiSetsPreference
     this.httpProxy = config.httpProxy
     this.httpProxyEnabled = config.httpProxyEnabled
+    this.curseforgeApiKey = config.curseforgeApiKey ?? ''
     this.maxSockets = config.maxSockets ?? 16
     this.maxAPISockets = config.maxAPISockets ?? 0
     this.theme = config.theme
@@ -160,6 +164,10 @@ export class Settings implements SettingSchema {
 
   httpProxySet(proxy: string) {
     this.httpProxy = proxy
+  }
+
+  curseforgeApiKeySet(key: string) {
+    this.curseforgeApiKey = key
   }
 
   httpProxyEnabledSet(enabled: boolean) {

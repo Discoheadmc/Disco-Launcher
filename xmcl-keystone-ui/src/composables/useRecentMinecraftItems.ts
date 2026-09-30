@@ -120,5 +120,5 @@ export function useRecentMinecraftItems(
     )
   })
 
-  return { recentMinecraftItems }
+  return { recentMinecraftItems, latestVersion: latestModrinth }
 }

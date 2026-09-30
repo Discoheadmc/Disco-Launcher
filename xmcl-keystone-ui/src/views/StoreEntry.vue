@@ -144,66 +144,32 @@
       </div>
 
       <!-- Main Content -->
-      <div id="store-content" class="p-6 lg:(flex-1 overflow-y-auto p-10) custom-scrollbar relative" ref="container">
-        <!-- Featured Carousel -->
-        <div v-if="!keyword && selectedCount === 0" class="mb-12">
-          <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
-            <v-icon color="orange" size="large">local_fire_department</v-icon>
-            {{ t('store.trending') }}
-          </h2>
-          <v-carousel
-            cycle
-            height="400"
-            hide-delimiter-background
-            show-arrows="hover"
-            color="white"
-            class="rounded-sm overflow-hidden"
-            interval="6000"
-          >
-            <template #prev="{ props: btnProps }">
-              <v-btn
-                variant="plain"
-                icon="chevron_left"
-                :color="arrowColor"
-                @click="btnProps.onClick"
-              />
-            </template>
-            <template #next="{ props: btnProps }">
-              <v-btn
-                variant="plain"
-                icon="chevron_right"
-                :color="arrowColor"
-                @click="btnProps.onClick"
-              />
-            </template>
-            <v-carousel-item v-for="(g, i) in popularItems" :key="i">
-              <StoreGallery :gallery="g" @enter="enter(g.type, g.id)" />
-            </v-carousel-item>
-          </v-carousel>
-        </div>
-
-        <!-- Latest Minecraft Section -->
+      <div id="store-content" class="p-6 lg:(flex-1 overflow-y-auto p-10) custom-scrollbar relative" ref="container">        <!-- Latest Minecraft: compact single-line info bar -->
         <section
           v-if="!keyword && selectedCount === 0"
-          class="mb-12"
+          class="latest-bar"
+          role="region"
+          :aria-label="latestBarAriaLabel"
+        >
+          <span class="latest-bar__dot" aria-hidden="true" />
+          <span :id="latestMinecraftHeadingId" class="latest-bar__text">
+            {{ latestBarText }}
+          </span>
+          <v-btn
+            icon="refresh"
+            variant="text"
+            size="x-small"
+            density="comfortable"
+            :aria-label="t('shared.refresh')"
+            @click="refreshRecentMinecraft"
+          />
+        </section>
+        <section
+          v-if="!keyword && selectedCount === 0 && recentMinecraftItems.length > 0"
+          class="mb-10"
           role="region"
           :aria-labelledby="latestMinecraftHeadingId"
         >
-          <h2
-            :id="latestMinecraftHeadingId"
-            class="text-2xl font-bold mb-6 flex items-center gap-3"
-          >
-            <v-icon color="green" size="large" aria-hidden="true">xmcl:minecraft</v-icon>
-            {{ t('store.latestMinecraft') }}
-            <v-btn
-              class="ml-2"
-              icon="refresh"
-              variant="text"
-              size="small"
-              :aria-label="t('shared.refresh')"
-              @click="refreshRecentMinecraft"
-            />
-          </h2>
           <div
             v-roving-tabindex
             role="group"
@@ -307,7 +273,6 @@ import FilterCard from '@/components/FilterCard.vue'
 import FTBIcon from '@/components/FTBIcon.vue'
 import ModrinthIcon from '@/components/ModrinthIcon.vue'
 import StoreExploreCardModern from '@/components/StoreExploreCardModern.vue'
-import StoreGallery from '@/components/StoreGallery.vue'
 import { kCurseforgeCategories, useCurseforgeCategoryI18n } from '@/composables/curseforge'
 import { useDateString } from '@/composables/date'
 import { kModrinthTags } from '@/composables/modrinth'
@@ -316,7 +281,6 @@ import { useSortByItems } from '@/composables/sortBy'
 import { normalizeMarketSort } from '@/composables/marketSort'
 import { useTextFieldBehavior } from '@/composables/textfieldBehavior'
 import { kTheme } from '@/composables/theme'
-import { usePopularItems } from '@/composables/usePopularItems'
 import { useRecentMinecraftItems } from '@/composables/useRecentMinecraftItems'
 import { useSearchedItems } from '@/composables/useSearchedItems'
 import { useGamepadInnerNav } from '@/composables/gamepad'
@@ -329,9 +293,6 @@ import { useId } from 'vue'
 const { push, replace } = useRouter()
 const route = useRoute()
 const { t } = useI18n()
-const { isDark } = injection(kTheme)
-const arrowColor = computed(() => (isDark.value ? 'white' : 'black'))
-
 const latestMinecraftHeadingId = useId()
 const discoverHeadingId = useId()
 
@@ -360,8 +321,8 @@ const curseforgeCategory = useQueryNumber(
 )
 const pageSize = 20
 
-// Disco Launcher: the trending/latest sections render only when no search or
-// category filter is active; gate their network fetches with the same flag.
+// Disco Launcher: the "Trending" carousel was removed; the latest-Minecraft
+// section still renders only when no search or category filter is active.
 // Mirrors `selectedCount > 0 || !!keyword` from raw state so it can be
 // declared before the data-fetching composables that consume it.
 const hasFilters = computed(() =>
@@ -410,9 +371,14 @@ useGamepadInnerNav({
   disabled: () => pageCount.value <= 1,
 })
 
-const { popularItems } = usePopularItems(galleryMappings, hasFiltersComputed)
-
 const { recentMinecraftItems: allRecentMinecraftItems } = useRecentMinecraftItems(galleryMappings, hasFiltersComputed)
+
+// Compact single-line info bar: "Latest Version" label + small refresh
+// button. The version number is intentionally not displayed (Disco task 3);
+// the refresh button keeps rotating the cards and the version check keeps
+// running in the background.
+const latestBarText = computed(() => t('store.latestVersionBar'))
+const latestBarAriaLabel = computed(() => t('store.latestMinecraft'))
 
 // Display only 8 items, with rotation support
 const recentMinecraftOffset = ref(0)
@@ -620,8 +586,8 @@ useTutorial(
     {
       element: '#store-content',
       popover: {
-        title: t('store.trending'),
-        description: t('tutorial.storePoupularModpackDescription'),
+        title: t('store.discover'),
+        description: t('tutorial.storeSearchDescription'),
       },
     },
   ]),
@@ -711,6 +677,42 @@ useTutorial(
 }
 
 .source-button:hover .cross-overlay {
+  opacity: 1;
+}
+
+/* Compact latest-version info bar (single line, prism-flat) */
+.latest-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding: 5px 10px;
+  width: fit-content;
+  border-radius: var(--card-subsection-radius, 3px);
+  background: rgba(var(--v-theme-on-surface), 0.04);
+}
+
+.latest-bar__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgb(var(--v-theme-green, var(--v-theme-primary)));
+  flex-shrink: 0;
+}
+
+.latest-bar__text {
+  color: rgba(var(--v-theme-on-surface), 0.72);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.latest-bar :deep(.v-btn) {
+  opacity: 0.6;
+}
+
+.latest-bar :deep(.v-btn:hover) {
   opacity: 1;
 }
 </style>

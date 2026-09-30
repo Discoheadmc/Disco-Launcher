@@ -28,7 +28,11 @@ export function useFeedTheBeast(props: FeedTheBeastProps) {
   })
 
   const { data, isValidating: refreshing } = useSWRV(computed(() => `/ftb?keyword=${currentKeyword.value}`), async () => {
-    return !currentKeyword.value ? await clientFTB.getFeaturedModpacks() : await clientFTB.searchModpacks({ keyword: currentKeyword.value })
+    // Disco: the browse view (empty keyword) lists the COMPLETE FTB catalogue
+    // via `/public/modpack/all` (~90 packs). The old `featured/5` call only
+    // ever returned the tiny featured pool (~5 packs), which is why most
+    // modpacks were missing. Keyword search keeps using the search API.
+    return !currentKeyword.value ? await clientFTB.getAllModpacks() : await clientFTB.searchModpacks({ keyword: currentKeyword.value })
   }, inject(kSWRVConfig))
 
   return {

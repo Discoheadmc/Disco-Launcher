@@ -40,6 +40,11 @@ export const SettingSchema = z.object({
   httpProxy: z.string().catch(''),
   /** Is proxy setting enabled */
   httpProxyEnabled: z.boolean().catch(false),
+  /**
+   * User-provided CurseForge API key (Settings > Network > API Keys).
+   * Stored locally in setting.json; never bundled with the launcher.
+   * Used for direct api.curseforge.com requests (store browsing, install). */
+  curseforgeApiKey: z.string().catch(''),
   /** The launcher theme */
   theme: z.enum(['dark', 'light', 'system']).catch('dark'),
   /** Maximum number of sockets to allow per host */
