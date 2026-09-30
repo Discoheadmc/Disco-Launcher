@@ -14,7 +14,7 @@
             v-for="(item, idx) in sections"
             :key="item.id"
             :value="idx"
-            class="mb-1"
+            class="setting-nav-item mb-1"
             color="primary"
             :title="t(item.title)"
             @click="scrollTo(item.id)"
@@ -279,5 +279,23 @@ useTutorial(
 
 .scroll-target {
   scroll-margin-top: 80px;
+}
+
+/* Left nav tabs: gentle hover + clear selected emphasis (existing tokens only) */
+.setting-nav-item {
+  border-radius: var(--card-item-radius, 3px) !important;
+  transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.setting-nav-item:hover {
+  background: rgba(var(--v-theme-on-surface), 0.06);
+}
+
+.setting-nav-item.v-list-item--active {
+  background: rgba(var(--v-theme-primary), 0.12);
+}
+
+.setting-nav-item.v-list-item--active .v-list-item-title {
+  font-weight: 600;
 }
 </style>

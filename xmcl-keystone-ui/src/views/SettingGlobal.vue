@@ -3,21 +3,34 @@
   <div class="flex flex-col gap-4">
     <!-- Quick Launch Settings Card -->
     <SettingCard :title="t('setting.quickLaunchSettings')" icon="flash_on">
-      <SettingItemCheckbox v-model="fastLaunch" :title="t('instanceSetting.fastLaunch')"
-        :description="t('instanceSetting.fastLaunchHint')" />
-      <v-divider class="my-2" />
-      <SettingItemCheckbox v-model="hideLauncher" :title="t('instanceSetting.hideLauncher')" />
-      <v-divider class="my-2" />
-      <SettingItemCheckbox v-model="showLog" :title="t('instanceSetting.showLog')"
-        :description="t('instanceSetting.showLogHint')" />
+      <div class="setting-group">
+        <div class="setting-group__header">
+          <v-icon size="16">play_circle</v-icon>
+          <span>{{ t('setting.groupRun') }}</span>
+        </div>
+        <div class="setting-group__body">
+          <SettingItemCheckbox v-model="fastLaunch" :title="t('instanceSetting.fastLaunch')"
+            :description="t('instanceSetting.fastLaunchHint')" />
+          <SettingItemCheckbox v-model="hideLauncher" :title="t('instanceSetting.hideLauncher')" />
+          <SettingItemCheckbox v-model="showLog" :title="t('instanceSetting.showLog')"
+            :description="t('instanceSetting.showLogHint')" />
+        </div>
+      </div>
     </SettingCard>
 
     <SettingCard :title="t('setting.authenticationSettings')" icon="security">
-      <SettingItemCheckbox v-model="disableAuthlibInjector" :title="t('instanceSetting.disableAuthlibInjector')"
-        :description="t('instanceSetting.disableAuthlibInjectorDescription')" />
-      <v-divider class="my-2" />
-      <SettingItemCheckbox v-model="disableElyByAuthlib" :title="t('instanceSetting.disableElyByAuthlib')"
-        :description="t('instanceSetting.disableElyByAuthlibDescription')" />
+      <div class="setting-group">
+        <div class="setting-group__header">
+          <v-icon size="16">vpn_key</v-icon>
+          <span>{{ t('setting.groupSecurity') }}</span>
+        </div>
+        <div class="setting-group__body">
+          <SettingItemCheckbox v-model="disableAuthlibInjector" :title="t('instanceSetting.disableAuthlibInjector')"
+            :description="t('instanceSetting.disableAuthlibInjectorDescription')" />
+          <SettingItemCheckbox v-model="disableElyByAuthlib" :title="t('instanceSetting.disableElyByAuthlib')"
+            :description="t('instanceSetting.disableElyByAuthlibDescription')" />
+        </div>
+      </div>
     </SettingCard>
 
     <!-- Java Preference Card -->
@@ -123,6 +136,12 @@
 
     <!-- Minecraft Options Card -->
     <SettingCard :title="t('setting.minecraftOptions')" icon="videogame_asset">
+      <div class="setting-group">
+        <div class="setting-group__header">
+          <v-icon size="16">download</v-icon>
+          <span>{{ t('setting.groupDownload') }}</span>
+        </div>
+        <div class="setting-group__body pa-4">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <div class="font-weight-medium mb-2">
@@ -139,6 +158,8 @@
           </div>
           <v-text-field v-model="mcOptions" variant="outlined" density="compact" hide-details
             :placeholder="t('instance.mcOptionsHint')" />
+        </div>
+      </div>
         </div>
       </div>
     </SettingCard>
@@ -343,5 +364,51 @@ useEventListener('beforeunload', save)
 
 .v-card:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Grouped sections: subtle tinted blocks with icon subtitles.
+   Uses only existing theme tokens (on-surface alphas). */
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.setting-group__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px 2px;
+  color: rgba(var(--v-theme-on-surface), 0.62);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.setting-group__body {
+  border-radius: var(--card-subsection-radius, 3px);
+  background: rgba(var(--v-theme-on-surface), 0.03);
+  padding: 4px 0;
+}
+
+.setting-group__body.pa-4 {
+  padding: 16px;
+}
+
+.setting-group__body > * + * {
+  position: relative;
+}
+
+.setting-group__body > * + *::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background: rgba(var(--v-theme-on-surface), 0.07);
+  pointer-events: none;
 }
 </style>
