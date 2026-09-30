@@ -11,7 +11,9 @@
         <div class="flex-1 min-w-0 mx-3 relative">
           <HomeInstanceGrid />
         </div>
-        <InstanceActionsPanel class="home-side-panel sticky top-0" />
+        <!-- Disco: InstanceActionsPanel moved to HomeLayout so it spans the
+             full page height next to the header too (the header launch pill
+             was removed; the panel's own launch button is the single entry). -->
       </div>
       <HomeFocusFooter v-if="isFocus" class="absolute bottom-0 left-0 pb-[26px]" />
     </transition>
@@ -35,7 +37,6 @@ import type { DriveStep } from 'driver.js'
 import HomeCriticalError from './HomeCriticalError.vue'
 import HomeFocusFooter from './HomeFocusFooterV2.vue'
 import HomeInstanceGrid from './HomeInstanceGrid.vue'
-import InstanceActionsPanel from './InstanceActionsPanel.vue'
 
 const isFocus = useInFocusMode()
 const { getBackgroundMenu: getFocusBackgroundMenu } = useHomeFocusCards()
@@ -108,7 +109,8 @@ useTutorial(
         popover: { title: t('instances.add'), description: t('tutorial.instanceAddDescription') },
       },
       {
-        element: '#launch-button',
+        // Disco: header launch pill removed; the panel's launch button is the entry.
+        element: '[data-testid="panel-launch"]',
         popover: { title: t('launch.launch'), description: t('tutorial.launchDescription') },
       },
     ]

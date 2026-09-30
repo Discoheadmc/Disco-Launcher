@@ -23,12 +23,11 @@
         <HomeLaunchButtonStatus
           :active="active"
         />
-        <HomeLaunchButton
-          class="ml-4"
-          :compact="compact"
-          @mouseenter="active = true"
-          @mouseleave="active = false"
-        />
+        <!-- Disco: the big header launch pill (and its embedded settings gear)
+             was removed. Launching lives solely in the right-hand
+             InstanceActionsPanel, which shares the same kLaunchButton handler.
+             The gear's menu rows (Ayarlar/Log/Klasör/Kısayol) already exist as
+             dedicated rows in that panel. -->
       </div>
     </transition>
   </div>
@@ -42,7 +41,6 @@ import { kInstanceVersion } from '@/composables/instanceVersion'
 import { kCompact } from '@/composables/scrollTop'
 import { useInFocusMode } from '@/composables/uiLayout'
 import { injection } from '@/util/inject'
-import HomeLaunchButton from './HomeLaunchButton.vue'
 import HomeLaunchButtonStatus from './HomeLaunchButtonStatus.vue'
 
 const { instance, runtime: version } = injection(kInstance)

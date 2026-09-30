@@ -5,19 +5,28 @@
     :style="{ scrollbarGutter: 'stable' }"
     @wheel="onScroll"
   >
-    <HomeHeader ref="headerEl" class="sticky top-0 z-20" />
+    <div class="flex min-h-0 flex-1 items-stretch overflow-hidden">
+      <div class="flex min-w-0 flex-1 flex-col">
+        <HomeHeader ref="headerEl" class="sticky top-0 z-20" />
 
-    <!-- This is to fix strange hover color issue... -->
-    <router-view v-slot="{ Component }">
-      <transition
-        name="fade-transition"
-        mode="out-in"
-        @after-enter="end"
-        @leave="start"
-      >
-        <component :is="Component" />
-      </transition>
-    </router-view>
+        <!-- This is to fix strange hover color issue... -->
+        <router-view v-slot="{ Component }">
+          <transition
+            name="fade-transition"
+            mode="out-in"
+            @after-enter="end"
+            @leave="start"
+          >
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </div>
+
+      <!-- Disco: full-height instance actions panel (was inside Home.vue,
+           below the header). Its own Başlat/Durdur buttons are the single
+           launch entry now that the header pill is removed. -->
+      <InstanceActionsPanel class="home-side-panel" />
+    </div>
 
     <HomeLogDialog />
     <HomeDropModpackDialog />
@@ -43,6 +52,7 @@ import HomeLaunchMultiInstanceDialog from './HomeLaunchMultiInstanceDialog.vue'
 import HomeUnresolvedFilesDialog from './HomeUnresolvedFilesDialog.vue'
 import HomeLaunchStatusDialog from './HomeLaunchStatusDialog.vue'
 import HomeLogDialog from './HomeLogDialog.vue'
+import InstanceActionsPanel from './InstanceActionsPanel.vue'
 import AppCollectionDialog from './AppCollectionDialog.vue'
 import HomeDropModpackDialog from './HomeDropModpackDialog.vue'
 import { useGamepadInnerNav } from '@/composables/gamepad'

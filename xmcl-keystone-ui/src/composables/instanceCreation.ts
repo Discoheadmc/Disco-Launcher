@@ -169,6 +169,23 @@ export function useInstanceCreation(gameProfile: Ref<GameProfile>, instances: Re
     server: null,
     assignMemory: undefined,
     fastLaunch: undefined,
+    /**
+     * Disco: opt-in WSkinLoader (custom cape in-game) support. Fabric-only;
+     * surfaced as a checkbox under the loader selection when Fabric is the
+     * active loader (see StepperAdvanceContent).
+     */
+    wskinLoader: false,
+  })
+
+  /**
+   * Whether the WSkinLoader (custom cape in-game) option applies to the
+   * current creation: it requires the Fabric loader (the bundled mod is a
+   * fabric mod). Hidden for other loaders; unchecked & disabled when the
+   * user leaves fabric so a stale check can never leak into the payload.
+   */
+  const wskinLoaderAvailable = computed(() => !!data.runtime.fabricLoader && data.edition !== 'bedrock')
+  watch(wskinLoaderAvailable, (available) => {
+    if (!available) data.wskinLoader = false
   })
   // TODO: check if we can use shallowRef
   const files: Ref<InstanceFile[]> = ref([])
@@ -209,6 +226,7 @@ export function useInstanceCreation(gameProfile: Ref<GameProfile>, instances: Re
 
   async function update(template: CreateInstanceOptions, filesPromise: Promise<InstanceFile[]>) {
     prepareImport()
+    data.wskinLoader = false
     data.name = template.name
     data.version = template.version ?? ''
     if (template.runtime) {
@@ -244,6 +262,7 @@ export function useInstanceCreation(gameProfile: Ref<GameProfile>, instances: Re
   function reset() {
     createdPath = ''
     data.name = ''
+    data.wskinLoader = false
     data.runtime = getNewRuntime()
     data.version = ''
     data.edition = 'java'
@@ -277,6 +296,7 @@ export function useInstanceCreation(gameProfile: Ref<GameProfile>, instances: Re
     linkPreferences,
     isManual,
     canCreate,
+    wskinLoaderAvailable,
     prepareImport,
     update,
     /**

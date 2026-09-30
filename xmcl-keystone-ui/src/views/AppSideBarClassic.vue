@@ -49,13 +49,13 @@
 
     <div class="sidebar__divider" />
 
+    <!-- Instances: single launcher button with popover list -->
     <div
-      ref="instancesScrollEl"
       v-roving-tabindex
       role="group"
       class="sidebar__instances"
     >
-      <AppSideBarInstances />
+      <AppSideBarInstanceMenu />
     </div>
 
     <div class="sidebar__divider" />
@@ -146,7 +146,6 @@
 
 <script lang="ts" setup>
 import PlayerAvatar from '@/components/PlayerAvatar.vue'
-import { useDragAutoScroll } from '@/composables/dragAutoScroll'
 import { useInjectSidebarSettings } from '@/composables/sidebarSettings'
 import { kTheme } from '@/composables/theme'
 import { kUserContext } from '@/composables/user'
@@ -154,7 +153,7 @@ import { vRovingTabindex } from '@/directives/rovingTabindex'
 import { vSharedTooltip } from '@/directives/sharedTooltip'
 import { injection } from '@/util/inject'
 import { useEventListener } from '@vueuse/core'
-import AppSideBarInstances from './AppSideBarInstances.vue'
+import AppSideBarInstanceMenu from './AppSideBarInstanceMenu.vue'
 import AppSideBarItem from './AppSideBarItem.vue'
 
 const { blurSidebar, sideBarColor } = injection(kTheme)
@@ -192,12 +191,8 @@ useEventListener(window, 'keydown', (e: KeyboardEvent) => {
   goBack()
 })
 
-// gh #1396 — Auto-scroll the instances container while an instance is being
-// dragged near its top/bottom edge. (Mouse-wheel scrolling during a native
-// HTML5 drag isn't possible — Chromium suppresses wheel events for the
-// duration of the drag.)
-const instancesScrollEl = ref<HTMLDivElement | null>(null)
-useDragAutoScroll(instancesScrollEl)
+// gh #1396 auto-scroll was for the old always-visible instance strip; the
+// popover list scrolls natively now.
 </script>
 
 <style scoped>

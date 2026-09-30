@@ -187,6 +187,7 @@ import {
   ModpackServiceKey,
   waitModpackFiles,
   BedrockServiceKey,
+  InstanceServiceKey,
 } from '@xmcl/runtime-api'
 import { useDialog } from '../composables/dialog'
 import { kInstanceCreation, useInstanceCreation } from '../composables/instanceCreation'
@@ -289,6 +290,7 @@ const onSelectManifest = async (man: InstanceManifest) => {
   }
 }
 
+const { editInstance } = useService(InstanceServiceKey)
 const { isShown, show, hide } = useDialog(
   AddInstanceDialogKey,
   (param) => {
@@ -452,6 +454,11 @@ async function installCollectionToInstance(newPath: string) {
 
 const onCreate = async () => {
   const isBedrock = creation.data.edition === 'bedrock'
+  // Disco: opt-in WSkinLoader (custom cape in-game) support. Snapshotted
+  // before `create()` (which resets the form). Fabric-only: the checkbox is
+  // only visible/enabled while Fabric is the selected loader, and the
+  // backend re-gates on the fabric runtime, so a stale check is harmless.
+  const withWSkinLoader = !isBedrock && creation.wskinLoaderAvailable.value && creation.data.wskinLoader
   if (isBedrock) {
     if (!hasMinecraftLicense.value) {
       notify({
@@ -479,8 +486,28 @@ const onCreate = async () => {
     } catch (e) {
       console.error(e)
     }
-  } else if (newPath === path.value) {
-    await fix().catch(() => {})
+  } else {
+    if (newPath === path.value) {
+      await fix().catch(() => {})
+    }
+    if (withWSkinLoader) {
+      try {
+        // Persist the opt-in flag and write the bundled mod jars into the new
+        // instance's `mods/` folder. Config is account-specific and is written
+        // by the launch middleware on every launch.
+        await editInstance({
+          instancePath: newPath,
+          wskinLoader: true,
+        })
+      } catch (e) {
+        notify({
+          level: 'warning',
+          title: t('instances.wskinLoader'),
+          body: t('instances.wskinLoaderApplyFailed'),
+        })
+        console.error('Failed to apply WSkinLoader opt-in:', e)
+      }
+    }
   }
   // TODO: re-enable installing a selected collection into the new instance
   // once the Add Instance collection UX is redesigned.
