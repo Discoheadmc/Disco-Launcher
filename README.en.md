@@ -51,6 +51,11 @@
 </p>
 <p align="center"><em>Appearance settings — 8 color pickers, including a dedicated color for the Launch button</em></p>
 
+<p align="center">
+  <img alt="Modpack store" width="820" src="docs/images/store.png">
+</p>
+<p align="center"><em>Modpack market — CurseForge, Modrinth and FTB; the discover grid</em></p>
+
 ## 🆚 How Is It Different from XMCL?
 
 | Area | XMCL | Disco Launcher |

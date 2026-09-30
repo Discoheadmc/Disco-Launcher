@@ -52,6 +52,11 @@
 </p>
 <p align="center"><em>Görünüm ayarları — 8 renk seçicisi ve "Başlat" butonu için özel renk</em></p>
 
+<p align="center">
+  <img alt="Mağaza" width="820" src="docs/images/store.png">
+</p>
+<p align="center"><em>Mod paketi mağazası — CurseForge, Modrinth ve FTB; keşif ızgarası</em></p>
+
 ## 🆚 XMCL Farkı Nedir?
 
 Disco Launcher, XMCL'nin optimizasyon fork'u olarak başladı. Bilinçli farkların özeti:
