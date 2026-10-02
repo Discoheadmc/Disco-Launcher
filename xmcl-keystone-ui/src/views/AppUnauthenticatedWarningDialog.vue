@@ -145,5 +145,5 @@ const onLogin = () => {
 }
 
 const openDiscord = () => window.open('https://discord.gg/W5XVwYY7GQ', 'browser')
-const openGithub = () => window.open('https://github.com/Voxelum/x-minecraft-launcher', 'browser')
+const openGithub = () => window.open('https://github.com/Discoheadmc/Disco-Launcher', 'browser')
 </script>

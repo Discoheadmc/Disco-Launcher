@@ -6,7 +6,7 @@ This file is the contract between the launcher UI in `xmcl-keystone-ui/` and the
 
 If the anchor you need is not here, add a `data-testid="…"` attribute to the corresponding Vue component, then re-run `pnpm gen:testids`.
 
-**Total anchors:** 236 (in 285 Vue files)
+**Total anchors:** 237 (in 285 Vue files)
 
 | Test ID | Defined in |
 |---|---|
@@ -175,14 +175,15 @@ If the anchor you need is not here, add a `data-testid="…"` attribute to the c
 | `nav-settings` | [`xmcl-keystone-ui/src/views/AppSideBarClassic.vue#L65`](../xmcl-keystone-ui/src/views/AppSideBarClassic.vue#L65)<br>[`xmcl-keystone-ui/src/views/AppSideBarClassic.vue#L134`](../xmcl-keystone-ui/src/views/AppSideBarClassic.vue#L134)<br>[`xmcl-keystone-ui/src/views/AppSideBarNotch.vue#L86`](../xmcl-keystone-ui/src/views/AppSideBarNotch.vue#L86) |
 | `nav-store` | [`xmcl-keystone-ui/src/views/AppSideBarClassic.vue#L39`](../xmcl-keystone-ui/src/views/AppSideBarClassic.vue#L39)<br>[`xmcl-keystone-ui/src/views/AppSideBarClassic.vue#L113`](../xmcl-keystone-ui/src/views/AppSideBarClassic.vue#L113)<br>[`xmcl-keystone-ui/src/views/AppSideBarNotch.vue#L45`](../xmcl-keystone-ui/src/views/AppSideBarNotch.vue#L45) |
 | `offline-hint` | [`xmcl-keystone-ui/src/components/UserLoginForm.vue#L38`](../xmcl-keystone-ui/src/components/UserLoginForm.vue#L38) |
-| `panel-delete` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L92`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L92) |
-| `panel-duplicate` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L79`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L79) |
-| `panel-edit` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L49`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L49) |
-| `panel-export` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L69`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L69) |
-| `panel-folder` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L59`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L59) |
-| `panel-kill` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L35`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L35) |
-| `panel-launch` | [`xmcl-keystone-ui/src/views/Home.vue#L116`](../xmcl-keystone-ui/src/views/Home.vue#L116)<br>[`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L25`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L25) |
-| `panel-shortcut` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L102`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L102) |
+| `panel-delete` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L105`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L105) |
+| `panel-duplicate` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L92`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L92) |
+| `panel-edit` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L62`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L62) |
+| `panel-export` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L82`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L82) |
+| `panel-folder` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L72`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L72) |
+| `panel-install` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L24`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L24) |
+| `panel-kill` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L48`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L48) |
+| `panel-launch` | [`xmcl-keystone-ui/src/views/Home.vue#L115`](../xmcl-keystone-ui/src/views/Home.vue#L115)<br>[`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L38`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L38) |
+| `panel-shortcut` | [`xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L115`](../xmcl-keystone-ui/src/views/InstanceActionsPanel.vue#L115) |
 | `refresh-all-servers` | [`xmcl-keystone-ui/src/views/BaseSettingServer.vue#L54`](../xmcl-keystone-ui/src/views/BaseSettingServer.vue#L54) |
 | `remote-server-connection-advanced` | [`xmcl-keystone-ui/src/views/BaseSettingServerRemote.vue#L35`](../xmcl-keystone-ui/src/views/BaseSettingServerRemote.vue#L35) |
 | `remote-server-deploy` | [`xmcl-keystone-ui/src/views/BaseSettingServerRemote.vue#L195`](../xmcl-keystone-ui/src/views/BaseSettingServerRemote.vue#L195) |

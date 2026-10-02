@@ -107,13 +107,13 @@ const feedbackChannels = computed(() => [
     buttonText: t('feedback.discordJoin')
   },
   {
-    title: 'Discohead',
-    description: t('agent.discoheadTagline'),
-    icon: 'smart_toy',
-    color: 'primary',
-    link: 'https://chat.openai.com/',
+    title: t('feedback.github'),
+    description: t('feedback.githubDescription'),
+    icon: 'bug_report',
+    color: 'grey-darken-3',
+    link: 'https://github.com/Discoheadmc/Disco-Launcher/issues',
     target: 'browser',
-    buttonText: t('feedback.discordJoin')
+    buttonText: t('feedback.githubOpenIssue')
   }
 ])
 

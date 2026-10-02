@@ -37,10 +37,17 @@ function isDatabaseLockedError(e: unknown) {
 
 function isCorruptDatabaseError(e: unknown) {
   const message = getErrorMessage(e).toLowerCase()
+  const anyError = e as { code?: string } | undefined
   return message.includes('database disk image is malformed') ||
     message.includes('not a database') ||
     message.includes('file is encrypted or is not a database') ||
-    message.includes('no such table: project')
+    message.includes('no such table: project') ||
+    // A truncated `.sqlite.gz` (early cut-off in the transfer) fails gunzip with
+    // `unexpected end of file`/`Z_BUF_ERROR`; the retry loop must tear down the
+    // stale cache and re-download instead of failing every launch forever.
+    message.includes('unexpected end of file') ||
+    message.includes('checksum does not match') ||
+    anyError?.code === 'Z_BUF_ERROR'
 }
 
 function isOpenDatabaseError(e: unknown) {

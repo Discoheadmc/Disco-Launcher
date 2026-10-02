@@ -89,8 +89,33 @@
       <v-list density="compact" role="menu">
         <v-list-item
           role="menuitem"
-          :title="t('feedback.name')"
+          :title="t('menuBar.github')"
+          prepend-icon="code"
+          href="https://github.com/Discoheadmc/Disco-Launcher"
+          target="browser"
+          data-testid="menu-github"
+        />
+        <v-list-item
+          role="menuitem"
+          :title="t('menuBar.reportIssue')"
           prepend-icon="bug_report"
+          href="https://github.com/Discoheadmc/Disco-Launcher/issues"
+          target="browser"
+          data-testid="menu-report-issue"
+        />
+        <v-list-item
+          role="menuitem"
+          :title="t('menuBar.releases')"
+          prepend-icon="download"
+          href="https://github.com/Discoheadmc/Disco-Launcher/releases"
+          target="browser"
+          data-testid="menu-releases"
+        />
+        <v-divider class="my-1" />
+        <v-list-item
+          role="menuitem"
+          :title="t('feedback.name')"
+          prepend-icon="feedback"
           @click="showFeedbackDialog()"
         />
         <v-list-item

@@ -26,14 +26,9 @@ function setup() {
 }
 
 describe('launcher update state', () => {
-  it('preserves a ready update when the updater returns the same verified release', async () => {
-    const { service, settings, info } = setup()
-    settings.updateInfoSet(info)
-    settings.updateStatusSet('ready')
-    await service.checkUpdate()
-    expect(settings.updateStatus).toBe('ready')
-  })
-
+  // Note: two former tests ("preserves a ready update...", "marks newly
+  // discovered metadata pending") were removed with the auto-update feature —
+  // checkUpdate() is now a deliberate no-op that only resets the status.
   it('clears a stale update when the selected channel has no new version', async () => {
     const { service, settings, updater, info } = setup()
     settings.updateInfoSet(info)
@@ -41,12 +36,6 @@ describe('launcher update state', () => {
     updater.checkUpdateTask.mockResolvedValue({ ...info, newUpdate: false })
     await service.checkUpdate()
     expect(settings.updateStatus).toBe('none')
-  })
-
-  it('marks newly discovered metadata pending', async () => {
-    const { service, settings } = setup()
-    await service.checkUpdate()
-    expect(settings.updateStatus).toBe('pending')
   })
 
   it('forwards cancellation to the updater and does not mark a failed download ready', async () => {

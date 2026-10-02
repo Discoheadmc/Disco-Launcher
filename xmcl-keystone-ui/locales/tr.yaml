@@ -6,6 +6,9 @@ menuBar:
   about: Hakkında
   files: Dosyalar
   gameDataFolder: Oyun Veri Klasörü
+  github: GitHub Deposu
+  releases: İndirmeler
+  reportIssue: Hata Bildir
 AppShareInstanceDialog:
   editScopeDescription: Eşlerin LAN'da çalışan bu oyunu keşfettikten sonra alabileceği dosyaları seçin.
   editScopeTitle: Paylaşım kapsamını düzenle

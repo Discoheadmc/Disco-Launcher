@@ -3,6 +3,7 @@ import { YggdrasilTexture, YggdrasilTexturesInfo } from '@xmcl/user'
 import { Readable } from 'stream'
 import { finished } from 'stream/promises'
 import { LauncherAppPlugin } from '~/app'
+import type { Context, Handler } from '~/app/LauncherProtocolHandler'
 import { UserService } from '~/user'
 
 /**
@@ -63,8 +64,12 @@ export const pluginLocalYggdrasilHandler: LauncherAppPlugin = (app) => {
     })
   }
 
-  app.protocol.registerHandler('http', async ({ request, response, handle }) => {
-    if (request.url.host !== 'localhost' || !request.url.pathname.startsWith('/yggdrasil')) return
+  // The launcher's local Node server maps every HTTP request to
+  // `xmcl://launcher/<path>` (see LauncherApp.createServer), so authlib's
+  // in-game `http://localhost:<port>/yggdrasil` call arrives here under the
+  // 'xmcl' scheme — not 'http'. Register both to be safe.
+  const serve: Handler = async ({ request, response, handle }: Context) => {
+    if (!request.url.pathname.startsWith('/yggdrasil')) return
     if (response.status) return
 
     const pathname = request.url.pathname.substring('/yggdrasil'.length) || ''
@@ -86,7 +91,8 @@ export const pluginLocalYggdrasilHandler: LauncherAppPlugin = (app) => {
         request.body.resume()
         await finished(request.body)
       }
-      response.status = 240
+      // Vanilla authlib treats 204 (no content) as a successful join.
+      response.status = 204
     } else if (pathname.startsWith('/sessionserver/session/minecraft/hasJoined') && request.method === 'GET') {
       const username = request.url.searchParams.get('username') || ''
       try {
@@ -136,5 +142,7 @@ export const pluginLocalYggdrasilHandler: LauncherAppPlugin = (app) => {
     } else {
       response.status = 404
     }
-  })
+  }
+  app.protocol.registerHandler('xmcl', serve)
+  app.protocol.registerHandler('http', serve)
 }

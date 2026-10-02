@@ -389,7 +389,14 @@ export abstract class AbstractInstanceDomainService extends AbstractService {
           }
           const result = await curseforgeClient.getFingerprintsMatchesByGameId(432, Object.keys(allPrints).map(v => parseInt(v, 10))).catch((e) => {
             if (e instanceof CurseforgeApiError && e.status >= 400 && e.status < 500 && e.status !== 404) {
-              this.error(e)
+              if (e.status === 401 || e.status === 403) {
+                // Without a valid key the CurseForge API rejects every request;
+                // say it plainly instead of a bare stack trace so users know to
+                // set the key under Settings → Network.
+                this.warn(`CurseForge request denied (HTTP ${e.status}). A valid CurseForge API key is required (Settings → Network); skipping mod metadata refresh for instance ${instancePath}.`)
+              } else {
+                this.error(e)
+              }
             }
             return { exactMatches: [] }
           })

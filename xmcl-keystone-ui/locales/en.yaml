@@ -6,6 +6,9 @@ menuBar:
   about: About
   files: Files
   gameDataFolder: Game Data Folder
+  github: GitHub Repository
+  releases: Downloads
+  reportIssue: Report Issue
 AppShareInstanceDialog:
   alterDownloadDescription: >-
     If you don't want to mess up current instance. You can also create a new
@@ -44,18 +47,11 @@ SettingMigrationDialog:
 agent:
   discoheadTagline: The built-in DHMC assistant that helps you manage, diagnose and optimize your game.
   accessRequiredHint: Subscribe to DHMC to use the built-in Agent, or configure your own AI provider in Settings.
-  abort: Stop generation
   callingTool: calling {name}…
-  confirmAccept: Continue
-  confirmAllowAll: Allow all
-  confirmCancel: Cancel
-  confirmPending: Waiting for confirmation
-  confirmTitle: Confirm agent action
   disabledPlaceholder: Agent disabled
   emptyHint: >-
     Ask the agent to inspect your instance, toggle mods, read logs, or diagnose
     a crash.
-  errorTitle: The agent hit an error
   inputPlaceholder: Ask the agent…  (Enter to send, Shift+Enter for newline)
   notConfiguredHint: >-
     Set an API key, model and OpenAI-compatible endpoint in Settings → General
@@ -63,20 +59,6 @@ agent:
   notConfiguredTitle: Agent unavailable
   openSettings: Open settings
   subscribeXmcl: Subscribe to DHMC
-  passiveGameCrashed: Game crashed
-  passiveGameExitCode: Exit code {code}
-  passiveGameExited: Game exited
-  passiveGameExitSignal: Signal {signal}
-  passiveGameExitSummary: '{duration} · {result}'
-  passiveGameExitUnknown: No exit status
-  reasoning: Reasoning
-  passiveGameStarted: Game started
-  passiveGameStartedSummary: 'Minecraft {minecraft} · {version} · PID {pid}'
-  passiveModDiagnosis: Mod compatibility report
-  passiveModDiagnosisError: Compatibility diagnosis failed
-  passiveModDiagnosisSummary: '{checked} mods checked · {incompatibilities} incompatibilities · {duplicates} duplicates'
-  passiveModDuplicate: 'Duplicate {mod}: {files}'
-  passiveModInstalled: installed {version}
   reset: New conversation
   setupGuide: Setup guide
   statusDisabled: Disabled — sign in or configure a provider
@@ -91,23 +73,7 @@ agent:
     instance
   thinking: thinking…
   title: Discohead
-  toolArguments: Arguments
-  toolResult: Result
-  toolRunning: Waiting for result…
   toggleHint: to toggle
-  marketConfirmMessage: Install {name} into the current instance?
-  marketConfirmTarget: 'Target: {instance}'
-  marketConfirmTitle: Install {type}
-  marketInstall: Install
-  marketInstalled: Installed
-  marketInstallFailed: Failed to install {type}
-  marketType:
-    datapack: data pack
-    mod: mod
-    modpack: modpack
-    resourcepack: resource pack
-    shader: shader pack
-  marketResultCount: '{count} results'
 ago:
   day: '{duration} day ago | {duration} days ago'
   hour: '{duration} hour ago | {duration} hours ago'
@@ -173,7 +139,6 @@ baseSetting:
     modLoader: Mod loader
     notConfigured: Not configured
     notSet: Not set
-    offline: Offline archive
     projectId: Project ID
     running: Running
     saved: Saved
@@ -452,7 +417,6 @@ commandPalette:
   hintEnter: enter
   hintBack: back
   hintClose: close
-  hintAskAgent: ask Agent
 feedback:
   channel: Channels
   description: I found a Bug or I want to make a suggestion
@@ -476,8 +440,6 @@ feedback:
     Enter the feedback QQ group and direct talk with authors. Group Number:
     {number}
   qqEnterGroup: Join
-  reddit: Reddit
-  redditDescription: Join the r/DHMC subreddit community
 fileDetail:
   fileSize: File Size
   filesize: File size
@@ -936,32 +898,6 @@ me:
   recentPlay: Recent Play
 migrateMinecraft:
   name: Migrate Minecraft Files
-xmclAccount:
-  accountSummary: Account
-  confirmMerge: Confirm account merge
-  createdAt: Created {date}
-  description: Your passwordless DHMC identity, separate from Minecraft game accounts.
-  expiresAt: Expires {date}
-  gameAccountsSeparate: Removing a game account does not unlink an DHMC login method.
-  guest: Guest
-  identityConflict: This {provider} login belongs to another DHMC Account. Accounts are never merged automatically.
-  linkAccountWith: Link account with
-  mergePreview: Review the resources that will move before confirming.
-  mergeNeedsSession: Sign in to the DHMC Account you want to keep before reviewing the merge.
-  mergeQueued: Account merge is in progress.
-  requestFailed: The DHMC Account service could not complete this request. Your game account is unchanged.
-  reviewMerge: Review merge
-  session: Session
-  sessionActive: Active
-  sessionExpired: Expired
-  signOutAll: Sign out all devices
-  signOutDevice: Sign out this device
-  status:
-    active: Active
-    deleted: Deleted
-    deletion_pending: Deletion pending
-    merged: Merged
-  title: DHMC Account
 migrationWindow:
   title: Data Migration
   preparing: Preparing migration…
@@ -1116,17 +1052,14 @@ modpack:
   projectIdentity: Identity and description
   projectLinks: Project links
   projectLoadFailed: Failed to load the bound Modrinth project.
-  projectNoChanges: No unsaved project changes.
   projectNotBound: No Modrinth project is bound
   projectNotBoundHint: Bind an existing project, or create a new Modrinth project.
-  projectUnsavedChanges: '{count} project field(s) changed'
   projectLatestDraft: Draft
   projectVersions: versions
   publish: Publish
   publishCategories: Categories (comma separated)
   publishChannel: Release channel
   publishChangelog: Changelog
-  publishChangelogGenerate: Generate with AI
   publishConfirmProjectChanges: Confirm project changes
   publishCreateProject: Create project
   publishCreateDraft: Build and create draft
@@ -1135,23 +1068,15 @@ modpack:
   publishDiscordUrl: Discord URL
   publishDraftCreated: Draft version uploaded.
   publishSubmitted: Version submitted for review.
-  publishExistingProject: Existing project
   publishIcon: Project icon
-  publishIconHint: PNG, JPEG, or WebP
   publishIconKeep: Leave unchanged unless a new image is selected
   publishIconUseInstance: Use instance icon
   publishIssuesUrl: Issues URL
   publishLicense: License ID
-  publishLogin: Sign in to Modrinth
   publishFiles: selected files
   publishLinkageSummary: '{linked} of {total} mods/resource packs/shader packs will be linked directly to their Modrinth download instead of being uploaded.'
   publishLinkageEmbeddedSummary: "{count} file(s) can't be linked and will be uploaded (embedded) with this version."
   publishLinkageShowFiles: Show files that must be uploaded
-  publishLinkageReason:
-    missing-file: File not found on disk
-    not-linked-to-modrinth: Not recognized as a Modrinth resource
-    no-downloadable-url: No redistributable download URL found
-  publishModrinth: Publish to Modrinth
   publishNewProject: New project
   publishOpenProject: Open project
   publishOpenVersion: Open version
@@ -1161,9 +1086,7 @@ modpack:
   publishProfileSplit: Universal + separate client/server files
   publishProfileUniversal: Universal
   publishProject: Project
-  publishProjectDetailsTab: Project details
   publishProjectName: Project name
-  publishProjectRequired: Select a project before publishing.
   publishProjectSlug: Project slug
   publishProjectUrl: Project URL (optional)
   publishProjectUrlHint: Leave blank to use {slug}.
@@ -1173,7 +1096,6 @@ modpack:
   publishSummary: Short summary
   publishSummaryMinWords: Summary must contain at least 3 words.
   publishVersionTitle: Version title
-  publishVersionTab: Publish version
   publishVersion: Publish version
   publishVisibility: Visibility
   publishWikiUrl: Wiki URL
@@ -1372,12 +1294,10 @@ multiplayer:
     A room member has been unable to connect to you for a while. Try DHMC
     Together to improve connectivity for everyone in the room. Only the room
     master needs Together.
-  connectedToMaster: Connected to the room master
   connections: Connections
   copied: Copied!
   copy: Copy
   copyGroupToFriendHint: Let your friends join the group with this id
-  directConnection: Direct
   copyLocalHint: >
     "Please copy the local SDP text and send it to your object to have your
     object enter this text in the join connection <span>A token can be only used
@@ -1413,10 +1333,7 @@ multiplayer:
     can copy it and send it to your peer."
   gameAvailable: LAN game available
   groupId: Group Id
-  master: Master
-  masterHostsGameHint: The room master is the connection hub and should host the Minecraft LAN world. Transfer master before changing hosts.
   masterPurchaseHint: Only the room master needs Together Home to improve connectivity for everyone in the room.
-  member: Member
   illegalTokenDescription: Illegal token, please make sure the token from your peer is correct
   initiateConnection: Initiate Connection
   joinConnection: >-
@@ -1427,7 +1344,6 @@ multiplayer:
   joinManual: Join
   joinOrCreateGroup: Join/Create Group
   joinOrCreateGroupHint: Get group id from your friends or create a group
-  joinCreatesMissingRoomHint: If this room does not exist, you will create it and become its master.
   loginRequiredDescription: P2P multiplayer uses DHMC online services. Sign in to an DHMC Account to continue.
   loginRequiredTitle: Sign in for P2P multiplayer
   kernel: P2P Kernel
@@ -1454,7 +1370,6 @@ multiplayer:
     automatically. Now you can close the dialog.
   receiveRemoteTokenHint: Please enter the token from your peer here.
   remoteToken: Remote Token
-  relayConnection: Relay
   routerInfo: Router Info
   sendTokenToRemote: Send Token to Remote
   editSharingScope: Edit Sharing Scope
@@ -1483,10 +1398,7 @@ multiplayer:
   month: month
   orderStatus: 'Waffo order: {status}'
   planDescription: 20 GB of managed relay traffic each month, plus AI troubleshooting for your modpack.
-  relayAllowanceSummary: '{remaining} remaining of {total} this period'
-  relayServiceAvailable: DHMC Together relay service available
   waffoHint: Payments are completed securely on Waffo Pancake. DHMC never receives your card number.
-  waitingForMaster: Waiting for the room master to reconnect
 myStuff: My Stuff
 natType:
   blocked: Blocked
@@ -1525,15 +1437,10 @@ peerIceGatheringState:
 peerSignalingState:
   have-local-offer: Waiting peer description
 presence:
-  away: Away
   instance: 'Playing {instance}'
   instanceSetting: 'Edit Instance Setting: {instance}'
   mod: Viewing Mods in {instance}
   modrinthProject: Viewing {name} in Modrinth
-  offline: Offline
-  online: Online
-  playing: Playing {game}
-  playingGeneric: Playing
   resourcePack: Viewing Resource Packs in {instance}
   save: Viewing Saves in {instance}
   setting: Viewing Setting Page
@@ -1900,8 +1807,6 @@ serverStatus:
   refuse: §4Server refused!
   timeout: §4Connect server timeout!
 setting:
-  multiplayerTransport: Together transport
-  multiplayerTransportDescription: Choose the WebRTC implementation used by Together. Changing transport disconnects active peers.
   about: About
   aboutBmclDescription: BMCL API provides convenient downloads for users in Chinese Mainland
   aboutContributors: 🧑‍💻 Contributors 🧑‍💻
@@ -2595,13 +2500,9 @@ gamepad:
   modInstalledNotify: '{name} has been installed for in-game controller support.'
   modNotFound: 'No compatible version found for {loader} on Minecraft {version}.'
   autoEnableLabel: Auto Enable Controls
-  autoEnableHint: Automatically enable gamepad navigation when a controller is detected.
   autoOpenKeyboardLabel: Auto Open Steam Keyboard
-  autoOpenKeyboardHint: Open Steam On-Screen Keyboard when focusing text input fields.
   focusTooltipsLabel: Show Tooltips on Focus
-  focusTooltipsHint: Display hover tooltips when navigating elements using gamepad focus.
   disableModPromptLabel: Disable Controller Mod Suggestions
-  disableModPromptHint: Do not prompt to install controller mods when launching with a gamepad.
   settingSteamTitle: Add Launcher to Steam
   steamAddedNotify: Launcher added to Steam Library successfully! Please restart Steam to see it.
   steamAlreadyAddedNotify: Launcher is already in your Steam Library.

@@ -63,9 +63,9 @@ describe('pluginModrinthAccess', () => {
     expect(registry.getOrCreate).toHaveBeenCalledWith(ExternalCredentialService)
 
     const response = {} as Record<string, unknown>
-    handlers.get('xmcl')!({
+    handlers.get('disco')!({
       request: {
-        url: new URL('xmcl://launcher/modrinth-auth?code=abc'),
+        url: new URL('disco://launcher/modrinth-auth?code=abc'),
       },
       response,
     })

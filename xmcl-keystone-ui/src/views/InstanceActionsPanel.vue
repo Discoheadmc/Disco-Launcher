@@ -18,6 +18,19 @@
     </div>
 
     <button
+      v-if="needsInstall"
+      type="button"
+      class="action-btn action-btn--install"
+      data-testid="panel-install"
+      :disabled="fixing"
+      :aria-label="t('shared.download')"
+      @click="onFix"
+    >
+      <v-icon size="18">get_app</v-icon>
+      {{ t('shared.download') }}
+    </button>
+    <button
+      v-else
       type="button"
       class="action-btn action-btn--primary"
       :class="{ 'action-btn--primary--custom': !!launchButtonColor }"
@@ -115,6 +128,8 @@ import { useDialog } from '@/composables/dialog'
 import { kEnvironment } from '@/composables/environment'
 import { kInstance } from '@/composables/instance'
 import { kInstanceLaunch } from '@/composables/instanceLaunch'
+import { useInstanceLaunchMenuItems } from '@/composables/instanceLaunchMenuItems'
+import { kInstanceVersionInstall } from '@/composables/instanceVersionInstall'
 import { kTheme } from '@/composables/theme'
 import { kUserContext } from '@/composables/user'
 import { kLaunchButton } from '@/composables/launchButton'
@@ -151,6 +166,27 @@ const { createLaunchShortcut } = useService(LaunchServiceKey)
 const { userProfile } = injection(kUserContext)
 const env = injection(kEnvironment)
 const { show: showDeleteDialog } = useDialog('delete-instance')
+
+// Disco: when the selected instance is not installable as-is (missing/broken
+// version jar, missing java, missing libraries/assets, stalled downloads...),
+// the "Başlat" button becomes a fixed-blue "İndir" button that runs the same
+// repair flow the old top "Yükle" button used. The custom launch-button color
+// must NOT tint this state — keep `launchBtnStyle` exclusive to the Başlat
+// branch.
+const { issues, fixInstanceFileIssue } = useInstanceLaunchMenuItems()
+const { fix: fixVersionIssues, loading: loadingVersionIssues, isInstanceFixing } =
+  injection(kInstanceVersionInstall)
+const needsInstall = computed(() => issues.value !== 0)
+const fixing = computed(() => isInstanceFixing(path.value) || loadingVersionIssues.value)
+
+async function onFix() {
+  if (fixing.value) return
+  const instancePath = path.value
+  await Promise.allSettled([
+    fixVersionIssues(instancePath),
+    fixInstanceFileIssue(instancePath),
+  ])
+}
 
 function openFolder() {
   openDirectory(path.value)
@@ -252,6 +288,16 @@ const onCreateShortcut = async () => {
 
 .action-btn--primary:hover {
   background: rgba(150, 219, 89, 0.25) !important;
+}
+
+/* Disco: fixed blue for the "İndir" (repair/install) state — intentionally
+   independent from the user-configurable launch-button color. */
+.action-btn--install {
+  background: rgba(33, 150, 243, 0.18);
+}
+
+.action-btn--install:hover:not(:disabled) {
+  background: rgba(33, 150, 243, 0.3) !important;
 }
 
 /* Disco: when a dedicated launch-button color is customized in the theme,

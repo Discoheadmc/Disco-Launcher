@@ -303,7 +303,7 @@ export function useInstanceLaunch(
         )
         if (!launchId) throw new Error('Launch started but no launch ID was reported')
         mutate()
-        if (state.aborted) {
+        if (state?.aborted) {
           await action.run(() => kill(pid))
         } else {
           data.value?.push({
@@ -394,9 +394,26 @@ export function useInstanceLaunch(
     }
   }
 
-  function abort() {
+  /**
+   * The launch token is derived from the *currently selected* instance/user,
+   * so if the user switches instance while a launch is in flight the naive
+   * `abort()` targets a key that has no state and crashes on `state.aborted`.
+   * Fall back to the single live launch in that case — cancelling the wrong
+   * launch is still better than a crash that leaves the real one unstoppable.
+   */
+  function resolveAbortToken(): string | undefined {
     const token = launchToken.value
+    if (allLaunchingStatus.value[token]) return token
+    const live = Object.entries(allLaunchingStatus.value).filter(([, s]) => s.status.length > 0)
+    if (live.length === 1) return live[0][0]
+    return undefined
+  }
+
+  function abort() {
+    const token = resolveAbortToken()
+    if (!token) return
     const state = allLaunchingStatus.value[token]
+    if (!state) return
     state.aborted = true
     const controllers = state.controllers
     controllers['preparing-authlib']?.abort()
@@ -419,19 +436,22 @@ export function useInstanceLaunch(
     generateLaunchOptions,
     abort,
     skipAuthLib: () => {
-      const token = launchToken.value
-      const controllers = allLaunchingStatus.value[token].controllers
-      controllers['preparing-authlib']?.abort()
+      const token = resolveAbortToken()
+      if (!token) return
+      const controllers = allLaunchingStatus.value[token]?.controllers
+      controllers?.['preparing-authlib']?.abort()
     },
     skipRefresh: () => {
-      const token = launchToken.value
-      const controllers = allLaunchingStatus.value[token].controllers
-      controllers['refreshing-user']?.abort()
+      const token = resolveAbortToken()
+      if (!token) return
+      const controllers = allLaunchingStatus.value[token]?.controllers
+      controllers?.['refreshing-user']?.abort()
     },
     skipPermission: () => {
-      const token = launchToken.value
-      const controllers = allLaunchingStatus.value[token].controllers
-      controllers['checking-permission']?.abort()
+      const token = resolveAbortToken()
+      if (!token) return
+      const controllers = allLaunchingStatus.value[token]?.controllers
+      controllers?.['checking-permission']?.abort()
     },
   }
 }

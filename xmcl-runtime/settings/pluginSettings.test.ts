@@ -344,8 +344,9 @@ describe('pluginSettings', () => {
         httpProxy: '',
         httpProxyEnabled: false,
         theme: 'dark',
-        maxSockets: 64,
+        maxSockets: 16,
         maxAPISockets: 16,
+        curseforgeApiKey: '',
         replaceNatives: 'legacy-only',
         globalMinMemory: 0,
         globalMaxMemory: 0,
@@ -412,8 +413,9 @@ describe('pluginSettings', () => {
         httpProxy: '',
         httpProxyEnabled: false,
         theme: 'dark', // default value, not 'invalid-theme'
-        maxSockets: 64, // default value, not 'not-a-number'
+        maxSockets: 16, // default value, not 'not-a-number'
         maxAPISockets: 16,
+        curseforgeApiKey: '',
         replaceNatives: 'legacy-only',
         globalMinMemory: 0,
         globalMaxMemory: 0,

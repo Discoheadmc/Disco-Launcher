@@ -22,6 +22,18 @@ vi.mock('~/install', () => ({
   VersionMetadataService: class { },
 }))
 
+// wskinloader imports the shipped Fabric mods as .jar assets; vitest has no
+// assetsInclude for them, so stub the module — this suite never installs mods.
+vi.mock('./wskinloader', () => ({
+  WSKINLOADER_JAR_NAME: 'wskinloader-1.6.2.jar',
+  FABRIC_API_JAR_NAME: 'fabric-api-0.161.0_26.3.jar',
+  MOD_MINECRAFT: '26.3',
+  MOD_FABRIC_LOADER: '0.19.5',
+  MOD_JAVA: 25,
+  installWSkinLoaderMods: vi.fn(),
+  removeWSkinLoaderMods: vi.fn(),
+}))
+
 const { InstanceService } = await import('./InstanceService')
 
 function createInstance(path: string): Instance {
