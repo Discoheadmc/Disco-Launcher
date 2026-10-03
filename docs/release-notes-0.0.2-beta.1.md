@@ -1,4 +1,4 @@
-# Disco Launcher 0.0.2-beta.1 — Performans & Kararlılık Paketi 🚀
+﻿# Disco Launcher 0.0.2-beta.1 — Performans & Kararlılık Paketi 🚀
 
 > **Aşağıdaki `DiscoLauncher-Setup-0.0.2-beta.1.exe` dosyasını indir, kur, oyna.** SHA-256 doğrulaması için `.sha256` yan dosyasını kullanabilirsin.
 

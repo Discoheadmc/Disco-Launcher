@@ -1,4 +1,4 @@
-# Disco Launcher 0.0.2-beta.1 — Performance & Stability Patch 🚀
+﻿# Disco Launcher 0.0.2-beta.1 — Performance & Stability Patch 🚀
 
 > **Download `DiscoLauncher-Setup-0.0.2-beta.1.exe` below, install, play.** Use the `.sha256` sidecar to verify the download.
 
