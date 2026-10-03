@@ -2,7 +2,7 @@
     "name": "disco-launcher",
     "private": true,
     "main": "./index.js",
-    "version": "0.0.1",
+    "version": "0.0.2-beta.1",
     "author": "Disco",
     "description": "Disco Launcher - A fast Minecraft launcher",
     "license": "MIT",

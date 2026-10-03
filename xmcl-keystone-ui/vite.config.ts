@@ -34,9 +34,19 @@ export default defineConfig({
     // except `index.html` from `dist/`, white-screening the multiplayer /
     // browser / logger / migration windows because the html they load
     // 404'd. Keep all rolldown inputs in `rolldownOptions`.
+    // G1: Ağır bağımlılıklar ayrı chunk'ta — three.js, skinview3d, vanta
+    // yalnızca 3D skin sayfasında kullanılıyor ama ana bundle'da.
     rolldownOptions: {
       input: entries,
       external: ['electron'],
+      output: {
+        manualChunks(id: string) {
+          if (id.includes('three') || id.includes('skinview3d')) return 'vendor-3d'
+          if (id.includes('vanta')) return 'vendor-vana'
+          if (id.includes('markdown-it')) return 'vendor-markdown'
+          if (id.includes('vuetify')) return 'vendor-vuetify'
+        },
+      },
     },
     minify: 'terser',
     sourcemap: true,

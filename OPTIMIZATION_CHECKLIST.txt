@@ -1,0 +1,277 @@
+================================================================================
+DISCO LAUNCHER — PERFORMANS / VERİMLİLİK OPTİMİZASYON KONTROL LİSTESİ
+================================================================================
+Oluşturulma: 2026-10-03
+Repo: C:\Projeler\Discock\Github\Disco-Launcher
+Git Status: CLEAN (hiçbir dosya değiştirilmemiş)
+================================================================================
+
+NOT: Bu liste SALT OKUNUR analiz sonucudur. Hiçbir kod değiştirilmemiştir.
+Her madde: [Kategori] Başlık | Konum | Sorun | Öneri | Etki | Efor | Risk
+
+================================================================================
+İLK YAPILACAK 5 MADDE (En Yüksek Kazanç / En Düşük Risk)
+================================================================================
+
+[1] C1 — HomeInstanceGrid Virtual Scroll
+    Konum: xmcl-keystone-ui/src/views/HomeInstanceGrid.vue:12-32
+    Sorun: 100+ instance'ta v-for ile tüm DOM'a basılıyor → layout thrashing, 15fps
+    Öneri: @tanstack/vue-virtual (zaten devDependencies'de) entegrasyonu
+    Etki: 🔴 Yüksek (100+ inst: 60fps → 15fps fix) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+[2] A2 — Port Dinleme Async Init
+    Konum: xmcl-runtime/app/LauncherApp.ts:244-247
+    Sorun: listen(port) promise'i constructor'da await edilmiyor, port dinlenene kadar blokluyor
+    Öneri: serverPort promise'ini constructor'da await et veya listen callback'ini app.whenReady().then()'e taşı
+    Etki: 🟠 Orta (-50-100ms) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+[3] A3 — Chromium Switch'leri Async Init
+    Konum: xmcl-electron-app/main/ElectronLauncherApp.ts:217-226
+    Sorun: Chromium switch'leri (process-per-site, renderer-process-limit, v8-cache-options, js-flags) constructor'da sync ekleniyor
+    Öneri: Switch'leri app.whenReady().then(() => ...) içine taşı; --renderer-process-limit config'ten oku
+    Etki: 🟡 Düşük (-20-50ms) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+[4] B1 — Diagnosis Cache Unbounded
+    Konum: xmcl-runtime/install/InstallCoordinator.ts:114-115
+    Sorun: FreshResultCache (30s TTL) + InFlightCache unbounded Map → memory leak potansiyeli
+    Öneri: InFlightCache'e LRU + maxSize (500 entry) ekle. FreshResultCache'e maxSize + periyodik clearExpired() interval
+    Etki: 🔴 Yüksek (uzun oturumda +50-100MB) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+[5] B3 — Download Concurrency Limit
+    Konum: xmcl-runtime/network/FileTransferInstallDownloader.ts:13-48
+    Sorun: downloadMultiple tüm dosyaları aynı anda başlatıyor → memory spike (100+ dosya)
+    Öneri: p-limit / p-map pattern ile concurrency limit (4-8) + adaptive controller her host için
+    Etki: 🟠 Orta (peak mem -30-50%) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+
+================================================================================
+A. BAŞLANGIÇ SÜRESİ (Startup Time)
+================================================================================
+
+[A1] Heavy Plugin'ler Sync Init
+    Konum: xmcl-electron-app/main/ElectronLauncherApp.ts:175-189 / definedPlugins.ts
+    Sorun: AuthlibInjectorService, VersionMetadataService, InstanceService, JavaService hepsi constructor'da sync init. AuthlibInjectorService.ensureElevateExe sync IO.
+    Öneri: definedPlugins.ts sırasını değiştir: lightweight önce, heavy'ler app.whenReady().then(() => plugin(app)) ile async init. ensureElevateExe lazy init.
+    Etki: 🔴 Yüksek (-300-800ms) | Efor: 🟡 Orta | Risk: 🟡 Orta
+
+[A4] Renderer Mount'ta Provider'lar Sync Create
+    Konum: xmcl-keystone-ui/src/windows/main/index.ts:114-135
+    Sorun: useTaskManager(), useServiceFactory(), useDialogModel() mount anında new yapıyor
+    Öneri: shallowRef + lazy init pattern: provide(key, () => shallowRef(null)) + onMounted(() => ref.value = create())
+    Etki: 🟠 Orta (-100-200ms) | Efor: 🟡 Orta | Risk: 🟡 Orta
+
+
+================================================================================
+🔵 B. BELLEK (Memory)
+================================================================================
+
+[B2] Instance State markRaw + Reactive Array Kopyalama
+    Konum: xmcl-keystone-ui/src/composables/instances.ts:17-37
+    Sorun: instanceEdit her edit'te this.instances = markRaw([...]) yeni array O(n) kopyalama
+    Öneri: shallowRef<Map<string, Instance>> + Map mutation + computed(() => Array.from(map.values()))
+    Etki: 🟠 Orta (edit latency -30%, mem -20%) | Efor: 🟡 Orta | Risk: 🟡 Orta
+
+[B4] instances Computed Her Render'da Filter
+    Konum: xmcl-keystone-ui/src/composables/instances.ts:81-88
+    Sorun: instances computed her render'da filter yapıyor, userProfile değişmediği halde yeniden çalışıyor
+    Öneri: shallowRef + watch(userProfile, ...) ile invalidation + shallowRef cache
+    Etki: 🟡 Düşük | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+
+================================================================================
+🟢 C. ARAYÜZ (Renderer Performance)
+================================================================================
+
+[C2] StoreExploreCardModern — 3D Skin Preview Sürekli Render
+    Konum: xmcl-keystone-ui/src/views/StoreExploreCardModern.vue
+    Sorun: skinview3d + three.js her kart için ayrı canvas + requestAnimationFrame. 20+ kartta CPU %40+
+    Öneri: Sadece viewport'ta olan kartları render et (IntersectionObserver + v-show). 3D preview sadece hover/click'te mount et.
+    Etki: 🔴 Yüksek (store CPU -60%) | Efor: 🟡 Orta | Risk: 🟡 Orta
+
+[C3] Instance Icon Her Render'da Çağrılıyor
+    Konum: xmcl-keystone-ui/src/views/HomeInstanceGrid.vue:23-28
+    Sorun: getInstanceIcon(inst, undefined) template içinde çağrılıyor, computed cache yok
+    Öneri: computed(() => new Map(instances.map(i => [i.path, getInstanceIcon(i, undefined)]))) + :src="instanceIconMap.get(inst.path)"
+    Etki: 🟠 Orta (re-render -20%) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+[C4] Store Büyük Görseller Optimize Edilmeden Yükleniyor
+    Konum: xmcl-keystone-ui/src/views/StoreExploreCardModern.vue
+    Sorun: Modpaket kapak resimleri (500KB-2MB) v-img ile direkt yükleniyor, lazy/placeholder yok
+    Öneri: v-img → loading="lazy" + placeholder + aspect-ratio CSS. WebP/AVIF format desteği
+    Etki: 🟠 Orta (bandwidth -40%, LCP -30%) | Efor: 🟡 Orta | Risk: 🟢 Düşük
+
+
+================================================================================
+🟣 D. AĞ VE İNDİRME (Network & Download)
+================================================================================
+
+[D1] AdaptiveController Sadece Bmcl'de Aktif
+    Konum: xmcl-runtime/network/FileTransferInstallDownloader.ts:19-25
+    Sorun: adaptiveController sadece bmcl host'unda aktif. Diğer host'lar (Modrinth, CurseForge, Mojang) için undefined → varsayılan concurrency (32). 429/403.
+    Öneri: adaptiveController her host için aktif. Host başına Map<string, DownloadController> cache + per-host concurrency (Modrinth:8, CurseForge:4, Mojang:16)
+    Etki: 🔴 Yüksek (indirme hızı +20-40%, 429 azalır) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+[D2] Retry/Backoff Hardcoded
+    Konum: xmcl-runtime/network/FileTransferInstallDownloader.ts:13-48
+    Sorun: Retry logic hardcoded, özelleştirilemez. Ağ hatalarında agresif retry.
+    Öneri: DownloadController interface'ini extend edip retryPolicy (exponential backoff + jitter + maxRetries) parametresi ekle
+    Etki: 🟠 Orta | Efor: 🟡 Orta | Risk: 🟡 Orta
+
+[D3] Aynı Dosya Tekrarlanan İndirme
+    Konum: xmcl-runtime/network/FileTransferInstallDownloader.ts:13-48
+    Sorun: Aynı URL/destination birden fazla kez kuyruğa giriyor (modpack bağımlılık çakışması)
+    Öneri: downloadInFlight: Map<string, Promise> pattern — aynı destination için ikinci çağrı ilk promise'i döndürsün
+    Etki: 🟠 Orta (gereksiz bant genişliği -20%) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+[D4] Market Cache Eksik
+    Konum: xmcl-runtime/market/ModpackService.ts
+    Sorun: Modrinth/CurseForge/FTB arama sonuçları cache'lenmiyor, her sayfa geçişinde tekrar istek
+    Öneri: swrv / stale-while-revalidate pattern ile cache (5-10 dk TTL). key: ['modrinth', query, page, filters]
+    Etki: 🟠 Orta (market latency -50%) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+
+================================================================================
+🟤 E. DOSYA G/Ç (File I/O)
+================================================================================
+
+[E1] Instance Tarama Sync + Recursive
+    Konum: xmcl-runtime/instance/InstanceService.ts
+    Sorun: loadInstances recursive readdir + her dosya için stat + readJson. 1000+ mod dosyasında 2-3s bloke
+    Öneri: Worker thread'e taşı (worker_threads + piscina). Veya fast-glob + p-map concurrency + async. chokidar watch ile incremental
+    Etki: 🔴 Yüksek (açılış/tarama -50-70%) | Efor: 🟡 Orta | Risk: 🟡 Orta
+
+[E2] Hash Hesaplama Tüm Dosya Belleğe Okunuyor
+    Konum: xmcl-runtime/instance/InstanceService.ts
+    Sorun: checksum(filePath, 'sha256') stream pipeline kullanıyor (iyi) ama büyük dosyalarda (100MB+) CPU spike
+    Öneri: worker_threads ile hash hesaplaması offload. Veya blake3 (daha hızlı) kullan
+    Etki: 🟠 Orta (hash CPU -40%) | Efor: 🟡 Orta | Risk: 🟡 Orta
+
+[E3] Tekrarlı Disk Taraması
+    Konum: xmcl-runtime/instance/InstanceService.ts
+    Sorun: refreshInstances her instance seçiminde listInstances → readdir. Debounce/cache yok
+    Öneri: chokidar.watch + debounced (500ms) refresh + Map cache + mtime karşılaştırması
+    Etki: 🟠 Orta (UI response -30%) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+
+================================================================================
+🔵 F. IPC (Main ↔ Renderer)
+================================================================================
+
+[F1] useService Her Çağrıda Yeni Promise
+    Konum: xmcl-keystone-ui/src/composables/service.ts
+    Sorun: Her component mount'ta invoke('serviceName') yeni promise chain yaratıyor
+    Öneri: Module-level serviceCache: Map<string, Promise> + getService(key) singleton pattern
+    Etki: 🟠 Orta (mount latency -10-20ms) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+[F2] Büyük Payload'lar JSON Serialize
+    Konum: xmcl-runtime/app/LauncherAppController.ts
+    Sorun: installProfile, launchOptions (MB'larca JSON) JSON.stringify → IPC → JSON.parse
+    Öneri: ipcRenderer.postMessage + structuredClone / v8.serialize (Node 18+) için büyük binary payload'lar. Transferable (ArrayBuffer) kullan
+    Etki: 🟠 Orta (IPC latency -30%, mem copy azalır) | Efor: 🟡 Orta | Risk: 🟡 Orta
+
+
+================================================================================
+📦 G. PAKET BOYUTU VE BAĞIMLILIKLAR
+================================================================================
+
+[G1] Heavy Deps Ana Bundle'da
+    Konum: xmcl-keystone-ui/package.json:54-59
+    Sorun: three (500KB+), vanta (200KB), skinview3d (300KB) ana bundle'da. Sadece 3D skin/cape sayfasında kullanılıyor
+    Öneri: defineAsyncComponent(() => import('@/views/SkinView3D')) + dynamic import. vite.config.ts manualChunks ile ayrı chunk
+    Etki: 🔴 Yüksek (bundle -1.5MB, gzipped -400KB) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+[G2] markdown-it Bundle'da
+    Konum: xmcl-keystone-ui/package.json:46-50
+    Sorun: markdown-it + plugins bundle'da. Sadece changelog/markdown sayfasında kullanılıyor
+    Öneri: Dynamic import + defineAsyncComponent
+    Etki: 🟠 Orta (-200KB) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+[G3] koffi Native Dependency Platform-Specific
+    Konum: xmcl-electron-app/package.json:76
+    Sorun: koffi sadece Windows'ta elevate.exe için. Linux/macOS'ta dead weight
+    Öneri: optionalDependencies + platform-specific optionalDependencies (pnpm cpu/os filter)
+    Etki: 🟠 Orta (Linux/macOS bundle -2MB) | Efor: 🟡 Orta | Risk: 🟡 Orta
+
+[G4] Workspace Packages Hepsi dependencies'de
+    Konum: xmcl-runtime/package.json
+    Sorun: @xmcl/* workspace packages hepsi dependencies'de. devDependencies olabilecekler (test utils, type-only) dependencies'de
+    Öneri: pnpm dlx depcheck çalıştır → sadece runtime gerekli olanları dependencies tut
+    Etki: 🟡 Düşük (install boyutu -10-20%) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+
+================================================================================
+⚫ H. ÖLÜ KOD (Dead Code — Kaldırılan Feature Kalıntıları)
+================================================================================
+
+[H1] 98 Ölü i18n Anahtarı (en.yaml)
+    Konum: xmcl-keystone-ui/locales/en.yaml
+    Sorun: agent.*, xmclAccount.*, multiplayer.*, presence.*, feedback.reddit*, commandPalette.hintAskAgent, gamepad.autoEnableHint vb.
+    Kanıt: i18n-diff.js analizi: 219 en-only, 98 dead (0 reference in src)
+    Etki: 🟡 Düşük | Efor: 🟢 Küçük
+
+[H2] Ölü Component'ler
+    Konum: xmcl-keystone-ui/src/components/
+    Sorun: UserLoginForm.vue, AppUnauthenticatedWarningDialog.vue (XMCL linkleri), SettingUpdateInfoDialog.vue (upstream linkleri)
+    Kanıt: git grep ile referans yok
+    Etki: 🟡 Düşük | Efor: 🟢 Küçük
+
+[H3] Updater Kod Tamamen Devre Dışı
+    Konum: xmcl-runtime/app/LauncherAppUpdater.ts
+    Sorun: checkUpdate/downloadUpdate no-op, testlerde mock'lanıyor
+    Kanıt: BaseService.update.test.ts fixture'ları hala updater state bekliyor
+    Etki: 🟡 Düşük | Efor: 🟢 Küçük
+
+[H4] Kaldırılan Account System Dosyaları
+    Konum: xmcl-runtime/user/accountSystems/
+    Sorun: ElyByAccountSystem, LittleSkinAccountSystem, XmclAccountSystem dosyaları hala var, export edilmiyor
+    Kanıt: git grep -r "ElyByAccountSystem\|LittleSkinAccountSystem" → 0 referans
+    Etki: 🟡 Düşük | Efor: 🟢 Küçük
+
+
+================================================================================
+🟣 I. ARKA PLAN İŞLERİ (Background Jobs)
+================================================================================
+
+[I1] Discord Rich Presence Polling
+    Konum: xmcl-runtime/presence/PresenceService.ts:62-76
+    Sorun: minecraft-start/exit event'leriyle sayaç ama setActivity her durum değişikliğinde. runningGameCount atomic değil
+    Öneri: runningGameCount → Ref + watch + debounced setActivity (500ms). clearActivity sadece runningGameCount === 0
+    Etki: 🟡 Düşük (CPU -5%) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+[I2] GFW Detection Her Boot'ta
+    Konum: xmcl-runtime/infra/plugins/gfw.ts:10-33
+    Sorun: Promise.any + 5s timeout. Her başlatmada 2 HTTP request (taobao + google)
+    Öneri: Sonucu localStorage/secretStorage'a cache'le (24h TTL). İlk boot'ta değil, idle'da background'ta
+    Etki: 🟡 Düşük (açılış -2-5s) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+[I3] setActivity Her Navigation'ta
+    Konum: xmcl-runtime/presence/PresenceService.ts:108-133
+    Sorun: setActivity her route değişikliğinde çağrılıyor, Discord rate limit (5 req/20s). Queue/coalesce yok
+    Öneri: debouncedSetActivity (500ms) + son state'i merge et
+    Etki: 🟡 Düşük (Discord rate limit hatası önlenir) | Efor: 🟢 Küçük | Risk: 🟢 Düşük
+
+
+================================================================================
+ÖNCELİK MATRİSİ (Etki × Kolaylık)
+================================================================================
+
+1. HEMEN (1-2 gün) — Toplam ~15 madde, Efor: 🟢🟢🟢
+   A2, A3, B1, B3, B4, C1, C3, C4, D1, D3, E3, F1, G1, G2, H1-H4, I1-I3
+
+2. KISA VADELİ (1 hafta) — Toplam ~10 madde, Efor: 🟡🟡
+   A1, A4, B2, C2, C4, D2, D4, E1, E2, F1, G3
+
+3. ORTA VADELİ (2-3 hafta) — Toplam ~7 madde, Efor: 🔴🔴
+   B2 (refactor), C2 (virtual scroll + 3D lazy), D2 (retry policy), E1 (worker thread), F2 (IPC binary), E2 (hash worker), G3 (koffi platform-specific)
+
+
+================================================================================
+DOĞRULAMA
+================================================================================
+
+$ git status
+(no output)  ← TAMAM, hiçbir dosya değiştirilmemiş
+
+================================================================================
+DOSYA YOLU: C:\Projeler\Discock\Github\Disco-Launcher\OPTIMIZATION_CHECKLIST.txt
+================================================================================

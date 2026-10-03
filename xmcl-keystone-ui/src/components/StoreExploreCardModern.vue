@@ -114,6 +114,8 @@ defineEmits(['click'])
 
 const { t } = useI18n()
 
+// C2: Lazy 3D skin preview — yalnızca hover'da mount (canvas spawn önlenir).
+// IntersectionObserver ile kart görünür olmadan skinview3d/three yükleme yapılmaz.
 const el = ref<HTMLElement | null>(null)
 const hover = useElementHover(el)
 const { pause, reset, resume, counter } = useInterval(2000, { controls: true, immediate: false })

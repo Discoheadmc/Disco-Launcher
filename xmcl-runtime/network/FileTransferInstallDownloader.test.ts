@@ -37,7 +37,8 @@ describe('FileTransferInstallDownloader', () => {
           url: ['https://example.com/file'],
           destination: 'official',
           expectedTotal: 1,
-          controller: undefined,
+          // D1: adaptiveController artık her host için aktif (önceden yalnızca BMCL idi).
+          controller,
         },
       ],
     }))

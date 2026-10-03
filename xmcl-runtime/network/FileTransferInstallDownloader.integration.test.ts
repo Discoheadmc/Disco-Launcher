@@ -26,7 +26,10 @@ class LocalDispatcher extends Dispatcher {
 }
 
 describe('FileTransferInstallDownloader integration', () => {
-  test('uses the adaptive range path only for BMCL files in a mixed batch', async () => {
+  // D1: adaptiveController artık her host için aktif (önceden yalnızca BMCL).
+  // RangeSplitThreshold=1024 ve content 4KB olduğunda her iki path de range
+  // üzerinden indirilir (her ikisinde de 2 range request beklenir).
+  test('uses the adaptive range path for all hosts in a mixed batch', async () => {
     const bmclContent = Buffer.alloc(4 * 1024, 0xab)
     const officialContent = Buffer.alloc(4 * 1024, 0xcd)
     const bmclRanges: Array<string | undefined> = []
@@ -88,7 +91,8 @@ describe('FileTransferInstallDownloader integration', () => {
       expect((await readFile(officialDestination)).equals(officialContent)).toBe(true)
       expect(bmclRanges).toHaveLength(2)
       expect(new Set(bmclRanges).size).toBe(2)
-      expect(officialRanges).toEqual([undefined])
+      // D1: official dosya da aynı adaptive controller'dan geçer — 2 range request beklenir.
+      expect(officialRanges.filter(r => r !== undefined)).toHaveLength(2)
       expect(tracker.trackers).toHaveLength(2)
       expect(tracker.progress).toBe(bmclContent.length + officialContent.length)
       expect(tracker.total).toBe(bmclContent.length + officialContent.length)

@@ -19,6 +19,13 @@ import { LaunchService } from '../launch/LaunchService'
 const PRESENCE_DETAILS = LAUNCHER_NAME
 const PRESENCE_LARGE_IMAGE = 'dark_512'
 
+// I3: Presence setActivity debounce — her route değişikliğinde çağrılıyor.
+// Discord rate limit (5 req/20s) önlemek için 500ms debounce.
+const presenceDebounce = {
+  timer: null as ReturnType<typeof setTimeout> | null,
+  pendingActivity: null as string | null,
+}
+
 @ExposeServiceKey(PresenceServiceKey)
 export class PresenceService extends AbstractService implements IPresenceService {
   private discord: Client
@@ -38,6 +45,29 @@ export class PresenceService extends AbstractService implements IPresenceService
           // Ignore
         }
       }
+    })
+
+    // Initialize Discord client first before setting up event listeners
+    // Client ID belongs to the user's own "Disco Launcher" Discord
+    // application (created in the Developer Portal) so the presence shows
+    // Disco branding instead of the upstream XMCL app.
+    this.discord = new Client({
+      clientId: '1553202858348773406',
+    })
+
+    settings.subscribe('discordPresenceSet', async (state) => {
+      if (state) {
+        await this.discord.connect().catch((e: any) => {
+          this.warn('Fail to connect to discord. %o', e)
+        })
+      } else {
+        await this.discord.destroy()
+      }
+    })
+
+    launchService.on('minecraft-exit', () => {
+      this.runningGameCount = Math.max(0, this.runningGameCount - 1)
+      this.log(`Game exited, re-enabling Discord presence updates if no games running (running games: ${this.runningGameCount})`)
     })
 
     // Initialize Discord client first before setting up event listeners
@@ -114,21 +144,31 @@ export class PresenceService extends AbstractService implements IPresenceService
       this.log('Game is running, skipping Discord presence update')
       return
     }
-    if (!this.discord.isConnected) {
-      try {
-        await this.discord.connect()
-      } catch (e) {
-        return
+    // I3: Debounce — her route'da request atmamak için 500ms beklet, o
+    // sırada gelen yeni isteği en son haliyle sentezle.
+    presenceDebounce.pendingActivity = activity
+    if (presenceDebounce.timer) clearTimeout(presenceDebounce.timer)
+    presenceDebounce.timer = setTimeout(async () => {
+      presenceDebounce.timer = null
+      const pending = presenceDebounce.pendingActivity
+      if (!pending) return
+      presenceDebounce.pendingActivity = null
+      if (!this.discord.isConnected) {
+        try {
+          await this.discord.connect()
+        } catch (e) {
+          return
+        }
       }
-    }
-    const param = this.current
-    this.current.largeImageKey = PRESENCE_LARGE_IMAGE
-    this.current.largeImageText = LAUNCHER_NAME
-    this.current.startTimestamp = Date.now()
-    this.current.details = PRESENCE_DETAILS
-    this.current.state = activity
-    await this.discord.user?.setActivity(param).catch((e: any) => {
-      this.warn('Fail to set discord presence. %o', e)
-    })
+      const param = this.current
+      this.current.largeImageKey = PRESENCE_LARGE_IMAGE
+      this.current.largeImageText = LAUNCHER_NAME
+      this.current.startTimestamp = Date.now()
+      this.current.details = PRESENCE_DETAILS
+      this.current.state = pending
+      await this.discord.user?.setActivity(param).catch((e: any) => {
+        this.warn('Fail to set discord presence. %o', e)
+      })
+    }, 500)
   }
 }

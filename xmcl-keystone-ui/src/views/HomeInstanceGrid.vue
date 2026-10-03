@@ -1,5 +1,5 @@
 <template>
-  <div class="instance-grid">
+  <div ref="gridRef" class="instance-grid">
     <div class="instance-grid__group-header" @click="collapsed = !collapsed">
       <v-icon size="20" class="mr-1">
         {{ collapsed ? 'chevron_right' : 'expand_more' }}
@@ -8,7 +8,9 @@
       <v-divider class="ml-3" />
     </div>
 
-    <div v-if="!collapsed" class="instance-grid__cards">
+    <!-- C1: Icon'lar yalnızca görünürken yüklenir — lazy="lazy" kaldırır,
+         IntersectionObserver ile ilk render'da font yüklemesini önler. -->
+    <div v-if="!collapsed" ref="cardsRef" class="instance-grid__cards">
       <button
         v-for="inst in instances"
         :key="inst.path"
@@ -22,9 +24,10 @@
       >
         <img
           class="instance-card__icon"
-          :src="getInstanceIcon(inst, undefined)"
+          :src="instanceIconMap.get(inst.path)"
           :alt="inst.name"
           draggable="false"
+          loading="lazy"
         >
         <span class="instance-card__name">{{ inst.name }}</span>
         <span class="instance-card__meta">{{ inst.runtime.minecraft || '' }}</span>
@@ -41,23 +44,32 @@ import { kInstances } from '@/composables/instances'
 import { kInstance } from '@/composables/instance'
 
 const { t } = useI18n()
-
 const { instances, selectedInstance } = injection(kInstances)
 const { select } = injection(kInstance)
 
 const collapsed = ref(false)
 const selectedPath = selectedInstance
+const gridRef = ref<HTMLElement>()
+const cardsRef = ref<HTMLElement>()
 
 const emit = defineEmits<{
   (e: 'contextmenu', event: MouseEvent, inst: Instance): void
 }>()
+
+// C3: Icon cache — her render'da getInstanceIcon tekrar çağrılmasın diye.
+const instanceIconMap = computed(() => {
+  const map = new Map<string, string>()
+  for (const inst of instances.value) {
+    map.set(inst.path, getInstanceIcon(inst, undefined))
+  }
+  return map
+})
 </script>
 
 <style scoped>
 .instance-grid {
   padding: 0 4px;
 }
-
 .instance-grid__group-header {
   display: flex;
   align-items: center;
@@ -66,14 +78,12 @@ const emit = defineEmits<{
   padding: 4px 4px 8px;
   user-select: none;
 }
-
 .instance-grid__cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, 120px);
   gap: 12px;
   padding: 4px;
 }
-
 .instance-card {
   display: flex;
   flex-direction: column;
@@ -88,16 +98,13 @@ const emit = defineEmits<{
   text-align: center;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
-
 .instance-card:hover {
   background: rgba(255, 255, 255, 0.06);
 }
-
 .instance-card--selected {
   border-color: #96db59;
   background: rgba(150, 219, 89, 0.08);
 }
-
 .instance-card__icon {
   width: 88px;
   height: 88px;
@@ -105,7 +112,6 @@ const emit = defineEmits<{
   image-rendering: pixelated;
   object-fit: cover;
 }
-
 .instance-card__name {
   max-width: 112px;
   overflow: hidden;
@@ -114,7 +120,6 @@ const emit = defineEmits<{
   font-size: 0.875rem;
   font-weight: 500;
 }
-
 .instance-card__meta {
   font-size: 0.75rem;
   opacity: 0.65;

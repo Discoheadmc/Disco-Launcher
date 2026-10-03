@@ -40,15 +40,31 @@ import { pluginUserTokenStorage } from '@xmcl/runtime/user/pluginUserTokenStorag
 import { LauncherAppPlugin } from '~/app'
 import { definedServices } from './definedServices'
 
+/**
+ * A1: Heavy plugin'ler (worker thread spawn edenler) constructor'ı bloke etmesin
+ * diye `app.whenReady()` sonrasına ertelenir. Factory henüz çağrılmaz — plugin
+ * fonksiyonu Electron hazır olduğunda çalışır. Bu sayede main process'te
+ * constructor sync/bitmemiş kalır; ağır spawn/sync IO'lar UI bloklamadan önce
+ * tamamlanabilir.
+ */
+function deferredPlugin(name: string, plugin: LauncherAppPlugin): LauncherAppPlugin {
+  return (app, manifest) => {
+    app.getLogger('DeferredPlugins').log(`Deferred plugin: ${name} (runs after app.whenReady)`)
+    app.waitEngineReady().then(() => plugin(app, manifest))
+  }
+}
+
 export const definedPlugins: LauncherAppPlugin[] = [
   pluginCommandHost({ services: definedServices }),
   pluginCli,
   pluginPowerMonitor,
   pluginIconProtocol,
   pluginApiFallback,
-  pluginResourceWorker,
-  pluginEncodingWorker,
-  pluginSaveWorker,
+  // A1: Worker-spawn'layan heavy plugin'ler deferred — spawn/main thread spawn
+  // penceresi UI bloklamamalı.
+  deferredPlugin('pluginResourceWorker', pluginResourceWorker),
+  deferredPlugin('pluginEncodingWorker', pluginEncodingWorker),
+  deferredPlugin('pluginSaveWorker', pluginSaveWorker),
   pluginSetup,
   pluginLaunchPrecheck,
   pluginLinuxDisplay,

@@ -214,16 +214,14 @@ export default class ElectronLauncherApp extends LauncherApp {
       )
     }
 
-    // Memory/perf tuning: cap Chromium's renderer process count so idle
-    // windows share processes instead of each spinning up their own renderer,
-    // shrink V8 heaps (the main process idles far below the 4 GB default heap
-    // ceiling), and keep V8's on-disk code cache warm so the bundled JS parses
-    // faster on the second boot. Visible effect: the launcher idles meaningfully
-    // lower than the ~480 MB stock footprint.
-    app.commandLine.appendSwitch('process-per-site')
-    app.commandLine.appendSwitch('renderer-process-limit', '2')
-    app.commandLine.appendSwitch('v8-cache-options', 'code')
-    app.commandLine.appendSwitch('js-flags', '--max-old-space-size=512 --max-semi-space-size=16')
+    // A3: Chromium switch'leri async init'e taşı — app.whenReady() içinde ekle,
+    // böylece constructor async olmadan tamamlanır.
+    app.whenReady().then(() => {
+      app.commandLine.appendSwitch('process-per-site')
+      app.commandLine.appendSwitch('renderer-process-limit', '2')
+      app.commandLine.appendSwitch('v8-cache-options', 'code')
+      app.commandLine.appendSwitch('js-flags', '--max-old-space-size=512 --max-semi-space-size=16')
+    })
   }
 
   get systemLocale(): string {

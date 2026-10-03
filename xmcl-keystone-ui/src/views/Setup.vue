@@ -164,10 +164,18 @@ const prev = () => {
 }
 
 const { locale, t } = useI18n()
+
+// localeRef: iki yönlü kompozit setter.
+// get → öncelikle settings state, fallback olarak i18n locale
+// set → hem settings state'i hem de i18n locale'i aynı anda güncelle,
+//       böylece kullanıcı seçimi kaybolmaz.
 const localeRef = computed({
   get: () => state.value?.locale ?? locale.value,
   set: (v) => {
     state.value?.localeSet(v ?? locale.value)
+    // i18n locale'i de anında güncelle — aksi halde setup() sonrasında
+    // kullanıcının seçimi (örn. Türkçe) kaybolur ve hâlâ İngilizce kalır.
+    if (v) locale.value = v
   },
 })
 

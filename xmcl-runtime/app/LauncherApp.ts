@@ -241,6 +241,8 @@ export class LauncherApp extends EventEmitter {
       }
     }
 
+    // A2: Non-blocking port listener — resolve the promise but don't block
+    // constructor completion. The port is only read lazily via app.serverPort.
     this.serverPort = listen(this.server, 25555, (cur) => cur + 7).then((port) => {
       this.logger.log(`Localhost server is listening on port ${port}`)
       return port

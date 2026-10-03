@@ -3,7 +3,7 @@
         "private": true,
         "type": "module",
         "productName": "Disco Launcher",
-        "version": "0.66.0",
+        "version": "0.0.2-beta.1",
         "author": "Disco",
         "description": "Disco Launcher - A fast Minecraft launcher",
         "license": "MIT",
