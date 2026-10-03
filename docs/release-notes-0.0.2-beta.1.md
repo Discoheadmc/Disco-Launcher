@@ -39,7 +39,7 @@ Bu beta, 0.0.1 üzerinde eklenen performans ve kararlılık iyileştirmelerini i
 
 | Dosya | Boyut | SHA-256 |
 | --- | --- | --- |
-| `DiscoLauncher-Setup-0.0.2-beta.1.exe` | 94,23 MB | `{SHA256_BURAYA}` |
+| `DiscoLauncher-Setup-0.0.2-beta.1.exe` | 94,20 MB | `4f28314b82597d2cc045f8df6f7b6dc555489609dd640b7e2dbcba1590f706fa` |
 
 ```powershell
 Get-FileHash .\DiscoLauncher-Setup-0.0.2-beta.1.exe -Algorithm SHA256
