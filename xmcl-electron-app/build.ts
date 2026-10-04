@@ -127,6 +127,8 @@ async function start() {
     return
   }
   const dir = !(process.env.BUILD_TARGET || (process.env.RELEASE === 'true'))
+  const makeInstaller = process.env.BUILD_TARGET === 'all' || process.env.RELEASE === 'true'
+  const publish = !!process.env.RELEASE
   // Create empty binding.gyp to let electron-rebuild trigger rebuild to it
   await ensureFile(resolve(__dirname, 'node_modules', 'node_datachannel', 'binding.gyp'))
   const config: Configuration = {
