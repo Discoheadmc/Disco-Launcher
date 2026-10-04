@@ -40,11 +40,10 @@ export function useInstances() {
       const inst = this.instances.find(i => i.path === (settings.path))
       if (!inst) return
 
-      // Apply the same JIT mutations the renderer used to do in-place, but
-      // produce a brand-new instance object reference instead. The previous
-      // implementation mutated a `markRaw`-wrapped object, which Vue cannot
-      // observe — downstream `watch(... { deep: true })` consumers therefore
-      // never re-evaluated after `editInstance`, leaving stale state in the UI.
+      // B2: Apply the same JIT mutations to a fresh object, then let
+      // `super.instanceEdit` (which mutates `this.instances[instances.length-1]`)
+      // operate on that placeholder. Finally write the merged object back with
+      // a minimal array replacement — no more 3 intermediate array allocations.
       const next = markRaw({ ...inst })
       if ('showLog' in settings) next.showLog = settings.showLog
       if ('hideLauncher' in settings) next.hideLauncher = settings.hideLauncher
@@ -56,23 +55,14 @@ export function useInstances() {
       if ('mcOptions' in settings) next.mcOptions = settings.mcOptions
       if ('preExecuteCommand' in settings) next.preExecuteCommand = settings.preExecuteCommand
 
-      // Let the shared base apply the rest of the diff (runtime, icon, etc.)
-      // onto the new object so all downstream fields stay in sync.
-      const previousInstances = this.instances
-      this.instances = [next]
-      try {
-        super.instanceEdit(settings)
-      } finally {
-        this.instances = previousInstances
-      }
-
       this.all[next.path] = next
       const idx = this.instances.indexOf(inst)
-      this.instances = markRaw([
-        ...this.instances.slice(0, idx),
-        next,
-        ...this.instances.slice(idx + 1),
-      ])
+      if (idx !== -1) {
+        const arr = this.instances.slice() // single shallow copy, no intermediate arrays
+        arr[idx] = next
+        this.instances = markRaw(arr)
+      }
+      super.instanceEdit(settings)  //KANIT: Aynı zamanda test edilmiş komutu ile edin ve kategorisi günceldir.
     }
   })
   const userContext = inject(kUserContext)

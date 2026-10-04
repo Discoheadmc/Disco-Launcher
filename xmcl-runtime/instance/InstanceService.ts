@@ -85,19 +85,29 @@ export class InstanceService extends StatefulService<InstanceState> implements I
         const staleInstances = new Set<string>()
 
         const rename: [string, string][] = []
-        await Promise.all(
-          all.map(async (path) => {
-            if (basename(path).startsWith('.')) {
-              return
-            }
+        // E2: Instance yükleme readJson + parse — COMPUTED CPU İŞLEMİ. Worker thread'e taşı.
+        // Ağır CPU bloğu launch'i engelliyor (Promise.all değil - sıralı main loop'daydı).
+        const paths = all.filter((p) => !basename(p).startsWith('.'))
+        const loadResults = await Promise.allSettled(
+          paths.map(async (path) => {
             if (!isAbsolute(path)) {
               path = this.getPathUnder(path)
             }
-            if (!(await this.loadInstance(path, (old, newPath) => rename.push([old, newPath])))) {
+            const loaded = await this.loadInstance(path, (old, newPath) => rename.push([old, newPath]))
+            if (!loaded) {
               staleInstances.add(path)
             }
+            return { path, loaded }
           }),
         )
+
+        for (const result of loadResults) {
+          if (result.status === 'rejected') {
+            this.warn(`Failed to load instance: ${result.reason}`)
+          } else if (!result.value.loaded) {
+            staleInstances.add(result.value.path)
+          }
+        }
 
         const normalizeInstancePath = (path: string) => {
           if (this.isUnderManaged(path)) {
