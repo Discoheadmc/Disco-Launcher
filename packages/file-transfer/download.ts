@@ -398,6 +398,24 @@ async function runSegment(p: SegmentParams): Promise<void> {
   const segEnd = p.segment?.end
   const segTotal = isSeg ? segEnd! - segStart + 1 : 0
 
+  // D2: Exponential-backoff hook. When the controller supplies
+  // `retryDelayMs`, wait that long before the next attempt instead of
+  // immediately re-hammering a struggling origin. `attempt` counts the
+  // retries already made on this segment (across all retry kinds).
+  const waitRetry = async (attempt: number) => {
+    const ms = controller.retryDelayMs?.(attempt) ?? 0
+    if (ms > 0 && !signal?.aborted) {
+      await new Promise<void>((resolve) => {
+        const t = setTimeout(resolve, ms)
+        signal?.addEventListener('abort', () => {
+          clearTimeout(t)
+          resolve()
+        }, { once: true })
+      })
+    }
+  }
+  let totalRetries = 0
+
   let resumeOffset = segStart
   let resumes = 0
   let slowRerolls = 0
@@ -498,6 +516,7 @@ async function runSegment(p: SegmentParams): Promise<void> {
         resumeOffset = Math.max(resumeOffset, handler.offset)
         if (resumes < maxResumes) {
           resumes++
+          await waitRetry(++totalRetries)
           continue // resume the missing tail
         }
         lastError = new Error(
@@ -532,6 +551,7 @@ async function runSegment(p: SegmentParams): Promise<void> {
       await ftruncateAsync(fd, 0)
       resumeOffset = 0
       restartedCurrentUrlFromZero = true
+      await waitRetry(++totalRetries)
       continue
     }
 
@@ -547,6 +567,7 @@ async function runSegment(p: SegmentParams): Promise<void> {
           // faster mirror, resuming from where we stopped.
           slowRerolls++
           resumes++
+          await waitRetry(++totalRetries)
           continue
         }
         if (urlIndex < urls.length - 1) {
@@ -566,6 +587,7 @@ async function runSegment(p: SegmentParams): Promise<void> {
       // looping on dead mirrors and wasting the whole reroll budget.
       if (noProgress < maxNoProgress) {
         noProgress++
+        await waitRetry(++totalRetries)
         continue
       }
       advanceUrl()
@@ -577,6 +599,7 @@ async function runSegment(p: SegmentParams): Promise<void> {
     // bytes — rather than giving up on this URL.
     if (controller.shouldReroll?.(ops.origin, err) && resumes < maxResumes) {
       resumes++
+      await waitRetry(++totalRetries)
       continue
     }
 

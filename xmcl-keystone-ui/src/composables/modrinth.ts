@@ -4,7 +4,7 @@ import { InjectionKey, Ref, computed, reactive, toRefs, watch } from 'vue'
 import { clientModrinthV2 } from '@/util/clients'
 import { useDebounceFn } from '@vueuse/core'
 import useSWRV from 'swrv'
-import { kSWRVConfig, useOverrideSWRVConfig } from './swrvConfig'
+import { kSWRVConfig, MARKET_CACHE_TTL_MS, useOverrideSWRVConfig } from './swrvConfig'
 import { get, notNullish } from '@vueuse/core'
 import type { MaybeRef } from 'vue'
 import { formatKey } from '@/util/swrvGet'
@@ -177,7 +177,7 @@ export function useModrinth(
       environment,
       projectType,
     })),
-    () => search((get(page) - 1) * get(pageSize)), useOverrideSWRVConfig({ ttl: 30 * 1000 }))
+    () => search((get(page) - 1) * get(pageSize)), useOverrideSWRVConfig({ ttl: MARKET_CACHE_TTL_MS }))
 
   const pages = computed(() => searchData.value ? Math.ceil(searchData.value.total_hits / get(pageSize)) : 0)
 

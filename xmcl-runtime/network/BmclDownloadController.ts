@@ -134,6 +134,19 @@ export interface BmclDownloadControllerOptions {
   slowCbThreshold?: number
   /** Slow-source quarantine duration. @default 30000 */
   slowCbCooldownMs?: number
+  /**
+   * Base delay (ms) for the exponential retry backoff applied between
+   * retry attempts of a failing connection. The actual delay is
+   * `min(retryMaxDelayMs, retryBaseDelayMs * 2^(attempt-1))` with up to
+   * ±25% jitter. `0` disables the backoff (immediate retry).
+   * @default 300
+   */
+  retryBaseDelayMs?: number
+  /**
+   * Upper bound (ms) for the retry backoff.
+   * @default 5000
+   */
+  retryMaxDelayMs?: number
 }
 
 export interface BmclDownloadTelemetrySnapshot {
@@ -197,6 +210,10 @@ export class BmclDownloadController implements DownloadController {
   private lastSlowStrike = 0
   private slowOpenUntil = 0
 
+  // D2: exponential retry backoff between attempts of a failing connection.
+  readonly retryBaseDelayMs: number
+  readonly retryMaxDelayMs: number
+
   private readonly hosts = new Map<string, Ewma>()
   private readonly global: Ewma = { score: 0, weight: 0, lastUpdate: 0, count: 0 }
 
@@ -234,6 +251,8 @@ export class BmclDownloadController implements DownloadController {
     this.cbProbeEvery = Math.max(1, options.cbProbeEvery ?? 24)
     this.slowCbThreshold = options.slowCbThreshold ?? 8
     this.slowCbCooldownMs = options.slowCbCooldownMs ?? 30_000
+    this.retryBaseDelayMs = options.retryBaseDelayMs ?? 300
+    this.retryMaxDelayMs = options.retryMaxDelayMs ?? 5_000
   }
 
   /**
@@ -325,6 +344,20 @@ export class BmclDownloadController implements DownloadController {
     const status = (error as any)?.statusCode
     if (status === 404 || status === 410) return false
     return true
+  }
+
+  /**
+   * D2: exponential backoff with jitter between retry attempts. Prevents
+   * hammering a struggling origin (e.g. after a transient 429/503) and
+   * gives a rate-limited mirror time to recover before the next re-roll.
+   */
+  retryDelayMs(attempt: number): number {
+    if (this.retryBaseDelayMs <= 0) return 0
+    const exp = this.retryBaseDelayMs * Math.pow(2, Math.max(0, attempt - 1))
+    const capped = Math.min(exp, this.retryMaxDelayMs)
+    // ±25% jitter to avoid synchronized retry storms across segments.
+    const jitter = capped * 0.25 * (Math.random() * 2 - 1)
+    return Math.max(0, Math.round(capped + jitter))
   }
 
   isAbortable(origin: string): boolean {

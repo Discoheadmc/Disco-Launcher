@@ -5,7 +5,7 @@ import type { MaybeRef } from 'vue'
 import { File, FileModLoaderType, Mod, ModsSearchSortField } from '@xmcl/curseforge'
 import useSWRV from 'swrv'
 import { InjectionKey, Ref, computed, reactive, toRefs, watch } from 'vue'
-import { kSWRVConfig, useOverrideSWRVConfig } from './swrvConfig'
+import { kSWRVConfig, MARKET_CACHE_TTL_MS, useOverrideSWRVConfig } from './swrvConfig'
 import { UpstreamHeaderProps } from '@/views/HomeUpstreamHeader.vue'
 import { getExpectedSize } from '@/util/size'
 import { mergeCurseforgeFilePage } from '@/util/curseforge'
@@ -59,7 +59,7 @@ export function useCurseforge(
     })),
     async () => markRaw(search((page.value - 1) * get(pageSize))),
     useOverrideSWRVConfig({
-      ttl: 30 * 1000,
+      ttl: MARKET_CACHE_TTL_MS,
     }))
 
   watch(_data, (v) => {

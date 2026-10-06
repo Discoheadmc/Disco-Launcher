@@ -447,6 +447,41 @@ describe('@xmcl/file-transfer download (controller)', () => {
     }
   })
 
+  it('waits for the controller retry backoff before re-rolling (D2)', async () => {
+    const full = Buffer.alloc(256)
+    for (let i = 0; i < full.length; i++) full[i] = (i * 7) & 0xff
+    const srv = rangeServer(full)
+    const { server, baseUrl } = await startServer(srv.routes)
+    const dir = await tempDir()
+
+    // Record the attempt indices the backoff hook is consulted with, and
+    // force exactly one re-roll so the hook must fire.
+    const delayAttempts: number[] = []
+    const controller: DownloadController = {
+      sampleInterval: 15,
+      warmup: 0,
+      maxResumes: 3,
+      onSample: () => (delayAttempts.length < 1 ? 'abort' : 'continue'),
+      retryDelayMs: (attempt) => {
+        delayAttempts.push(attempt)
+        return 5
+      },
+    }
+
+    try {
+      const dest = join(dir, 'r.bin')
+      await download({ url: `${baseUrl}/r`, destination: dest, controller, expectedTotal: full.length })
+
+      expect((await readFile(dest)).equals(full)).toBe(true)
+      // The backoff must have been consulted for the first re-roll (attempt 1).
+      expect(delayAttempts.length).toBeGreaterThanOrEqual(1)
+      expect(delayAttempts[0]).toBe(1)
+    } finally {
+      server.close()
+      await rm(dir, { recursive: true, force: true })
+    }
+  })
+
   it('completes normally and reports once when the controller never aborts', async () => {
     const content = 'controller-pass-through'
     const { server, baseUrl } = await startServer({

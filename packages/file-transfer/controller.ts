@@ -183,6 +183,18 @@ export interface DownloadController {
    */
   shouldSkip?(origin: string): boolean
   /**
+   * Delay, in milliseconds, to wait before performing retry attempt
+   * number `attempt` (1-based: the first retry of a connection).
+   *
+   * Without this, `download` retries a failing connection immediately,
+   * which hammers a struggling origin and can turn a transient 429/503
+   * into a sustained one. Implementations typically return an
+   * exponential backoff (`base * 2^(attempt-1)`) with jitter, capped to
+   * a maximum. Returning `0` (or omitting the method) preserves the
+   * immediate-retry behaviour.
+   */
+  retryDelayMs?(attempt: number): number
+  /**
    * Receive the final outcome of a single connection, for updating a
    * reputation / speed model.
    */

@@ -2,12 +2,40 @@
 DISCO LAUNCHER — PERFORMANS / VERİMLİLİK OPTİMİZASYON KONTROL LİSTESİ
 ================================================================================
 Oluşturulma: 2026-10-03
+Güncelleme: 2026-10-06
 Repo: C:\Projeler\Discock\Github\Disco-Launcher
-Git Status: CLEAN (hiçbir dosya değiştirilmemiş)
 ================================================================================
 
-NOT: Bu liste SALT OKUNUR analiz sonucudur. Hiçbir kod değiştirilmemiştir.
-Her madde: [Kategori] Başlık | Konum | Sorun | Öneri | Etki | Efor | Risk
+DURUM ÖZETİ (2026-10-06 itibarıyla)
+-----------------------------------
+✔ Uygulandı: A1, A2, A3, B1, B2, B3, B4, C1, C2, C3, D1, D2, D3, D4, G1, G2, I1, I3
+✔ Zaten mevcuttu (doğrulandı): E2 (hash zaten @xmcl/worker içinde), F1 (service cash + Proxy)
+✖ Mimari refactor gerektirdiği için ertelendi: E1 (piscina bağımlılığı), F2 (MessagePort IPC)
+✔ Kaldırıldı: H1-H4 (98 ölü i18n anahtarı vb.)
+
+YENİ TAMAMLANANLAR (bu tur)
+---------------------------
+D2 — Download Retry Backoff:
+  - packages/file-transfer/controller.ts: DownloadController.retryDelayMs?(attempt) eklendi
+  - packages/file-transfer/download.ts: her retry (reroll/resume/416 restart) öncesi waitRetry()
+  - xmcl-runtime/network/BmclDownloadController.ts: exponential backoff + jitter (±25%), base 300ms, cap 5s
+  - Test: download.test.ts "waits for the controller retry backoff before re-rolling (D2)"
+
+D4 — Market Cache TTL:
+  - swrvConfig.ts: MARKET_CACHE_TTL_MS = 5 dakika ortak sabit
+  - modrinth.ts + curseforge.ts: ttl 30sn → 5dk (navigasyon arası gereksiz refetch kalktı)
+
+B2 — Instance Edit Optimize:
+  - instances.ts: ara array tahsisleri kaldırıldı (tek shallow copy)
+
+C2/G2 — skinview3d Lazy:
+  - SkinView.vue: skinview3d dynamic import (ana bundle'dan ayrıldı)
+
+E1 — Instance Load Parallel:
+  - InstanceService.ts: Promise.allSettled + hata izolasyonu
+
+NOT: Orijinal analiz listesi (referans) aşağıdadır. Tamamlanan maddeler yukarıda.
+================================================================================
 
 ================================================================================
 İLK YAPILACAK 5 MADDE (En Yüksek Kazanç / En Düşük Risk)
