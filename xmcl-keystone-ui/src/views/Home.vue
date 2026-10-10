@@ -15,7 +15,7 @@
              full page height next to the header too (the header launch pill
              was removed; the panel's own launch button is the single entry). -->
       </div>
-      <HomeFocusFooter v-if="isFocus" class="absolute bottom-0 left-0 pb-[26px]" />
+      <HomeFocusFooter v-else class="absolute bottom-0 left-0 pb-[26px]" />
     </transition>
   </div>
 </template>

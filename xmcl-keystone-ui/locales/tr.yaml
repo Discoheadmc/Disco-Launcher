@@ -387,6 +387,7 @@ instance:
   gridUngrouped: Gruplandırılmamış
   current: Mevcut Instance
   delete: Oyunu Sil
+  mcSettings: MC Ayarları
   deleteFailed: Instance silinemedi
   deleteFailedPermission: Dosya başka bir program tarafından kullanılıyor
   deleteFile: Örnek dosyalarını sil
@@ -1446,7 +1447,7 @@ setting:
   enableDedicatedGPUOptimization: Özel GPU Ata
   enableDedicatedGPUOptimizationDescription: Bu seçenek Minecraft işlemine özel GPU atayacaktır.
   enableDiscord: Discord Zengin Durum
-  enableDiscordDescription: Disco Launcher etkinliğini Discord profilinde göster
+  enableDiscordDescription: Xlmc Disco Launcher etkinliğini Discord profilinde göster
   enterUrl: URL Girin
   exportSettings: Ayarları Dışa Aktar
   exportSettingsHint: Mevcut ayarlarınızı bir dosyaya kaydedin
@@ -1709,8 +1710,8 @@ theme:
   selectImage: Resim Seç
   selectMusic: Müzik Seç
   selectVideo: Video Seç
-  title: Disco Launcher
-title: Disco Launcher
+  title: Xlmc Disco Launcher
+title: Xlmc Disco Launcher
 transportType:
   host: Ana Bilgisayar Adayı
   prflx: Eş Yansıtmalı Aday
@@ -1873,7 +1874,7 @@ userCape:
   customOnlyHere: Sadece bu başlatıcıda görünür — resmî Mojang pelerininden bağımsızdır
   customCancel: İptal
   customApply: Uygula
-  customDescription: Bu özel pelerin yalnızca Disco Launcher kullanan oyuncular tarafından görünür. Resmî Mojang pelerin sisteminizi hiçbir şekilde etkilemez — PNG cihazınızdan çıkmaz, Mojang'a gönderilmez.
+  customDescription: Bu özel pelerin yalnızca Xlmc Disco Launcher kullanan oyuncular tarafından görünür. Resmî Mojang pelerin sisteminizi hiçbir şekilde etkilemez — PNG cihazınızdan çıkmaz, Mojang'a gönderilmez.
 userService:
   add: Daha Fazla Servis Ekle
   authlibInjectorMetadata: Authlib-Injector meta verileri
@@ -2094,6 +2095,90 @@ gamepad:
   steamAddedNotify: Başlatıcı Steam Kütüphanesine başarıyla eklendi! Görmek için lütfen Steam'i yeniden başlatın.
   steamAlreadyAddedNotify: Başlatıcı zaten Steam Kütüphanenizde var.
   steamDeckTitle: Steam Deck Algılandı
-  steamDeckDesc: Steam Deck üzerinde çalıştığınızı algıladık. Oyun Modunda tam Steam arayüzü ve kontrolcü entegrasyonu için Disco Launcher'ı Steam Kütüphanenize Steam dışı bir oyun olarak eklemek ister misiniz?
+  steamDeckDesc: Steam Deck üzerinde çalıştığınızı algıladık. Oyun Modunda tam Steam arayüzü ve kontrolcü entegrasyonu için Xlmc Disco Launcher'ı Steam Kütüphanenize Steam dışı bir oyun olarak eklemek ister misiniz?
   steamDeckAddBtn: Steam'e Ekle ({btn})
   steamDeckCancelBtn: İptal Et ({btn})
+mcSettings:
+  runningWarning: Oyun çalışırken ayarlar değiştirilemez, önce oyunu kapat
+  empty: options.txt içinde düzenlenebilir ayar bulunamadı.
+  skipped: Desteklenmeyen ayarlar
+  saveAsFavorite: Favori Yap
+  removeFavorite: Favoriden Çıkar
+  applyFavorite: Favori Ayarlarımı Uygula
+  favoriteSaved: Favori ayarlar kaydedildi
+  favoriteRemoved: Favori ayarlar kaldırıldı
+  overwriteFavorite: Zaten bir favori var. Üzerine yazılsın mı?
+  applyConfirm: '{count} ayar bu instance üzerine uygulanacak. Devam edilsin mi?'
+  applyDone: Favori ayarlar uygulandı
+  applySkipped: '{count} ayar bu sürümde desteklenmediği için atlandı'
+  applyEmpty: Uygulanacak uyumlu ayar bulunamadı
+  confirmTitle: Onay
+  saved: MC ayarları kaydedildi
+  saveFailed: MC ayarları kaydedilemedi
+  loadFailed: options.txt okunamadı
+  group:
+    video: Görüntü
+    audio: Ses
+    controls: Kontroller
+    language: Dil
+    chat: Sohbet
+  field:
+    renderDistance: Görüş Mesafesi
+    fov: Görüş Alanı (FOV)
+    graphicsMode: Grafikler
+    fancyGraphics: Şık Grafikler
+    ao: Yumuşak Aydınlatma
+    renderClouds: Bulutlar
+    particles: Parçacıklar
+    mipmapLevels: Mipmap Seviyesi
+    entityShadows: Varlık Gölgeleri
+    guiScale: Arayüz Ölçeği
+    maxFps: Maksimum FPS
+    gamma: Parlaklık
+    fullscreen: Tam Ekran
+    enableVsync: VSync
+    soundCategory_master: Ana Ses
+    soundCategory_music: Müzik
+    soundCategory_record: Müzik Kutusu/Nota Blokları
+    soundCategory_weather: Hava Durumu
+    soundCategory_block: Bloklar
+    soundCategory_hostile: Düşman Yaratıklar
+    soundCategory_neutral: Tarafsız Yaratıklar
+    soundCategory_player: Oyuncular
+    soundCategory_ambient: Ortam
+    soundCategory_voice: Ses/Sohbet
+    soundCategory_ui: Arayüz
+    mouseSensitivity: Fare Hassasiyeti
+    invertYMouse: Fareyi Ters Çevir
+    autoJump: Otomatik Zıplama
+    touchscreen: Dokunmatik Mod
+    difficulty: Zorluk
+    lang: Dil
+    forceUnicodeFont: Unicode Yazı Tipini Zorla
+    chatVisibility: Sohbet Görünürlüğü
+    chatColors: Sohbet Renkleri
+    chatLinks: Sohbet Bağlantıları
+    chatLinksPrompt: Bağlantı Onayı
+    chatOpacity: Sohbet Opaklığı
+  option:
+    graphics_fast: Hızlı
+    graphics_fancy: Şık
+    graphics_fabulous: Muhteşem
+    ao_off: Kapalı
+    ao_min: En Az
+    ao_max: Maksimum
+    clouds_off: Kapalı
+    clouds_fast: Hızlı
+    clouds_fancy: Şık
+    particles_all: Tümü
+    particles_decreased: Azaltılmış
+    particles_minimal: En Az
+    chat_full: Tümü
+    chat_system: Sadece Komutlar
+    chat_hidden: Gizli
+    difficulty_peaceful: Barışçıl
+    difficulty_easy: Kolay
+    difficulty_normal: Normal
+    difficulty_hard: Zor
+    bool_on: Açık
+    bool_off: Kapalı

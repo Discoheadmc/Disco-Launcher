@@ -88,8 +88,13 @@ export interface InstanceOptionsService {
   /**
    * Get the game setting of the specific instance
    * @param instancePath The instance path
+   * @param options Set `createIfMissing: false` to read only and never create an
+   *   `options.txt` (useful for a read-only preview such as the settings dialog).
    */
-  getGameOptions(instancePath: string): Promise<GameSetting>
+  getGameOptions(
+    instancePath: string,
+    options?: { createIfMissing?: boolean },
+  ): Promise<GameSetting>
   /**
    * Edit the game setting of current instance
    * @param options The game setting edit options

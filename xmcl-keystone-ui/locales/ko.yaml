@@ -1668,8 +1668,8 @@ theme:
   selectImage: 이미지 선택
   selectMusic: 음악 선택
   selectVideo: 비디오 선택
-  title: Disco Launcher
-title: Disco Launcher
+  title: Xlmc Disco Launcher
+title: Xlmc Disco Launcher
 transportType:
   host: 호스트 후보
   prflx: 피어 반사 후보
@@ -2080,6 +2080,6 @@ gamepad:
   steamAddedNotify: Steam 라이브러리에 런처를 추가했습니다! 라이브러리에서 확인하려면 Steam을 다시 시작해 주세요.
   steamAlreadyAddedNotify: 런처가 이미 Steam 라이브러리에 있습니다.
   steamDeckTitle: Steam Deck 감지됨
-  steamDeckDesc: Steam Deck에서 실행 중임이 감지되었습니다. 게이밍 모드에서 온전한 Steam 오버레이 및 컨트롤러 연동을 위해 Disco Launcher를 Steam 라이브러리에 비 Steam 게임으로 추가하시겠습니까?
+  steamDeckDesc: Steam Deck에서 실행 중임이 감지되었습니다. 게이밍 모드에서 온전한 Steam 오버레이 및 컨트롤러 연동을 위해 Xlmc Disco Launcher를 Steam 라이브러리에 비 Steam 게임으로 추가하시겠습니까?
   steamDeckAddBtn: Steam에 추가 ({btn})
   steamDeckCancelBtn: 취소 ({btn})

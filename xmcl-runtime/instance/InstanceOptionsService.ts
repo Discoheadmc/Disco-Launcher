@@ -10,7 +10,7 @@ import {
   stringifyShaderOptions,
 } from '@xmcl/runtime-api'
 import { FSWatcher } from 'chokidar'
-import { ensureDir, ensureFile, readdir, readFile, unlink, writeFile } from 'fs-extra'
+import { copyFile, ensureDir, ensureFile, readdir, readFile, rename, unlink, writeFile } from 'fs-extra'
 import { basename, dirname, join, resolve, sep } from 'path'
 import { Inject, kGameDataPath, LauncherAppKey, type PathResolver } from '~/app'
 import { AbstractService, ExposeServiceKey, ServiceStateManager } from '~/service'
@@ -279,11 +279,12 @@ export class InstanceOptionsService extends AbstractService implements IInstance
     await unHardLinkFiles(rootGameOptions, instanceGameOptions)
   }
 
-  async getGameOptions(instancePath: string) {
+  async getGameOptions(instancePath: string, options: { createIfMissing?: boolean } = {}) {
     const optionsPath = join(instancePath, 'options.txt')
     const result = await readFile(optionsPath, 'utf-8').then(parse, async (e) => {
       if (isSystemError(e) && e.code === 'ENOENT') {
         if (
+          options.createIfMissing !== false &&
           !existsSync(join(instancePath, 'config', 'yosby', 'options.txt')) &&
           !existsSync(join(instancePath, 'config', 'yosbr', 'options.txt')) &&
           !existsSync(join(instancePath, 'config', 'defaultoptions'))
@@ -395,16 +396,9 @@ export class InstanceOptionsService extends AbstractService implements IInstance
     const current = await this.getGameOptions(instancePath)
 
     const diff: Frame = {}
-    if (Object.keys(current).length !== 0) {
-      for (const key of Object.keys(options)) {
-        if (key === 'instancePath') continue
-        if (key in current && (current as any)[key] !== (options as any)[key]) {
-          ;(diff as any)[key] = (options as any)[key]
-        }
-      }
-    } else {
-      for (const key of Object.keys(options)) {
-        if (key === 'instancePath') continue
+    for (const key of Object.keys(options)) {
+      if (key === 'instancePath') continue
+      if ((current as any)[key] !== (options as any)[key]) {
         ;(diff as any)[key] = (options as any)[key]
       }
     }
@@ -417,13 +411,49 @@ export class InstanceOptionsService extends AbstractService implements IInstance
     if (Object.keys(diff).length > 0) {
       this.log(`Edit gamesetting: ${JSON.stringify(diff, null, 4)} to ${instancePath}`)
       const optionsTxtPath = join(instancePath, 'options.txt')
-      Object.assign(current, diff)
-      await writeFile(
-        optionsTxtPath,
-        Object.entries(current)
-          .map(([k, v]) => (typeof v !== 'string' ? `${k}:${JSON.stringify(v)}` : `${k}:${v}`))
-          .join('\n') + '\n',
-      )
+
+      // Patch the raw file line-by-line so keys we are not changing keep their
+      // exact formatting and order — only the changed lines are rewritten.
+      let raw = ''
+      try {
+        raw = await readFile(optionsTxtPath, 'utf-8')
+      } catch {
+        raw = ''
+      }
+      const eol = raw.includes('\r\n') ? '\r\n' : '\n'
+      const serialize = (key: string, value: any) =>
+        typeof value === 'string' ? `${key}:${value}` : `${key}:${JSON.stringify(value)}`
+      const seen = new Set<string>()
+      const outLines = (raw.length ? raw.split(/\r?\n/) : []).map((line) => {
+        const i = line.indexOf(':')
+        if (i <= 0) return line
+        const key = line.slice(0, i)
+        if (key in diff) {
+          seen.add(key)
+          return serialize(key, (diff as any)[key])
+        }
+        return line
+      })
+      for (const [key, value] of Object.entries(diff)) {
+        if (!seen.has(key)) outLines.push(serialize(key, value))
+      }
+      let content = outLines.join(eol)
+      if (!content.endsWith(eol)) content += eol
+
+      // Keep a single rolling backup of the previous file so a bad edit can be
+      // recovered manually, then write through a temp file + rename so an
+      // interrupted write can never leave a half-written options.txt behind.
+      if (existsSync(optionsTxtPath)) {
+        await copyFile(optionsTxtPath, optionsTxtPath + '.bak').catch(() => undefined)
+      }
+      const tempPath = optionsTxtPath + '.tmp'
+      try {
+        await writeFile(tempPath, content)
+        await rename(tempPath, optionsTxtPath)
+      } catch (e) {
+        await unlink(tempPath).catch(() => undefined)
+        throw e
+      }
     }
   }
 

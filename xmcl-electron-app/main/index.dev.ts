@@ -6,6 +6,40 @@
  */
 
 // Set environment for development
+
+/**
+ * Prevent infinite EPIPE log loop: when a pipe/socket breaks (e.g. DevTools
+ * WebSocket disconnects), Node's console.warn tries to write to the broken
+ * pipe, gets EPIPE, logs that error, which tries to write again → infinite loop.
+ * Wrap console.warn/error to detect EPIPE and suppress re-entry.
+ */
+const _originalWarn = console.warn.bind(console)
+const _originalError = console.error.bind(console)
+let _inEpipeHandler = false
+function _isEpipe(err: any): boolean {
+  return err && (err.code === 'EPIPE' || err.message?.includes?.('EPIPE') || err.message?.includes?.('broken pipe'))
+}
+console.warn = (...args: any[]) => {
+  const epipe = args.some(_isEpipe)
+  if (epipe && _inEpipeHandler) return
+  if (epipe) {
+    _inEpipeHandler = true
+    try { _originalWarn('[suppressed EPIPE]', ...args.filter((a) => !_isEpipe(a))) } finally { _inEpipeHandler = false }
+    return
+  }
+  _originalWarn(...args)
+}
+console.error = (...args: any[]) => {
+  const epipe = args.some(_isEpipe)
+  if (epipe && _inEpipeHandler) return
+  if (epipe) {
+    _inEpipeHandler = true
+    try { _originalError('[suppressed EPIPE]', ...args.filter((a) => !_isEpipe(a))) } finally { _inEpipeHandler = false }
+    return
+  }
+  _originalError(...args)
+}
+
 import { app, session } from 'electron'
 import { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import { downloadChromeExtension } from 'electron-devtools-installer/dist/downloadChromeExtension'

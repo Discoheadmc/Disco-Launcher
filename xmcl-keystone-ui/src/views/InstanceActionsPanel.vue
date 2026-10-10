@@ -69,6 +69,23 @@
     <button
       type="button"
       class="action-btn"
+      data-testid="panel-mc-settings"
+      :aria-label="t('instance.mcSettings')"
+      @click="showMcSettings({ path, name })"
+    >
+      <v-icon size="18">tune</v-icon>
+      {{ t('instance.mcSettings') }}
+      <v-icon
+        v-if="isMcFavorite"
+        color="warning"
+        size="14"
+        class="ml-auto"
+        data-testid="panel-mc-settings-favorite"
+      >star</v-icon>
+    </button>
+    <button
+      type="button"
+      class="action-btn"
       data-testid="panel-folder"
       :aria-label="t('instance.showInstance')"
       @click="openFolder"
@@ -128,6 +145,7 @@ import { useDialog } from '@/composables/dialog'
 import { kEnvironment } from '@/composables/environment'
 import { kInstance } from '@/composables/instance'
 import { kInstanceLaunch } from '@/composables/instanceLaunch'
+import { useMcSettingsFavorite } from '@/composables/mcSettingsFavorite'
 import { useInstanceLaunchMenuItems } from '@/composables/instanceLaunchMenuItems'
 import { kInstanceVersionInstall } from '@/composables/instanceVersionInstall'
 import { kTheme } from '@/composables/theme'
@@ -166,6 +184,9 @@ const { createLaunchShortcut } = useService(LaunchServiceKey)
 const { userProfile } = injection(kUserContext)
 const env = injection(kEnvironment)
 const { show: showDeleteDialog } = useDialog('delete-instance')
+const { show: showMcSettings } = useDialog('mc-settings')
+const { isFavoriteOf } = useMcSettingsFavorite()
+const isMcFavorite = computed(() => isFavoriteOf(path.value))
 
 // Disco: when the selected instance is not installable as-is (missing/broken
 // version jar, missing java, missing libraries/assets, stalled downloads...),

@@ -179,9 +179,9 @@ export default class ElectronLauncherApp extends LauncherApp {
       // Disco Launcher: auto-update is removed — pass a no-op updater that
     // rejects every operation so the BaseService update API stays type-safe.
     (app) => ({
-      checkUpdateTask: () => Promise.reject(new Error('Disco Launcher: auto-update is disabled')),
-      downloadUpdate: () => Promise.reject(new Error('Disco Launcher: auto-update is disabled')),
-      installUpdateAndQuit: () => Promise.reject(new Error('Disco Launcher: auto-update is disabled')),
+      checkUpdateTask: () => Promise.reject(new Error('Xlmc Disco Launcher: auto-update is disabled')),
+      downloadUpdate: () => Promise.reject(new Error('Xlmc Disco Launcher: auto-update is disabled')),
+      installUpdateAndQuit: () => Promise.reject(new Error('Xlmc Disco Launcher: auto-update is disabled')),
     }),
       defaultApp,
       getEnv(),

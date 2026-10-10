@@ -220,7 +220,7 @@ export class ElectronController implements LauncherAppController {
     await app.whenReady()
     const restoredSession = this.app.session.getSession(defaultApp.url)
     const browser = new BrowserWindow({
-      title: 'Disco Launcher Migrate',
+      title: 'Xlmc Disco Launcher Migrate',
       frame: false,
       resizable: false,
       width: 600,
@@ -265,7 +265,7 @@ export class ElectronController implements LauncherAppController {
     const enableTranslucency = this.settings?.windowTranslucent ?? false
 
     const browser = new BrowserWindow({
-      title: 'Disco Launcher Browser',
+      title: 'Xlmc Disco Launcher Browser',
       frame: false,
       transparent: true,
       resizable: false,
@@ -407,7 +407,7 @@ export class ElectronController implements LauncherAppController {
 
     const config = await tracker.getConfig()
     const browser = new BrowserWindow({
-      title: 'Disco Launcher Monitor',
+      title: 'Xlmc Disco Launcher Monitor',
       width: config.getWidth(600, 600),
       height: config.getHeight(400, 400),
       x: config.x,

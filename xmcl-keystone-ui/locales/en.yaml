@@ -505,6 +505,7 @@ instance:
   gridUngrouped: Ungrouped
   current: Current Instance
   delete: Delete Game
+  mcSettings: MC Settings
   deleteFailed: Fail to delete instance
   deleteFailedPermission: Other program occupied the file
   deleteFile: Delete Instance Files
@@ -1885,7 +1886,7 @@ setting:
   enableDedicatedGPUOptimization: Assign Dedicated GPU
   enableDedicatedGPUOptimizationDescription: This option will assign dedicated GPU to Minecraft process.
   enableDiscord: Discord Rich Presence
-  enableDiscordDescription: Show Disco Launcher activity on your Discord profile
+  enableDiscordDescription: Show Xlmc Disco Launcher activity on your Discord profile
   enterUrl: Enter URL
   exportSettings: Export Settings
   exportSettingsHint: Save your current settings to a file
@@ -2179,8 +2180,8 @@ theme:
   selectImage: Select Image
   selectMusic: Select Music
   selectVideo: Select Video
-  title: Disco Launcher
-title: Disco Launcher
+  title: Xlmc Disco Launcher
+title: Xlmc Disco Launcher
 transportType:
   host: Host Candidate
   prflx: Peer Reflexive Candidate
@@ -2375,7 +2376,7 @@ userCape:
   customOnlyHere: Only visible in this launcher — independent from official Mojang capes
   customCancel: Cancel
   customApply: Apply
-  customDescription: This custom cape is only visible to players using Disco Launcher. It does not touch the official Mojang cape system — the PNG never leaves your device or gets sent to Mojang.
+  customDescription: This custom cape is only visible to players using Xlmc Disco Launcher. It does not touch the official Mojang cape system — the PNG never leaves your device or gets sent to Mojang.
 userService:
   add: Add More Services
   authlibInjectorMetadata: Authlib-Injector metadata
@@ -2510,3 +2511,87 @@ gamepad:
   steamDeckDesc: We detected that you are running on Steam Deck. Would you like to add DHMC to your Steam Library as a non-Steam game for full Steam overlay and controller integration in Gaming Mode?
   steamDeckAddBtn: Add to Steam ({btn})
   steamDeckCancelBtn: Cancel ({btn})
+mcSettings:
+  runningWarning: Settings cannot be changed while the game is running. Close the game first.
+  empty: No editable settings were found in options.txt.
+  skipped: Unsupported settings
+  saveAsFavorite: Make Favorite
+  removeFavorite: Remove Favorite
+  applyFavorite: Apply My Favorite Settings
+  favoriteSaved: Favorite settings saved
+  favoriteRemoved: Favorite settings removed
+  overwriteFavorite: A favorite already exists. Overwrite it?
+  applyConfirm: '{count} settings will be applied to this instance. Continue?'
+  applyDone: Favorite settings applied
+  applySkipped: '{count} settings were skipped because they are not supported by this version'
+  applyEmpty: No compatible settings to apply
+  confirmTitle: Confirm
+  saved: MC settings saved
+  saveFailed: Failed to save MC settings
+  loadFailed: Failed to read options.txt
+  group:
+    video: Video
+    audio: Sound
+    controls: Controls
+    language: Language
+    chat: Chat
+  field:
+    renderDistance: Render Distance
+    fov: Field of View
+    graphicsMode: Graphics
+    fancyGraphics: Fancy Graphics
+    ao: Smooth Lighting
+    renderClouds: Clouds
+    particles: Particles
+    mipmapLevels: Mipmap Levels
+    entityShadows: Entity Shadows
+    guiScale: GUI Scale
+    maxFps: Max Framerate
+    gamma: Brightness
+    fullscreen: Fullscreen
+    enableVsync: VSync
+    soundCategory_master: Master
+    soundCategory_music: Music
+    soundCategory_record: Jukebox/Note Blocks
+    soundCategory_weather: Weather
+    soundCategory_block: Blocks
+    soundCategory_hostile: Hostile Creatures
+    soundCategory_neutral: Neutral Creatures
+    soundCategory_player: Players
+    soundCategory_ambient: Ambient/Environment
+    soundCategory_voice: Voice/Speech
+    soundCategory_ui: UI
+    mouseSensitivity: Mouse Sensitivity
+    invertYMouse: Invert Mouse
+    autoJump: Auto-Jump
+    touchscreen: Touchscreen Mode
+    difficulty: Difficulty
+    lang: Language
+    forceUnicodeFont: Force Unicode Font
+    chatVisibility: Chat Visibility
+    chatColors: Chat Colors
+    chatLinks: Chat Links
+    chatLinksPrompt: Chat Links Prompt
+    chatOpacity: Chat Opacity
+  option:
+    graphics_fast: Fast
+    graphics_fancy: Fancy
+    graphics_fabulous: Fabulous
+    ao_off: Off
+    ao_min: Minimum
+    ao_max: Maximum
+    clouds_off: Off
+    clouds_fast: Fast
+    clouds_fancy: Fancy
+    particles_all: All
+    particles_decreased: Decreased
+    particles_minimal: Minimal
+    chat_full: Shown
+    chat_system: Commands Only
+    chat_hidden: Hidden
+    difficulty_peaceful: Peaceful
+    difficulty_easy: Easy
+    difficulty_normal: Normal
+    difficulty_hard: Hard
+    bool_on: On
+    bool_off: Off

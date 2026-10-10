@@ -1699,8 +1699,8 @@ theme:
   selectImage: Válassza a Kép lehetőséget
   selectMusic: Válassza a Zene lehetőséget
   selectVideo: Válassza a Videó lehetőséget
-  title: Disco Launcher
-title: Disco Launcher
+  title: Xlmc Disco Launcher
+title: Xlmc Disco Launcher
 transportType:
   host: Kiszolgáló jelölt
   prflx: Peer Reflexív jelölt
