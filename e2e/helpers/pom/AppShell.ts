@@ -58,7 +58,9 @@ export class AppShell {
   }
 
   // Home / instance bar
-  get launchButton(): Locator { return this.main.getByTestId('launch-button') }
+  // Disco: the home launch pill was removed; the right action panel is the
+  // single launch entry.
+  get launchButton(): Locator { return this.main.getByTestId('panel-launch') }
   get createInstance(): Locator { return this.main.getByTestId('create-instance') }
   get instanceItems(): Locator { return this.main.getByTestId('instance-item') }
 

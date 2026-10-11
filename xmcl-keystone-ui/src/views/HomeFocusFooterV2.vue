@@ -9,9 +9,6 @@
         <HomeLaunchButtonStatus
           class="mr-4 ml-2"
           :active="active"
-        />
-        <HomeLaunchButton
-          top
           @mouseenter="active = true"
           @mouseleave="active = false"
         />
@@ -20,7 +17,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import HomeLaunchButton from './HomeLaunchButton.vue'
 import HomeLaunchButtonStatus from './HomeLaunchButtonStatus.vue'
 import HomeFooterCard from './HomeFooterCard.vue'
 

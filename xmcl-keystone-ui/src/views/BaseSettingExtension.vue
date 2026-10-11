@@ -21,20 +21,7 @@
     <div class="flex-grow mr-2" />
     <transition name="fade-transition" mode="out-in">
       <div
-        key="launch-button-group"
-        class="flex items-center justify-end overflow-visible"
-        v-if="!targetQuery"
-      >
-        <HomeLaunchButtonStatus v-if="!isNarrow" :active="active" />
-        <HomeLaunchButton
-          class="ml-4"
-          :compact="compact"
-          @mouseenter="active = true"
-          @mouseleave="active = false"
-        />
-      </div>
-      <div
-        v-else-if="targetQuery === 'modpack'"
+        v-if="targetQuery === 'modpack'"
         class="flex items-center justify-end overflow-hidden"
       >
         <v-btn
@@ -108,7 +95,6 @@ import { kInstanceVersion } from '@/composables/instanceVersion'
 import { kInstanceTheme } from '@/composables/instanceTheme'
 import { kCompact } from '@/composables/scrollTop'
 import { injection } from '@/util/inject'
-import HomeLaunchButton from './HomeLaunchButton.vue'
 import HomeLaunchButtonStatus from './HomeLaunchButtonStatus.vue'
 import { useQuery } from '@/composables/query'
 import { kModpackExport } from '@/composables/modpack'
@@ -127,7 +113,6 @@ const { instance, runtime: version } = injection(kInstance)
 const { versionHeader } = injection(kInstanceVersion)
 const isBedrock = computed(() => isBedrockInstance(instance.value))
 
-const active = ref(false)
 const { t } = useI18n()
 const compact = injection(kCompact)
 

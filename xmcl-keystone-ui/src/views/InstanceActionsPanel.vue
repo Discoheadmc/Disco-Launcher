@@ -93,6 +93,18 @@
       <v-icon size="18">folder</v-icon>
       {{ t('instance.showInstance') }}
     </button>
+    <!-- Disco: the home launch pill and its gear menu were removed; this keeps
+         the "logs" entry the gear menu used to be the only source of. -->
+    <button
+      type="button"
+      class="action-btn"
+      data-testid="panel-logs"
+      :aria-label="t('logsCrashes.title')"
+      @click="showLogs"
+    >
+      <v-icon size="18">subtitles</v-icon>
+      {{ t('logsCrashes.title') }}
+    </button>
     <button
       type="button"
       class="action-btn"
@@ -185,8 +197,13 @@ const { userProfile } = injection(kUserContext)
 const env = injection(kEnvironment)
 const { show: showDeleteDialog } = useDialog('delete-instance')
 const { show: showMcSettings } = useDialog('mc-settings')
+const { show: showLogDialog } = useDialog('log')
 const { isFavoriteOf } = useMcSettingsFavorite()
 const isMcFavorite = computed(() => isFavoriteOf(path.value))
+
+function showLogs() {
+  showLogDialog()
+}
 
 // Disco: when the selected instance is not installable as-is (missing/broken
 // version jar, missing java, missing libraries/assets, stalled downloads...),
