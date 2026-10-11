@@ -5,7 +5,7 @@ import type { Configuration } from 'electron-builder'
 dotenv()
 
 export const config = {
-  productName: 'Xlmc Disco Launcher',
+  productName: 'XMCL Disco Launcher',
   appId: 'com.discolauncher.app',
   directories: {
     output: 'build/output',
@@ -13,15 +13,15 @@ export const config = {
     app: '.',
   },
   protocols: {
-    name: 'Xlmc Disco Launcher',
+    name: 'XMCL Disco Launcher',
     schemes: ['disco'],
   },
   // assign publish for auto-updater
   // set this to your own repo!
   publish: [{
     provider: 'github',
-    owner: 'discolauncher',
-    repo: 'disco-launcher',
+    owner: 'Discoheadmc',
+    repo: 'XMCL-Disco',
   }],
   files: [{
     from: 'dist',

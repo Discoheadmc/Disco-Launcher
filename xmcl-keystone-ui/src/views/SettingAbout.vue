@@ -6,13 +6,13 @@
         <div class="d-flex align-center flex-wrap gap-4 mb-6">
           <v-img
             :src="logo"
-            alt="Xlmc Disco Launcher Logo"
+            alt="XMCL Disco Launcher Logo"
             width="64"
             height="64"
             class="mr-4 rounded-lg flex-grow-0 flex-shrink-0"
           ></v-img>
           <div>
-            <div class="text-h5 font-weight-bold">Xlmc Disco Launcher</div>
+            <div class="text-h5 font-weight-bold">XMCL Disco Launcher</div>
             <div class="text-caption opacity-70">{{ version }}</div>
           </div>
           <v-spacer />

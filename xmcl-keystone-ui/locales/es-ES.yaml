@@ -1960,8 +1960,8 @@ theme:
   selectImage: Seleccionar imagen
   selectMusic: Seleccionar música
   selectVideo: Seleccionar vídeo
-  title: Xlmc Disco Launcher
-title: Xlmc Disco Launcher
+  title: XMCL Disco Launcher
+title: XMCL Disco Launcher
 transportType:
   host: Candidato de Anfitrión
   prflx: Candidato Reflexivo de Par
@@ -2331,7 +2331,7 @@ gamepad:
   steamAlreadyAddedNotify: El lanzador ya está en tu biblioteca de Steam.
   steamDeckTitle: Steam Deck detectado
   steamDeckDesc: >-
-    Detectamos que estás ejecutando Steam Deck. ¿Te gustaría añadir Xlmc Disco Launcher
+    Detectamos que estás ejecutando Steam Deck. ¿Te gustaría añadir XMCL Disco Launcher
     Launcher a tu biblioteca de Steam como un juego no Steam para tener la
     superposición completa de Steam y la integración del mando en el modo de
     juego?
