@@ -1,27 +1,30 @@
 <p align="center">
-  <img alt="Disco Launcher" width="120" src="xmcl-electron-app/icons/dark@256x256.png">
+  <img alt="XMCL Disco Launcher" width="120" src="xmcl-electron-app/icons/dark@256x256.png">
 </p>
 
-<h1 align="center">Disco Launcher</h1>
+<h1 align="center">XMCL Disco Launcher</h1>
 
 <p align="center">
   <strong>A fast, lightweight, privacy-friendly Minecraft launcher — built for low-end machines.</strong><br>
-  Hızlı, hafif ve gizlilik dostu bir Minecraft launcher'ı
+  Hızlı, hafif ve gizlilik dostu bir Minecraft launcher'ı — Türkçe sürüm için <a href="README.md">README.md</a>
 </p>
 
 <p align="center">
-  <a href="#-features">Features</a> ·
-  <a href="#-screenshots">Screenshots</a> ·
-  <a href="#-how-is-it-different-from-xmcl">Differences from XMCL</a> ·
-  <a href="#-install">Install</a> ·
-  <a href="#-development">Development</a> ·
-  <a href="#-license">License</a><br>
-  <a href="README.md">🇹🇷 Türkçe sürüm</a>
+  <a href="#features">Features</a> ·
+  <a href="#screenshots">Screenshots</a> ·
+  <a href="#project-statistics">Statistics</a> ·
+  <a href="#how-is-it-different-from-xmcl">Differences from XMCL</a> ·
+  <a href="#install">Install</a> ·
+  <a href="#development">Development</a> ·
+  <a href="#license">License</a><br>
+  <a href="README.md">Türkçe sürüm</a>
 </p>
 
 <p align="center">
+  <img alt="version" src="https://img.shields.io/badge/version-0.0.2-blue">
   <img alt="platform" src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-2d333b?logo=windows95&logoColor=white">
   <img alt="node" src="https://img.shields.io/badge/Node.js-%E2%89%A522.16-339933?logo=nodedotjs&logoColor=white">
+  <img alt="electron" src="https://img.shields.io/badge/Electron-43-47848F?logo=electron&logoColor=white">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green">
   <img alt="based on" src="https://img.shields.io/badge/fork%20of-XMCL-8A2BE2">
   <img alt="privacy" src="https://img.shields.io/badge/telemetry-none-success">
@@ -29,18 +32,21 @@
 
 ---
 
-**Disco Launcher** is a fork of the open-source [X Minecraft Launcher (XMCL)](https://github.com/Voxelum/x-minecraft-launcher), rebuilt around a single idea: **keep what makes a launcher great, strip everything else**. On top of that cleanup it adds its own skin & cape management, a Prism-inspired flat UI, a dedicated color picker for the Launch button, and hardened networking defaults.
+**XMCL Disco Launcher** is a fork of the open-source [X Minecraft Launcher (XMCL)](https://github.com/Voxelum/x-minecraft-launcher), rebuilt around a single idea: **keep what makes a launcher great, strip everything else**. On top of that cleanup it adds its own skin & cape management, a Prism-inspired flat UI, a dedicated color picker for the Launch button, MC Settings for editing `options.txt` without launching the game, and hardened networking defaults.
 
-## ✨ Features
+## Features
 
-- 🪶 **Lightweight** — no telemetry, auto-update, P2P multiplayer or AI assistant
-- 🔐 **Microsoft + offline accounts**
-- 🧥 **Local skins & custom capes** — offline skins show up in game
-- 🧩 **Modpack market** — CurseForge (own API key), Modrinth, FTB
-- 🎨 **Prism-minimal theme** — 8 color pickers, incl. the Launch button color
-- 🗂 **Multi-instance** · 💬 **Discord Rich Presence** · 🖥 **Windows / macOS / Linux**
+- **Lightweight** — no telemetry, auto-update, P2P multiplayer or AI assistant
+- **MC Settings** — edit `options.txt` without launching the game; grouped UI (Video/Audio/Controls/Language/Chat), safe line-based saving, automatic `.bak` backup, atomic writes
+- **Favorite settings** — save an instance's settings as a favorite and apply them to other instances with one click; version-incompatible settings are skipped automatically
+- **Running-game protection** — settings are locked while the game is open, so Minecraft cannot overwrite the file on exit
+- **Microsoft + offline accounts**
+- **Local skins & custom capes** — offline skins show up in game
+- **Modpack market** — CurseForge (own API key), Modrinth, FTB
+- **Prism-minimal theme** — 8 color pickers, incl. the Launch button color
+- Multi-instance, Discord Rich Presence, Windows / macOS / Linux support
 
-## 📸 Screenshots
+## Screenshots
 
 <p align="center">
   <img alt="Home" width="820" src="docs/images/home.png">
@@ -57,13 +63,29 @@
 </p>
 <p align="center"><em>Modpack market — CurseForge, Modrinth and FTB; the discover grid</em></p>
 
-## 🆚 How Is It Different from XMCL?
+## Project Statistics
 
-Disco Launcher started as an optimization fork of XMCL. The deliberate differences:
+| Metric | Value |
+| --- | --- |
+| Version | 0.0.2 |
+| Commits | 3,700+ (root: XMCL, since 2019) |
+| Source code | 1,200+ files, 170,000+ lines (TS / Vue) |
+| Unit tests | 235 test files, 1,761 tests |
+| E2E tests | Playwright (showcase + CI safety net) |
+| Installer size | ~94 MB (Windows NSIS) |
+| App bundle | ~9 MB (app.asar.gz) |
+| Contributors | 64 (including fork history) |
+| Releases | v0.0.1, v0.0.2-beta.1, v0.0.2 |
+| First release | July 2019 (XMCL root) |
 
-| Area | XMCL | Disco Launcher |
+## How Is It Different from XMCL?
+
+XMCL Disco Launcher started as an optimization fork of XMCL. The deliberate differences:
+
+| Area | XMCL | XMCL Disco Launcher |
 | --- | --- | --- |
 | Accounts | Microsoft, offline, ely.by, littleskin, XMCL.org | **Microsoft + offline only** |
+| MC Settings | None (edit options.txt by hand) | **Built-in dialog** — grouped, safe saving, favorite apply |
 | Multiplayer | XMCL Together P2P | **Removed** |
 | Auto-update | Built-in updater | **Removed** — install a new setup bundle |
 | Telemetry | Azure/OTel | **Removed** — nothing is collected |
@@ -78,11 +100,11 @@ Disco Launcher started as an optimization fork of XMCL. The deliberate differenc
 
 Unchanged: the [@xmcl/*](packages) core library family, instance/resource linking architecture, CurseForge & Modrinth integrations, and the multi-instance model.
 
-## 📦 Install
+## Install
 
 Grab the latest `DiscoLauncher-Setup-*.exe` (+ `.sha256`) from the [Releases](../../releases) page. Updates are installed the same way with a new bundle.
 
-## 🛠 Development
+## Development
 
 **Prerequisites**
 
@@ -127,6 +149,6 @@ pnpm build:all
 
 Targets live in [`xmcl-electron-app/build/electron-builder.config.ts`](xmcl-electron-app/build/electron-builder.config.ts): **Windows** NSIS (`DiscoLauncher-Setup-<version>.exe` + sha256), **macOS** dmg, **Linux** deb/rpm/AppImage/tar.xz/pacman.
 
-## 📄 License
+## License
 
-[MIT](LICENSE) — Disco Launcher inherits XMCL's MIT license. All credit for the original launcher goes to the [XMCL team](https://github.com/Voxelum/x-minecraft-launcher); localization and maintenance credits are listed in the [upstream acknowledgments](https://github.com/Voxelum/x-minecraft-launcher#credits--acknowledgments).
+[MIT](LICENSE) — XMCL Disco Launcher inherits XMCL's MIT license. All credit for the original launcher goes to the [XMCL team](https://github.com/Voxelum/x-minecraft-launcher); localization and maintenance credits are listed in the [upstream acknowledgments](https://github.com/Voxelum/x-minecraft-launcher#credits--acknowledgments).
