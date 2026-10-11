@@ -494,7 +494,21 @@ useTutorial(computed(() => {
 .base-setting-nav-item {
   min-height: 42px !important;
   margin: 3px 0;
+  /* 12px matches the heading and meta padding above, so the section icons
+     line up with the instance name and the Minecraft version instead of
+     sitting 4px to their left. */
+  padding-inline: 12px !important;
   border-radius: var(--card-item-radius, 3px) !important;
+}
+
+/* Vuetify pads the prepend with a fixed 32px spacer, which pushed the label
+   far away from the icon it belongs to. Pull it back to the sidebar rhythm. */
+.base-setting-nav-item .v-list-item__spacer {
+  width: 12px;
+}
+
+.base-setting-nav-item:hover:not(.v-list-item--active) {
+  background: rgba(var(--v-theme-on-surface), 0.06);
 }
 
 .base-setting-nav-indicator {
