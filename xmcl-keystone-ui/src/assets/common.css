@@ -848,9 +848,10 @@ a {
      height. */
   --disco-switch-rail-height: 14px;
   --disco-switch-knob-size: 14px;
-  /* Vuetify slides the knob 20px, which leaves a 14px knob touching the rail's
-     edge. Shorten the slide so the knob keeps rail visible on both sides. */
-  --disco-switch-travel: 16px;
+  /* The knob rests flush against either end of the rail, so the travel is the
+     rail width minus the knob width. Vuetify's own 20px slide left the knob
+     1px short of the edge and left rail visible past it. */
+  --disco-switch-travel: 22px;
 }
 
 .v-switch .v-switch__track {
