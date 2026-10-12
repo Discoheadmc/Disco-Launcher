@@ -837,11 +837,33 @@ a {
    Only the shape changes: sharp-ish corners on the track and a square knob
    instead of the pill/circle Material look. Colors and sizes stay on the
    theme tokens. */
+.v-switch {
+  /* Material sizes the knob from --v-selection-control-size (half of it) while
+     the rail is a fixed 14px, so the knob was thicker than the rail at default
+     density and thinner than it at compact density. Drive both from one token
+     so the knob is flush with the rail at every density. */
+  --disco-switch-rail-height: 14px;
+}
+
 .v-switch .v-switch__track {
+  block-size: var(--disco-switch-rail-height) !important;
   border-radius: 3px !important;
 }
 
 .v-switch .v-switch__thumb {
+  block-size: var(--disco-switch-rail-height) !important;
   border-radius: 2px !important;
   box-shadow: none !important;
+  /* Vuetify slides the knob across the full width of the input box, which is
+     wider than the rail, so the knob ends up 2px proud of the rail on the
+     outer side in both states. Pull it back by that same 2px. `translate`
+     composes with the parent's transform instead of replacing it, so the
+     slide animation is preserved. */
+  translate: 2px 0 !important;
+  transition: translate 0.15s cubic-bezier(0.4, 0, 0, 0.2, 1),
+    background-color 0.15s cubic-bezier(0.4, 0, 0, 0.2, 1);
+}
+
+.v-switch .v-selection-control--dirty .v-switch__thumb {
+  translate: -2px 0 !important;
 }
