@@ -842,11 +842,15 @@ a {
      rail is a fixed 14px, so the knob was 20px tall in a 14px rail and spilled
      3px past the top and bottom of it in both states. It also filled 55% of the
      rail's width, which read as a two-tone bar rather than a knob.
-     Drive both from one token so they cannot drift apart at any density (the
-     knob previously scaled with --v-selection-control-size while the rail did
-     not), and size the knob so the rail shows on both sides of it. */
+     Drive the rail and the knob from one token so they cannot drift apart at
+     any density (the knob previously scaled with --v-selection-control-size
+     while the rail did not), and make the knob a square that matches the rail
+     height. */
   --disco-switch-rail-height: 14px;
-  --disco-switch-knob-size: 12px;
+  --disco-switch-knob-size: 14px;
+  /* Vuetify slides the knob 20px, which leaves a 14px knob touching the rail's
+     edge. Shorten the slide so the knob keeps rail visible on both sides. */
+  --disco-switch-travel: 16px;
 }
 
 .v-switch .v-switch__track {
@@ -855,8 +859,18 @@ a {
 }
 
 .v-switch .v-switch__thumb {
-  block-size: var(--disco-switch-rail-height) !important;
+  block-size: var(--disco-switch-knob-size) !important;
   inline-size: var(--disco-switch-knob-size) !important;
   border-radius: 2px !important;
   box-shadow: none !important;
+}
+
+/* The parent already transitions `transform`, so shortening the slide keeps the
+   animation intact. */
+.v-switch .v-selection-control__input {
+  transform: translateX(calc(var(--disco-switch-travel) / -2)) !important;
+}
+
+.v-switch .v-selection-control--dirty .v-selection-control__input {
+  transform: translateX(calc(var(--disco-switch-travel) / 2)) !important;
 }
