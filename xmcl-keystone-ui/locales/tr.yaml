@@ -2098,6 +2098,14 @@ gamepad:
   steamDeckDesc: Steam Deck üzerinde çalıştığınızı algıladık. Oyun Modunda tam Steam arayüzü ve kontrolcü entegrasyonu için XMCL Disco Launcher'ı Steam Kütüphanenize Steam dışı bir oyun olarak eklemek ister misiniz?
   steamDeckAddBtn: Steam'e Ekle ({btn})
   steamDeckCancelBtn: İptal Et ({btn})
+minecraftUpdate:
+  available: Minecraft {version} yayınlandı.
+  hint: Bu oyun eski bir sürümü kullanıyor. Güncellemek için dokun.
+  modHint: Bu oyun modlu; sürüm yükseltmesi modları bozabilir.
+  apply: Güncelle
+  badgeHint: Minecraft {version} yayınlandı — Güncelle
+  modWarningTitle: Mod uyarısı
+  modWarningDescription: Bu oyun mod yükleyicisi kullanıyor. Minecraft {version} sürümüne geçince bazı modlar çalışmayabilir. Yine de güncellensin mi?
 mcSettings:
   runningWarning: Oyun çalışırken ayarlar değiştirilemez, önce oyunu kapat
   empty: options.txt içinde düzenlenebilir ayar bulunamadı.

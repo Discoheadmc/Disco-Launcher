@@ -2511,6 +2511,14 @@ gamepad:
   steamDeckDesc: We detected that you are running on Steam Deck. Would you like to add DHMC to your Steam Library as a non-Steam game for full Steam overlay and controller integration in Gaming Mode?
   steamDeckAddBtn: Add to Steam ({btn})
   steamDeckCancelBtn: Cancel ({btn})
+minecraftUpdate:
+  available: Minecraft {version} has been released.
+  hint: This game is on an older version. Click to update.
+  modHint: This game is modded; a version bump can break its mods.
+  apply: Update
+  badgeHint: Minecraft {version} has been released — click to update
+  modWarningTitle: Mod warning
+  modWarningDescription: This game uses a mod loader. Some mods may stop working on Minecraft {version}. Update anyway?
 mcSettings:
   runningWarning: Settings cannot be changed while the game is running. Close the game first.
   empty: No editable settings were found in options.txt.
