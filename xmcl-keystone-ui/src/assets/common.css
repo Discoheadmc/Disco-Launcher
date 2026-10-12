@@ -846,12 +846,12 @@ a {
      any density (the knob previously scaled with --v-selection-control-size
      while the rail did not), and make the knob a square that matches the rail
      height. */
-  --disco-switch-rail-height: 14px;
-  --disco-switch-knob-size: 14px;
+  --disco-switch-rail-height: 18px;
+  --disco-switch-knob-size: 18px;
   /* The knob rests flush against either end of the rail, so the travel is the
      rail width minus the knob width. Vuetify's own 20px slide left the knob
      1px short of the edge and left rail visible past it. */
-  --disco-switch-travel: 22px;
+  --disco-switch-travel: 18px;
 }
 
 .v-switch .v-switch__track {
