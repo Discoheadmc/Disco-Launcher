@@ -89,6 +89,30 @@ export function useMinecraftLatestRelease() {
   }
 }
 
+export type MinecraftLatestRelease = ReturnType<typeof useMinecraftLatestRelease>
+
+/**
+ * Warm the Minecraft version metadata into the app-level latest-release refs.
+ *
+ * This deliberately does not go through `useMinecraftVersions()`: that composable
+ * injects `kLatestMinecraftVersion`, and the repo's `injection()` helper only
+ * walks the ancestor chain, so it cannot see a provide made by the same
+ * component. Calling it right after the provide would throw.
+ *
+ * Failure is swallowed on purpose — the version pickers fetch for themselves
+ * when they mount, so a cold or offline start just leaves the field to fill in
+ * later rather than breaking the window.
+ */
+export async function warmMinecraftVersions(latest: MinecraftLatestRelease) {
+  const service = useService(VersionMetadataServiceKey)
+  try {
+    const data = await service.getMinecraftVersions()
+    latest.setLatestMinecraft(data.latest.release, data.latest.snapshot)
+  } catch {
+    // Leave the refs unset; a picker mounted later will retry.
+  }
+}
+
 export function useMinecraftVersions() {
   const service = useService(VersionMetadataServiceKey)
   const { data, isValidating, error, mutate } = useAsyncData(() => service.getMinecraftVersions())

@@ -122,11 +122,6 @@ export function useInstanceCreation(gameProfile: Ref<GameProfile>, instances: Re
   const { notify } = useNotifier()
   const { t } = useI18n()
   const { release } = injection(kLatestMinecraftVersion)
-  watch(release, (v) => {
-    if (v && data.runtime.minecraft === '') {
-      data.runtime.minecraft = v
-    }
-  })
   const placeHolderName = computed(() => {
     if (data.edition === 'bedrock') {
       return generateDistinctName(
@@ -176,6 +171,16 @@ export function useInstanceCreation(gameProfile: Ref<GameProfile>, instances: Re
      */
     wskinLoader: false,
   })
+
+  // Default the version field to the latest release. `immediate` covers the
+  // case where the release already resolved before this composable was set up,
+  // which the plain watch could never catch. Declared after `data` because an
+  // immediate watch runs during setup and would touch it before assignment.
+  watch(release, (v) => {
+    if (v && data.runtime.minecraft === '') {
+      data.runtime.minecraft = v
+    }
+  }, { immediate: true })
 
   /**
    * Whether the WSkinLoader (custom cape in-game) option applies to the

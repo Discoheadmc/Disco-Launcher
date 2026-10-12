@@ -69,7 +69,7 @@ import { kTutorial, useTutorialModel } from '@/composables/tutorial'
 
 import { kNetworkStatus, useNetworkStatus } from '@/composables/useNetworkStatus'
 import { kUserContext, useUserContext } from '@/composables/user'
-import { kLatestMinecraftVersion, useMinecraftLatestRelease } from '@/composables/version'
+import { kLatestMinecraftVersion, useMinecraftLatestRelease, warmMinecraftVersions } from '@/composables/version'
 import { kLocalVersions, useLocalVersions } from '@/composables/versionLocal'
 import { kSupportedAuthorityMetadata, useSupportedAuthority } from '@/composables/yggrasil'
 import { vuetify } from '@/vuetify'
@@ -161,7 +161,13 @@ export default defineComponent({
 
     provide(kCriticalStatus, useCriticalStatus(settings.state))
 
-    provide(kLatestMinecraftVersion, useMinecraftLatestRelease())
+    const latestMinecraftVersion = useMinecraftLatestRelease()
+    provide(kLatestMinecraftVersion, latestMinecraftVersion)
+    // Disco: warm the Minecraft version metadata as soon as the window opens.
+    // It used to load only when a version picker mounted, so opening "create
+    // instance" on a cold start showed an empty version field until the fetch
+    // landed.
+    warmMinecraftVersions(latestMinecraftVersion)
     provide(kJavaContext, java)
     provide(kSettingsState, settings)
     provide(kInstances, instances)
