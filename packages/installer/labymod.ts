@@ -214,7 +214,14 @@ export function resolveLabyModMetadataInstallManifest(
         artifact: {
           path: `net/labymod/LabyMod/${manifest.labyModVersion}/LabyMod-${manifest.labyModVersion}.jar`,
           sha1: manifest.sha1,
-          size: manifest.size,
+          // LabyMod's manifest reports a `size` that does not match the jar it
+          // actually serves (observed 13 bytes short for both 4.6.27 and 47).
+          // The downloader uses this value to plan byte ranges, so the trailing
+          // bytes were never fetched, the sha1 never matched and every install
+          // aborted with "This operation was aborted". The sha1 above still
+          // verifies the payload, so drop the size and let the downloader
+          // stream the whole artifact instead of splitting a bogus range.
+          size: undefined as unknown as number,
           url: `https://laby-releases.s3.de.io.cloud.ovh.net/api/v1/download/labymod4/${environment}/${manifest.commitReference}.jar`,
         },
       },
