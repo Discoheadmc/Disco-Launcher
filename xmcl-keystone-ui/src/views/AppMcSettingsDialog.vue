@@ -12,8 +12,8 @@
         <span v-if="name" class="text-caption" style="opacity: 0.65">{{ name }}</span>
         <v-icon
           v-if="isFavoriteOfThis"
-          color="warning"
           size="18"
+          class="mc-settings-favorite"
           data-testid="mc-settings-favorite-star"
         >star</v-icon>
         <v-spacer />
@@ -33,6 +33,7 @@
           type="error"
           variant="tonal"
           density="compact"
+          class="mc-settings-alert"
           data-testid="mc-settings-error"
         >
           {{ error }}
@@ -44,7 +45,7 @@
             type="warning"
             variant="tonal"
             density="compact"
-            class="mb-3"
+            class="mc-settings-alert"
             data-testid="mc-settings-running-warning"
           >
             {{ t('mcSettings.runningWarning') }}
@@ -56,9 +57,16 @@
             {{ t('mcSettings.empty') }}
           </div>
 
-          <div v-for="group in groups" :key="group.key" class="mb-4">
-            <div class="text-subtitle-2 mb-2">{{ t(`mcSettings.group.${group.key}`) }}</div>
-            <v-row dense>
+          <div
+            v-for="group in groups"
+            :key="group.key"
+            class="mc-settings-group mb-5"
+          >
+            <div class="mc-settings-group__title">
+              <v-icon size="18">{{ group.icon }}</v-icon>
+              <span>{{ t(`mcSettings.group.${group.key}`) }}</span>
+            </div>
+            <v-row class="mc-settings-row">
               <v-col v-for="field in group.fields" :key="field.key" :cols="field.cols" :md="field.cols">
                 <v-slider
                   v-if="field.control === 'slider'"
@@ -120,11 +128,10 @@
 
           <v-divider class="my-4" />
 
-          <div class="d-flex align-center flex-wrap ga-2">
+          <div class="d-flex align-center flex-wrap ga-2 mc-settings-actions">
             <v-btn
               v-if="isFavoriteOfThis"
               variant="text"
-              color="warning"
               size="small"
               prepend-icon="star"
               @click="onRemoveFavorite"
@@ -134,7 +141,6 @@
             <v-btn
               v-else
               variant="text"
-              color="warning"
               size="small"
               prepend-icon="star_outline"
               :disabled="!editable"
@@ -228,6 +234,8 @@ interface FieldDef {
 
 interface GroupDef {
   key: string
+  /** Material icon shown next to the group subheading. */
+  icon: string
   fields: FieldDef[]
 }
 
@@ -258,6 +266,7 @@ const SOUND_KEYS: string[] = [
 const CATALOG: GroupDef[] = [
   {
     key: 'video',
+    icon: 'videocam',
     fields: [
       { key: 'renderDistance', control: 'slider', default: 12, min: 2, max: 32, step: 1 },
       { key: 'fov', control: 'slider', default: 70, min: 30, max: 110, step: 1 },
@@ -303,6 +312,7 @@ const CATALOG: GroupDef[] = [
   },
   {
     key: 'audio',
+    icon: 'volume_up',
     fields: SOUND_KEYS.map((key) => ({
       key,
       control: 'slider' as const,
@@ -314,6 +324,7 @@ const CATALOG: GroupDef[] = [
   },
   {
     key: 'controls',
+    icon: 'mouse',
     fields: [
       { key: 'mouseSensitivity', control: 'slider', default: 0.5, min: 0, max: 1, step: 0.01 },
       { key: 'invertYMouse', control: 'switch', default: false },
@@ -334,6 +345,7 @@ const CATALOG: GroupDef[] = [
   },
   {
     key: 'language',
+    icon: 'translate',
     fields: [
       { key: 'lang', control: 'text', default: 'en_us', cols: 6, hideWhenMissing: true },
       { key: 'forceUnicodeFont', control: 'switch', default: false },
@@ -341,6 +353,7 @@ const CATALOG: GroupDef[] = [
   },
   {
     key: 'chat',
+    icon: 'forum',
     fields: [
       {
         key: 'chatVisibility',
@@ -482,7 +495,7 @@ function fieldItems(field: FieldDef, value: any): Array<{ value: any; title: str
 const groups = computed(() => {
   const source = settings.value
   const missingFile = missing.value
-  const result: Array<{ key: string; fields: RenderedField[] }> = []
+  const result: Array<{ key: string; icon: string; fields: RenderedField[] }> = []
   for (const group of CATALOG) {
     const fields: RenderedField[] = []
     for (const field of group.fields) {
@@ -499,7 +512,7 @@ const groups = computed(() => {
         items: boolAo ? undefined : fieldItems(field, value),
       })
     }
-    if (fields.length) result.push({ key: group.key, fields })
+    if (fields.length) result.push({ key: group.key, icon: group.icon, fields })
   }
   return result
 })
@@ -665,3 +678,49 @@ watch(isShown, (shown) => {
   }
 }, { immediate: true })
 </script>
+
+<style scoped>
+/* Sliders render 29px tall at compact density while switches, selects and
+   text fields render 40px, so a mixed row looked ragged. Pin every control to
+   the taller of the two. */
+.mc-settings-group :deep(.v-input) {
+  min-height: 40px;
+}
+
+/* `dense` collapsed the gutters; a plain row with an explicit row gap keeps
+   the two columns apart and gives the stacked controls room to breathe. */
+.mc-settings-row {
+  row-gap: 12px;
+}
+
+/* Slightly raised above the field labels so a group reads as a heading rather
+   than another setting, without introducing a new colour. */
+.mc-settings-group__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: rgba(var(--v-theme-on-surface), 0.74);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.mc-settings-group__title :deep(.v-icon) {
+  opacity: 0.85;
+}
+
+/* Plain favourite marker: the title already says which instance is open, so
+   the star only needs to be readable, not loud. */
+.mc-settings-favorite {
+  opacity: 0.62;
+}
+
+.mc-settings-alert {
+  margin-bottom: 12px;
+}
+
+.mc-settings-actions {
+  padding-top: 4px;
+}
+</style>

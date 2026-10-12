@@ -77,9 +77,8 @@
       {{ t('instance.mcSettings') }}
       <v-icon
         v-if="isMcFavorite"
-        color="warning"
         size="14"
-        class="ml-auto"
+        class="ml-auto panel-favorite-star"
         data-testid="panel-mc-settings-favorite"
       >star</v-icon>
     </button>
@@ -347,6 +346,11 @@ const onCreateShortcut = async () => {
 
 .action-btn--danger:hover:not(:disabled) {
   background: rgba(255, 82, 82, 0.15);
+}
+
+/* Plain favourite marker, matching the one in the MC settings dialog. */
+.panel-favorite-star {
+  opacity: 0.62;
 }
 
 .instance-actions-panel__divider {
