@@ -838,11 +838,15 @@ a {
    instead of the pill/circle Material look. Colors and sizes stay on the
    theme tokens. */
 .v-switch {
-  /* Material sizes the knob from --v-selection-control-size (half of it) while
-     the rail is a fixed 14px, so the knob was thicker than the rail at default
-     density and thinner than it at compact density. Drive both from one token
-     so the knob is flush with the rail at every density. */
+  /* Material sizes the knob at half the selection control (20px) while the
+     rail is a fixed 14px, so the knob was 20px tall in a 14px rail and spilled
+     3px past the top and bottom of it in both states. It also filled 55% of the
+     rail's width, which read as a two-tone bar rather than a knob.
+     Drive both from one token so they cannot drift apart at any density (the
+     knob previously scaled with --v-selection-control-size while the rail did
+     not), and size the knob so the rail shows on both sides of it. */
   --disco-switch-rail-height: 14px;
+  --disco-switch-knob-size: 12px;
 }
 
 .v-switch .v-switch__track {
@@ -852,18 +856,7 @@ a {
 
 .v-switch .v-switch__thumb {
   block-size: var(--disco-switch-rail-height) !important;
+  inline-size: var(--disco-switch-knob-size) !important;
   border-radius: 2px !important;
   box-shadow: none !important;
-  /* Vuetify slides the knob across the full width of the input box, which is
-     wider than the rail, so the knob ends up 2px proud of the rail on the
-     outer side in both states. Pull it back by that same 2px. `translate`
-     composes with the parent's transform instead of replacing it, so the
-     slide animation is preserved. */
-  translate: 2px 0 !important;
-  transition: translate 0.15s cubic-bezier(0.4, 0, 0, 0.2, 1),
-    background-color 0.15s cubic-bezier(0.4, 0, 0, 0.2, 1);
-}
-
-.v-switch .v-selection-control--dirty .v-switch__thumb {
-  translate: -2px 0 !important;
 }
