@@ -31,14 +31,6 @@
         >
         <span class="instance-card__name">{{ inst.name }}</span>
         <span class="instance-card__meta">{{ inst.runtime.minecraft || '' }}</span>
-        <span
-          v-if="pending.has(inst.path)"
-          class="instance-card__update"
-          :title="t('minecraftUpdate.badgeHint', { version: pending.get(inst.path) })"
-          data-testid="instance-update-badge"
-        >
-          <v-icon size="12">system_update_alt</v-icon>
-        </span>
       </button>
     </div>
   </div>
@@ -50,12 +42,10 @@ import { getInstanceIcon } from '@/util/favicon'
 import { injection } from '@/util/inject'
 import { kInstances } from '@/composables/instances'
 import { kInstance } from '@/composables/instance'
-import { useInstanceMinecraftUpdateMap } from '@/composables/minecraftUpdate'
 
 const { t } = useI18n()
 const { instances, selectedInstance } = injection(kInstances)
 const { select } = injection(kInstance)
-const { pending } = useInstanceMinecraftUpdateMap()
 
 const collapsed = ref(false)
 const selectedPath = selectedInstance
@@ -95,7 +85,6 @@ const instanceIconMap = computed(() => {
   padding: 4px;
 }
 .instance-card {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -134,22 +123,5 @@ const instanceIconMap = computed(() => {
 .instance-card__meta {
   font-size: 0.75rem;
   opacity: 0.65;
-}
-/* Disco: "a newer Minecraft release exists" marker, pinned to the card corner
-   so it never reflows the icon/name/meta stack. Informational only — applying
-   the update lives in the instance settings. */
-.instance-card__update {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: rgba(33, 150, 243, 0.9);
-  color: #fff;
-  pointer-events: none;
 }
 </style>
