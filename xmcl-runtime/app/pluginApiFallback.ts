@@ -57,14 +57,17 @@ export const pluginApiFallback: LauncherAppPlugin = (app) => {
       const key = (state.curseforgeApiKey || '').trim()
       if (key === last) return
       last = key
-      // Apply unconditionally: clearing the key in settings must revoke the
-      // previously stored one, otherwise requests keep the old credentials.
+      // An empty user key must revoke a previously stored user key, but it must
+      // not strip the launcher's own bundled fallback — otherwise every user
+      // without a personal key loses CurseForge the moment settings load.
+      applyKey(key || fallback)
       if (key) {
         logger.log('Applied user CurseForge API key from settings')
+      } else if (fallback) {
+        logger.log('No user CurseForge API key; keeping the bundled fallback')
       } else {
         logger.log('Cleared user CurseForge API key')
       }
-      applyKey(key)
     }
     sync()
     state.subscribeAll(sync)
