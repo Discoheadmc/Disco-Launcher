@@ -1,10 +1,11 @@
 import { ExploreProjectModern } from '@/components/StoreExploreCardModern.vue'
-import { CurseforgeBuiltinClassId, useCurseforge } from '@/composables/curseforge'
+import { useCurseforge } from '@/composables/curseforge'
 import { useDateString } from '@/composables/date'
 import { getFeedTheBeastProjectModel, useFeedTheBeast } from '@/composables/ftb'
 import { useMarketSort } from '@/composables/marketSort'
 import { useModrinth } from '@/composables/modrinth'
 import { useService } from '@/composables/service'
+import { getCurseforgeClassId, getModrinthProjectType, StoreContentType } from '@/composables/storeContentType'
 import { getCursforgeModLoadersFromString } from '@/util/curseforge'
 import { injection } from '@/util/inject'
 import { getExpectedSize } from '@/util/size'
@@ -23,6 +24,7 @@ interface UseSearchedItemsOptions {
   omitSources: Ref<string[]>
   modrinthCategories: Ref<string[]>
   curseforgeCategory: Ref<number | undefined>
+  contentType: Ref<StoreContentType>
   pageSize: number
   tCategory: (key: string) => string
 }
@@ -37,6 +39,7 @@ export function useSearchedItems(options: UseSearchedItemsOptions) {
     omitSources,
     modrinthCategories,
     curseforgeCategory,
+    contentType,
     pageSize,
     tCategory,
   } = options
@@ -108,14 +111,14 @@ export function useSearchedItems(options: UseSearchedItemsOptions) {
     modLoaders,
     '',
     modrinthSort,
-    'modpack',
+    computed(() => getModrinthProjectType(contentType.value)),
     page,
     pageSize,
   )
 
   // Curseforge
   const { projects: curseforgeProjects, pages: curseforgePageCount, isValidating: isCurseforgeSearching } = useCurseforge(
-    CurseforgeBuiltinClassId.modpack,
+    computed(() => getCurseforgeClassId(contentType.value)),
     query,
     page,
     computed(() => getCursforgeModLoadersFromString(modLoaders.value)),

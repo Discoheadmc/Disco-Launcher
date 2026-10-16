@@ -1685,7 +1685,15 @@ store:
   trending: Trend olan
   empty: Modpack bulunamadı
   emptyHint: Filtrelerinizi veya aramanızı değiştirmeyi deneyin.
-  searchHint: Mod paketlerini ara...
+  contentType:
+    name: İçerik
+    modpack: Mod Paketleri
+    mod: Modlar
+    resourcepack: Texture Paketleri
+  searchHint:
+    modpack: Mod paketlerini ara...
+    mod: Modları ara...
+    resourcepack: Texture paketlerini ara...
 tag:
   create: Etiket Oluştur
   createSelected: Seçilenler için Etiket Oluştur

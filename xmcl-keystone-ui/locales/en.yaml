@@ -2153,7 +2153,15 @@ store:
   latestVersionBar: Latest Version
   name: Modpack Market
   popularity: Popularity / follows
-  searchHint: Search mods, modpacks, resource packs...
+  contentType:
+    name: Content
+    modpack: Modpacks
+    mod: Mods
+    resourcepack: Texture Packs
+  searchHint:
+    modpack: Search modpacks...
+    mod: Search mods...
+    resourcepack: Search resource packs...
   searchResult: Search Result
   trending: Trending
 tag:

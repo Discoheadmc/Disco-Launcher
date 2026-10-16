@@ -13,6 +13,25 @@
       class="store-sidebar w-auto lg:(w-88 h-full overflow-y-auto pb-20) flex-none border-b lg:(border-b-0 border-r) border-divider/40 px-4 pt-6 flex flex-col gap-6 custom-scrollbar"
     >
       <div class="flex flex-col gap-4 flex-shrink-0">
+        <!-- Content Type -->
+        <div class="filter-group">
+          <h3 class="filter-title">{{ t('store.contentType.name') }}</h3>
+          <div class="flex gap-2">
+            <button
+              v-for="type in contentTypeList"
+              :key="type.id"
+              type="button"
+              :aria-label="type.text"
+              :aria-pressed="contentType === type.id"
+              class="source-button prism-flat-box relative flex-1 flex flex-col items-center justify-center p-3"
+              :class="{ selected: contentType === type.id }"
+              @click="selectContentType(type.id)"
+            >
+              <v-icon size="22" class="mb-1">{{ type.icon }}</v-icon>
+              <span class="text-xs font-bold">{{ type.text }}</span>
+            </button>
+          </div>
+        </div>
         <!-- Sources -->
         <div class="filter-group">
           <h3 class="filter-title">
@@ -130,7 +149,7 @@
             hide-details
             rounded="xl"
             density="comfortable"
-            :placeholder="t('store.searchHint')"
+            :placeholder="searchPlaceholder"
             prepend-inner-icon="search"
             class="elevated-search"
           >
@@ -283,6 +302,7 @@ import { useTextFieldBehavior } from '@/composables/textfieldBehavior'
 import { kTheme } from '@/composables/theme'
 import { useRecentMinecraftItems } from '@/composables/useRecentMinecraftItems'
 import { useSearchedItems } from '@/composables/useSearchedItems'
+import { normalizeStoreContentType, STORE_CONTENT_TYPES, StoreContentType } from '@/composables/storeContentType'
 import { useGamepadInnerNav } from '@/composables/gamepad'
 import { vRovingTabindex } from '@/directives/rovingTabindex'
 import { injection } from '@/util/inject'
@@ -306,6 +326,7 @@ const query = useQuery('query', ensureQuery)
 const gameVersion = useQuery('gameVersion', ensureQuery)
 const modLoaders = useQueryStringArray('modLoaders', ensureQuery)
 const sortQuery = useQuery('sort', ensureQuery)
+const contentTypeQuery = useQuery('contentType', ensureQuery)
 const sort = computed({
   get: () => normalizeMarketSort(sortQuery.value || (query.value ? 'relevance' : 'downloads')),
   set: (value: string) => { sortQuery.value = value },
@@ -320,6 +341,39 @@ const curseforgeCategory = useQueryNumber(
   ensureQuery,
 )
 const pageSize = 20
+
+// Disco: the store's content-type selector. Defaults to modpack so the screen
+// opens exactly as it did before the selector existed.
+const contentType = computed<StoreContentType>({
+  get: () => normalizeStoreContentType(contentTypeQuery.value),
+  set: (value) => { contentTypeQuery.value = value },
+})
+const contentTypeList = computed(() => STORE_CONTENT_TYPES.map((id) => ({
+  id,
+  icon: id === 'modpack' ? 'inventory_2' : id === 'mod' ? 'extension' : 'texture',
+  text: t(`store.contentType.${id}`),
+})))
+const searchPlaceholder = computed(() => t(`store.searchHint.${contentType.value}`))
+
+function selectContentType(type: StoreContentType) {
+  if (contentType.value === type) return
+  // One replace, not several computed writes: every useQuery setter reads
+  // route.query synchronously and Vue Router does not update it between
+  // synchronous calls, so sequential writes would clobber each other.
+  const newQuery: Record<string, string | (string | null)[] | null | undefined> = {
+    ...route.query,
+    contentType: type,
+    // Categories are type-specific (a modpack category is meaningless in a
+    // mod search and vice versa), so drop them on every switch.
+    modrinthCategories: undefined,
+    curseforgeCategory: undefined,
+    page: '1',
+  }
+  // Loader filters only make sense for modpacks and mods.
+  if (type === 'resourcepack') newQuery.modLoaders = undefined
+  delete newQuery.sortOrder
+  replace({ query: newQuery })
+}
 
 // Disco Launcher: the "Trending" carousel was removed; the latest-Minecraft
 // section still renders only when no search or category filter is active.
@@ -351,6 +405,7 @@ const { items, isSearching, searchError, pageCount, sources } = useSearchedItems
   omitSources,
   modrinthCategories: _modrinthCategories,
   curseforgeCategory,
+  contentType,
   pageSize,
   tCategory,
 })
@@ -666,6 +721,14 @@ useTutorial(
   background: transparent;
   border-color: rgba(var(--v-theme-on-surface), 0.08);
   opacity: 0.5;
+}
+
+/* On-state for single-select buttons (the content-type switch): same accent
+   treatment the modloader tiles use. */
+.source-button.selected {
+  background: rgba(var(--v-theme-primary), 0.08);
+  border-color: rgba(var(--v-theme-primary), 0.9);
+  @apply text-gray-800 dark:text-gray-100;
 }
 
 .source-button.omitted {
