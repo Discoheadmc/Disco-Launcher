@@ -3,6 +3,7 @@ import StoreProjectBase, { StoreProject } from '@/components/StoreProject.vue'
 import { StoreProjectVersion, StoreProjectVersionDetail } from '@/components/StoreProjectInstallVersionDialog.vue'
 import { TeamMember } from '@/components/StoreProjectMembers.vue'
 import { kInstances } from '@/composables/instances'
+import { useDialog } from '@/composables/dialog'
 import { useMarkdown } from '@/composables/markdown'
 import { useModpackInstaller } from '@/composables/modpackInstaller'
 import { kModrinthTags } from '@/composables/modrinth'
@@ -10,6 +11,7 @@ import { useModrinthProject } from '@/composables/modrinthProject'
 import { useModrinthVersions } from '@/composables/modrinthVersions'
 import { useNotifier } from '@/composables/notifier'
 import { usePresence } from '@/composables/presence'
+import { StoreInstallTargetsDialogKey } from '@/composables/storeInstall'
 import { kSWRVConfig } from '@/composables/swrvConfig'
 import { useTasks } from '@/composables/task'
 import { clientModrinthV2 } from '@/util/clients'
@@ -206,6 +208,24 @@ async function getVersionDetail(version: StoreProjectVersion) {
 }
 
 usePresence(computed(() => t('presence.modrinthProject', { name: project.value?.title || '' })))
+
+// Disco: mods and resource packs install into an existing instance; only
+// modpacks keep the create-instance flow.
+const installTargets = computed(() => {
+  const type = proj.value?.project_type
+  return type === 'mod' || type === 'resourcepack'
+})
+const { show: showInstallTargets } = useDialog(StoreInstallTargetsDialogKey)
+function onInstallTargets() {
+  if (!proj.value) return
+  showInstallTargets({
+    market: 'modrinth',
+    projectId: proj.value.id,
+    icon: project.value?.iconUrl,
+    title: project.value?.title || proj.value.title,
+    contentType: proj.value.project_type === 'mod' ? 'mod' : 'resourcepack',
+  })
+}
 </script>
 <template>
   <StoreProjectBase
@@ -220,7 +240,9 @@ usePresence(computed(() => t('presence.modrinthProject', { name: project.value?.
     :loading-members="loadingMembers"
     :team-error="teamError"
     :get-version-detail="getVersionDetail"
+    :install-targets="installTargets"
     @install="onInstall"
+    @install-targets="onInstallTargets"
     @open="onOpen"
   />
 </template>

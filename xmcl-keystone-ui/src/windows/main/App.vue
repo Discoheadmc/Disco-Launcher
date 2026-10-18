@@ -108,6 +108,7 @@ const lazyDialogComponents = {
   'modrinth-project-bind': defineAsyncComponent(() => import('@/views/AppModrinthProjectBindDialog.vue')),
   'modrinth-version-publish': defineAsyncComponent(() => import('@/views/AppModrinthVersionPublishDialog.vue')),
   'mc-settings': defineAsyncComponent(() => import('@/views/AppMcSettingsDialog.vue')),
+  'store-install-targets': defineAsyncComponent(() => import('@/views/StoreInstallTargetsDialog.vue')),
 }
 
 const showSetup = ref(location.search.indexOf('bootstrap') !== -1)

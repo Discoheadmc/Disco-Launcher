@@ -117,17 +117,30 @@ const props = defineProps<{
   installed?: boolean
   installing?: boolean
 
+  /**
+   * Disco: when the project installs into an existing instance (mods and
+   * resource packs from the store), İndir skips the version picker and emits
+   * `install-targets` instead — the instance picker resolves the version per
+   * instance. Modpacks keep the version-dialog → create-instance flow.
+   */
+  installTargets?: boolean
+
   getVersionDetail: (version: StoreProjectVersion) => Promise<StoreProjectVersionDetail>
 }>()
 
 const emit = defineEmits<{
   (event: 'install', version: StoreProjectVersion): void
+  (event: 'install-targets'): void
   (event: 'open'): void
   (event: 'load'): void
 }>()
 
 const installDialog = ref(false)
 const onInstall = () => {
+  if (props.installTargets) {
+    emit('install-targets')
+    return
+  }
   installDialog.value = true
 }
 const onOpen = () => {

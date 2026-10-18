@@ -2,11 +2,13 @@
 import StoreProject, { StoreProject as IStoreProject } from '@/components/StoreProject.vue'
 import { StoreProjectVersion } from '@/components/StoreProjectInstallVersionDialog.vue'
 import { TeamMember } from '@/components/StoreProjectMembers.vue'
-import { getCurseforgeProjectDescriptionModel, getCurseforgeProjectFilesModel, getCurseforgeProjectModel, useCurseforgeCategoryI18n } from '@/composables/curseforge'
+import { CurseforgeBuiltinClassId, getCurseforgeProjectDescriptionModel, getCurseforgeProjectFilesModel, getCurseforgeProjectModel, useCurseforgeCategoryI18n } from '@/composables/curseforge'
 import { getCurseforgeChangelogModel } from '@/composables/curseforgeChangelog'
 import { useDateString } from '@/composables/date'
+import { useDialog } from '@/composables/dialog'
 import { kInstances } from '@/composables/instances'
 import { useModpackInstaller } from '@/composables/modpackInstaller'
+import { StoreInstallTargetsDialogKey } from '@/composables/storeInstall'
 import { useSWRVModel } from '@/composables/swrv'
 import { kSWRVConfig } from '@/composables/swrvConfig'
 import { useTasks } from '@/composables/task'
@@ -229,6 +231,24 @@ async function getVersionDetail(version: StoreProjectVersion) {
   }
 }
 
+// Disco: mods and resource packs install into an existing instance; only
+// modpacks keep the create-instance flow.
+const installTargets = computed(() => {
+  const classId = proj.value?.classId
+  return classId === CurseforgeBuiltinClassId.mod || classId === CurseforgeBuiltinClassId.resourcePack
+})
+const { show: showInstallTargets } = useDialog(StoreInstallTargetsDialogKey)
+function onInstallTargets() {
+  if (!proj.value) return
+  showInstallTargets({
+    market: 'curseforge',
+    projectId: String(proj.value.id),
+    icon: project.value?.iconUrl,
+    title: project.value?.title || proj.value.name,
+    contentType: proj.value.classId === CurseforgeBuiltinClassId.mod ? 'mod' : 'resourcepack',
+  })
+}
+
 </script>
 <template>
   <StoreProject
@@ -242,7 +262,9 @@ async function getVersionDetail(version: StoreProjectVersion) {
     :loading-members="false"
     :team-error="undefined"
     :get-version-detail="getVersionDetail"
+    :install-targets="installTargets"
     @install="onInstall"
+    @install-targets="onInstallTargets"
     @open="onOpen"
   />
 </template>

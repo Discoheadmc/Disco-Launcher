@@ -261,7 +261,9 @@
               v-for="mod in items"
               :key="`${mod.type}:${mod.id}`"
               :value="mod"
+              :installable="canQuickInstall(mod)"
               @click="enter(mod.type, mod.id)"
+              @install="onQuickInstall(mod)"
             />
           </div>
 
@@ -292,8 +294,10 @@ import FilterCard from '@/components/FilterCard.vue'
 import FTBIcon from '@/components/FTBIcon.vue'
 import ModrinthIcon from '@/components/ModrinthIcon.vue'
 import StoreExploreCardModern from '@/components/StoreExploreCardModern.vue'
+import type { ExploreProjectModern } from '@/components/StoreExploreCardModern.vue'
 import { kCurseforgeCategories, useCurseforgeCategoryI18n } from '@/composables/curseforge'
 import { useDateString } from '@/composables/date'
+import { useDialog } from '@/composables/dialog'
 import { kModrinthTags } from '@/composables/modrinth'
 import { useQuery, useQueryNumber, useQueryStringArray } from '@/composables/query'
 import { useSortByItems } from '@/composables/sortBy'
@@ -302,6 +306,7 @@ import { useTextFieldBehavior } from '@/composables/textfieldBehavior'
 import { kTheme } from '@/composables/theme'
 import { useRecentMinecraftItems } from '@/composables/useRecentMinecraftItems'
 import { useSearchedItems } from '@/composables/useSearchedItems'
+import { StoreInstallTargetsDialogKey } from '@/composables/storeInstall'
 import { normalizeStoreContentType, STORE_CONTENT_TYPES, StoreContentType } from '@/composables/storeContentType'
 import { useGamepadInnerNav } from '@/composables/gamepad'
 import { vRovingTabindex } from '@/directives/rovingTabindex'
@@ -475,6 +480,26 @@ const catModLoaders = computed(() =>
 
 const enter = (type: string, id: string) => {
   push(`/store/${type}/${id}`)
+}
+
+// Disco: quick install — mods and resource packs go straight into an
+// existing instance. Modpacks keep the create-instance flow and FTB has no
+// per-instance content, so those cards never show the button.
+const canQuickInstall = (mod: ExploreProjectModern) =>
+  contentType.value !== 'modpack' && (mod.type === 'modrinth' || mod.type === 'curseforge')
+
+const { show: showInstallTargets } = useDialog(StoreInstallTargetsDialogKey)
+function onQuickInstall(mod: ExploreProjectModern) {
+  if (mod.type !== 'modrinth' && mod.type !== 'curseforge') return
+  const ct = contentType.value
+  if (ct === 'modpack') return
+  showInstallTargets({
+    market: mod.type,
+    projectId: mod.id,
+    icon: mod.iconUrl,
+    title: mod.localizedTitle || mod.title,
+    contentType: ct,
+  })
 }
 
 // --- UI Logic for Filters ---

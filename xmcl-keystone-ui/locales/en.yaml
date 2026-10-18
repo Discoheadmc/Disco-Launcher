@@ -2162,6 +2162,27 @@ store:
     modpack: Search modpacks...
     mod: Search mods...
     resourcepack: Search resource packs...
+storeInstall:
+  title: Install to which game?
+  typeMod: Mod
+  typeResourcepack: Texture Pack
+  search: Search games...
+  willInstall: Will install {version}
+  noVersion: No compatible version
+  loaderMismatch: Mod loader mismatch
+  installed: Installed
+  installedNote: Selecting will upgrade the existing copy
+  running: Running
+  runningWarning: Takes effect after the game restarts
+  confirm: 'Install ({count})'
+  empty: No games to install to. Create one first.
+  depsTitle: The following will also be installed
+  depsHint: Required dependencies of this content
+  depCount: Will install to {count} games
+  back: Back
+  depsFailed: Failed to resolve dependencies
+  done: '{project} installed'
+  failed: 'Failed to install to {instance}'
   searchResult: Search Result
   trending: Trending
 tag:

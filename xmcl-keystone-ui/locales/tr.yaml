@@ -1694,6 +1694,27 @@ store:
     modpack: Mod paketlerini ara...
     mod: Modları ara...
     resourcepack: Texture paketlerini ara...
+storeInstall:
+  title: Hangi oyuna kurulsun?
+  typeMod: Mod
+  typeResourcepack: Texture Paketi
+  search: Oyun ara...
+  willInstall: '{version} kurulacak'
+  noVersion: Uyumlu sürüm yok
+  loaderMismatch: Mod yükleyici uyuşmuyor
+  installed: Kurulu
+  installedNote: Seçilirse mevcut kopya yükseltilir
+  running: Çalışıyor
+  runningWarning: Etkisi oyun yeniden başlayınca görünür
+  confirm: 'Kur ({count})'
+  empty: Kurulacak oyun yok. Önce bir oyun oluşturun.
+  depsTitle: Şunlar da kurulacak
+  depsHint: Bu içeriğin çalışması için gerekli bağımlılıklar
+  depCount: '{count} oyuna kurulacak'
+  back: Geri
+  depsFailed: Bağımlılıklar çözümlenemedi
+  done: '{project} kuruldu'
+  failed: '{instance} oyununa kurulamadı'
 tag:
   create: Etiket Oluştur
   createSelected: Seçilenler için Etiket Oluştur

@@ -50,6 +50,21 @@
           </span>
         </div>
       </div>
+
+      <!-- Disco: quick install into an existing instance (mods / resource
+           packs only). The click must not open the detail page. -->
+      <button
+        v-if="installable"
+        type="button"
+        class="explore-card__install absolute bottom-3 right-3 flex items-center justify-center w-8 h-8 rounded-md bg-black/55 backdrop-blur-md"
+        :aria-label="t('shared.install')"
+        :data-testid="`store-card-install-${value.title}`"
+        @click.stop="$emit('install')"
+        @keydown.enter.stop.prevent="$emit('install')"
+        @keydown.space.stop.prevent="$emit('install')"
+      >
+        <v-icon size="16" color="white">file_download</v-icon>
+      </button>
     </div>
 
     <!-- Content Area -->
@@ -108,9 +123,13 @@
 import { vSharedTooltip } from '@/directives/sharedTooltip'
 import { useElementHover, useInterval } from '@vueuse/core'
 
-const props = defineProps<{ value: ExploreProjectModern }>()
+const props = defineProps<{
+  value: ExploreProjectModern
+  /** Disco: show the quick "install to instance" button on the card. */
+  installable?: boolean
+}>()
 
-defineEmits(['click'])
+defineEmits(['click', 'install'])
 
 const { t } = useI18n()
 
