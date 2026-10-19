@@ -1685,6 +1685,7 @@ store:
   trending: Trend olan
   empty: Modpack bulunamadı
   emptyHint: Filtrelerinizi veya aramanızı değiştirmeyi deneyin.
+  ftbOnlyModpacks: FTB yalnızca mod paketi sunar
   contentType:
     name: İçerik
     modpack: Mod Paketleri

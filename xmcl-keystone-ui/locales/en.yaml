@@ -2149,6 +2149,7 @@ store:
   discover: Discover
   empty: No Modpacks Found
   emptyHint: Try adjusting your filters or search query.
+  ftbOnlyModpacks: FTB only serves modpacks
   latestMinecraft: Latest Minecraft Version
   latestVersionBar: Latest Version
   name: Modpack Market

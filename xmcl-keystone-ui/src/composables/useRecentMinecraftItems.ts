@@ -1,5 +1,6 @@
 import { useCurseforgeCategoryI18n } from '@/composables/curseforge'
 import { getFacatsText, kModrinthTags } from '@/composables/modrinth'
+import { getCurseforgeClassId, StoreContentType } from '@/composables/storeContentType'
 import { kSWRVConfig } from '@/composables/swrvConfig'
 import { useService } from '@/composables/service'
 import { clientCurseforgeV1, clientModrinthV2 } from '@/util/clients'
@@ -7,7 +8,7 @@ import { mergeSorted } from '@/util/sort'
 import { ModsSearchSortField } from '@xmcl/curseforge'
 import { ProjectMappingServiceKey } from '@xmcl/runtime-api'
 import useSWRV from 'swrv'
-import { Ref, computed, inject, watch } from 'vue'
+import { Ref, computed, inject, ref, watch } from 'vue'
 import { injection } from '@/util/inject'
 import { ExploreProjectModern } from '@/components/StoreExploreCardModern.vue'
 import { getExpectedSize } from '@/util/size'
@@ -16,6 +17,7 @@ import { useDateString } from './date'
 export function useRecentMinecraftItems(
   galleryMappings: Ref<Record<string, { name: string; description: string }>>,
   enabled: Ref<boolean>,
+  contentType: Ref<StoreContentType> = ref('modpack') as Ref<StoreContentType>,
 ) {
   const { t } = useI18n()
   const tCategory = useCurseforgeCategoryI18n()
@@ -28,23 +30,24 @@ export function useRecentMinecraftItems(
   const latestModrinth = computed(() => gameVersions.value.filter(v => v.major)[0].version)
   // Disco Launcher: gated behind `enabled` — a null swrv key means "do not
   // fetch". The section is hidden while searching/filtering, so the 30-item
-  // queries should not race with the user's own search.
+  // queries should not race with the user's own search. The content type is
+  // part of the key so switching it refetches.
   const { data: modrinthRecentMinecraft } = useSWRV(
-    computed(() => (enabled.value ? '/modrinth/recent_version' : null)),
+    computed(() => (enabled.value ? `/modrinth/recent_version/${contentType.value}` : null)),
     async () => {
       const result = await clientModrinthV2.searchProjects({
         index: 'newest',
         limit: 30,
-        facets: getFacatsText(latestModrinth.value, '', [], [], 'modpack', ''),
+        facets: getFacatsText(latestModrinth.value, '', [], [], contentType.value, ''),
       })
       return result.hits
     },
     inject(kSWRVConfig),
   )
   const { data: curseforgeRecentMinecraft } = useSWRV(
-    computed(() => (enabled.value ? '/curseforge/recent_version' : null)),
+    computed(() => (enabled.value ? `/curseforge/recent_version/${contentType.value}` : null)),
     async () => {
-      const result = await clientCurseforgeV1.searchMods({ sortField: ModsSearchSortField.GameVersion, classId: 4471, pageSize: 30 })
+      const result = await clientCurseforgeV1.searchMods({ sortField: ModsSearchSortField.GameVersion, classId: getCurseforgeClassId(contentType.value), pageSize: 30 })
       return result.data
     },
     inject(kSWRVConfig),

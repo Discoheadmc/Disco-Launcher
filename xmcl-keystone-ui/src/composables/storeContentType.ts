@@ -35,3 +35,12 @@ export function getCurseforgeClassId(type: StoreContentType): CurseforgeBuiltinC
     default: return CurseforgeBuiltinClassId.modpack
   }
 }
+
+/**
+ * The CurseForge class whose direct children are the categories of the
+ * content type. Category ids are only unique within their parent class, so
+ * the store's category filter must switch alongside the content type.
+ */
+export function getCurseforgeCategoryParentId(type: StoreContentType): number {
+  return getCurseforgeClassId(type)
+}

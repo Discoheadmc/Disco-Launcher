@@ -45,8 +45,13 @@
               :aria-label="source.text"
               :aria-pressed="!omitSources.includes(source.id)"
               class="source-button prism-flat-box relative flex-1 flex flex-col items-center justify-center p-3"
-              :class="{ omitted: omitSources.includes(source.id) }"
-              @click="toggleSource(source.id)"
+              :class="{
+                omitted: omitSources.includes(source.id),
+                'source-button--unavailable': !isSourceAvailable(source.id),
+              }"
+              :disabled="!isSourceAvailable(source.id)"
+              v-shared-tooltip="() => (isSourceAvailable(source.id) ? undefined : t('store.ftbOnlyModpacks'))"
+              @click="isSourceAvailable(source.id) && toggleSource(source.id)"
             >
               <component :is="source.component" class="w-6 h-6 fill-current" />
               <span class="text-xs font-bold mt-2">{{ source.text }}</span>
@@ -96,8 +101,9 @@
         </div>
       </div>
 
-      <!-- ModLoaders -->
+      <!-- ModLoaders — hidden for resource packs: they are loader-agnostic. -->
       <FilterCard
+        v-if="contentType !== 'resourcepack'"
         :title="t('modrinth.modLoaders.name')"
         :items="
           catModLoaders.map((loader) => ({
@@ -304,10 +310,11 @@ import { useSortByItems } from '@/composables/sortBy'
 import { normalizeMarketSort } from '@/composables/marketSort'
 import { useTextFieldBehavior } from '@/composables/textfieldBehavior'
 import { kTheme } from '@/composables/theme'
+import { vSharedTooltip } from '@/directives/sharedTooltip'
 import { useRecentMinecraftItems } from '@/composables/useRecentMinecraftItems'
 import { useSearchedItems } from '@/composables/useSearchedItems'
 import { StoreInstallTargetsDialogKey } from '@/composables/storeInstall'
-import { normalizeStoreContentType, STORE_CONTENT_TYPES, StoreContentType } from '@/composables/storeContentType'
+import { getCurseforgeCategoryParentId, getCurseforgeClassId, normalizeStoreContentType, STORE_CONTENT_TYPES, StoreContentType } from '@/composables/storeContentType'
 import { useGamepadInnerNav } from '@/composables/gamepad'
 import { vRovingTabindex } from '@/directives/rovingTabindex'
 import { injection } from '@/util/inject'
@@ -376,6 +383,16 @@ function selectContentType(type: StoreContentType) {
   }
   // Loader filters only make sense for modpacks and mods.
   if (type === 'resourcepack') newQuery.modLoaders = undefined
+  if (type !== 'modpack') {
+    // If FTB was the only active source, switching to a type FTB cannot
+    // serve would leave the store with zero sources. Fall back to Modrinth.
+    const omitted = new Set(newQuery.omitSources ? String(newQuery.omitSources).split(',') : [])
+    if (omitted.has('modrinth') && omitted.has('curseforge')) {
+      omitted.delete('modrinth')
+      omitted.delete('curseforge')
+      newQuery.omitSources = omitted.size > 0 ? Array.from(omitted).join(',') : undefined
+    }
+  }
   delete newQuery.sortOrder
   replace({ query: newQuery })
 }
@@ -401,13 +418,24 @@ const tCategory = useCurseforgeCategoryI18n()
 const { getDateString } = useDateString()
 const galleryMappings = ref<Record<string, { name: string; description: string }>>({})
 
+// FTB only serves modpacks, so it is unavailable (shown dimmed with a hint)
+// whenever another content type is browsed, and effectively omitted from the
+// search even if it was active before.
+function isSourceAvailable(id: string) {
+  return !(id === 'ftb' && contentType.value !== 'modpack')
+}
+const effectiveOmitSources = computed(() => {
+  if (contentType.value === 'modpack') return omitSources.value
+  return Array.from(new Set([...omitSources.value, 'ftb']))
+})
+
 const { items, isSearching, searchError, pageCount, sources } = useSearchedItems({
   query,
   gameVersion,
   modLoaders,
   sort,
   page,
-  omitSources,
+  omitSources: effectiveOmitSources,
   modrinthCategories: _modrinthCategories,
   curseforgeCategory,
   contentType,
@@ -431,7 +459,7 @@ useGamepadInnerNav({
   disabled: () => pageCount.value <= 1,
 })
 
-const { recentMinecraftItems: allRecentMinecraftItems } = useRecentMinecraftItems(galleryMappings, hasFiltersComputed)
+const { recentMinecraftItems: allRecentMinecraftItems } = useRecentMinecraftItems(galleryMappings, hasFiltersComputed, contentType)
 
 // Compact single-line info bar: "Latest Version" label + small refresh
 // button. The version number is intentionally not displayed (Disco task 3);
@@ -475,7 +503,7 @@ const {
 } = injection(kModrinthTags)
 const { categories: curseforgeCategories } = injection(kCurseforgeCategories)
 const catModLoaders = computed(() =>
-  modrinthModloaders.value.filter((v) => v.supported_project_types.includes('modpack')),
+  modrinthModloaders.value.filter((v) => v.supported_project_types.includes(contentType.value)),
 )
 
 const enter = (type: string, id: string) => {
@@ -517,10 +545,11 @@ function toggleSource(id: string) {
   }
 }
 
-// Categories Display
+// Categories Display — per content type; a modpack category is meaningless
+// in a mod search and vice versa.
 const modrinthCategoriesDisplay = computed(() => {
   return modrinthCategories.value
-    .filter((v) => v.project_type === 'modpack')
+    .filter((v) => v.project_type === contentType.value)
     .map((c) => ({
       id: c.name,
       text: t(`modrinth.categories.${c.name}`, c.name),
@@ -536,9 +565,10 @@ function toggleModLoader(name: string) {
   }
 }
 
-// CurseForge Categories Display
+// CurseForge Categories Display — children of the content type's class.
 const curseforgeCategoriesDisplay = computed(() => {
-  return (curseforgeCategories.value?.filter((c) => c.parentCategoryId === 4471) || []).map(
+  const parent = getCurseforgeCategoryParentId(contentType.value)
+  return (curseforgeCategories.value?.filter((c) => c.parentCategoryId === parent) || []).map(
     (c) => ({
       id: c.id.toString(),
       text: tCategory(c.name),
@@ -754,6 +784,15 @@ useTutorial(
   background: rgba(var(--v-theme-primary), 0.08);
   border-color: rgba(var(--v-theme-primary), 0.9);
   @apply text-gray-800 dark:text-gray-100;
+}
+
+/* Unavailable source (FTB outside modpacks): dimmed, not clickable, the
+   tooltip carries the reason. */
+.source-button--unavailable,
+.source-button--unavailable:hover {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: rgba(var(--v-theme-on-surface), 0.08);
 }
 
 .source-button.omitted {
