@@ -1,8 +1,12 @@
 <template>
   <div class="flex gap-4">
-    <!-- Prism-minimal: flat corners, solid primary only on the main action. -->
+    <!-- Prism-minimal: flat corners, solid primary only on the main action.
+         Disco: the cancel button carries a border and a light surface fill —
+         as a bare text button it visually disappeared next to the filled
+         primary actions. -->
     <v-btn
       data-testid="add-instance-cancel"
+      class="stepper-cancel-btn"
       :disabled="creating"
       variant="text"
       @click="emit('quit')"
@@ -47,3 +51,21 @@ defineProps<{
 const emit = defineEmits(['quit', 'next', 'create', 'back'])
 const { t } = useI18n()
 </script>
+
+<style scoped>
+/* Disco: outline + light surface fill so Cancel reads as a button of its
+   own next to the filled primary actions. Theme tokens only. */
+.stepper-cancel-btn {
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.25);
+  border-radius: 2px;
+  background: rgba(var(--v-theme-on-surface), 0.08);
+}
+
+.stepper-cancel-btn:hover:not(.v-btn--disabled) {
+  background: rgba(var(--v-theme-on-surface), 0.14);
+}
+
+.stepper-cancel-btn.v-btn--disabled {
+  opacity: 0.4;
+}
+</style>
