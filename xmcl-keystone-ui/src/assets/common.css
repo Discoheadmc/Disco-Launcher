@@ -81,6 +81,10 @@ html {
     --surface-bg: rgb(var(--v-theme-surface));
     --surface-blur: 0px;
 
+    /* Disco: input field background. Defaults to the surface color so solo
+       fields look unchanged until the surface-colors editor overrides it. */
+    --input-bg: rgb(var(--v-theme-surface));
+
     /* Menu-only: inner padding + list-item radius (dialogs don't share). */
     --surface-menu-padding: 6px;
     --surface-menu-item-radius: 3px;
@@ -497,6 +501,15 @@ a {
 
 .v-text-field input {
     @apply z-7;
+}
+
+/* Disco: the surface-colors editor drives input fields through --input-bg
+   (fallback: the theme surface color). Vuetify paints the solo variants
+   straight onto .v-field, so the override needs the extra .v-application
+   hop to win over the framework rule regardless of style order. */
+.v-application .v-field--variant-solo,
+.v-application .v-field--variant-solo-filled {
+    background: var(--input-bg, rgb(var(--v-theme-surface)));
 }
 
 .theme--dark.v-card .v-card__subtitle,

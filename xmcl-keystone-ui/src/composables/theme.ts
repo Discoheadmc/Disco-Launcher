@@ -23,6 +23,17 @@ export enum BackgroundType {
   IMAGE = 'image',
   VIDEO = 'video' }
 
+export interface SurfaceColorSet {
+  /** Vuetify surface color — dialogs, menus, list items, input fields. */
+  background?: string
+  /** Card and panel backgrounds. */
+  card?: string
+  /** Input field background (falls back to background when absent). */
+  input?: string
+  /** Card/panel/surface border color. */
+  border?: string
+}
+
 export interface UIThemeDataV1 {
   dark: boolean | 'system'
   colors: {
@@ -59,6 +70,19 @@ export interface UIThemeDataV1 {
     sideBar?: number
     background?: number
     card?: number
+  }
+
+  /**
+   * Disco: per-surface gray colors (background, cards, inputs, borders)
+   * edited through the "Yüzey Renkleri" menu. Stored separately for the
+   * dark and the light theme. The whole block is optional and each field
+   * is optional: absent means "default look". Old themes without the block
+   * load with defaults; export/import carries it untouched since it lives
+   * in the same theme object.
+   */
+  surfaceColors?: {
+    dark?: SurfaceColorSet
+    light?: SurfaceColorSet
   }
 
   backgroundMusic: MediaData[]

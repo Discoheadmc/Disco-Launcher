@@ -63,6 +63,7 @@ import {
   kSurfaceTokens,
   useSurfaceTokens,
 } from '@/composables/surfaceTokens'
+import { useSurfaceColorsSync } from '@/composables/surfaceColors'
 import { useTelemetryTrack } from '@/composables/telemetryTrack'
 import { kTheme, useTheme } from '@/composables/theme'
 import { kTutorial, useTutorialModel } from '@/composables/tutorial'
@@ -209,6 +210,11 @@ export default defineComponent({
     provide(kTheme, theme)
     const surfaceTokens = useSurfaceTokens()
     provide(kSurfaceTokens, surfaceTokens)
+    // Disco: gray surface colors (background/card/input/border) stored in the
+    // theme and applied live through Vuetify's surface color + the surface
+    // tokens. Absent block = today's default look. Passed as arguments
+    // (not injected) because this runs inside Context's own setup.
+    useSurfaceColorsSync(theme, surfaceTokens)
 
     // Disco (task 5): the "Rounded Corners" theme setting was removed — the
     // minimal Prism-style design defines its corner rounding in fixed surface

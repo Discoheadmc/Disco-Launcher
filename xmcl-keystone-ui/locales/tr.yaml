@@ -1438,6 +1438,19 @@ setting:
     primaryColor: Birincil Renk
     sideBarColor: Kenar Çubuğu
     warningColor: Uyarı Rengi
+  surfaceColors:
+    name: Yüzey Renkleri
+    description: Arka plan, kart ve panel renklerini değiştirin
+    open: Düzenle
+    editingDark: Koyu tema düzenleniyor
+    editingLight: Açık tema düzenleniyor
+    background: Arka plan
+    card: Kart / Panel
+    input: Girdi alanı
+    border: Kenarlık
+    save: Kaydet
+    reset: Varsayılana sıfırla
+    lowContrast: Metin zor okunabilir olabilir
   darkTheme: Tema
   darkThemeDescription: Koyu veya açık tema arasında seçim yapın
   developerMode: Geliştirici Modu

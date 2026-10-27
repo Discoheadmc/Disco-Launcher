@@ -57,6 +57,11 @@ export function serialize(theme: UIThemeDataV1) {
   if (theme.customCssEnabled) {
     settings.customCssEnabled = true
   }
+  // Disco: per-surface gray colors (Yüzey Renkleri). Absent = defaults, so
+  // old themes keep loading with the pre-feature look.
+  if (theme.surfaceColors) {
+    settings.surfaceColors = theme.surfaceColors as unknown as Record<string, unknown>
+  }
   settings.dark = theme.dark
   const serialized: ThemeData = {
     ui: 'keystone',
@@ -157,6 +162,11 @@ export function deserialize(data: ThemeData): UIThemeDataV1 {
     }
     if (data.settings.customCssEnabled) {
       theme.customCssEnabled = data.settings.customCssEnabled as boolean
+    }
+    // Disco: per-surface gray colors; old themes without the block load
+    // with the defaults (the pre-feature look).
+    if (data.settings.surfaceColors !== undefined) {
+      theme.surfaceColors = data.settings.surfaceColors as UIThemeDataV1['surfaceColors']
     }
   }
   return theme

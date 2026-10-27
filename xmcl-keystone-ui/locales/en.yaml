@@ -1862,6 +1862,19 @@ setting:
     primaryColor: Primary Color
     sideBarColor: Side Bar
     warningColor: Warning Color
+  surfaceColors:
+    name: Surface Colors
+    description: Change the background, card and panel colors
+    open: Edit
+    editingDark: Editing the dark theme
+    editingLight: Editing the light theme
+    background: Background
+    card: Card / Panel
+    input: Input fields
+    border: Borders
+    save: Save
+    reset: Reset to default
+    lowContrast: Text may be hard to read
   customCss:
     advancedDescription: Override the launcher's current styling with your own CSS.
     assistantHint: Describe the look you want and I'll write the CSS for you.

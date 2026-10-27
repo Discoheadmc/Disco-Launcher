@@ -30,9 +30,17 @@ export const DEFAULT_SURFACE_BORDER = '1px solid rgba(var(--v-theme-on-surface),
 /** Prism-minimal: barely-there elevation shadow, no big diffusion. */
 export const DEFAULT_SURFACE_SHADOW = '0 4px 16px -4px rgba(0, 0, 0, 0.18)'
 
-/** Prism-minimal: opaque solid surfaces — no frosted glass. */
 export const DEFAULT_SURFACE_BG = 'rgb(var(--v-theme-surface))'
 export const DEFAULT_SURFACE_BLUR = 0
+
+/**
+ * Input field background. Defaults to the theme surface color so solo
+ * fields stay identical to the look before this token existed; the
+ * surface-colors editor overrides it per theme. The value keeps the
+ * `var()` reference unresolved on purpose — CSS resolves nested vars at
+ * use time, so an unset override always follows the live surface color.
+ */
+export const DEFAULT_INPUT_BG = 'rgb(var(--v-theme-surface))'
 
 /** Menu-only: inner padding and list-item radius. */
 export const DEFAULT_SURFACE_MENU_PADDING = 6
@@ -117,6 +125,7 @@ export interface SurfaceTokensInit {
   shadow?: string
   bg?: string
   blur?: number
+  inputBg?: string
   menuPadding?: number
   menuItemRadius?: number
   dialogRadius?: number
@@ -155,6 +164,7 @@ export interface SurfaceTokens {
   shadow: Ref<string>
   bg: Ref<string>
   blur: Ref<number>
+  inputBg: Ref<string>
   menuPadding: Ref<number>
   menuItemRadius: Ref<number>
   dialogRadius: Ref<number>
@@ -197,6 +207,7 @@ export function useSurfaceTokens(init: SurfaceTokensInit = {}): SurfaceTokens {
   const shadow = ref(init.shadow ?? DEFAULT_SURFACE_SHADOW)
   const bg = ref(init.bg ?? DEFAULT_SURFACE_BG)
   const blur = ref(init.blur ?? DEFAULT_SURFACE_BLUR)
+  const inputBg = ref(init.inputBg ?? DEFAULT_INPUT_BG)
   const menuPadding = ref(init.menuPadding ?? DEFAULT_SURFACE_MENU_PADDING)
   const menuItemRadius = ref(init.menuItemRadius ?? DEFAULT_SURFACE_MENU_ITEM_RADIUS)
   const dialogRadius = ref(init.dialogRadius ?? DEFAULT_SURFACE_DIALOG_RADIUS)
@@ -240,6 +251,7 @@ export function useSurfaceTokens(init: SurfaceTokensInit = {}): SurfaceTokens {
     root.setProperty('--surface-shadow', shadow.value)
     root.setProperty('--surface-bg', bg.value)
     root.setProperty('--surface-blur', `${blur.value}px`)
+    root.setProperty('--input-bg', inputBg.value)
     root.setProperty('--surface-menu-padding', `${menuPadding.value}px`)
     root.setProperty('--surface-menu-item-radius', `${menuItemRadius.value}px`)
     root.setProperty('--surface-dialog-radius', `${dialogRadius.value}px`)
@@ -281,6 +293,7 @@ export function useSurfaceTokens(init: SurfaceTokensInit = {}): SurfaceTokens {
     shadow.value = DEFAULT_SURFACE_SHADOW
     bg.value = DEFAULT_SURFACE_BG
     blur.value = DEFAULT_SURFACE_BLUR
+    inputBg.value = DEFAULT_INPUT_BG
     menuPadding.value = DEFAULT_SURFACE_MENU_PADDING
     menuItemRadius.value = DEFAULT_SURFACE_MENU_ITEM_RADIUS
     dialogRadius.value = DEFAULT_SURFACE_DIALOG_RADIUS
@@ -319,6 +332,7 @@ export function useSurfaceTokens(init: SurfaceTokensInit = {}): SurfaceTokens {
     shadow,
     bg,
     blur,
+    inputBg,
     menuPadding,
     menuItemRadius,
     dialogRadius,

@@ -37,8 +37,10 @@ export interface ThemeData {
    *
    * Notable keys:
    * - `customCssEnabled` (boolean): whether the theme's custom CSS is applied.
+   * - `surfaceColors` (object): Disco per-surface gray colors; nested
+   *   `{ dark?: {...}, light?: {...} }`. Absent = the default look.
    */
-  settings?: Record<string, string | number | boolean>
+  settings?: Record<string, string | number | boolean | Record<string, unknown>>
 }
 
 export interface StoredTheme {

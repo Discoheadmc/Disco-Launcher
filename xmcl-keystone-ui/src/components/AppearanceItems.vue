@@ -64,6 +64,28 @@
         />
       </div>
     </div>
+    <!-- Disco: gray surface colors (background/card/input/border) editor.
+         Kept separate from the Tema Renkleri row above on purpose. -->
+    <SettingItem
+      :title="t('setting.surfaceColors.name')"
+      :description="t('setting.surfaceColors.description')"
+      long-action
+    >
+      <template #action>
+        <v-btn
+          variant="outlined"
+          data-testid="surface-colors-open"
+          @click="showSurfaceColors = true"
+        >
+          {{ t('setting.surfaceColors.open') }}
+        </v-btn>
+      </template>
+    </SettingItem>
+    <SurfaceColorsMenu
+      v-model="showSurfaceColors"
+      :theme="props.theme"
+      @save="emit('save')"
+    />
     <SettingItemSelect
       v-model="backgroundType"
       :title="t('setting.backgroundType')"
@@ -255,6 +277,7 @@ import SettingItem from '@/components/SettingItem.vue'
 import SettingItemCheckbox from '@/components/SettingItemCheckbox.vue'
 import SettingAppearanceColor from '@/components/SettingAppearanceColor.vue'
 import SettingItemSelect from '@/components/SettingItemSelect.vue'
+import SurfaceColorsMenu from '@/components/SurfaceColorsMenu.vue'
 import { kCustomCss } from '@/composables/customCss'
 import { kEnvironment } from '@/composables/environment'
 import { kInstanceTheme } from '@/composables/instanceTheme'
@@ -362,6 +385,9 @@ function onToggleCss(value: boolean | null) {
 // URL input refs
 const imageUrlInput = ref('')
 const fontUrlInput = ref('')
+
+// Disco: surface colors (Yüzey Renkleri) editor dialog.
+const showSurfaceColors = ref(false)
 
 // Dialog show states
 const showImageUrlDialog = ref(false)
