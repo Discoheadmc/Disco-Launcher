@@ -2,7 +2,7 @@
   <v-dialog
     v-model="isShown"
     max-width="560px"
-    :persistent="installing"
+    :persistent="false"
   >
     <v-card
       data-testid="store-install-targets"
@@ -32,7 +32,6 @@
           variant="text"
           size="small"
           :aria-label="t('shared.cancel')"
-          :disabled="installing"
           data-testid="store-install-targets-close"
           @click="onCancel"
         >
@@ -153,7 +152,7 @@
             <span>{{ t('storeInstall.runningWarning') }}</span>
           </div>
           <div class="targets-actions">
-            <v-btn variant="text" :disabled="installing" data-testid="store-install-targets-cancel" @click="onCancel">
+            <v-btn variant="text" data-testid="store-install-targets-cancel" @click="onCancel">
               {{ t('shared.cancel') }}
             </v-btn>
             <v-btn
@@ -195,7 +194,7 @@
         </div>
         <v-divider />
         <div class="targets-actions">
-          <v-btn variant="text" :disabled="installing" @click="step = 'targets'">
+          <v-btn variant="text" @click="step = 'targets'">
             {{ t('storeInstall.back') }}
           </v-btn>
           <v-btn
@@ -566,6 +565,10 @@ async function performInstall() {
   installing.value = true
   const service = domainService(p.contentType)
   const targets = selectedRows.value
+  // Snapshot the resolved dependencies: the dialog may be closed while the
+  // installs run (the user is free to leave now), and the close handler resets
+  // depsByPath. Reading the map lazily would then silently skip them.
+  const deps = new Map(depsByPath.value)
 
   const results = await Promise.allSettled(targets.map(async (row) => {
     // The project itself.
@@ -575,7 +578,7 @@ async function performInstall() {
       await service.installFromMarket({ market: MarketType.CurseForge, file: { fileId: row.file.id, icon: p.icon }, instancePath: row.path })
     }
     // Its required dependencies for this instance.
-    for (const dep of depsByPath.value.get(row.path) || []) {
+    for (const dep of deps.get(row.path) || []) {
       if (p.market === 'modrinth' && dep.versionId) {
         await service.installFromMarket({ market: MarketType.Modrinth, version: { versionId: dep.versionId, icon: dep.icon }, instancePath: row.path })
       } else if (p.market === 'curseforge' && dep.fileId) {
@@ -611,7 +614,10 @@ async function performInstall() {
 }
 
 function onCancel() {
-  if (installing.value) return
+  // Closing during an install is allowed: the downloads already started are
+  // fire-and-forget and keep running, and their results are reported through
+  // the notifier. Only the picker goes away, so the user is never trapped on
+  // this screen while a big modpack/mod download is in flight.
   isShown.value = false
 }
 

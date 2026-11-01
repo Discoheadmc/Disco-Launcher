@@ -4,7 +4,7 @@ import { LAUNCHER_NAME } from '@xmcl/runtime/constant'
 import { kFlights, runWithExternalHttpTrace } from '@xmcl/runtime/infra'
 import { AnyError } from '@xmcl/utils'
 import { Menu, app, net, shell } from 'electron'
-import { stat } from 'fs-extra'
+import { readFileSync, stat } from 'fs-extra'
 import { join } from 'path'
 import { fetch as ufetch, FormData as UndiciFormData } from 'undici'
 import { ElectronController } from './ElectronController'
@@ -16,6 +16,19 @@ import { definedPlugins } from './definedPlugins'
 import { isReplayableFetchBody, splitFetchBody } from './fetchBody'
 import { getOzonePlatform } from './ozonePlatform'
 import { getWindowsUtils } from './utils/windowsUtils'
+
+/**
+ * Read the `version` field of a package.json. Returns undefined when the file
+ * is missing or malformed, so callers can fall back to the next candidate.
+ */
+function readPackageVersion(path: string): string | undefined {
+  try {
+    const { version } = JSON.parse(readFileSync(path, 'utf-8')) as { version?: string }
+    return version || undefined
+  } catch {
+    return undefined
+  }
+}
 
 class ElectronShell implements Shell {
   showItemInFolder = shell.showItemInFolder
@@ -226,6 +239,30 @@ export default class ElectronLauncherApp extends LauncherApp {
 
   get systemLocale(): string {
     return app.getSystemLocale()
+  }
+
+  /**
+   * Disco: the launcher's own version, never the Electron runtime's.
+   *
+   * In development the Electron app path is `<repo>/xmcl-electron-app/dist`,
+   * which holds no `package.json`, so Electron's `app.getVersion()` silently
+   * fell back to the bundled Electron version (43.1.0) and Settings > About
+   * showed that nonsense number to users. Read the app's package.json
+   * explicitly - the very same file electron-builder uses for the packaged
+   * artifact version - and keep `app.getVersion()` as the fallback for the
+   * packaged layout.
+   */
+  get version(): string {
+    const candidates = [
+      join(__dirname, '..', 'package.json'), // dev: dist/index.js
+      join(__dirname, 'package.json'), // packaged: <app>/index.js
+      join(app.getAppPath(), 'package.json'),
+    ]
+    for (const candidate of candidates) {
+      const version = readPackageVersion(candidate)
+      if (version) return version
+    }
+    return app.getVersion()
   }
 
   fetch: typeof fetch = async (...args: any[]) => {

@@ -1,0 +1,166 @@
+﻿# MC Ayarları & Instance Ayarları Güzelleştirme - Çalışma Özeti
+# Dosya: MC_Ayarlari_Gorev_Durumu.txt
+# Tarih: 27 Ekim 2026
+
+## PROJE DURUMU
+Repo: C:\Projeler\Discock\Github\Disco-Launcher
+Branch: master (origin/master'dan 5 commit önde)
+Commit: 97626256 - feat: add a surface-colors editor to the appearance settings
+
+## 1. TAMAMLANAN ADIMLAR
+
+### ADIM 1: MC Ayarları Teşhisi ve Doğrulama
+Kök neden: Kod kaybolmadı; çalışan kurulum eskiydi (3 Ekim tarihli asar, mc-settings içermiyordu). v0.0.2 paketi içeriyordu ama kurulu kopyası güncellenmemişti.
+
+Doğrulanan özellikler:
+- Sağ panelde panel-mc-settings butonu görünür (MC Ayarları)
+- Dialog açılır, oyun başlatmaz
+- 5 grup: Görüntü, Ses, Kontroller, Dil, Sohbet
+- options.txt okuma (33 alan, dosyayla birebir)
+- .bak yedeği oluşturulur, .tmp kalmaz
+- Sadece değişen satır yazılır
+- Favori testleri otomasyonla yapılamadı (manuel)
+- Oyun çalışırken kilit testi yapılmadı
+
+### ADIM 2: Mavi Başlat Butonu ve Dişli Kaldırma
+Yapılanlar:
+- HomeLaunchButton.vue ve HomeLaunchButtonMenuList.vue silindi (artık referanssız)
+- BaseSettingExtension.vue: Mavi Başlat hapı ve dişli menü kaldırıldı (instance ayarları sayfasından)
+- HomeFocusFooterV2.vue: Ana ekran odak-alt barından kaldırıldı
+- e2e/helpers/pom/AppShell.ts: launch-button testid panel-launch olarak güncellendi
+- e2e/TESTIDS.md: 249 -> 247 (3 kaldırıldı, 1 eklendi: panel-logs)
+
+Kaybolmayan işlevler (panele taşındı):
+- Ayarlar -> panel-edit (zaten var)
+- Instance klasörü -> panel-folder (zaten var)
+- Kısayol oluştur -> panel-shortcut (zaten var)
+- Günlükler -> panel-logs olarak panele EKLENDİ (yeni)
+
+Doğrulama:
+- Ana ekran ve ayarlar sayfasında mavi Başlat butonu yok
+- Modpack ve sunucu sekmeleri sağlam
+- Günlükler butonu dialog'u açar
+- Tüm panel butonları çalışıyor
+
+### ADIM 3: Instance Ayarları Menüsü Güzelleştirme
+BaseSetting.vue CSS:
+- base-setting-nav-item padding-inline: 12px (8px'den)
+- .v-list-item__spacer width: 32px -> 12px
+- base-setting-nav-item:hover rgba(255,255,255,0.06) eklendi
+
+Sonuç:
+- İkon, başlık ve meta tek ızgara hattında (131px)
+- İkon-metin boşluğu 51px -> 27px
+- Tüm satırlar tek hizalama ile
+
+### ADIM 4: MC Ayarları Dialogu Güzelleştirme
+Yapılanlar:
+- Beş gruba ikon eklendi: videocam (Görüntü), volume_up (Ses), mouse (Kontroller), translate (Dil), forum (Sohbet)
+- Grup başlıkları mc-settings-group__title sınıfıyla
+- mb-4 -> mb-5 (gruplar arası boşluk arttırıldı)
+- v-row -> mc-settings-row (sıfırlanmış aralık)
+- Sliderlar: min-height: 40px (29px'den) - tüm kontrollerle eşitlendi
+- Favori yıldızı: color="warning" kaldırıldı, düz beyaz @0.62 opaklık
+- Alertler: mc-settings-alert sınıfı, mb-3 -> mb-12
+- Butonlar: mc-settings-actions sınıfı, padding-top: 4px
+
+Doğrulama:
+- Tüm kontrol tipleri 40px'e eşitlendi
+- İkonlu gruplar doğru
+- Footer düzgün
+
+### ADIM 5: Toggle Kalınlığı (HALA DEVAM EDIYOR)
+Durum: thumb 20px, track 4px (thumb 5x kalın)
+İlerleme: Başlatılmadı
+
+## 5. DEĞİŞTİRİLEN DOSYALAR
+
+Commit Edilen Dosyalar:
+- xmcl-keystone-ui/src/views/BaseSetting.vue (Adım 3: menü güzelleştirme)
+- xmcl-keystone-ui/src/views/AppMcSettingsDialog.vue (Adım 4: dialog güzelleştirme)
+- xmcl-keystone-ui/src/views/BaseSettingExtension.vue (Adım 2: mavi başlat kaldırma)
+- xmcl-keystone-ui/src/views/HomeFocusFooterV2.vue (Adım 2: mavi başlat kaldırma)
+- xmcl-keystone-ui/src/views/InstanceActionsPanel.vue (Adım 2: Günlükler butonu eklendi)
+- xmcl-keystone-ui/src/composables/theme.ts (Adım 4: yüzey renkleri)
+  - GroupDef arayüzüne icon alanı eklendi
+  - groups computed'ı icon alanını içerecek şekilde güncellendi
+  - mc-settings-favorite-star stiffi düzeltildi (warning -> düz beyaz @0.62)
+  - .mc-settings-group yapısı eklendi
+  - mc-settings-actions sınıfı eklendi
+  - Slider thumb kalınlığı min-height: 40px (29px'den)
+  - mc-settings-actions padding-top: 4px
+
+Yeni Dosyalar:
+- xmcl-keystone-ui/src/components/SurfaceColorsMenu.vue - Yüzey renkleri dialogu (YENİ)
+- xmcl-keystone-ui/src/composables/surfaceColors.ts - Yüzey renkleri composable (YENİ)
+- xmcl-keystone-ui/src/composables/surfaceColors.test.ts - Test dosyası (YENİ)
+
+Değiştirilen Dosyalar (Commit Edilmemiş):
+- xmcl-keystone-ui/src/views/InstanceActionsPanel.vue - panel-logs butonu eklendi (Günlükler)
+
+Eski Dosyalar (Silindi):
+- xmcl-keystone-ui/src/views/HomeLaunchButton.vue - Mavi Başlat bileşeni
+- xmcl-keystone-ui/src/views/HomeLaunchButtonMenuList.vue - Dişli menü bileşeni
+
+## 6. TEST SONUÇLARI
+
+MC Ayarları:
+- Dialog açık, 5 grup görünür
+- options.txt okuma: 33 alan, dosyayla birebir
+- Yazma: .bak yedeği oluşturulur, atomik yazma, sadece değişen satır
+- Favori testleri: otomasyonla yapılamadı (manuel)
+- Oyun çalışırken kilit testi yapılmadı
+
+Instance Ayarları:
+- Mavi Başlat butonu yok
+- Dişli menü yok
+- panel-logs butonu çalışıyor (dialog açılıyor)
+- Modpack ve sunucu sekmeleri sağlam
+- Tüm panel butonları çalışıyor
+
+Toggle Kalınlığı:
+- thumb 20px, track 4px (5x kalın) - HALA DÜZELTMEDİ
+
+Test Sonucu: 50 dosya / 273 test geçti (adım 2 sonrası)
+Son test: 49 dosya / 273 test (adım 4 sonrası)
+
+## 7. SIRADAKI İŞLER (ÖNCELİĞE GÖRE)
+
+1. Toggle kalınlığı düzelt (AppMcSettingsDialog.vue, thumb 20px = track 4px)
+2. Favori Yap / Favoriden Çıkar testini yap (manuel)
+3. Oyun çalışırken kilit testi (manuel)
+4. Push et (5 commit + 1 değişiklik bekliyor)
+   git add -A && git commit -m "..." && git push
+
+## 8. DOSYA HARİTASI
+
+xmcl-keystone-ui/src/
+├── views/
+│   ├── AppMcSettingsDialog.vue      (MC Ayarları dialogu - güzelleştirildi)
+│   ├── BaseSetting.vue              (Instance ayarları - güzelleştirildi)
+│   ├── BaseSettingExtension.vue     (Instance ayarları başlangıç - mavi başlat kaldırıldı)
+│   ├── BaseSettingActions.vue       (İndir butonu)
+│   ├── HomeFocusFooterV2.vue        (Ana ekran odak-alt barı - mavi başlat kaldırıldı)
+│   ├── HomeLaunchButton.vue         (SİLİNDİ - mavi Başlat butonu)
+│   └── HomeLaunchButtonMenuList.vue (SİLİNDİ - dişli menü bileşeni)
+├── InstanceActionsPanel.vue         (Sağ panel - Günlükler butonu eklendi)
+├── composables/
+│   ├── mcSettingsFavorite.ts        (Favori composable)
+│   ├── storeColor.ts                (Renk seçme yardımcısı)
+│   └── surfaceColors.ts             (Yüzey renkleri composable - YENİ)
+└── views/
+    └── SurfaceColorsMenu.vue        (Yüzey renkleri dialogu - YENİ)
+
+## 9. KOMUTLAR (Geliştirme)
+
+pnpm dev:renderer   # Tarayıcı tarafı (localhost:3000)
+pnpm dev:main       # Electron ana işlem (9222 port)
+
+pnpm vitest run xmcl-keystone-ui/src   # Test
+pnpm check          # TypeScript tipi kontrolü
+pnpm lint           # Lint
+pnpm build:all      # Üretim paketi
+
+---
+
+Bu dosya 27 Ekim 2026 tarihinde oluşturuldu.

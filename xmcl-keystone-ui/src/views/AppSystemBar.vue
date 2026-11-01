@@ -5,7 +5,7 @@
     window
     role="toolbar"
     :aria-label="systemBarAriaLabel"
-    class="moveable static! flex w-full grow-0 gap-1 p-0 text-[.875rem]! bg-[transparent]! dark:color-[#ffffffb3] pr-0 max-h-[30px]"
+    class="moveable app-system-bar flex w-full grow-0 gap-1 p-0 text-[.875rem]! bg-[transparent]! dark:color-[#ffffffb3] pr-0 max-h-[30px]"
     :style="{ 'backdrop-filter': `blur(${blurAppBar}px)` }"
   >
     <span
@@ -218,5 +218,18 @@ const windowControlsAriaLabel = 'Window controls'
   .palette-hotkey {
     margin-left: 4px;
   }
+}
+
+/* Disco: the system bar carries `-webkit-app-region: drag` and is the only
+   draggable strip along the top edge of the frameless window. Vuetify's
+   dialog scrim is `position: absolute; z-index: 300`, while the bar carried
+   inline `position: fixed; z-index: 1004` styles that the dialog scrim still
+   painted over - so the whole window became impossible to move while a dialog
+   was open (e.g. while a modpack was being installed). Both values have to be
+   `!important` because they come from inline styles, which only !important
+   rules can override. */
+.app-system-bar {
+  position: relative !important;
+  z-index: 4000 !important;
 }
 </style>

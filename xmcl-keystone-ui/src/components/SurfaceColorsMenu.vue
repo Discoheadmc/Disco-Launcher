@@ -68,8 +68,8 @@
             <v-card class="scm-picker-card">
               <v-color-picker
                 :model-value="draft[item.key]"
-                dot-size="22"
-                canvas-height="110"
+                dot-size="18"
+                canvas-height="100"
                 hide-inputs
                 @update:model-value="v => onColor(item.key, v)"
               />
@@ -297,11 +297,23 @@ function onReset() {
 }
 
 .scm-picker-card {
-  min-width: 280px;
+  /* Compact picker: Vuetify's own .v-color-picker width is 300px, which
+     overhangs the 520px dialog when opened from the right-side swatches.
+     Narrow it and tighten Vuetify's VPicker paddings so the popup hugs the
+     swatch instead of covering the menu. */
+  width: 236px;
 }
 
 .scm-picker-card :deep(.v-color-picker) {
-  width: 100%;
+  width: 100% !important;
+}
+
+.scm-picker-card :deep(.v-picker__body) {
+  padding: 8px;
+}
+
+.scm-picker-card :deep(.v-color-picker-canvas) {
+  max-width: 100%;
 }
 
 .scm-actions {
