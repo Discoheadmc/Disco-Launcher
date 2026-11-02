@@ -60,13 +60,19 @@
   </div>
 </template>
 <script lang="ts" setup>
-import Halo from '@/components/Halo.vue'
-import Particles from '@/components/Particles.vue'
 import { injection } from '@/util/inject'
 import { kTheme, BackgroundType } from '@/composables/theme'
 import { kInstanceLaunch } from '@/composables/instanceLaunch'
 import { kCustomCss } from '@/composables/customCss'
-import { inject } from 'vue'
+import { defineAsyncComponent, inject } from 'vue'
+
+// Disco (memory): Halo pulls in `three` (~0.5 MB of JS plus its WebGL
+// runtime and shader programs) and Particles pulls in the particle canvas
+// engine. Both are only ever needed when the user actually picks that
+// background, so keep them out of the initial bundle - the chunk is fetched
+// the first time that background type is selected, not on every launch.
+const Halo = defineAsyncComponent(() => import('@/components/Halo.vue'))
+const Particles = defineAsyncComponent(() => import('@/components/Particles.vue'))
 
 const customCss = inject(kCustomCss)
 const customBackgroundVideo = computed(() => customCss?.customBackgroundVideo.value || '')
@@ -106,10 +112,9 @@ onMounted(() => {
   }
 })
 
-watch(backgroundType, (t) => {
-  console.log(t)
-  console.log(backgroundImage.value)
-})
+// Disco (memory): this watcher only existed to log the background switches to
+// the console. Debug logging here runs on every background change and keeps
+// the previous media URL referenced, so drop it entirely.
 
 
 </script>

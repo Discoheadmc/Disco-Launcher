@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from 'vue'
+import { defineComponent, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import {
   Camera, Color, LinearFilter, Mesh,
   PlaneGeometry, RGBAFormat, Scene,
@@ -45,15 +45,26 @@ export default defineComponent({
   setup() {
     const halo = ref(null as any)
     const { isDark } = injection(kTheme)
+    let effect: any
+    let stopThemeWatch: (() => void) | undefined
     onMounted(() => {
-      const effect = initHalo({
+      effect = initHalo({
         el: halo.value,
         THREE: window.THREE,
         lightTheme: isDark.value ? 0 : 1,
       })
-      watch(isDark, (dark) => {
+      stopThemeWatch = watch(isDark, (dark) => {
         effect?.setOptions?.({ lightTheme: dark ? 0 : 1 })
       })
+    })
+    // Disco (memory): Vanta's WebGL effect owns a render loop, a WebGL
+    // context and two float render targets. Without an explicit destroy the
+    // requestAnimationFrame loop keeps running after the background type
+    // switches away from Halo (or the theme unmounts it), holding that GPU
+    // memory and the WebGL context for the rest of the session.
+    onBeforeUnmount(() => {
+      stopThemeWatch?.()
+      effect?.destroy?.()
     })
     return { halo }
   },

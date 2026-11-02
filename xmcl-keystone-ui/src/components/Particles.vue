@@ -19,6 +19,7 @@
   />
 </template>
 <script lang=ts setup>
+import { onBeforeUnmount, onMounted, nextTick } from 'vue'
 import './particle'
 
 const props = withDefaults(defineProps<{
@@ -250,5 +251,19 @@ onMounted(() => {
   nextTick().then(() => {
     initParticleJS()
   })
+})
+
+// Disco (memory): particlesJS registers the instance in `window.pJSDom` and
+// runs its own requestAnimationFrame loop. Without an explicit destroy the
+// loop keeps rendering into a canvas that no longer belongs to this
+// component after the background type changes, so the animation frame, the
+// particle array and the canvas stay alive for the rest of the session.
+onBeforeUnmount(() => {
+  const cur = (window as any).pJSDom?.[0]
+  if (cur?.fn?.vendors?.destroypJS) {
+    cur.fn.vendors.destroypJS()
+  } else if (cur?.destroy) {
+    cur.destroy()
+  }
 })
 </script>

@@ -1,24 +1,12 @@
-import BaseSetting from '@/views/BaseSetting.vue'
-import BaseSettingActions from '@/views/BaseSettingActions.vue'
-import BaseSettingExtension from '@/views/BaseSettingExtension.vue'
+// Disco (memory): routes are lazy by design. Only the lobby (the screen the
+// app boots into) and the Store shell stay eager - everything else is fetched
+// on first navigation, so an idle launcher never pays for the code of screens
+// the user never opens. Eager imports would keep ~20 view modules in the
+// initial bundle and in the renderer heap for the whole session.
+import HomeLayout from '@/views/HomeLayout.vue'
 import Home from '@/views/Home.vue'
 import HomeActions from '@/views/HomeActions.vue'
 import HomeExtension from '@/views/HomeExtension.vue'
-import HomeLayout from '@/views/HomeLayout.vue'
-import Me from '@/views/Me.vue'
-import Mod from '@/views/Mod.vue'
-import ModActions from '@/views/ModActions.vue'
-import ModExtension from '@/views/ModExtension.vue'
-import ResourcePack from '@/views/ResourcePack.vue'
-import ResourcePackActions from '@/views/ResourcePackActions.vue'
-import ResourcePackExtension from '@/views/ResourcePackExtension.vue'
-import Save from '@/views/Save.vue'
-import SaveActions from '@/views/SaveActions.vue'
-import SaveExtension from '@/views/SaveExtension.vue'
-import Setting from '@/views/Setting.vue'
-import ShaderPack from '@/views/ShaderPack.vue'
-import ShaderPackActions from '@/views/ShaderPackActions.vue'
-import ShaderPackExtension from '@/views/ShaderPackExtension.vue'
 import Store from '@/views/Store.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
@@ -40,33 +28,33 @@ export const router = createRouter({
         {
           path: 'save',
           components: {
-            default: Save,
-            extensions: SaveExtension,
-            actions: SaveActions,
+            default: () => import('@/views/Save.vue'),
+            extensions: () => import('@/views/SaveExtension.vue'),
+            actions: () => import('@/views/SaveActions.vue'),
           },
         },
         {
           path: 'mods',
           components: {
-            default: Mod,
-            extensions: ModExtension,
-            actions: ModActions,
+            default: () => import('@/views/Mod.vue'),
+            extensions: () => import('@/views/ModExtension.vue'),
+            actions: () => import('@/views/ModActions.vue'),
           },
         },
         {
           path: 'resourcepacks',
           components: {
-            default: ResourcePack,
-            extensions: ResourcePackExtension,
-            actions: ResourcePackActions,
+            default: () => import('@/views/ResourcePack.vue'),
+            extensions: () => import('@/views/ResourcePackExtension.vue'),
+            actions: () => import('@/views/ResourcePackActions.vue'),
           },
         },
         {
           path: 'shaderpacks',
           components: {
-            default: ShaderPack,
-            extensions: ShaderPackExtension,
-            actions: ShaderPackActions,
+            default: () => import('@/views/ShaderPack.vue'),
+            extensions: () => import('@/views/ShaderPackExtension.vue'),
+            actions: () => import('@/views/ShaderPackActions.vue'),
           },
         },
         {
@@ -81,9 +69,9 @@ export const router = createRouter({
         {
           path: 'base-setting',
           components: {
-            default: BaseSetting,
-            extensions: BaseSettingExtension,
-            actions: BaseSettingActions,
+            default: () => import('@/views/BaseSetting.vue'),
+            extensions: () => import('@/views/BaseSettingExtension.vue'),
+            actions: () => import('@/views/BaseSettingActions.vue'),
           },
         },
         {
@@ -119,11 +107,11 @@ export const router = createRouter({
     },
     {
       path: '/setting',
-      component: Setting,
+      component: () => import('@/views/Setting.vue'),
     },
     {
       path: '/me',
-      component: Me,
+      component: () => import('@/views/Me.vue'),
       meta: { workspaceSidePanel: true },
     },
   ],
