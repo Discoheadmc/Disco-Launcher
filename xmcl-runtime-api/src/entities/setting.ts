@@ -31,6 +31,15 @@ export class Settings implements SettingSchema {
   windowTranslucent = false
   quickActionShortcut = ''
 
+  // Disco: UI identity. The inventory layout replaces the top menu bar and
+  // the left icon bar with a bottom hotbar, square instance slots and a
+  // tooltip detail panel. The new lobby replaces the instance grid with a
+  // large "last played" card plus a compact list. Both are independent.
+  // Defaults are ON (see setting.schema.ts); a missing key in an existing
+  // setting.json is filled with the default by the zod `.catch(true)`.
+  inventoryTheme = true
+  dashboardHome = true
+
   locale = ''
 
   theme = 'dark' as 'dark' | 'light' | 'system'
@@ -123,6 +132,8 @@ export class Settings implements SettingSchema {
     this.replaceNatives = config.replaceNatives
     this.globalResolution = config.globalResolution
     this.quickActionShortcut = config.quickActionShortcut ?? ''
+    this.inventoryTheme = config.inventoryTheme ?? true
+    this.dashboardHome = config.dashboardHome ?? true
   }
 
   developerModeSet(developerMode: boolean) {
@@ -131,6 +142,14 @@ export class Settings implements SettingSchema {
 
   quickActionShortcutSet(shortcut: string) {
     this.quickActionShortcut = shortcut
+  }
+
+  inventoryThemeSet(enabled: boolean) {
+    this.inventoryTheme = enabled
+  }
+
+  dashboardHomeSet(enabled: boolean) {
+    this.dashboardHome = enabled
   }
 
   discordPresenceSet(presence: boolean) {

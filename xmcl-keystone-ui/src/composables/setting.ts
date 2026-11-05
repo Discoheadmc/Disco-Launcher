@@ -255,6 +255,19 @@ export function useSettings() {
     set: (v) => state.value?.quickActionShortcutSet(v),
   })
 
+  // Disco: UI identity toggles. Applied immediately - the shell reads a
+  // computed, so flipping either one re-renders the layout with no restart.
+  // Defaults match the runtime schema (both true); an absent key in an old
+  // setting.json still resolves to true here.
+  const inventoryTheme = computed({
+    get: () => state.value?.inventoryTheme ?? true,
+    set: (v) => state.value?.inventoryThemeSet(v),
+  })
+  const dashboardHome = computed({
+    get: () => state.value?.dashboardHome ?? true,
+    set: (v) => state.value?.dashboardHomeSet(v),
+  })
+
   return {
     enableDedicatedGPUOptimization,
     streamerMode,
@@ -262,6 +275,8 @@ export function useSettings() {
     httpProxyEnabled,
     enableDiscord,
     quickActionShortcut,
+    inventoryTheme,
+    dashboardHome,
     maxSockets,
     maxAPISockets,
     locales,

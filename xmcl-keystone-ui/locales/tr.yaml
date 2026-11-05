@@ -1587,6 +1587,13 @@ setting:
   livePreview: Canlı Önizleme
   sidebarShowOnlyPinned: Yalnızca Sabitlenmiş Örnekleri Göster
   sidebarShowOnlyPinnedHint: Kenar çubuğunda yalnızca sabitlenmiş örnekleri göster
+  uiLayout:
+    name: Düzen
+    inventoryTheme: Envanter Teması
+    inventoryThemeHint: 'Alt sıra (hotbar) gezinme, kare örnek kartları ve ipuçları biçiminde detay paneli. Esc ile menü açılır.'
+    dashboardHome: Yeni Ana Ekran
+    dashboardHomeHint: 'En son oynanan örnek için büyük kart ve altında sade liste.'
+    backToClassic: Klasik Düzene Dön
 settingLabel:
   global: Global
   globalHint: Bu ayar global ayarı takip edecektir

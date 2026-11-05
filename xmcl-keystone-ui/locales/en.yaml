@@ -1998,6 +1998,13 @@ setting:
   sidebarPosition: Sidebar Position
   sidebarShowOnlyPinned: Show Only Pinned Instances
   sidebarShowOnlyPinnedHint: Only display pinned instances in the sidebar
+  uiLayout:
+    name: Layout
+    inventoryTheme: Inventory Theme
+    inventoryThemeHint: 'Bottom hotbar navigation, square instance slots and a tooltip style detail panel. Press Esc for the menu.'
+    dashboardHome: New Home Screen
+    dashboardHomeHint: 'A large card for the last played instance, with a compact list below.'
+    backToClassic: Back to Classic Layout
   streamerMode: Streaming Mode
   streamerModeDescription: This will hide your private information like email in launcher.
   theme:

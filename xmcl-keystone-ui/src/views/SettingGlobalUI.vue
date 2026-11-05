@@ -76,6 +76,34 @@
                 <v-switch v-model="sidebarShowOnlyPinned" color="primary" hide-details dense />
               </template>
             </SettingItem>
+
+            <v-divider class="my-2" />
+            <!-- Disco: UI identity toggles. Independent switches - all four
+                 combinations must work, and "off + off" is the classic layout
+                 exactly as it was before this feature existed. -->
+            <SettingItem
+              :title="t('setting.uiLayout.inventoryTheme')"
+              :description="t('setting.uiLayout.inventoryThemeHint')"
+            >
+              <template #action>
+                <v-switch v-model="inventoryTheme" color="primary" hide-details dense />
+              </template>
+            </SettingItem>
+            <SettingItem
+              :title="t('setting.uiLayout.dashboardHome')"
+              :description="t('setting.uiLayout.dashboardHomeHint')"
+            >
+              <template #action>
+                <v-switch v-model="dashboardHome" color="primary" hide-details dense />
+              </template>
+            </SettingItem>
+            <SettingItem :title="t('setting.uiLayout.backToClassic')">
+              <template #action>
+                <v-btn variant="outlined" @click="backToClassic">
+                  {{ t('setting.uiLayout.backToClassic') }}
+                </v-btn>
+              </template>
+            </SettingItem>
           </v-list>
         </div>
       </div>
@@ -213,6 +241,22 @@ const linuxTitlebar = computed({
   get: () => state.value?.linuxTitlebar ?? false,
   set: (v) => state.value?.linuxTitlebarSet(v),
 })
+
+// Disco: UI identity. Read straight off the shared settings state so the
+// switch reacts the moment the settings file is patched, and writes go
+// through the Settings setters (same path the other toggles use).
+const inventoryTheme = computed({
+  get: () => state.value?.inventoryTheme ?? true,
+  set: (v) => state.value?.inventoryThemeSet(v),
+})
+const dashboardHome = computed({
+  get: () => state.value?.dashboardHome ?? true,
+  set: (v) => state.value?.dashboardHomeSet(v),
+})
+function backToClassic() {
+  inventoryTheme.value = false
+  dashboardHome.value = false
+}
 
 function onSave() {
   saveCurrentTheme()

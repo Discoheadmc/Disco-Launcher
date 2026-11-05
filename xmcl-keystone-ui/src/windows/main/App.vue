@@ -1,11 +1,23 @@
 <template>
   <v-app v-if="!showSetup" class="h-full max-h-screen overflow-hidden select-none" :class="{ 'dark': isDark }">
     <AppBackground />
-    <div class="w-full h-full absolute left-0 header-overlay" :style="{
-      height: headerHeight + 70 + 'px',
-      'background-image': `linear-gradient(${appBarColor} 0%, color-mix(in srgb, ${appBarColor}, transparent) 65%, transparent 100%)`
-    }">
+    <div
+      v-if="!inventoryTheme"
+      class="w-full h-full absolute left-0 header-overlay"
+      :style="{
+        height: headerHeight + 70 + 'px',
+        'background-image': `linear-gradient(${appBarColor} 0%, color-mix(in srgb, ${appBarColor}, transparent) 65%, transparent 100%)`
+      }"
+    >
     </div>
+    <!-- Disco: the shell is chosen by the "Envanter Temasi" setting.
+         The classic branch is the original layout. The inventory branch
+         renders no top bar, no menu bar and no left icon bar; the
+         functions those carried are reached through the hotbar menu slot
+         and the Esc pause menu. Everything below the shell - dialogs,
+         notifier, context menu, task dialog - is shared, so both layouts
+         keep every feature. -->
+    <template v-if="!inventoryTheme">
     <AppSystemBar :back="false" />
     <AppMenuBar />
     <div
@@ -27,6 +39,20 @@
         </router-view>
       </main>
     </div>
+    </template>
+    <template v-else>
+      <div class="inventory-shell">
+        <main class="inventory-shell__main">
+          <router-view v-slot="{ Component }">
+            <transition name="fade-transition" mode="out-in">
+              <component :is="Component" class="z-2" />
+            </transition>
+          </router-view>
+        </main>
+        <AppHotbar />
+        <AppPauseMenu />
+      </div>
+    </template>
     <AppContextMenu />
     <AppNotifier />
     <AppOmniDialog />
@@ -55,6 +81,8 @@
 import '@/assets/common.css'
 import AppImageDialog from '@/components/AppImageDialog.vue'
 import AppSharedTooltip from '@/components/AppSharedTooltip.vue'
+import AppHotbar from '@/components/AppHotbar.vue'
+import AppPauseMenu from '@/components/AppPauseMenu.vue'
 import { useAuthProfileImportNotification } from '@/composables/authProfileImport'
 import { useCommandPaletteHotkey } from '@/composables/commandPalette'
 import { kDialogModel } from '@/composables/dialog'
@@ -114,6 +142,8 @@ const lazyDialogComponents = {
 const showSetup = ref(location.search.indexOf('bootstrap') !== -1)
 const { state } = injection(kSettingsState)
 const dialogModel = injection(kDialogModel)
+// Disco: "Envanter Temasi" - the inventory layout replaces the classic shell.
+const inventoryTheme = computed(() => state.value?.inventoryTheme ?? true)
 const lazyDialogComponent = computed(() => lazyDialogComponents[dialogModel.current.value.dialog as keyof typeof lazyDialogComponents])
 const developerMode = computed(() => state.value?.developerMode ?? false)
 

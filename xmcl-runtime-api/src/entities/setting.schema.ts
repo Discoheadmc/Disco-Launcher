@@ -101,6 +101,10 @@ export const SettingSchema = z.object({
   quickActionShortcut: z.string().catch(''),
   /** Global resolution settings for Minecraft */
   globalResolution: GlobalResolutionSchema.catch({}),
+  /** Inventory-style layout: bottom hotbar shell, square instance slots, tooltip detail panel */
+  inventoryTheme: z.boolean().catch(true),
+  /** New lobby: large "last played" card plus a compact instance list */
+  dashboardHome: z.boolean().catch(true),
 })
 
 export type SettingSchema = z.infer<typeof SettingSchema>
