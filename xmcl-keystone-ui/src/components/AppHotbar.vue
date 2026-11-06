@@ -43,6 +43,7 @@
 
 <script lang="ts" setup>
 import { useDialog } from '@/composables/dialog'
+import { AddInstanceDialogKey } from '@/composables/instanceTemplates'
 import { kSettingsState } from '@/composables/setting'
 import { injection } from '@/util/inject'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
@@ -84,11 +85,11 @@ const activeSlot = computed(() => {
 })
 
 const hovered = ref('')
-const { show: showAddInstance } = useDialog('add-instance')
+const { show: showAddInstance } = useDialog(AddInstanceDialogKey)
 
 function select(slot: HotbarSlot, index: number) {
   if (slot.id === 'create') {
-    showAddInstance({})
+    showAddInstance(undefined)
     return
   }
   if (slot.id === 'menu') {

@@ -23,7 +23,7 @@
     </button>
   </div>
 
-  <!-- Compact readout while the mode is on, so the state is always visible. -->
+    <!-- Compact readout while the mode is on, so the state is always visible. -->
   <div
     v-else-if="active"
     class="mc-keys mc-keys--active"
@@ -65,6 +65,19 @@ const dismissed = ref(false)
 const onInstanceScreen = computed(() => route.path === '/')
 const showHint = computed(() => onInstanceScreen.value && !active.value && !dismissed.value)
 
+/**
+ * Number of hotbar slots. Counted from the DOM so the mapping never drifts
+ * when a slot is added or removed; 0 when the hotbar is not rendered (the
+ * classic layout), in which case every number picks an instance.
+ */
+const hotbarSlotCount = ref(0)
+function readHotbarSlotCount() {
+  const bar = document.querySelector('[data-testid="app-hotbar"]')
+  hotbarSlotCount.value = bar ? bar.querySelectorAll('.hotbar__slot').length : 0
+}
+watch(onInstanceScreen, () => nextTick(readHotbarSlotCount), { immediate: true })
+onMounted(() => nextTick(readHotbarSlotCount))
+
 function dismissHint() {
   dismissed.value = true
 }
@@ -80,6 +93,11 @@ function toggle(next: boolean) {
  * Esc turns THIS mode off - it must not fall through to the pause menu, so the
  * event is consumed here and the pause menu additionally bails out on a
  * defaultPrevented Esc. Number keys are ignored while typing.
+ *
+ * While the mode is on, a number is first offered to the hotbar: the keys map
+ * to its slots one-to-one (1..6 today), so the hotbar keeps working. A number
+ * above the slot count picks that instance instead, which is what makes the
+ * "Minecraft tuslari" list usable.
  */
 function onKeydown(e: KeyboardEvent) {
   if (e.defaultPrevented) return
@@ -105,12 +123,15 @@ function onKeydown(e: KeyboardEvent) {
   if (!active.value) return
   const index = Number(e.key)
   if (!Number.isInteger(index) || index < 1) return
+  // The hotbar owns 1..N (N = slot count). Anything above that selects the
+  // instance at that offset, so pressing past the hotbar still picks a game.
+  if (index <= hotbarSlotCount.value) return
   const list = instances.value
-  if (index > list.length) return
-  e.preventDefault()
+  const instanceIndex = index - hotbarSlotCount.value
+  if (instanceIndex > list.length) return
   // Selecting the instance switches the detail view to it - the launch
   // decision stays with the Başlat button, so no launch logic is touched.
-  select(list[index - 1].path)
+  select(list[instanceIndex - 1].path)
 }
 
 onMounted(() => window.addEventListener('keydown', onKeydown, true))
