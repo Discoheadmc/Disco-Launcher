@@ -2005,6 +2005,8 @@ setting:
     dashboardHome: New Home Screen
     dashboardHomeHint: 'A large card for the last played instance, with a compact list below.'
     backToClassic: Back to Classic Layout
+    mcKeysHint: Press Enter to use the Minecraft keys here
+    mcKeysActive: Minecraft keys are on - pick an instance with a number, Esc to turn off
   streamerMode: Streaming Mode
   streamerModeDescription: This will hide your private information like email in launcher.
   theme:

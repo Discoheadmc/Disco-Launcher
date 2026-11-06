@@ -1594,6 +1594,8 @@ setting:
     dashboardHome: Yeni Ana Ekran
     dashboardHomeHint: 'En son oynanan örnek için büyük kart ve altında sade liste.'
     backToClassic: Klasik Düzene Dön
+    mcKeysHint: Minecraft tuşlarını burada kullanmak için Enter'a basın
+    mcKeysActive: Minecraft tuşları açık — numara ile örnek seç, Esc ile kapat
 settingLabel:
   global: Global
   globalHint: Bu ayar global ayarı takip edecektir

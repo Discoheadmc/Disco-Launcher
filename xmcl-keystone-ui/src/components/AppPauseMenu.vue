@@ -165,6 +165,9 @@ function toggle() {
  */
 function onKeydown(e: KeyboardEvent) {
   if (e.key !== 'Escape') return
+  // Esc is already spoken for while the Minecraft-keys mode is on (it closes
+  // that mode instead) - never open the pause menu on top of it.
+  if (e.defaultPrevented) return
   const target = e.target as HTMLElement | null
   if (target) {
     const tag = target.tagName

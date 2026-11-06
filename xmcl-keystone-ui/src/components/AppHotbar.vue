@@ -121,7 +121,11 @@ function onKeydown(e: KeyboardEvent) {
 }
 
 // Global handler so the keys work without focusing the bar first.
+// Disco: while the "Minecraft tuslari" mode is on, the number keys belong to
+// the instance picker - the hotbar must stay out of the way. That mode owns
+// the event already (capture phase) and marks it defaultPrevented.
 function onWindowKeydown(e: KeyboardEvent) {
+  if (e.defaultPrevented) return
   if (e.key === 'Escape') return
   const target = e.target as HTMLElement | null
   const tag = target?.tagName ?? ''

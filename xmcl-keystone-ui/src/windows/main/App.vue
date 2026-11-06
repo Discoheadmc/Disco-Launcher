@@ -50,6 +50,11 @@
           </router-view>
         </main>
         <AppHotbar />
+        <!-- Order matters: AppMinecraftKeys is mounted first so its capture
+             phase window listener is registered before the pause menu's. While
+             the Minecraft-keys mode is on, Esc closes that mode and the event
+             is consumed there; the pause menu then never sees it. -->
+        <AppMinecraftKeys />
         <AppPauseMenu />
       </div>
     </template>
@@ -83,6 +88,7 @@ import AppImageDialog from '@/components/AppImageDialog.vue'
 import AppSharedTooltip from '@/components/AppSharedTooltip.vue'
 import AppHotbar from '@/components/AppHotbar.vue'
 import AppPauseMenu from '@/components/AppPauseMenu.vue'
+import AppMinecraftKeys from '@/components/AppMinecraftKeys.vue'
 import { useAuthProfileImportNotification } from '@/composables/authProfileImport'
 import { useCommandPaletteHotkey } from '@/composables/commandPalette'
 import { kDialogModel } from '@/composables/dialog'
@@ -279,5 +285,27 @@ img {
 .workspace-side-panel-attached :deep(.sidebar-notch--left .sidebar-notch__container) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+/* Disco: the inventory shell. A full-height column: the page area
+   scrolls, the hotbar is a fixed-height footer below it. Without an
+   explicit height/min-height here the scrolling chain breaks and long
+   pages (Settings above all) cannot be reached. */
+.inventory-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.inventory-shell__main {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  overflow-x: hidden;
 }
 </style>
