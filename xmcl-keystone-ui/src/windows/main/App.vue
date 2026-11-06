@@ -42,6 +42,9 @@
     </template>
     <template v-else>
       <div class="inventory-shell">
+        <!-- The window strip replaces the drag area and window buttons that
+             AppSystemBar carries in the classic layout. -->
+        <AppInventoryTitleBar />
         <main class="inventory-shell__main">
           <router-view v-slot="{ Component }">
             <transition name="fade-transition" mode="out-in">
@@ -89,6 +92,7 @@ import AppSharedTooltip from '@/components/AppSharedTooltip.vue'
 import AppHotbar from '@/components/AppHotbar.vue'
 import AppPauseMenu from '@/components/AppPauseMenu.vue'
 import AppMinecraftKeys from '@/components/AppMinecraftKeys.vue'
+import AppInventoryTitleBar from '@/components/AppInventoryTitleBar.vue'
 import { useAuthProfileImportNotification } from '@/composables/authProfileImport'
 import { useCommandPaletteHotkey } from '@/composables/commandPalette'
 import { kDialogModel } from '@/composables/dialog'

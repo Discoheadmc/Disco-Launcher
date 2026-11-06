@@ -146,7 +146,8 @@ watch(onInstanceScreen, (onInstance) => {
 <style scoped>
 .mc-keys {
   position: absolute;
-  top: 10px;
+  /* Below the inventory window strip (28px) so the two never overlap. */
+  top: 38px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 30;
