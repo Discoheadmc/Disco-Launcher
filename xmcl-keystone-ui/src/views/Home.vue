@@ -7,7 +7,13 @@
   >
     <HomeCriticalError />
     <transition name="slide-y-reverse-transition" mode="out-in">
-      <div v-if="!isFocus" class="flex items-start gap-0 pr-0">
+      <!-- Disco: "Yeni Ana Ekran" replaces the grid entirely; its own card
+           carries every action, so the side panel is hidden while it is on. -->
+      <HomeDashboard v-if="dashboardHome" />
+      <div
+        v-else-if="!isFocus"
+        class="flex items-start gap-0 pr-0"
+      >
         <div class="flex-1 min-w-0 mx-3 relative">
           <!-- Disco: the inventory theme swaps the instance grid for square
                slots. The classic grid stays untouched for the classic layout. -->
@@ -48,11 +54,14 @@ import HomeCriticalError from './HomeCriticalError.vue'
 import HomeFocusFooter from './HomeFocusFooterV2.vue'
 import HomeInstanceGrid from './HomeInstanceGrid.vue'
 import InstanceSlotGrid from '@/components/InstanceSlotGrid.vue'
+import HomeDashboard from './HomeDashboard.vue'
 
 const isFocus = useInFocusMode()
 /** Disco: "Envanter Teması" - square instance slots + tooltip detail panel. */
 const { state } = injection(kSettingsState)
 const inventoryTheme = computed(() => state.value?.inventoryTheme ?? true)
+/** Disco: "Yeni Ana Ekran" - the large last-played card replaces the grid. */
+const dashboardHome = computed(() => state.value?.dashboardHome ?? true)
 
 function onGridContextMenu(event: MouseEvent, inst: any) {
   emit('contextmenu', event, inst)

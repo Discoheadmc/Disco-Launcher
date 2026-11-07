@@ -31,11 +31,11 @@
             theme this column becomes the tooltip-style detail panel; both
             read the same shared action source. -->
       <InstanceTooltipPanel
-        v-if="inventoryTheme"
+        v-if="inventoryTheme && !dashboardHome"
         class="home-side-panel"
       />
       <InstanceActionsPanel
-        v-else
+        v-else-if="!dashboardHome"
         class="home-side-panel"
       />
     </div>
@@ -74,9 +74,11 @@ import { useGamepadInnerNav } from '@/composables/gamepad'
 const router = useRouter()
 
 // Disco: "Envanter Temasi" - the right column becomes the tooltip-style
-// detail panel instead of the classic action list.
+// detail panel instead of the classic action list. "Yeni Ana Ekran" hides that
+// column completely, because its own card carries every action.
 const { state } = injection(kSettingsState)
 const inventoryTheme = computed(() => state.value?.inventoryTheme ?? true)
+const dashboardHome = computed(() => state.value?.dashboardHome ?? true)
 
 // Gamepad triggers (L2/R2) cycle through the instance pages.
 const HOME_GROUP = ['/', '/mods', '/resourcepacks', '/shaderpacks', '/save']

@@ -457,6 +457,12 @@ gameType:
   survival: Survival Mode
 help: Help
 home: Home
+homeDashboard:
+  noneTitle: You have not played yet
+  noneHint: Create a game or pick one; it turns into the big card here.
+  more: More actions
+  listTitle: All games
+  count: '{count} games'
 importModpack:
   name: Import Modpack
 installAssets:

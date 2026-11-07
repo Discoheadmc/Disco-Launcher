@@ -343,6 +343,12 @@ gameType:
   survival: Hayatta Kalma Modu
 help: Yardım
 home: Ana Sayfa
+homeDashboard:
+  noneTitle: Hic oynamadin
+  noneHint: Bir oyun olustur veya mevcut bir ornegi sec; burada buyuk karta donusur.
+  more: Diger islemler
+  listTitle: Tum oyunlar
+  count: '{count} oyun'
 importModpack:
   name: Mod Paketi İçe Aktar
 installAssets:
