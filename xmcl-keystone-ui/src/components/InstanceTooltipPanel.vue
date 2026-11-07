@@ -37,12 +37,12 @@
 
       <div class="tooltip-panel__facts">
         <div class="tooltip-panel__fact">
-          <DiscoIcon name="clock" :size="12" />
+          <v-icon size="14">schedule</v-icon>
           <span class="tooltip-panel__fact-label">{{ t('instance.playtime') }}</span>
           <span class="tooltip-panel__fact-value">{{ playTimeText }}</span>
         </div>
         <div class="tooltip-panel__fact">
-          <DiscoIcon name="history" :size="12" />
+          <v-icon size="14">update</v-icon>
           <span class="tooltip-panel__fact-label">{{ t('instance.lastPlayed') }}</span>
           <span class="tooltip-panel__fact-value">{{ lastPlayedText }}</span>
         </div>
@@ -64,7 +64,7 @@
           :disabled="action.disabled"
           @click="action.run()"
         >
-          <DiscoIcon :name="discoIconFor(action.icon)" :size="14" />
+          <v-icon size="16">{{ action.icon }}</v-icon>
           <span class="tp-btn__label">{{ action.label }}</span>
           <v-icon
             v-if="action.id === 'mc-settings' && favoriteOf"
@@ -79,7 +79,6 @@
 </template>
 
 <script lang="ts" setup>
-import DiscoIcon, { type DiscoIconName } from '@/components/DiscoIcon.vue'
 import { useInstanceActions } from '@/composables/instanceActions'
 import { kInstance } from '@/composables/instance'
 import { kInstances } from '@/composables/instances'
@@ -89,37 +88,6 @@ import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-
-// Material icon name -> pixel icon. Unknown icons fall back to a neutral block.
-function discoIconFor(mdi: string): DiscoIconName {
-  const map: Record<string, DiscoIconName> = {
-    get_app: 'download',
-    play_arrow: 'play',
-    cancel: 'stop',
-    edit: 'settings',
-    tune: 'settings',
-    folder: 'folder',
-    folder_open: 'folder-open',
-    subtitles: 'info',
-    ios_share: 'download',
-    file_copy: 'more',
-    delete: 'delete',
-    rocket_launch: 'play',
-    apps: 'apps',
-    storefront: 'store',
-    account_circle: 'account',
-    settings: 'settings',
-    menu: 'menu',
-    add: 'add',
-    schedule: 'clock',
-    update: 'history',
-    info: 'info',
-    more_horiz: 'more',
-    sports_esports: 'apps',
-  }
-  return (map[mdi] ?? 'apps') as DiscoIconName
-}
-
 
 const { instance, path, name } = injection(kInstance)
 const { instances, selectedInstance } = injection(kInstances)
