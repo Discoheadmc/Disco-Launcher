@@ -25,7 +25,19 @@
       <!-- Disco: full-height instance actions panel (was inside Home.vue,
            below the header). Its own Başlat/Durdur buttons are the single
            launch entry now that the header pill is removed. -->
-      <InstanceActionsPanel class="home-side-panel" />
+      <!-- Disco: full-height instance actions panel (was inside Home.vue,
+            below the header). Its own Baslat/Durdur buttons are the single
+            launch entry now that the header pill is removed. In the inventory
+            theme this column becomes the tooltip-style detail panel; both
+            read the same shared action source. -->
+      <InstanceTooltipPanel
+        v-if="inventoryTheme"
+        class="home-side-panel"
+      />
+      <InstanceActionsPanel
+        v-else
+        class="home-side-panel"
+      />
     </div>
 
     <HomeLogDialog />
@@ -53,11 +65,18 @@ import HomeUnresolvedFilesDialog from './HomeUnresolvedFilesDialog.vue'
 import HomeLaunchStatusDialog from './HomeLaunchStatusDialog.vue'
 import HomeLogDialog from './HomeLogDialog.vue'
 import InstanceActionsPanel from './InstanceActionsPanel.vue'
+import InstanceTooltipPanel from '@/components/InstanceTooltipPanel.vue'
 import AppCollectionDialog from './AppCollectionDialog.vue'
 import HomeDropModpackDialog from './HomeDropModpackDialog.vue'
+import { kSettingsState } from '@/composables/setting'
 import { useGamepadInnerNav } from '@/composables/gamepad'
 
 const router = useRouter()
+
+// Disco: "Envanter Temasi" - the right column becomes the tooltip-style
+// detail panel instead of the classic action list.
+const { state } = injection(kSettingsState)
+const inventoryTheme = computed(() => state.value?.inventoryTheme ?? true)
 
 // Gamepad triggers (L2/R2) cycle through the instance pages.
 const HOME_GROUP = ['/', '/mods', '/resourcepacks', '/shaderpacks', '/save']

@@ -9,7 +9,16 @@
     <transition name="slide-y-reverse-transition" mode="out-in">
       <div v-if="!isFocus" class="flex items-start gap-0 pr-0">
         <div class="flex-1 min-w-0 mx-3 relative">
-          <HomeInstanceGrid />
+          <!-- Disco: the inventory theme swaps the instance grid for square
+               slots. The classic grid stays untouched for the classic layout. -->
+          <InstanceSlotGrid
+            v-if="inventoryTheme"
+            @contextmenu="onGridContextMenu"
+          />
+          <HomeInstanceGrid
+            v-else
+            @contextmenu="onGridContextMenu"
+          />
         </div>
         <!-- Disco: InstanceActionsPanel moved to HomeLayout so it spans the
              full page height next to the header too (the header launch pill
@@ -31,14 +40,24 @@ import { useTutorial } from '@/composables/tutorial'
 import { useInFocusMode } from '@/composables/uiLayout'
 import { useHomeFocusCards } from '@/composables/homeCards'
 import { vContextMenu } from '@/directives/contextMenu'
+import { kSettingsState } from '@/composables/setting'
 import { injection } from '@/util/inject'
 import { isBedrockInstance } from '@xmcl/instance'
 import type { DriveStep } from 'driver.js'
 import HomeCriticalError from './HomeCriticalError.vue'
 import HomeFocusFooter from './HomeFocusFooterV2.vue'
 import HomeInstanceGrid from './HomeInstanceGrid.vue'
+import InstanceSlotGrid from '@/components/InstanceSlotGrid.vue'
 
 const isFocus = useInFocusMode()
+/** Disco: "Envanter Teması" - square instance slots + tooltip detail panel. */
+const { state } = injection(kSettingsState)
+const inventoryTheme = computed(() => state.value?.inventoryTheme ?? true)
+
+function onGridContextMenu(event: MouseEvent, inst: any) {
+  emit('contextmenu', event, inst)
+}
+const emit = defineEmits<{ (e: 'contextmenu', event: MouseEvent, inst: any): void }>()
 const { getBackgroundMenu: getFocusBackgroundMenu } = useHomeFocusCards()
 const { instance } = injection(kInstance)
 const isBedrock = computed(() => isBedrockInstance(instance.value))

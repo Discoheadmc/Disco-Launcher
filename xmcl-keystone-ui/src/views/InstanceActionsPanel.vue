@@ -17,158 +17,52 @@
       </div>
     </div>
 
-    <button
-      v-if="needsInstall"
-      type="button"
-      class="action-btn action-btn--install"
-      data-testid="panel-install"
-      :disabled="fixing"
-      :aria-label="t('shared.download')"
-      @click="onFix"
+    <!-- Disco: the actions come from the shared source (useInstanceActions), so
+         the classic panel, the tooltip panel and the home card all offer the
+         same list in the same order with the same state rules. -->
+    <template
+      v-for="action in actions"
+      :key="action.id"
     >
-      <v-icon size="18">get_app</v-icon>
-      {{ t('shared.download') }}
-    </button>
-    <button
-      v-else
-      type="button"
-      class="action-btn action-btn--primary"
-      :class="{ 'action-btn--primary--custom': !!launchButtonColor }"
-      :style="launchBtnStyle"
-      data-testid="panel-launch"
-      :aria-label="t('launch.launch')"
-      @click="onLaunch"
-    >
-      <v-icon size="18">play_arrow</v-icon>
-      {{ t('launch.launch') }}
-    </button>
-    <button
-      type="button"
-      class="action-btn action-btn--danger"
-      data-testid="panel-kill"
-      :disabled="count === 0"
-      :aria-label="t('launch.kill')"
-      @click="kill('client')"
-    >
-      <v-icon size="18">cancel</v-icon>
-      {{ t('launch.kill') }}
-    </button>
-
-    <div class="instance-actions-panel__divider" />
-
-    <button
-      type="button"
-      class="action-btn"
-      data-testid="panel-edit"
-      :aria-label="t('shared.manage')"
-      @click="router.push('/base-setting')"
-    >
-      <v-icon size="18">edit</v-icon>
-      {{ t('shared.manage') }}
-    </button>
-    <button
-      type="button"
-      class="action-btn"
-      data-testid="panel-mc-settings"
-      :aria-label="t('instance.mcSettings')"
-      @click="showMcSettings({ path, name })"
-    >
-      <v-icon size="18">tune</v-icon>
-      {{ t('instance.mcSettings') }}
-      <v-icon
-        v-if="isMcFavorite"
-        size="14"
-        class="ml-auto panel-favorite-star"
-        data-testid="panel-mc-settings-favorite"
-      >star</v-icon>
-    </button>
-    <button
-      type="button"
-      class="action-btn"
-      data-testid="panel-folder"
-      :aria-label="t('instance.showInstance')"
-      @click="openFolder"
-    >
-      <v-icon size="18">folder</v-icon>
-      {{ t('instance.showInstance') }}
-    </button>
-    <!-- Disco: the home launch pill and its gear menu were removed; this keeps
-         the "logs" entry the gear menu used to be the only source of. -->
-    <button
-      type="button"
-      class="action-btn"
-      data-testid="panel-logs"
-      :aria-label="t('logsCrashes.title')"
-      @click="showLogs"
-    >
-      <v-icon size="18">subtitles</v-icon>
-      {{ t('logsCrashes.title') }}
-    </button>
-    <button
-      type="button"
-      class="action-btn"
-      data-testid="panel-export"
-      :aria-label="t('modpack.export')"
-      @click="router.push('/base-setting?target=modpack')"
-    >
-      <v-icon size="18">ios_share</v-icon>
-      {{ t('modpack.export') }}
-    </button>
-    <button
-      type="button"
-      class="action-btn"
-      data-testid="panel-duplicate"
-      :aria-label="t('instance.duplicate')"
-      @click="onDuplicate"
-    >
-      <v-icon size="18">file_copy</v-icon>
-      {{ t('instance.duplicate') }}
-    </button>
-
-    <div class="instance-actions-panel__divider" />
-
-    <button
-      type="button"
-      class="action-btn action-btn--danger"
-      data-testid="panel-delete"
-      :aria-label="t('instance.delete')"
-      @click="showDeleteDialog({ name, path })"
-    >
-      <v-icon size="18">delete</v-icon>
-      {{ t('instance.delete') }}
-    </button>
-    <button
-      type="button"
-      class="action-btn"
-      data-testid="panel-shortcut"
-      :aria-label="t('launch.createShortcut')"
-      @click="onCreateShortcut"
-    >
-      <v-icon size="18">rocket_launch</v-icon>
-      {{ t('launch.createShortcut') }}
-    </button>
+      <div
+        v-if="action.id === 'kill'"
+        :key="'divider-before-' + action.id"
+        class="instance-actions-panel__divider"
+      />
+      <button
+        type="button"
+        class="action-btn"
+        :class="{
+          'action-btn--danger': action.danger,
+          'action-btn--primary': action.primary,
+          'action-btn--primary--custom': action.primary && !!launchButtonColor,
+        }"
+        :style="action.style"
+        :data-testid="action.testid"
+        :aria-label="action.label"
+        :disabled="action.disabled"
+        @click="action.run()"
+      >
+        <v-icon size="18">{{ action.icon }}</v-icon>
+        {{ action.label }}
+        <v-icon
+          v-if="action.id === 'mc-settings' && favoriteOf"
+          size="14"
+          class="ml-auto panel-favorite-star"
+          data-testid="panel-mc-settings-favorite"
+        >star</v-icon>
+      </button>
+    </template>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useService } from '@/composables'
-import { useDialog } from '@/composables/dialog'
 import { kEnvironment } from '@/composables/environment'
 import { kInstance } from '@/composables/instance'
-import { kInstanceLaunch } from '@/composables/instanceLaunch'
-import { useMcSettingsFavorite } from '@/composables/mcSettingsFavorite'
-import { useInstanceLaunchMenuItems } from '@/composables/instanceLaunchMenuItems'
-import { kInstanceVersionInstall } from '@/composables/instanceVersionInstall'
 import { kTheme } from '@/composables/theme'
-import { kUserContext } from '@/composables/user'
-import { kLaunchButton } from '@/composables/launchButton'
-import { join } from '@/util/basename'
-import { getInstanceIcon, toPngIconUrl } from '@/util/favicon'
+import { useInstanceActions } from '@/composables/instanceActions'
+import { getInstanceIcon } from '@/util/favicon'
 import { injection } from '@/util/inject'
-import { BaseServiceKey, InstanceServiceKey, LaunchServiceKey } from '@xmcl/runtime-api'
-
-const { t } = useI18n()
-const router = useRouter()
 
 // Disco: optional theme color dedicated to the launch button. Empty = the
 // button keeps its built-in hardcoded styling (default behavior preserved).
@@ -183,73 +77,12 @@ const launchBtnStyle = computed(() =>
 )
 
 const { instance, path, name } = injection(kInstance)
-const { kill, count } = injection(kInstanceLaunch)
-// Use the app-root launch button, not a private `useLaunchButton()` instance:
-// the root owns the preclick listeners (unauthenticated warning, debounced
-// instance-edit flush). A private instance has an empty listener set, so
-// launching from this panel would skip those guards.
-const { onClick: onLaunch } = injection(kLaunchButton)
-const { duplicateInstance } = useService(InstanceServiceKey)
-const { openDirectory, getDesktopDirectory } = useService(BaseServiceKey)
-const { createLaunchShortcut } = useService(LaunchServiceKey)
-const { userProfile } = injection(kUserContext)
-const env = injection(kEnvironment)
-const { show: showDeleteDialog } = useDialog('delete-instance')
-const { show: showMcSettings } = useDialog('mc-settings')
-const { show: showLogDialog } = useDialog('log')
-const { isFavoriteOf } = useMcSettingsFavorite()
-const isMcFavorite = computed(() => isFavoriteOf(path.value))
+const { actions, favoriteOf } = useInstanceActions()
 
-function showLogs() {
-  showLogDialog()
-}
-
-// Disco: when the selected instance is not installable as-is (missing/broken
-// version jar, missing java, missing libraries/assets, stalled downloads...),
-// the "Başlat" button becomes a fixed-blue "İndir" button that runs the same
-// repair flow the old top "Yükle" button used. The custom launch-button color
-// must NOT tint this state — keep `launchBtnStyle` exclusive to the Başlat
-// branch.
-const { issues, fixInstanceFileIssue } = useInstanceLaunchMenuItems()
-const { fix: fixVersionIssues, loading: loadingVersionIssues, isInstanceFixing } =
-  injection(kInstanceVersionInstall)
-const needsInstall = computed(() => issues.value !== 0)
-const fixing = computed(() => isInstanceFixing(path.value) || loadingVersionIssues.value)
-
-async function onFix() {
-  if (fixing.value) return
-  const instancePath = path.value
-  await Promise.allSettled([
-    fixVersionIssues(instancePath),
-    fixInstanceFileIssue(instancePath),
-  ])
-}
-
-function openFolder() {
-  openDirectory(path.value)
-}
-
-async function onDuplicate() {
-  await duplicateInstance(path.value)
-}
-
-const onCreateShortcut = async () => {
-  const dir = await getDesktopDirectory()
-  const { filePath } = await windowController.showSaveDialog({
-    defaultPath: join(dir, name.value),
-    filters: env.value?.os === 'windows'
-      ? [{ name: 'Shortcut', extensions: ['lnk'] }]
-      : [{ name: 'Shortcut', extensions: ['desktop'] }],
-    properties: ['createDirectory', 'showOverwriteConfirmation'],
-  })
-  if (!filePath) return
-  await createLaunchShortcut({
-    instancePath: path.value,
-    destination: filePath,
-    userId: userProfile.value.id,
-    icon: await toPngIconUrl(getInstanceIcon(instance.value, undefined)),
-  })
-}
+// The install action must never be tinted by the custom launch color.
+const coloredActions = computed(() =>
+  actions.value.map(a => (a.id === 'install' ? a : { ...a, style: launchBtnStyle.value })),
+)
 </script>
 
 <style scoped>
