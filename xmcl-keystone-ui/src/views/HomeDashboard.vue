@@ -11,11 +11,11 @@
       class="dashboard__empty"
       data-testid="home-dashboard-empty"
     >
-      <v-icon size="40" class="mb-2">sports_esports</v-icon>
+      <DiscoIcon name="apps" :size="36" class="mb-2" />
       <div class="text-body-1 mb-1">{{ t('homeDashboard.noneTitle') }}</div>
       <div class="text-caption mb-4">{{ t('homeDashboard.noneHint') }}</div>
       <v-btn color="primary" @click="onCreate">
-        <v-icon start>add</v-icon>
+        <DiscoIcon name="add" :size="16" class="mr-1" />
         {{ t('instances.add') }}
       </v-btn>
     </div>
@@ -41,8 +41,8 @@
             <template v-else-if="lastPlayed.runtime.fabricLoader"> · Fabric {{ lastPlayed.runtime.fabricLoader }}</template>
           </div>
           <div class="hero__facts">
-            <span><v-icon size="14">schedule</v-icon> {{ playTimeText() }}</span>
-            <span><v-icon size="14">update</v-icon> {{ lastPlayedText }}</span>
+            <span><DiscoIcon name="clock" :size="12" /> {{ playTimeText() }}</span>
+            <span><DiscoIcon name="history" :size="12" /> {{ lastPlayedText }}</span>
           </div>
           <div class="hero__actions">
             <v-btn
@@ -52,7 +52,7 @@
               :disabled="needsInstall ? fixing : false"
               @click="heroPrimaryAction"
             >
-              <v-icon start>{{ needsInstall ? 'get_app' : 'play_arrow' }}</v-icon>
+              <DiscoIcon :name="needsInstall ? 'download' : 'play'" :size="18" class="mr-1" />
               {{ needsInstall ? t('shared.download') : t('launch.launch') }}
             </v-btn>
             <v-btn
@@ -61,7 +61,7 @@
               data-testid="home-dashboard-menu"
               @click="showMenu = !showMenu"
             >
-              <v-icon start>more_horiz</v-icon>
+              <DiscoIcon name="more" :size="18" class="mr-1" />
               {{ t('homeDashboard.more') }}
             </v-btn>
           </div>
@@ -81,7 +81,7 @@
               :data-testid="action.testid"
               @click="runMenuAction(action)"
             >
-              <v-icon size="16">{{ action.icon }}</v-icon>
+              <DiscoIcon :name="discoIconFor(action.icon)" :size="14" />
               {{ action.label }}
             </button>
           </div>
@@ -128,7 +128,7 @@
               :data-testid="`home-dashboard-row-launch-${inst.name}`"
               @click.stop="launchInstance(inst.path)"
             >
-              <v-icon start size="16">play_arrow</v-icon>
+              <DiscoIcon name="play" :size="14" class="mr-1" />
               {{ t('launch.launch') }}
             </v-btn>
           </div>
@@ -149,10 +149,42 @@ import { AddInstanceDialogKey } from '@/composables/instanceTemplates'
 import { useDialog } from '@/composables/dialog'
 import { getInstanceIcon } from '@/util/favicon'
 import { injection } from '@/util/inject'
+import DiscoIcon, { type DiscoIconName } from '@/components/DiscoIcon.vue'
 import { computed, nextTick, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
+
+// Material icon name -> pixel icon. Unknown icons fall back to a neutral block.
+function discoIconFor(mdi: string): DiscoIconName {
+  const map: Record<string, DiscoIconName> = {
+    get_app: 'download',
+    play_arrow: 'play',
+    cancel: 'stop',
+    edit: 'settings',
+    tune: 'settings',
+    folder: 'folder',
+    folder_open: 'folder-open',
+    subtitles: 'info',
+    ios_share: 'download',
+    file_copy: 'more',
+    delete: 'delete',
+    rocket_launch: 'play',
+    apps: 'apps',
+    storefront: 'store',
+    account_circle: 'account',
+    settings: 'settings',
+    menu: 'menu',
+    add: 'add',
+    schedule: 'clock',
+    update: 'history',
+    info: 'info',
+    more_horiz: 'more',
+    sports_esports: 'apps',
+  }
+  return (map[mdi] ?? 'apps') as DiscoIconName
+}
+
 
 const { instances, selectedInstance } = injection(kInstances)
 const { select } = injection(kInstance)

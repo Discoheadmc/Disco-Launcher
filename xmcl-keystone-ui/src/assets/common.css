@@ -888,3 +888,50 @@ a {
 .v-switch .v-selection-control--dirty .v-selection-control__input {
   transform: translateX(calc(var(--disco-switch-travel) / 2)) !important;
 }
+
+/* ------------------------------------------------------------------
+   Disco identity layer: square Material components
+
+   Corner radius is capped at 2px across the interactive and container
+   components of Vuetify, so the shell, the hotbar, the tooltip panel and
+   every dialog share one geometry. No color, gradient or shadow is
+   introduced here - the palette keeps coming from the theme, and the
+   per-theme surface colors keep working untouched.
+   ------------------------------------------------------------------ */
+.v-btn,
+.v-card,
+.v-dialog > .v-overlay__content,
+.v-dialog .v-card,
+.v-menu > .v-overlay__content,
+.v-select__content,
+.v-autocomplete__content,
+.v-overlay__content > .v-list,
+.v-tooltip .v-overlay__content,
+.v-snackbar > .v-overlay__content,
+.v-sheet,
+.v-field,
+.v-input__details,
+.v-chip,
+.v-tab,
+.v-pagination__item,
+.v-slider-thumb,
+.v-list-item,
+.v-banner,
+.v-alert {
+  border-radius: 2px !important;
+}
+
+/* Selection controls: square and framed, never a pill. This matches
+   the toggle style the identity already uses. */
+.v-checkbox .v-selection-control__input > .v-icon,
+.v-radio .v-selection-control__input > .v-icon {
+  border-radius: 2px !important;
+}
+
+/* Focus: one crisp 1px primary ring, never a soft glow. */
+.v-btn:focus-visible,
+.v-list-item:focus-visible,
+.v-field:focus-within {
+  outline: 1px solid rgb(var(--v-theme-primary)) !important;
+  outline-offset: 0 !important;
+}

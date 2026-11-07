@@ -17,7 +17,7 @@
         data-testid="inv-titlebar-minimize"
         @click="minimize"
       >
-        <v-icon size="14">minimize</v-icon>
+        <DiscoIcon name="minimize" :size="12" />
       </button>
       <button
         type="button"
@@ -26,7 +26,7 @@
         data-testid="inv-titlebar-maximize"
         @click="toggleMaximize"
       >
-        <v-icon size="14">{{ maximized ? 'filter_none' : 'crop_square' }}</v-icon>
+        <DiscoIcon :name="maximized ? 'restore' : 'maximize'" :size="12" />
       </button>
       <button
         type="button"
@@ -35,13 +35,14 @@
         data-testid="inv-titlebar-close"
         @click="close"
       >
-        <v-icon size="14">close</v-icon>
+        <DiscoIcon name="close" :size="12" />
       </button>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import DiscoIcon, { type DiscoIconName } from '@/components/DiscoIcon.vue'
 import { computed, ref } from 'vue'
 
 const { maximize, minimize, close } = windowController

@@ -58,7 +58,7 @@ agent:
     → AI Agent. For example, use OpenAI or a Claude-compatible gateway.
   notConfiguredTitle: Agent unavailable
   openSettings: Open settings
-  subscribeXmcl: Subscribe to DHMC
+  subscribeXmcl: Subscribe to the Disco Launcher channel
   reset: New conversation
   setupGuide: Setup guide
   statusDisabled: Disabled — sign in or configure a provider
@@ -1905,7 +1905,7 @@ setting:
   enableDedicatedGPUOptimization: Assign Dedicated GPU
   enableDedicatedGPUOptimizationDescription: This option will assign dedicated GPU to Minecraft process.
   enableDiscord: Discord Rich Presence
-  enableDiscordDescription: Show XMCL Disco Launcher activity on your Discord profile
+  enableDiscordDescription: Show Disco Launcher activity on your Discord profile
   enterUrl: Enter URL
   exportSettings: Export Settings
   exportSettingsHint: Save your current settings to a file
@@ -2238,8 +2238,8 @@ theme:
   selectImage: Select Image
   selectMusic: Select Music
   selectVideo: Select Video
-  title: XMCL Disco Launcher
-title: XMCL Disco Launcher
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: Host Candidate
   prflx: Peer Reflexive Candidate
@@ -2434,7 +2434,7 @@ userCape:
   customOnlyHere: Only visible in this launcher — independent from official Mojang capes
   customCancel: Cancel
   customApply: Apply
-  customDescription: This custom cape is only visible to players using XMCL Disco Launcher. It does not touch the official Mojang cape system — the PNG never leaves your device or gets sent to Mojang.
+  customDescription: This custom cape is only visible to players using Disco Launcher. It does not touch the official Mojang cape system — the PNG never leaves your device or gets sent to Mojang.
 userService:
   add: Add More Services
   authlibInjectorMetadata: Authlib-Injector metadata

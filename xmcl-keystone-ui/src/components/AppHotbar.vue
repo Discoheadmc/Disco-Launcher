@@ -29,7 +29,7 @@
       >
         <span class="hotbar__index">{{ index + 1 }}</span>
         <span class="hotbar__icon">
-          <v-icon :size="22" :icon="slot.icon" />
+          <DiscoIcon :name="discoIconFor(slot.icon)" :size="22" />
         </span>
         <span class="hotbar__label">{{ slot.label }}</span>
         <span
@@ -44,6 +44,7 @@
 <script lang="ts" setup>
 import { useDialog } from '@/composables/dialog'
 import { AddInstanceDialogKey } from '@/composables/instanceTemplates'
+import DiscoIcon, { type DiscoIconName } from '@/components/DiscoIcon.vue'
 import { kSettingsState } from '@/composables/setting'
 import { injection } from '@/util/inject'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
@@ -77,6 +78,19 @@ const slots = computed<HotbarSlot[]>(() => [
   { id: 'menu', label: t('menuBar.files'), icon: 'menu' },
   { id: 'create', label: t('instances.add'), icon: 'add', badge: '+' },
 ])
+
+// Material icon name -> pixel icon. Falls back to a neutral block.
+function discoIconFor(mdi: string): DiscoIconName {
+  const map: Record<string, DiscoIconName> = {
+    apps: 'apps',
+    storefront: 'store',
+    account_circle: 'account',
+    settings: 'settings',
+    menu: 'menu',
+    add: 'add',
+  }
+  return (map[mdi] ?? 'apps') as DiscoIconName
+}
 
 const activeSlot = computed(() => {
   const path = route.path

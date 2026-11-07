@@ -344,10 +344,10 @@ gameType:
 help: Yardım
 home: Ana Sayfa
 homeDashboard:
-  noneTitle: Hic oynamadin
-  noneHint: Bir oyun olustur veya mevcut bir ornegi sec; burada buyuk karta donusur.
-  more: Diger islemler
-  listTitle: Tum oyunlar
+  noneTitle: Hiç oynamadın
+  noneHint: Bir oyun oluştur veya mevcut bir örneği seç; burada büyük karta dönüşür.
+  more: Diğer işlemler
+  listTitle: Tüm oyunlar
   count: '{count} oyun'
 importModpack:
   name: Mod Paketi İçe Aktar
@@ -1466,7 +1466,7 @@ setting:
   enableDedicatedGPUOptimization: Özel GPU Ata
   enableDedicatedGPUOptimizationDescription: Bu seçenek Minecraft işlemine özel GPU atayacaktır.
   enableDiscord: Discord Zengin Durum
-  enableDiscordDescription: XMCL Disco Launcher etkinliğini Discord profilinde göster
+  enableDiscordDescription: Disco Launcher etkinliğini Discord profilinde göster
   enterUrl: URL Girin
   exportSettings: Ayarları Dışa Aktar
   exportSettingsHint: Mevcut ayarlarınızı bir dosyaya kaydedin
@@ -1768,8 +1768,8 @@ theme:
   selectImage: Resim Seç
   selectMusic: Müzik Seç
   selectVideo: Video Seç
-  title: XMCL Disco Launcher
-title: XMCL Disco Launcher
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: Ana Bilgisayar Adayı
   prflx: Eş Yansıtmalı Aday
@@ -1932,7 +1932,7 @@ userCape:
   customOnlyHere: Sadece bu başlatıcıda görünür — resmî Mojang pelerininden bağımsızdır
   customCancel: İptal
   customApply: Uygula
-  customDescription: Bu özel pelerin yalnızca XMCL Disco Launcher kullanan oyuncular tarafından görünür. Resmî Mojang pelerin sisteminizi hiçbir şekilde etkilemez — PNG cihazınızdan çıkmaz, Mojang'a gönderilmez.
+  customDescription: Bu özel pelerin yalnızca Disco Launcher kullanan oyuncular tarafından görünür. Resmî Mojang pelerin sisteminizi hiçbir şekilde etkilemez — PNG cihazınızdan çıkmaz, Mojang'a gönderilmez.
 userService:
   add: Daha Fazla Servis Ekle
   authlibInjectorMetadata: Authlib-Injector meta verileri
@@ -2153,7 +2153,7 @@ gamepad:
   steamAddedNotify: Başlatıcı Steam Kütüphanesine başarıyla eklendi! Görmek için lütfen Steam'i yeniden başlatın.
   steamAlreadyAddedNotify: Başlatıcı zaten Steam Kütüphanenizde var.
   steamDeckTitle: Steam Deck Algılandı
-  steamDeckDesc: Steam Deck üzerinde çalıştığınızı algıladık. Oyun Modunda tam Steam arayüzü ve kontrolcü entegrasyonu için XMCL Disco Launcher'ı Steam Kütüphanenize Steam dışı bir oyun olarak eklemek ister misiniz?
+  steamDeckDesc: Steam Deck üzerinde çalıştığınızı algıladık. Oyun Modunda tam Steam arayüzü ve kontrolcü entegrasyonu için Disco Launcher'ı Steam Kütüphanenize Steam dışı bir oyun olarak eklemek ister misiniz?
   steamDeckAddBtn: Steam'e Ekle ({btn})
   steamDeckCancelBtn: İptal Et ({btn})
 mcSettings:

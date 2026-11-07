@@ -22,7 +22,7 @@
         data-testid="pause-menu-add-profile"
         @click="goMe"
       >
-        <v-icon size="18" class="mr-2">person_add</v-icon>
+        <DiscoIcon name="account" :size="16" class="mr-2" />
         {{ t('userAccount.add') }}
       </button>
 
@@ -33,7 +33,7 @@
         data-testid="pause-menu-instance-folder"
         @click="openInstanceFolder"
       >
-        <v-icon size="18" class="mr-2">folder_open</v-icon>
+        <DiscoIcon name="folder-open" :size="16" class="mr-2" />
         {{ t('instance.showInstance') }}
       </button>
       <button
@@ -42,7 +42,7 @@
         data-testid="pause-menu-game-data-folder"
         @click="openGameDataFolder"
       >
-        <v-icon size="18" class="mr-2">storage</v-icon>
+        <DiscoIcon name="apps" :size="16" class="mr-2" />
         {{ t('menuBar.gameDataFolder') }}
       </button>
       <button
@@ -52,7 +52,7 @@
         data-testid="pause-menu-create-shortcut"
         @click="onCreateShortcut"
       >
-        <v-icon size="18" class="mr-2">rocket_launch</v-icon>
+        <DiscoIcon name="play" :size="16" class="mr-2" />
         {{ t('launch.createShortcut') }}
       </button>
 
@@ -62,7 +62,7 @@
         data-testid="pause-menu-settings"
         @click="goSettings"
       >
-        <v-icon size="18" class="mr-2">settings</v-icon>
+        <DiscoIcon name="settings" :size="16" class="mr-2" />
         {{ t('setting.name', 1) }}
       </button>
 
@@ -74,7 +74,7 @@
         data-testid="pause-menu-github"
         @click="openLink('https://github.com/Discoheadmc/Disco-Launcher')"
       >
-        <v-icon size="18" class="mr-2">code</v-icon>
+        <DiscoIcon name="info" :size="16" class="mr-2" />
         {{ t('menuBar.github') }}
       </button>
       <button
@@ -83,7 +83,7 @@
         data-testid="pause-menu-report-issue"
         @click="openLink('https://github.com/Discoheadmc/Disco-Launcher/issues')"
       >
-        <v-icon size="18" class="mr-2">bug_report</v-icon>
+        <DiscoIcon name="info" :size="16" class="mr-2" />
         {{ t('menuBar.reportIssue') }}
       </button>
       <button
@@ -92,7 +92,7 @@
         data-testid="pause-menu-releases"
         @click="openLink('https://github.com/Discoheadmc/Disco-Launcher/releases')"
       >
-        <v-icon size="18" class="mr-2">download</v-icon>
+        <DiscoIcon name="download" :size="16" class="mr-2" />
         {{ t('menuBar.releases') }}
       </button>
       <button
@@ -101,7 +101,7 @@
         data-testid="pause-menu-feedback"
         @click="showFeedbackDialog"
       >
-        <v-icon size="18" class="mr-2">feedback</v-icon>
+        <DiscoIcon name="more" :size="16" class="mr-2" />
         {{ t('feedback.name') }}
       </button>
       <button
@@ -110,7 +110,7 @@
         data-testid="pause-menu-about"
         @click="goAbout"
       >
-        <v-icon size="18" class="mr-2">info</v-icon>
+        <DiscoIcon name="info" :size="16" class="mr-2" />
         {{ t('menuBar.about') }}
       </button>
 
@@ -122,7 +122,7 @@
         data-testid="pause-menu-close"
         @click="open = false"
       >
-        <v-icon size="18" class="mr-2">arrow_back</v-icon>
+        <DiscoIcon name="back" :size="16" class="mr-2" />
         {{ t('shared.back') }}
       </button>
     </div>
@@ -139,6 +139,7 @@ import { join } from '@/util/basename'
 import { getInstanceIcon, toPngIconUrl } from '@/util/favicon'
 import { injection } from '@/util/inject'
 import { BaseServiceKey, LaunchServiceKey } from '@xmcl/runtime-api'
+import DiscoIcon, { type DiscoIconName } from '@/components/DiscoIcon.vue'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'

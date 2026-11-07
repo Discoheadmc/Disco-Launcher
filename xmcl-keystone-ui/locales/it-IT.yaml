@@ -1651,8 +1651,8 @@ theme:
   selectImage: Scegli Immagine
   selectMusic: Scegli Musica
   selectVideo: Scegli Video
-  title: XMCL Disco Launcher
-title: XMCL Disco Launcher
+  title: Disco Launcher
+title: Disco Launcher
 transportType:
   host: Host Scelto
   prflx: Peer Reflexive Scelto
