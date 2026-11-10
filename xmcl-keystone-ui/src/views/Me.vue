@@ -22,6 +22,7 @@ import { Instance } from '@xmcl/instance'
 import { Ref, computed, nextTick, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import MeProfilePanel from './MeProfilePanel.vue'
+import MeStatsDialog from '@/components/MeStatsDialog.vue'
 
 const { t } = useI18n()
 const { instances } = injection(kInstances)
@@ -233,6 +234,9 @@ async function launchInstance(instancePath: string) {
 const getInstanceContextMenu = useInstanceContextMenuFunc()
 
 const filter = ref<HTMLElement | null>(null)
+
+// Disco: the play statistics dialog, opened from the button next to the filter.
+const showStats = ref(false)
 const { focused } = useFocus(filter)
 useTextFieldBehavior(filter, focused)
 
@@ -316,6 +320,7 @@ useTutorial(
           </div>
         </div>
 
+        <div v-if="instances.length > 0" class="stats-row">
         <v-text-field
           v-if="instances.length > 0"
           ref="filter"
@@ -327,6 +332,17 @@ useTutorial(
           hide-details
           class="search-field mb-4"
         />
+        <v-btn
+          variant="outlined"
+          class="stats-btn"
+          data-testid="me-stats-open"
+          :aria-label="t('homeStats.title')"
+          @click="showStats = true"
+        >
+          <v-icon start size="small" aria-hidden="true">leaderboard</v-icon>
+          {{ t('homeStats.title') }}
+        </v-btn>
+        </div>
 
         <Hint
           v-if="instances.length === 0"
@@ -407,6 +423,8 @@ useTutorial(
       </section>
     </div>
   </div>
+    <!-- Disco: play statistics, opened from the button next to the filter box. -->
+    <MeStatsDialog v-model="showStats" />
   </div>
 </template>
 
@@ -584,5 +602,27 @@ useTutorial(
   .instances-grid {
     grid-template-columns: 1fr;
   }
+}
+/* Disco: filter box with the statistics button next to it. */
+.stats-row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.stats-row .search-field {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.stats-btn {
+  flex-shrink: 0;
+  text-transform: none;
+  /* Match the outlined search field next to it exactly: same 40px height and
+     the same baseline. The button's own height var and box are both pinned,
+     because Vuetify's outlined variant recomputes the box from it. */
+  --v-btn-height: 40px;
+  height: 40px !important;
+  min-height: 40px !important;
 }
 </style>

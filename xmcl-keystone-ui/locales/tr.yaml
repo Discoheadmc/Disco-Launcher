@@ -696,6 +696,12 @@ me:
   listView: Liste görünümü
   news: Haberler
   recentPlay: Son Oynananlar
+homeStats:
+  title: Oynama İstatistikleri
+  subtitle: Tüm oyunlardaki toplam süre ve en çok oynananlar
+  instances: Oynanan oyun
+  sessions: Açılma sayısı
+  empty: Henüz bir oyun oynamadın. Oynadıkça istatistikler burada görünür.
 migrationWindow:
   title: Veri Taşıma
   preparing: Taşıma hazırlanıyor…

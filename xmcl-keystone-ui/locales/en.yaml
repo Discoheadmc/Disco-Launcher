@@ -903,6 +903,12 @@ me:
   listView: List view
   news: News
   recentPlay: Recent Play
+homeStats:
+  title: Play Statistics
+  subtitle: Total time across all games and the ones you played most
+  instances: Games played
+  sessions: Times launched
+  empty: You have not played any game yet. Stats appear here once you do.
 migrateMinecraft:
   name: Migrate Minecraft Files
 migrationWindow:
