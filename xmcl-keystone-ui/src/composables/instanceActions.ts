@@ -13,6 +13,33 @@ import { getInstanceIcon, toPngIconUrl } from '@/util/favicon'
 import { injection } from '@/util/inject'
 import { BaseServiceKey, InstanceServiceKey, LaunchServiceKey } from '@xmcl/runtime-api'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+
+/**
+ * Disco: the instance's content screens, as navigation entries.
+ *
+ * Only screens that really exist are listed - the routes already exist in the
+ * router and are what the command palette uses. "Kayıtlar" and "Dünyalar" are
+ * the same screen in Minecraft terms (world saves), so both point at /save.
+ * There is no /servers route; the server screen lives in the base-setting tab.
+ */
+export interface InstanceContentLink {
+  id: 'mods' | 'saves' | 'worlds' | 'servers'
+  label: string
+  icon: string
+  to: string
+}
+
+export function useInstanceContentLinks(): InstanceContentLink[] {
+  const { t } = useI18n()
+  return [
+    { id: 'mods', label: t('instanceContent.mods'), icon: 'extension', to: '/mods' },
+    { id: 'saves', label: t('instanceContent.saves'), icon: 'map', to: '/save' },
+    { id: 'worlds', label: t('instanceContent.worlds'), icon: 'public', to: '/save' },
+    { id: 'servers', label: t('instanceContent.servers'), icon: 'dns', to: '/base-setting?target=server' },
+  ]
+}
 
 /**
  * Disco: the single source of truth for instance actions.

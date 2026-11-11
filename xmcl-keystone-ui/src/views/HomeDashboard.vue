@@ -7,7 +7,7 @@
   <div class="dashboard" data-testid="home-dashboard">
     <!-- No instance / never played -->
     <div
-      v-if="!lastPlayed"
+      v-if="!hero"
       class="dashboard__empty"
       data-testid="home-dashboard-empty"
     >
@@ -28,17 +28,17 @@
       >
         <div class="hero__banner">
           <img
-            :src="getInstanceIcon(lastPlayed, undefined)"
-            :alt="lastPlayed.name"
+            :src="getInstanceIcon(hero, undefined)"
+            :alt="hero.name"
             draggable="false"
           >
         </div>
         <div class="hero__body">
-          <div class="hero__name" :title="lastPlayed.name">{{ lastPlayed.name }}</div>
+          <div class="hero__name" :title="hero.name">{{ hero.name }}</div>
           <div class="hero__meta">
-            {{ lastPlayed.runtime.minecraft || '' }}
-            <template v-if="lastPlayed.runtime.forge"> · Forge {{ lastPlayed.runtime.forge }}</template>
-            <template v-else-if="lastPlayed.runtime.fabricLoader"> · Fabric {{ lastPlayed.runtime.fabricLoader }}</template>
+            {{ hero.runtime.minecraft || '' }}
+            <template v-if="hero.runtime.forge"> · Forge {{ hero.runtime.forge }}</template>
+            <template v-else-if="hero.runtime.fabricLoader"> · Fabric {{ hero.runtime.fabricLoader }}</template>
           </div>
           <div class="hero__facts">
             <span><v-icon size="14">schedule</v-icon> {{ playTimeText() }}</span>
@@ -65,26 +65,32 @@
               {{ t('homeDashboard.more') }}
             </v-btn>
           </div>
+        </div>
 
-          <!-- Action menu: the same shared source, minus the primary action. -->
-          <div
-            v-if="showMenu"
-            class="hero__menu"
-            data-testid="home-dashboard-action-menu"
+        <!-- Disco: the actions open as a side panel sharing the card's row,
+             so the list below never moves. -->
+        <HeroActionsPanel v-model="showMenu" />
+      </div>
+
+      <!-- Disco: content row - visible entry points to the selected instance's
+           content screens (they used to be reachable only from the palette). -->
+      <div
+        class="content-row"
+        data-testid="home-dashboard-content-row"
+      >
+        <span class="content-row__label">{{ t('homeDashboard.content') }}</span>
+        <div class="content-row__items">
+          <button
+            v-for="link in contentLinks"
+            :key="link.id"
+            type="button"
+            class="content-btn"
+            :data-testid="`home-dashboard-content-${link.id}`"
+            @click="openContent(link.to)"
           >
-            <button
-              v-for="action in menuActions"
-              :key="action.id"
-              type="button"
-              class="hero__menu-btn"
-              :class="{ 'hero__menu-btn--danger': action.danger }"
-              :data-testid="action.testid"
-              @click="runMenuAction(action)"
-            >
-              <v-icon size="16">{{ action.icon }}</v-icon>
-              {{ action.label }}
-            </button>
-          </div>
+            <v-icon size="18">{{ link.icon }}</v-icon>
+            <span class="content-btn__label">{{ link.label }}</span>
+          </button>
         </div>
       </div>
 
@@ -99,7 +105,7 @@
             v-for="inst in instances"
             :key="inst.path"
             class="row"
-            :class="{ 'row--selected': inst.path === lastPlayed?.path }"
+            :class="{ 'row--selected': inst.path === hero?.path }"
             :data-testid="`home-dashboard-row-${inst.name}`"
           >
             <img
@@ -139,17 +145,18 @@
 </template>
 
 <script lang="ts" setup>
-import { useInstanceActions } from '@/composables/instanceActions'
+import { useInstanceActions, useInstanceContentLinks } from '@/composables/instanceActions'
+import { useDialog } from '@/composables/dialog'
 import { kInstance } from '@/composables/instance'
 import { kInstances } from '@/composables/instances'
 import { kInstanceVersionInstall } from '@/composables/instanceVersionInstall'
 import { useInstanceLaunchMenuItems } from '@/composables/instanceLaunchMenuItems'
+import HeroActionsPanel from '@/components/HeroActionsPanel.vue'
 import { kLaunchButton } from '@/composables/launchButton'
 import { AddInstanceDialogKey } from '@/composables/instanceTemplates'
-import { useDialog } from '@/composables/dialog'
 import { getInstanceIcon } from '@/util/favicon'
 import { injection } from '@/util/inject'
-import { computed, nextTick, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
@@ -159,12 +166,47 @@ const { select } = injection(kInstance)
 const { onClick: onLaunchClick } = injection(kLaunchButton)
 const { show: showAddInstance } = useDialog(AddInstanceDialogKey)
 
-/** The instance shown in the hero card: the most recently played one. */
+/** Content screens of the selected instance (Modlar / Kayıtlar / ...). */
+const contentLinks = useInstanceContentLinks()
+
+const router = useRouter()
+
+function openContent(to: string) {
+  if (!hero.value) return
+  // Make sure the screen opens for the instance the card shows.
+  if (hero.value.path !== selectedInstance.value) select(hero.value.path)
+  void router.push(to)
+}
+
+/**
+ * The instance shown in the hero card.
+ *
+ * ONE source of truth: the selected instance, the same one the page header and
+ * the statistics strip use (they read kInstance). Fallbacks, in order:
+ *   1. the selected instance, when it exists in the list
+ *   2. the most recently played instance (first open, or the selected one was
+ *      deleted and the list moved on)
+ *   3. nothing at all - the empty state
+ */
 const lastPlayed = computed(() => {
   const list = instances.value.filter(i => (i.lastPlayedDate ?? 0) > 0)
   if (list.length === 0) return undefined
   return [...list].sort((a, b) => (b.lastPlayedDate ?? 0) - (a.lastPlayedDate ?? 0))[0]
 })
+
+const hero = computed(() => {
+  const selected = instances.value.find(i => i.path === selectedInstance.value)
+  if (selected) return selected
+  return lastPlayed.value
+})
+
+// Keep the selection and the card in sync: when the card falls back to the
+// last played instance (first open, or the selection vanished), adopt it as
+// the selection so the header, the statistics strip, the tooltip panel and
+// every action operate on the very same instance as the card.
+watch(hero, (inst) => {
+  if (inst && inst.path !== selectedInstance.value) select(inst.path)
+}, { immediate: true })
 
 const showMenu = ref(false)
 
@@ -173,7 +215,7 @@ function onCreate() {
 }
 
 function playTimeText() {
-  const ms = lastPlayed.value?.playtime
+  const ms = hero.value?.playtime
   if (!ms) return t('instance.neverPlayed')
   const totalMinutes = Math.floor(ms / 60000)
   const days = Math.floor(totalMinutes / 1440)
@@ -191,7 +233,7 @@ function playTimeText() {
 }
 
 const lastPlayedText = computed(() => {
-  const date = lastPlayed.value?.lastPlayedDate
+  const date = hero.value?.lastPlayedDate
   if (!date) return t('instance.neverPlayed')
   return new Date(date).toLocaleString()
 })
@@ -201,18 +243,18 @@ const { issues, fixInstanceFileIssue } = useInstanceLaunchMenuItems()
 const { fix: fixVersionIssues, loading: loadingVersionIssues, isInstanceFixing } =
   injection(kInstanceVersionInstall)
 const needsInstall = computed(() => {
-  if (!lastPlayed.value) return false
-  const i = lastPlayed.value
+  if (!hero.value) return false
+  const i = hero.value
   if (i.path !== selectedInstance.value) return false
   return issues.value !== 0
 })
 const fixing = computed(() => {
-  if (!lastPlayed.value) return false
-  return isInstanceFixing(lastPlayed.value.path) || loadingVersionIssues.value
+  if (!hero.value) return false
+  return isInstanceFixing(hero.value.path) || loadingVersionIssues.value
 })
 
 async function heroPrimaryAction() {
-  const inst = lastPlayed.value
+  const inst = hero.value
   if (!inst) return
   if (inst.path !== selectedInstance.value) select(inst.path)
   await nextTick()
@@ -221,17 +263,6 @@ async function heroPrimaryAction() {
     return
   }
   await onLaunchClick()
-}
-
-/** The menu list is the shared source minus the primary (launch/install). */
-const { actions } = useInstanceActions()
-const menuActions = computed(() =>
-  actions.value.filter(a => a.id !== 'launch' && a.id !== 'install'),
-)
-
-function runMenuAction(action: { run: () => void }) {
-  showMenu.value = false
-  action.run()
 }
 
 /**
@@ -263,7 +294,10 @@ async function launchInstance(instancePath: string) {
   text-align: center;
 }
 
-/* The last-played card: flat, square, one thin border - no elevation. */
+/* The last-played card: flat, square, one thin border - no elevation. The row
+   also holds the actions panel, which shares the card height when open.
+   The row height is pinned by the banner (128px) + padding (2x14) = 156px, so
+   the two children can never grow it and the list below never moves. */
 .hero {
   display: flex;
   gap: 14px;
@@ -271,6 +305,11 @@ async function launchInstance(instancePath: string) {
   background: rgba(0, 0, 0, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 2px;
+  height: 156px;
+  box-sizing: content-box;
+  align-items: stretch;
+  /* Containing block for the absolutely positioned actions panel. */
+  position: relative;
 }
 
 .hero__banner {
@@ -299,6 +338,10 @@ async function launchInstance(instancePath: string) {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  /* Never taller than the card's inner area (128px): the row height is fixed
+     by .hero, so overflowing content is clipped instead of pushed. */
+  height: 128px;
+  overflow: hidden;
 }
 
 .hero__name {
@@ -336,37 +379,57 @@ async function launchInstance(instancePath: string) {
   margin-top: 2px;
 }
 
-.hero__menu {
-  margin-top: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 6px;
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 2px;
-}
-
-.hero__menu-btn {
+/* Content row: small square buttons, one per content screen. */
+.content-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 8px;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.content-row__label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  opacity: 0.55;
+}
+
+.content-row__items {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Square, framed, flat - same geometry as the rest of the shell. */
+.content-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 2px;
   color: rgb(var(--v-theme-on-surface));
-  font-size: 0.8rem;
-  text-align: left;
+  font-size: 0.78rem;
   cursor: pointer;
 }
 
-.hero__menu-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
+.content-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(var(--v-theme-primary), 0.5);
 }
 
-.hero__menu-btn--danger:hover {
-  background: rgba(255, 82, 82, 0.18);
+/* Narrow window: the panel cannot share the row, so it drops below the card
+   (same as the old behaviour) instead of overflowing. */
+@media (max-width: 760px) {
+  .hero {
+    flex-wrap: wrap;
+  }
+
+  .hero-side {
+    flex: 1 1 100%;
+    width: auto;
+  }
 }
 
 .list {

@@ -343,7 +343,14 @@ gameType:
   survival: Hayatta Kalma Modu
 help: Yardım
 home: Ana Sayfa
+instanceContent:
+  mods: Modlar
+  saves: Kayıtlar
+  worlds: Dünyalar
+  servers: Sunucular
+
 homeDashboard:
+  content: İçerik
   noneTitle: Hiç oynamadın
   noneHint: Bir oyun oluştur veya mevcut bir örneği seç; burada büyük karta dönüşür.
   more: Diğer işlemler
