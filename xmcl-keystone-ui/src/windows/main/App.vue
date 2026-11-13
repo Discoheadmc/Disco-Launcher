@@ -309,7 +309,34 @@ img {
   position: relative;
   flex: 1 1 auto;
   min-height: 0;
-  overflow: auto;
-  overflow-x: hidden;
+  /* Must be a flex column: the page views inside (Mod/Save/the lobby) rely on
+     inheriting a resolved height to measure their (virtual) lists. With
+     display:block the height chain collapsed and every content screen rendered
+     almost empty. */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* Room for the hotbar plus breathing space, so the last row of a list never
+     hides behind it. */
+  padding-bottom: 64px;
+}
+
+/* Every page fills the remaining height and scrolls on its own, which keeps a
+   single scroll container per screen (no nested page+list scrollbars). */
+.inventory-shell__main > * {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* The lobby layout is the shell's scroll container for the lobby screen. It is
+   capped to the shell height (its own `max-h-full` does not resolve against a
+   flex parent), so the page inside can grow to its content and this element
+   scrolls - one scrollbar per screen, no nested siblings. */
+.inventory-shell__main .home-page {
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
 }
 </style>

@@ -2,7 +2,7 @@
   <div
     ref="scrollElement"
     class="select-none"
-    :class="{ 'h-full': isFocus }"
+    :class="[{ 'h-full': isFocus }, { 'h-full': inventoryTheme || dashboardHome }]"
     v-context-menu="isFocus ? getFocusBackgroundMenu : undefined"
   >
     <HomeCriticalError />

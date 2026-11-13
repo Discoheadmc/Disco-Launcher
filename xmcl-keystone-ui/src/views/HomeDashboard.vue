@@ -281,7 +281,14 @@ async function launchInstance(instancePath: string) {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: 12px 4px 24px;
+  padding: 12px 4px 8px;
+  /* In the inventory shell the dashboard is the lobby screen's scroll
+     container. A fixed height (not flex-basis:auto) is what stops it growing
+     with content, so the list scrolls instead of stretching past the hotbar. */
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .dashboard__empty {
