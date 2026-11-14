@@ -21,7 +21,7 @@ export const config = {
   publish: [{
     provider: 'github',
     owner: 'Discoheadmc',
-    repo: 'XMCL-Disco',
+    repo: 'Disco-Launcher',
   }],
   files: [{
     from: 'dist',

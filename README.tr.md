@@ -46,7 +46,7 @@ X Minecraft Launcher (XMCL) üzerine kurulmuş, envanter tarzı ana ekran ve yen
 
 ## Kurulum
 İndiricileri Releases sayfasından indirin:
-https://github.com/Discoheadmc/XMCL-Disco/releases
+https://github.com/Discoheadmc/Disco-Launcher/releases
 
 Desteklenen platformlar:
 - Windows (NSIS yükleyici, x64)

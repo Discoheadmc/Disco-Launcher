@@ -47,7 +47,7 @@ with an inventory-style home screen and a new dashboard.
 
 ## Installation
 Download an installer from the Releases page:
-https://github.com/Discoheadmc/XMCL-Disco/releases
+https://github.com/Discoheadmc/Disco-Launcher/releases
 
 Supported platforms:
 - Windows (NSIS installer, x64)
