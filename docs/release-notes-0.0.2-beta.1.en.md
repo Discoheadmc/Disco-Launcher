@@ -51,6 +51,6 @@ Get-FileHash .\DiscoLauncher-Setup-0.0.2-beta.1.exe -Algorithm SHA256
 
 ## 🔗 Links
 
-- 📖 [README](../README.en.md) · 🇹🇷 [Türkçe](../README.md)
+- 📖 [README](../README.md) · 🇹🇷 [Türkçe](../README.md)
 - 🐛 [Open Issue](https://github.com/Discoheadmc/Disco-Launcher/issues)
 - 🛠️ Upstream: [X Minecraft Launcher (XMCL)](https://github.com/Voxelum/x-minecraft-launcher) — thank you for the MIT-licensed foundation
