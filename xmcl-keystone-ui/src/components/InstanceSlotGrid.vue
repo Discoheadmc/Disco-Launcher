@@ -9,6 +9,27 @@
     class="slot-grid"
     data-testid="instance-slot-grid"
   >
+    <!-- Disco: empty state with a direct "Oyun Oluştur" entry (the classic
+         grid relies on the toolbar button; the inventory home has none). -->
+    <div
+      v-if="instances.length === 0"
+      class="slot-grid__empty"
+      data-testid="instance-slot-grid-empty"
+    >
+      <v-icon size="40" class="mb-2">sports_esports</v-icon>
+      <div class="text-body-2 mb-1">{{ t('homeDashboard.noneTitle') }}</div>
+      <div class="text-caption mb-4">{{ t('homeDashboard.noneHint') }}</div>
+      <v-btn
+        color="primary"
+        variant="tonal"
+        size="small"
+        prepend-icon="add"
+        data-testid="instance-slot-grid-create"
+        @click="showAddInstance(undefined)"
+      >
+        {{ t('instances.add') }}
+      </v-btn>
+    </div>
     <div
       v-for="(inst, index) in instances"
       :key="inst.path"
@@ -37,7 +58,7 @@
         >
       </span>
       <span class="slot__name">{{ inst.name }}</span>
-      <span class="slot__meta">{{ inst.runtime.minecraft || '' }}</span>
+      <span class="slot__meta">{{ inst.runtime.minecraft || '' }}<template v-if="loaderText(inst)"> · {{ loaderText(inst) }}</template></span>
       <span
         v-if="running(inst.path)"
         class="slot__badge slot__badge--running"
@@ -53,6 +74,8 @@
 
 <script lang="ts" setup>
 import { Instance } from '@xmcl/instance'
+import { useDialog } from '@/composables/dialog'
+import { AddInstanceDialogKey } from '@/composables/instanceTemplates'
 import { getInstanceIcon } from '@/util/favicon'
 import { injection } from '@/util/inject'
 import { kInstances } from '@/composables/instances'
@@ -65,6 +88,17 @@ const { instances, selectedInstance } = injection(kInstances)
 const { select } = injection(kInstance)
 const { isRunning } = injection(kInstanceLaunchCoordinator)
 const running = isRunning as (path: string) => boolean
+const { show: showAddInstance } = useDialog(AddInstanceDialogKey)
+
+/** "sürüm · mod yükleyici" meta below the slot name (short loader name). */
+function loaderText(inst: Instance) {
+  const r = inst.runtime
+  if (r.forge) return 'Forge'
+  if (r.fabricLoader) return 'Fabric'
+  if (r.quiltLoader) return 'Quilt'
+  if (r.neoForged) return 'NeoForge'
+  return ''
+}
 
 const emit = defineEmits<{
   (e: 'contextmenu', event: MouseEvent, inst: Instance): void
@@ -88,9 +122,20 @@ const instanceIconMap = computed(() => {
   display: grid;
   /* Responsive square slots: the 1fr columns keep every slot square because the
      aspect ratio is fixed below, so the grid scrolls instead of stretching. */
-  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
-  gap: 6px;
+  grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+  gap: 8px;
   padding: 4px 2px 16px;
+}
+
+.slot-grid__empty {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  text-align: center;
+  opacity: 0.75;
 }
 
 /* Minecraft-style slot: square, framed, thick border when selected. */
@@ -138,8 +183,8 @@ const instanceIconMap = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 64px;
+  height: 64px;
   flex-shrink: 0;
   margin-top: 6px;
 }
@@ -151,15 +196,19 @@ const instanceIconMap = computed(() => {
   image-rendering: pixelated;
 }
 
-/* The name is always visible - it may ellipsize, never disappear. */
+/* The name is always visible - at most two lines, ellipsized, with the full
+   name in the slot's title tooltip. */
 .slot__name {
   width: 100%;
-  font-size: 0.66rem;
+  font-size: 0.7rem;
   line-height: 1.15;
   text-align: center;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .slot__meta {
