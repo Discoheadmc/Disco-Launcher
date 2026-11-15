@@ -99,7 +99,7 @@
       <Hint v-if="dragover" icon="save_alt" :text="t('save.dropHint')" class="h-full" />
       <div
         v-else-if="isDatapackChild(selectedItem)"
-        class="flex h-full flex-col gap-3 overflow-auto p-4"
+        class="flex h-full flex-col gap-3 overflow-auto p-4 save-page"
       >
         <div class="flex items-center gap-3">
           <v-avatar size="64" rounded>

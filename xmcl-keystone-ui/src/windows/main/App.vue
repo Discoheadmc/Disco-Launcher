@@ -303,6 +303,10 @@ img {
   min-height: 0;
   height: 100%;
   overflow: hidden;
+  /* Disco: the hotbar is a fixed overlay now, so pages must reserve room
+     inside their own scroll area (last row scrolls above the bar). This is
+     the single source of that height. */
+  --hotbar-h: 64px;
 }
 
 .inventory-shell__main {
@@ -316,9 +320,24 @@ img {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  /* Room for the hotbar plus breathing space, so the last row of a list never
-     hides behind it. */
-  padding-bottom: 64px;
+}
+
+/* Disco: the hotbar floats over the page instead of taking layout space,
+     so every scrollable area ends hotbar height + 16px above the window
+     bottom and the last row can always scroll out from under it. */
+.inventory-shell__main .custom-scrollbar,
+.inventory-shell__main .scroll-container,
+.inventory-shell__main .visible-scroll,
+.inventory-shell__main .home-page,
+.inventory-shell__main .dashboard,
+.inventory-shell__main .my-stuff-page,
+.inventory-shell__main .store-entry,
+.inventory-shell__main .store-sidebar,
+.inventory-shell__main .market-base,
+.inventory-shell__main .base-setting-scroll,
+.inventory-shell__main .save-page,
+.inventory-shell__main #store-content {
+  padding-bottom: calc(var(--hotbar-h) + 16px);
 }
 
 /* Every page fills the remaining height and scrolls on its own, which keeps a

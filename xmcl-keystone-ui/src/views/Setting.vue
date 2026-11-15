@@ -258,6 +258,9 @@ useTutorial(
 .scroll-container {
   scroll-behavior: smooth;
   position: relative;
+  /* Disco: room for the floating hotbar overlay, so the last setting row
+     can still scroll above it. 0px fallback in the classic shell. */
+  padding-bottom: calc(var(--hotbar-h, 0px) + 16px);
 }
 
 .scroll-container.has-sticky-tabs {

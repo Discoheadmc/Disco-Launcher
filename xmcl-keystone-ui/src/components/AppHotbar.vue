@@ -108,6 +108,7 @@ function select(slot: HotbarSlot, index: number) {
 function onKeydown(e: KeyboardEvent) {
   if (e.key === 'Escape') return
   if (e.defaultPrevented) return
+  if (hasOpenOverlay()) return
   const target = e.target as HTMLElement | null
   if (target) {
     const tag = target.tagName
@@ -128,6 +129,7 @@ function onKeydown(e: KeyboardEvent) {
 function onWindowKeydown(e: KeyboardEvent) {
   if (e.defaultPrevented) return
   if (e.key === 'Escape') return
+  if (hasOpenOverlay()) return
   const target = e.target as HTMLElement | null
   const tag = target?.tagName ?? ''
   if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target?.isContentEditable) return
@@ -141,6 +143,16 @@ function onWindowKeydown(e: KeyboardEvent) {
   select(slot, index - 1)
 }
 
+/**
+ * While any overlay (dialog, menu, sheet, modal) is on screen, the number
+ * keys belong to the overlay - the hotbar must not steal them. Vuetify
+ * mounts the `.v-overlay` element only while something is open, so its
+ * presence is a cheap, lint-safe probe.
+ */
+function hasOpenOverlay() {
+  return typeof document !== 'undefined' && !!document.querySelector('.v-overlay')
+}
+
 onMounted(() => window.addEventListener('keydown', onWindowKeydown))
 onBeforeUnmount(() => window.removeEventListener('keydown', onWindowKeydown))
 
@@ -150,21 +162,28 @@ defineExpose({ slots, activeSlot, hovered })
 
 <style scoped>
 .hotbar {
-  position: relative;
+  position: fixed;
+  bottom: 8px;
+  left: 0;
+  right: 0;
   z-index: 50;
   display: flex;
   justify-content: center;
-  padding: 0 8px 8px;
+  padding: 0 8px;
   flex-shrink: 0;
   pointer-events: none;
 }
 
+/* Disco: the hotbar is an overlay, not a bar. The wrapper paints nothing
+   (transparent, no border, no shadow, no blur) and lets clicks and wheel
+   events fall through to the page below; only the slot group itself
+   reacts. Each slot keeps its own opaque frame so it stays readable. */
 .hotbar__slots {
   display: flex;
   gap: 4px;
   padding: 4px;
-  background: rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: transparent;
+  border: none;
   border-radius: 2px;
   pointer-events: auto;
 }

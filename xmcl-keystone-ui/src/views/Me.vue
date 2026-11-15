@@ -431,6 +431,8 @@ useTutorial(
 <style scoped>
 .my-stuff-page {
   background: transparent;
+  /* Disco: room for the floating hotbar overlay. */
+  padding-bottom: calc(var(--hotbar-h, 0px) + 16px);
 }
 
 .classic-container {
