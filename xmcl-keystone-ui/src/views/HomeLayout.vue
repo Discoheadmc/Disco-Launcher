@@ -5,7 +5,7 @@
     :style="{ scrollbarGutter: 'stable' }"
     @wheel="onScroll"
   >
-    <div class="flex min-h-0 flex-1 items-stretch overflow-hidden">
+    <div class="home-columns flex min-h-0 flex-1 items-stretch overflow-hidden">
       <div class="flex min-w-0 flex-1 flex-col">
         <HomeHeader ref="headerEl" class="sticky top-0 z-20" />
 
@@ -144,6 +144,14 @@ provide('scrollElement', containerRef)
 </script>
 
 <style>
+/* Disco: narrow windows - the detail panel drops below the slot grid
+   (single column), no horizontal squeeze. */
+@media (max-width: 900px) {
+  .home-columns {
+    flex-direction: column;
+  }
+}
+
 .v-dialog__content--active {
   -webkit-app-region: no-drag;
   user-select: auto;

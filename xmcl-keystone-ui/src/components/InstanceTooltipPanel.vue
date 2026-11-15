@@ -36,7 +36,10 @@
       </div>
 
       <div class="tooltip-panel__facts">
-        <div class="tooltip-panel__fact">
+        <div
+          class="tooltip-panel__fact"
+          :title="lastPlayed.full"
+        >
           <v-icon size="14">schedule</v-icon>
           <span class="tooltip-panel__fact-label">{{ t('instance.playtime') }}</span>
           <span class="tooltip-panel__fact-value">{{ playTimeText }}</span>
@@ -44,7 +47,10 @@
         <div class="tooltip-panel__fact">
           <v-icon size="14">update</v-icon>
           <span class="tooltip-panel__fact-label">{{ t('instance.lastPlayed') }}</span>
-          <span class="tooltip-panel__fact-value">{{ lastPlayedText }}</span>
+          <span
+            class="tooltip-panel__fact-value"
+            :title="lastPlayed.full"
+          >{{ lastPlayed.text }}</span>
         </div>
       </div>
 
@@ -80,6 +86,7 @@
 
 <script lang="ts" setup>
 import { useInstanceActions } from '@/composables/instanceActions'
+import { useInstanceFacts } from '@/composables/instanceFacts'
 import { kInstance } from '@/composables/instance'
 import { kInstances } from '@/composables/instances'
 import { getInstanceIcon } from '@/util/favicon'
@@ -93,28 +100,12 @@ const { instance, path, name } = injection(kInstance)
 const { instances, selectedInstance } = injection(kInstances)
 
 const { actions, favoriteOf } = useInstanceActions()
+const { formatPlayTime, formatLastPlayed } = useInstanceFacts()
 
-/**
- * Oynama süresi / son oynanan - the same humanized strings the classic header
- * shows, so the tooltip never invents a second format.
- */
-const playTimeText = computed(() => {
-  const ms = instance.value.playtime
-  if (!ms) return t('instance.neverPlayed')
-  const totalMinutes = Math.floor(ms / 60000)
-  const days = Math.floor(totalMinutes / 1440)
-  const hours = Math.floor((totalMinutes % 1440) / 60)
-  const minutes = totalMinutes % 60
-  if (days > 0) return t('duration.day', { duration: days }, { plural: days }) + ' ' + t('duration.hour', { duration: hours }, { plural: hours })
-  if (hours > 0) return t('duration.hour', { duration: hours }, { plural: hours }) + ' ' + t('duration.minute', { duration: minutes }, { plural: minutes })
-  return t('duration.minute', { duration: minutes }, { plural: minutes })
-})
-
-const lastPlayedText = computed(() => {
-  const date = instance.value.lastPlayedDate
-  if (!date) return t('instance.neverPlayed')
-  return new Date(date).toLocaleString()
-})
+// Disco: the same shared formatter the dashboard hero card uses, so the two
+// surfaces can never disagree about one instance's facts again.
+const playTimeText = computed(() => formatPlayTime(instance.value.playtime ?? 0))
+const lastPlayed = computed(() => formatLastPlayed(instance.value.lastPlayedDate ?? 0))
 
 /**
  * Hover preview: the panel follows the pointer while it is over a slot, but it
@@ -126,9 +117,27 @@ const previewing = ref(false)
 </script>
 
 <style scoped>
+/* Disco: the detail column of the inventory home - fixed width, aligned to
+   the page header from the top, never taller than its own content (no
+   scrollbar inside the panel). */
 .tooltip-panel {
-  width: 260px;
+  width: 340px;
   flex-shrink: 0;
+  align-self: flex-start;
+  height: fit-content;
+  margin: 16px 16px 0;
+  position: sticky;
+  top: 0;
+}
+
+/* Narrow windows: the panel drops below the slot grid instead of squeezing
+   it. No horizontal overflow either. */
+@media (max-width: 900px) {
+  .tooltip-panel {
+    width: 100%;
+    margin: 16px 8px 0;
+    position: static;
+  }
 }
 
 .tooltip-panel__box {
