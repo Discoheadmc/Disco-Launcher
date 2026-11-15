@@ -95,6 +95,9 @@
           <template v-else-if="targetQuery === 'server' && !isBedrock">
             <BaseSettingServerManage />
           </template>
+          <template v-else-if="targetQuery === 'servers' && !isBedrock">
+            <BaseSettingServer />
+          </template>
           </div>
         </div>
       </main>
@@ -238,6 +241,7 @@ const sections = computed(() => [
       { value: 'modrinth-project', title: 'Modrinth', icon: 'xmcl:modrinth' },
     ] : []),
     { value: 'server', title: t('server.launch'), icon: 'dns' },
+    { value: 'servers', title: t('server.serversListTitle'), icon: 'list_alt' },
   ] : []),
   { value: 'appearance', title: t('setting.appearance'), icon: 'invert_colors' },
 ])
@@ -257,7 +261,7 @@ function navigate(target: string) {
 watch([isBedrock, targetQuery], ([bedrock, target]) => {
   if (target === 'remote-server') {
     targetQuery.value = 'server'
-  } else if (bedrock && (target === 'modpack' || target === 'server')) {
+  } else if (bedrock && (target === 'modpack' || target === 'server' || target === 'servers')) {
     targetQuery.value = 'general'
   }
 }, { immediate: true })
