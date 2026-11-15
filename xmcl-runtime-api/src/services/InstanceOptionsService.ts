@@ -1,0 +1,182 @@
+import type { Frame as GameSetting } from '@xmcl/gamesetting'
+import type { ShaderOptions } from '../entities/shaderpack'
+import type { SharedState } from '../util/SharedState'
+import type { ServiceKey } from './Service'
+export interface EditGameSettingOptions extends GameSetting {
+  /**
+   * The instance to edit game setting.
+   */
+  instancePath: string
+}
+
+export interface EditShaderOptions extends ShaderOptions {
+  /**
+   * The instance to edit shader config.
+   */
+  instancePath: string
+}
+
+export interface GameOptions {
+  resourcePacks: Array<string>
+  anaglyph3d: boolean | undefined
+  ao: any
+  useVbo: boolean | undefined
+  enableVsync: boolean | undefined
+  difficulty: any
+  entityShadows: boolean | undefined
+  fboEnable: boolean | undefined
+  fullscreen: boolean | undefined
+  renderDistance: GameSetting['renderDistance']
+  fancyGraphics: boolean | undefined
+  renderClouds: 'fast' | boolean | undefined
+  lang: string
+  shaderPack: string
+}
+
+export function getInstanceGameOptionKey(path: string) {
+  return 'instance-game-option://' + path
+}
+
+export class GameOptionsState implements GameOptions {
+  resourcePacks = []
+  anaglyph3d = undefined
+  ao = undefined
+  useVbo = undefined
+  enableVsync = undefined
+  difficulty = undefined
+  entityShadows = undefined
+  fboEnable = undefined
+  fullscreen = undefined
+  renderDistance = undefined
+  fancyGraphics = undefined
+  renderClouds = undefined
+  lang = ''
+  shaderPack = ''
+  eula = false
+
+  gameOptionsSet(settings: GameSetting) {
+    const container = this as Record<string, any>
+    if (settings.resourcePacks && settings.resourcePacks instanceof Array) {
+      container.resourcePacks = [...settings.resourcePacks]
+    }
+    for (const [key, value] of Object.entries(settings)) {
+      if (key in container) {
+        container[key] = value
+      }
+    }
+  }
+
+  shaderPackSet(pack: string) {
+    this.shaderPack = pack
+  }
+
+  eulaSet(value: boolean) {
+    this.eula = value
+  }
+}
+
+/**
+ * The service for game options & shader options
+ */
+export interface InstanceOptionsService {
+  watch(path: string): Promise<SharedState<GameOptionsState>>
+  /**
+   * Get the shader setting of the specific instance
+   * @param instancePath The instance path
+   */
+  getShaderOptions(instancePath: string): Promise<ShaderOptions>
+  /**
+   * Get the game setting of the specific instance
+   * @param instancePath The instance path
+   * @param options Set `createIfMissing: false` to read only and never create an
+   *   `options.txt` (useful for a read-only preview such as the settings dialog).
+   */
+  getGameOptions(
+    instancePath: string,
+    options?: { createIfMissing?: boolean },
+  ): Promise<GameSetting>
+  /**
+   * Edit the game setting of current instance
+   * @param options The game setting edit options
+   */
+  editGameSetting(options: EditGameSettingOptions): Promise<void>
+  /**
+   * Check if the game options is using shared game options
+   * @param instancePath The instance path
+   */
+  isGameOptionsLinked(instancePath: string): Promise<boolean>
+  linkGameOptions(instancePath: string): Promise<void>
+  unlinkGameOptions(instancePath: string): Promise<void>
+  /**
+   * Edit the shader options of current instance
+   * @param options Edit shader options
+   */
+  editShaderOptions(options: EditShaderOptions): Promise<void>
+  /**
+   * Show open gamesetting instance
+   */
+  showOptionsFileInFolder(instancePath: string): Promise<void>
+
+  showShaderOptionsInFolder(instancePath: string): Promise<void>
+
+  editIrisShaderOptions(options: EditShaderOptions): Promise<void>
+
+  editOculusShaderOptions(options: EditShaderOptions): Promise<void>
+
+  getIrisShaderOptions(instancePath: string): Promise<Record<string, string>>
+
+  getOculusShaderOptions(instancePath: string): Promise<Record<string, string>>
+
+  getEULA(instancePath: string): Promise<boolean>
+
+  setEULA(instancePath: string, value: boolean): Promise<void>
+
+  getServerProperties(instancePath: string): Promise<Record<string, string>>
+
+  setServerProperties(instancePath: string, properties: Record<string, string | number | boolean>): Promise<void>
+
+  /**
+   * Read the raw text content of a known top-level file under the instance's
+   * dedicated-server folder (`<instance>/server/`). Allowed files: `server.properties`,
+   * `eula.txt`, `ops.json`, `whitelist.json`, `banned-ips.json`, `banned-players.json`,
+   * `usercache.json`. Returns `''` when the file does not exist. Subpaths and path
+   * traversal are rejected.
+   * @param instancePath The instance path
+   * @param file The server file name (one of the allowed files)
+   */
+  getServerFile(instancePath: string, file: string): Promise<string>
+
+  /**
+   * Overwrite the raw text content of a known top-level server file (see
+   * {@link getServerFile} for the allowed set). Creates the file if missing.
+   * @param instancePath The instance path
+   * @param file The server file name (one of the allowed files)
+   * @param content The new file content
+   */
+  setServerFile(instancePath: string, file: string, content: string): Promise<void>
+
+  /**
+   * List the relative paths of every file under the instance `config/` directory.
+   * @param instancePath The instance path
+   */
+  getInstanceConfigFiles(instancePath: string): Promise<string[]>
+
+  /**
+   * Read the raw text content of a file under the instance `config/` directory.
+   * @param instancePath The instance path
+   * @param filePath The file path relative to the `config/` directory
+   */
+  getInstanceConfig(instancePath: string, filePath: string): Promise<string>
+
+  /**
+   * Overwrite the raw text content of a file under the instance `config/` directory.
+   * @param instancePath The instance path
+   * @param filePath The file path relative to the `config/` directory
+   * @param content The new file content
+   */
+  setInstanceConfig(instancePath: string, filePath: string, content: string): Promise<void>
+  /** Remove a file under the instance `config/` directory. */
+  removeInstanceConfig(instancePath: string, filePath: string): Promise<void>
+}
+
+export const InstanceOptionsServiceKey: ServiceKey<InstanceOptionsService> = 'InstanceOptionsService'

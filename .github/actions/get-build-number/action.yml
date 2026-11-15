@@ -1,0 +1,9 @@
+name: Get build number
+description: Get build number
+outputs:
+  build_number:
+    description: The release body
+runs:
+  using: 'node20'
+  main: index.js
+  

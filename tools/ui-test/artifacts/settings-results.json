@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Sol nav hover/focus geçişi (transition tanımlı)",
+    "ok": true,
+    "detail": "background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), color 0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+  },
+  {
+    "name": "Sol nav aktif sekme vurgusu",
+    "ok": true,
+    "detail": "rgba(128, 222, 234, 0.12)"
+  },
+  {
+    "name": "Genel bölümü grupları (Dil&Veri + Gizlilik)",
+    "ok": true,
+    "detail": "[\"language\\nDİL VE VERİ KONUMU\",\"privacy_tip\\nGİZLİLİK VE DURUM\",\"play_circle\\nÇALIŞTIRMA\",\"vpn_key\\nHESAP GÜVENLİĞİ\",\"download\\nAĞ VE İNDİRME\",\"public\\nAĞ VE BAĞLANTI\"]"
+  },
+  {
+    "name": "Grup gövdesi hafif arka plan tonu",
+    "ok": true,
+    "detail": "rgba(255, 255, 255, 0.03)"
+  },
+  {
+    "name": "Developer Mode toggle yerinde + hover/focus geçişi",
+    "ok": true,
+    "detail": "opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+  },
+  {
+    "name": "Ağ bölümü grup + 3 satır (kaynak/proxy/soket) korunuyor",
+    "ok": true,
+    "detail": "satır: 3"
+  },
+  {
+    "name": "Tipografi hiyerarşisi (başlık 600, açıklama soluk)",
+    "ok": true,
+    "detail": "başlık:600, açıklama:12.8px/0.62"
+  },
+  {
+    "name": "Regresyon: sidebar tek buton hâlâ çalışır durumda",
+    "ok": true,
+    "detail": "oldStrip:0, btn:true"
+  }
+]

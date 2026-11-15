@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Açıklama: sadece-bizde + Mojang notu",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "Önizleme <img> mevcut takılı pelerini gösteriyor",
+    "ok": true,
+    "detail": "http://launcher/media?path=C%3A%5CUsers%5CDisco%5CAppData%5CRoaming%5CDisco+Laun"
+  },
+  {
+    "name": "Değiştir dalı (pelerin zaten takılı)",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "Uygula pasif (değişiklik yokken)",
+    "ok": true,
+    "detail": "disabled=true class=true"
+  },
+  {
+    "name": "Sil butonu mevcut",
+    "ok": true,
+    "detail": ""
+  }
+]

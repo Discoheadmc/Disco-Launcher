@@ -1,0 +1,11 @@
+name: Generate release note
+description: Generate release note
+inputs:
+  body:
+    description: Body
+  version:
+    description: Version
+runs:
+  using: 'node20'
+  main: index.js
+  

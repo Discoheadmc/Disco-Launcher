@@ -1,0 +1,414 @@
+<!-- src/components/SettingGlobal.vue -->
+<template>
+  <div class="flex flex-col gap-4">
+    <!-- Quick Launch Settings Card -->
+    <SettingCard :title="t('setting.quickLaunchSettings')" icon="flash_on">
+      <div class="setting-group">
+        <div class="setting-group__header">
+          <v-icon size="16">play_circle</v-icon>
+          <span>{{ t('setting.groupRun') }}</span>
+        </div>
+        <div class="setting-group__body">
+          <SettingItemCheckbox v-model="fastLaunch" :title="t('instanceSetting.fastLaunch')"
+            :description="t('instanceSetting.fastLaunchHint')" />
+          <SettingItemCheckbox v-model="hideLauncher" :title="t('instanceSetting.hideLauncher')" />
+          <SettingItemCheckbox v-model="showLog" :title="t('instanceSetting.showLog')"
+            :description="t('instanceSetting.showLogHint')" />
+        </div>
+      </div>
+    </SettingCard>
+
+    <SettingCard :title="t('setting.authenticationSettings')" icon="security">
+      <div class="setting-group">
+        <div class="setting-group__header">
+          <v-icon size="16">vpn_key</v-icon>
+          <span>{{ t('setting.groupSecurity') }}</span>
+        </div>
+        <div class="setting-group__body">
+          <SettingItemCheckbox v-model="disableAuthlibInjector" :title="t('instanceSetting.disableAuthlibInjector')"
+            :description="t('instanceSetting.disableAuthlibInjectorDescription')" />
+          <SettingItemCheckbox v-model="disableElyByAuthlib" :title="t('instanceSetting.disableElyByAuthlib')"
+            :description="t('instanceSetting.disableElyByAuthlibDescription')" />
+        </div>
+      </div>
+    </SettingCard>
+
+    <!-- Java Preference Card -->
+    <SettingCard :title="t('java.name')" icon="coffee">
+      <div class="flex items-center gap-3">
+        <v-avatar
+          size="40"
+          rounded="lg"
+          :color="preferredJava && preferredJava.valid ? 'primary' : 'surface-variant'"
+          :variant="preferredJava && preferredJava.valid ? 'flat' : 'tonal'"
+        >
+          <span
+            v-if="preferredJava && preferredJava.valid && preferredJava.majorVersion"
+            class="text-subtitle-1 font-weight-bold"
+          >
+            {{ preferredJava.majorVersion }}
+          </span>
+          <v-icon v-else>smart_toy</v-icon>
+        </v-avatar>
+        <div class="flex-1 min-w-0">
+          <div class="text-subtitle-2 font-weight-medium">
+            {{ t('setting.globalJava') }}
+          </div>
+          <div
+            v-if="preferredJava && preferredJava.valid"
+            class="text-caption text-medium-emphasis truncate"
+          >
+            Java {{ preferredJava.version }} — {{ preferredJava.path }}
+          </div>
+          <div v-else class="text-caption text-medium-emphasis">
+            {{ t('setting.globalJavaHint') }}
+          </div>
+        </div>
+        <v-menu
+          v-model="javaPickerOpen"
+          :close-on-content-click="false"
+          location="bottom end"
+        >
+          <template #activator="{ props: menuProps }">
+            <v-btn v-bind="menuProps" variant="tonal" size="small">
+              <v-icon start size="small">tune</v-icon>
+              {{ t('java.change') }}
+            </v-btn>
+          </template>
+          <v-card width="540" max-width="90vw" max-height="60vh" class="overflow-auto">
+            <JavaList
+              :value="preferredJava || emptyJava"
+              :items="javas"
+              :remove="onRemoveJava"
+              @input="onPickJava"
+            />
+          </v-card>
+        </v-menu>
+      </div>
+    </SettingCard>
+
+    <!-- Java Memory Settings Card -->
+    <SettingCard :title="t('java.memory')" icon="memory">
+      <div class="d-flex align-center mb-3">
+        <span class="font-weight-medium mr-3">{{ t('setting.memoryAssignment') }}</span>
+        <v-spacer />
+        <SettingJavaMemoryAssign :value="assignMemory" @input="assignMemory = $event" />
+      </div>
+      <SettingJavaMemory :assign-memory="assignMemory" v-model:min="minMem" v-model:max="maxMem" />
+    </SettingCard>
+
+    <!-- Advanced Java Options Card -->
+    <SettingCard :title="t('setting.advancedJavaOptions')" icon="code">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div>
+          <div class="font-weight-medium mb-2">
+            <v-icon start size="small">terminal</v-icon>
+            {{ t("instance.prependCommand") }}
+          </div>
+          <v-text-field v-model="prependCommand" variant="outlined" density="compact" hide-details
+            :placeholder="t('instance.prependCommandHint')" />
+        </div>
+        <div>
+          <div class="font-weight-medium mb-2">
+            <v-icon start size="small">settings_applications</v-icon>
+            {{ t("instance.vmOptions") }}
+          </div>
+          <v-text-field v-model="vmOptions" variant="outlined" density="compact" hide-details
+            :placeholder="t('instance.vmOptionsHint')" />
+        </div>
+      </div>
+    </SettingCard>
+
+    <!-- Environment Variables Card -->
+    <SettingCard :title="t('instance.vmVar')" icon="eco">
+      <div class="flex justify-between items-center mb-3">
+        <div class="text-subtitle-2">
+          {{ t("instance.vmVarHint") }}
+        </div>
+        <v-btn color="primary" @click="onAddEnvVar" size="small" variant="text" border>
+          <v-icon start size="small">add</v-icon>
+          {{ t('shared.add') }}
+        </v-btn>
+      </div>
+      <EnvVarTableItem :env="env" @delete="onEnvVarDeleted" />
+      <EnvVarAddItem v-if="adding" @clear="onEnvVarCleared" @add="onEnvVarAdded" />
+    </SettingCard>
+
+    <!-- Minecraft Options Card -->
+    <SettingCard :title="t('setting.minecraftOptions')" icon="videogame_asset">
+      <div class="setting-group">
+        <div class="setting-group__header">
+          <v-icon size="16">download</v-icon>
+          <span>{{ t('setting.groupDownload') }}</span>
+        </div>
+        <div class="setting-group__body pa-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <div class="font-weight-medium mb-2">
+            <v-icon start size="small">play_arrow</v-icon>
+            {{ t("instance.preExecCommand") }}
+          </div>
+          <v-text-field v-model="preExecuteCommand" variant="outlined" density="compact" hide-details
+            :placeholder="t('instance.preExecCommandHint')" />
+        </div>
+        <div>
+          <div class="font-weight-medium mb-2">
+            <v-icon start size="small">tune</v-icon>
+            {{ t("instance.mcOptions") }}
+          </div>
+          <v-text-field v-model="mcOptions" variant="outlined" density="compact" hide-details
+            :placeholder="t('instance.mcOptionsHint')" />
+        </div>
+      </div>
+        </div>
+      </div>
+    </SettingCard>
+
+    <!-- Game Window Resolution Card -->
+    <SettingCard :title="t('instance.resolution')" icon="aspect_ratio">
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 items-center">
+        <v-text-field v-model="resolutionWidth" :label="t('instance.width')" type="number" variant="outlined" density="compact"
+          hide-details />
+        <v-text-field v-model="resolutionHeight" :label="t('instance.height')" type="number" variant="outlined" density="compact"
+          hide-details />
+        <v-switch v-model="resolutionFullscreen" data-testid="global-fullscreen-switch" :label="t('instance.fullscreen')" class="mt-0" color="primary" hide-details />
+        <v-select v-model="selectedResolutionPreset" :items="resolutionPresets" item-title="text" item-value="value"
+          :label="t('instance.resolutionPreset')" outlined filled hide-details dense />
+        <v-select v-if="monitorItems.length > 1" v-model="resolutionMonitor" data-testid="global-monitor-select"
+          :items="monitorItems" :label="t('instance.monitor')" :disabled="!resolutionFullscreen" variant="outlined"
+          density="compact" hide-details class="sm:col-span-4" />
+      </div>
+    </SettingCard>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useEventListener } from '@vueuse/core'
+import { useGlobalSettings } from '@/composables/setting'
+import { useResolutionPresets } from '@/composables/resolutionPresets'
+import { useMonitorItems } from '@/composables/monitor'
+import { kJavaContext } from '@/composables/java'
+import { injection } from '@/util/inject'
+import { shouldClearPinOnRemove } from '@/util/javaPin'
+import type { JavaRecord } from '@xmcl/runtime-api'
+import SettingItemCheckbox from '@/components/SettingItemCheckbox.vue'
+import SettingJavaMemory from './SettingJavaMemory.vue'
+import SettingJavaMemoryAssign from './SettingJavaMemoryAssign.vue'
+import JavaList from './BaseSettingJavaList.vue'
+import EnvVarTableItem from '@/components/EnvVarTableItem.vue'
+import EnvVarAddItem from '@/components/EnvVarAddItem.vue'
+import SettingCard from '@/components/SettingCard.vue'
+
+const { t } = useI18n()
+const {
+  globalAssignMemory,
+  globalMaxMemory,
+  globalMinMemory,
+  globalJava,
+  globalVmOptions,
+  globalMcOptions,
+  globalFastLaunch,
+  globalHideLauncher,
+  globalShowLog,
+  globalDisableAuthlibInjector,
+  globalDisableElyByAuthlib,
+  globalPrependCommand,
+  globalPreExecuteCommand,
+  globalEnv,
+  globalResolution,
+  setGlobalSettings,
+} = useGlobalSettings()
+
+// Java preference selection
+const { all: javas, remove: removeJava } = injection(kJavaContext)
+const javaPickerOpen = ref(false)
+const emptyJava: JavaRecord = { path: '', version: '', majorVersion: 0, valid: false }
+const preferredJavaPath = ref(globalJava.value)
+const preferredJava = computed(() => javas.value.find(j => j.path === preferredJavaPath.value))
+function onPickJava(value: JavaRecord) {
+  preferredJavaPath.value = value.path
+  javaPickerOpen.value = false
+  save()
+}
+
+function onRemoveJava(value: JavaRecord) {
+  if (shouldClearPinOnRemove(value.path, preferredJavaPath.value)) {
+    preferredJavaPath.value = ''
+    save()
+  }
+  removeJava(value)
+}
+
+// --- Reactive State (Form Data) ---
+const assignMemory = ref(globalAssignMemory.value)
+const minMem = ref(globalMinMemory.value)
+const maxMem = ref(globalMaxMemory.value)
+const vmOptions = ref(globalVmOptions.value.join(' '))
+const prependCommand = ref(globalPrependCommand.value)
+const preExecuteCommand = ref(globalPreExecuteCommand.value)
+const mcOptions = ref(globalMcOptions.value.join(' '))
+const fastLaunch = ref(globalFastLaunch.value)
+const hideLauncher = ref(globalHideLauncher.value)
+const showLog = ref(globalShowLog.value)
+const disableAuthlibInjector = ref(globalDisableAuthlibInjector.value)
+const disableElyByAuthlib = ref(globalDisableElyByAuthlib.value)
+const env = ref({ ...globalEnv.value })
+const adding = ref(false) // For adding environment variables
+
+// Resolution Settings
+const resolutionFullscreen = ref(globalResolution.value?.fullscreen)
+const resolutionWidth = ref(globalResolution.value?.width)
+const resolutionHeight = ref(globalResolution.value?.height)
+const resolutionMonitor = ref(globalResolution.value?.monitor ?? '')
+const resolutionPresets = useResolutionPresets()
+const monitorItems = useMonitorItems()
+
+// --- Computed Properties ---
+const selectedResolutionPreset = computed({
+  get: () => {
+    const width = resolutionWidth.value
+    const height = resolutionHeight.value
+    const preset = resolutionPresets.value.find(p => p.value.width === width && p.value.height === height)
+    return preset ? preset.value : { width, height }
+  },
+  set: (value) => {
+    resolutionWidth.value = value.width
+    resolutionHeight.value = value.height
+  }
+})
+
+// --- Lifecycle Hooks ---
+onMounted(() => {
+  assignMemory.value = globalAssignMemory.value
+  minMem.value = globalMinMemory.value
+  maxMem.value = globalMaxMemory.value
+  preferredJavaPath.value = globalJava.value
+  vmOptions.value = globalVmOptions.value.join(' ')
+  mcOptions.value = globalMcOptions.value.join(' ')
+  fastLaunch.value = globalFastLaunch.value
+  hideLauncher.value = globalHideLauncher.value
+  showLog.value = globalShowLog.value
+  disableAuthlibInjector.value = globalDisableAuthlibInjector.value
+  disableElyByAuthlib.value = globalDisableElyByAuthlib.value
+  prependCommand.value = globalPrependCommand.value
+  preExecuteCommand.value = globalPreExecuteCommand.value
+  if (globalResolution.value) {
+    resolutionFullscreen.value = globalResolution.value.fullscreen
+    resolutionWidth.value = globalResolution.value.width
+    resolutionHeight.value = globalResolution.value.height
+    resolutionMonitor.value = globalResolution.value.monitor ?? ''
+  }
+})
+
+// --- Methods ---
+function save() {
+  setGlobalSettings({
+    globalAssignMemory: assignMemory.value,
+    globalMaxMemory: maxMem.value,
+    globalMinMemory: minMem.value,
+    globalJava: preferredJavaPath.value,
+    globalVmOptions: vmOptions.value.split(' ').filter(s => !!s),
+    globalMcOptions: mcOptions.value.split(' ').filter(s => !!s),
+    globalFastLaunch: fastLaunch.value,
+    globalHideLauncher: hideLauncher.value,
+    globalShowLog: showLog.value,
+    globalDisableAuthlibInjector: disableAuthlibInjector.value,
+    globalDisableElyByAuthlib: disableElyByAuthlib.value,
+    globalPrependCommand: prependCommand.value,
+    globalPreExecuteCommand: preExecuteCommand.value,
+    // Deep-clone reactive proxies before sending over IPC so structured clone
+    // doesn't fail with "An object could not be cloned".
+    globalEnv: { ...env.value },
+    globalResolution: {
+      width: resolutionWidth.value,
+      height: resolutionHeight.value,
+      fullscreen: resolutionFullscreen.value,
+      monitor: resolutionMonitor.value || undefined,
+    },
+  })
+}
+
+// --- Environment Variable Management ---
+function onAddEnvVar() {
+  adding.value = true
+}
+function onEnvVarCleared() {
+  adding.value = false
+}
+function onEnvVarAdded(key: string, value: string) {
+  adding.value = false
+  if (key === '') return
+  env.value = { ...env.value, [key]: value }
+}
+function onEnvVarDeleted(key: string) {
+  const { [key]: _, ...rest } = env.value
+  env.value = rest
+}
+
+// Save settings when the component is unmounted or the user leaves the page
+onUnmounted(save)
+useEventListener('beforeunload', save)
+
+</script>
+
+<style scoped>
+:deep(.transparent-list) {
+  background: transparent !important;
+}
+
+.v-card {
+  transition: all 0.2s ease;
+}
+
+.v-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Grouped sections: subtle tinted blocks with icon subtitles.
+   Uses only existing theme tokens (on-surface alphas). */
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.setting-group__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px 2px;
+  color: rgba(var(--v-theme-on-surface), 0.62);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.setting-group__body {
+  border-radius: var(--card-subsection-radius, 3px);
+  background: rgba(var(--v-theme-on-surface), 0.03);
+  padding: 4px 0;
+}
+
+.setting-group__body.pa-4 {
+  padding: 16px;
+}
+
+.setting-group__body > * + * {
+  position: relative;
+}
+
+.setting-group__body > * + *::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background: rgba(var(--v-theme-on-surface), 0.07);
+  pointer-events: none;
+}
+</style>

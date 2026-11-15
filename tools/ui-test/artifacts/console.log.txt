@@ -1,0 +1,21 @@
+[log] Process id=2076
+[log] get shader pack path
+[log] revalidate game processes
+[log] update launch button facade
+[error] Error: Cannot find Symbol(UpdateSettings) to inject
+    at injection (http://disco.runtime/assets/inject-DXZqcG7F.js:1:88)
+    at setup (http://disco.runtime/assets/index-B5ppGnv8.js:2:878089)
+    at callWithErrorHandling (http://disco.runtime/assets/VApp-Hwsi0E2L.js:1:67135)
+    at setupStatefulCom
+[log] Locale changed  -> tr
+[log] loadSkin http://textures.minecraft.net/texture/d60f65cc3987230908831f1db8ca15601de28ca263dd86dc0a0c83172f714e67 http://textures.minecraft.net/texture/d60f65cc3987230908831f1db8ca15601de28ca263dd86dc0a0c83172f714e67
+[log] loadSkin http://textures.minecraft.net/texture/d60f65cc3987230908831f1db8ca15601de28ca263dd86dc0a0c83172f714e67 http://textures.minecraft.net/texture/d60f65cc3987230908831f1db8ca15601de28ca263dd86dc0a0c83172f714e67
+[debug] [LocalStorageCache] Cleaned 1 expired cache.
+[log] refresh instance version   Object
+[log] revalidate game processes
+[log] loadSkin http://textures.minecraft.net/texture/d60f65cc3987230908831f1db8ca15601de28ca263dd86dc0a0c83172f714e67 http://textures.minecraft.net/texture/d60f65cc3987230908831f1db8ca15601de28ca263dd86dc0a0c83172f714e67
+[log] loadSkin http://textures.minecraft.net/texture/d60f65cc3987230908831f1db8ca15601de28ca263dd86dc0a0c83172f714e67 http://textures.minecraft.net/texture/d60f65cc3987230908831f1db8ca15601de28ca263dd86dc0a0c83172f714e67
+[log] loadSkin http://textures.minecraft.net/texture/d60f65cc3987230908831f1db8ca15601de28ca263dd86dc0a0c83172f714e67 http://textures.minecraft.net/texture/d60f65cc3987230908831f1db8ca15601de28ca263dd86dc0a0c83172f714e67
+[log] loadSkin http://textures.minecraft.net/texture/d60f65cc3987230908831f1db8ca15601de28ca263dd86dc0a0c83172f714e67 http://textures.minecraft.net/texture/d60f65cc3987230908831f1db8ca15601de28ca263dd86dc0a0c83172f714e67
+[log] update launch button facade
+[log] update launch button facade

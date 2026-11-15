@@ -1,0 +1,39 @@
+.DS_Store
+*/dist/**/*
+**/dist/
+*.gen
+coverage
+node_modules/
+npm-debug.log
+npm-debug.log.*
+thumbs.db
+!.gitkeep
+*.lock
+*.log
+*.bin
+/temp
+xmcl-electron-app/build/appx
+.env
+
+p2p.network
+
+*/build/output/*
+package-lock.json
+
+
+## CODE EDITORS
+!.vscode/
+!.zed/
+/docs/*
+!/docs/tutorial/
+# Disco: hand-written docs (not TypeDoc output)
+!/docs/*.md
+!/docs/images/
+
+# e2e artifacts
+e2e/artifacts/
+e2e/playwright-report/
+e2e/test-results/
+
+# local download-probe / benchmark artifacts (opt-in tests)
+/bench-out/

@@ -1,0 +1,65 @@
+name: Validate
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'xmcl-runtime/**'
+      - 'xmcl-runtime-api/**'
+      - 'xmcl-keystone-ui/**'
+      - 'xmcl-electron-app/**'
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      ELECTRON_CACHE: ${{ github.workspace }}/.cache/electron
+      ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.cache/electron-builder
+    steps:
+    - uses: actions/checkout@v5
+    - uses: pnpm/action-setup@v6
+    - name: Use Node.js 22
+      uses: actions/setup-node@v5
+      with:
+        node-version: 22
+        cache: 'pnpm'
+    - name: Cache Electron binaries
+      uses: actions/cache@v5
+      with:
+        path: |
+          ${{ github.workspace }}/.cache/electron
+          ${{ github.workspace }}/.cache/electron-builder
+        key: ${{ runner.os }}-electron-${{ hashFiles('pnpm-lock.yaml') }}
+    - name: Cache Vite deps
+      uses: actions/cache@v5
+      with:
+        path: xmcl-keystone-ui/node_modules/.vite
+        key: ${{ runner.os }}-vite-${{ hashFiles('pnpm-lock.yaml', 'xmcl-keystone-ui/vite.config.ts') }}
+    - name: Install
+      run: |
+        pnpm install --frozen-lockfile
+    - name: Lint
+      run: |
+        pnpm lint
+    - name: Lint locales
+      run: |
+        pnpm lint:i18n -- --no-daemon
+    - name: Check
+      run: |
+        pnpm check
+    - name: Test
+      run: |
+        pnpm vitest run --exclude 'packages/**'
+    - name: Build
+      run: |
+        pnpm run --prefix xmcl-keystone-ui build
+        pnpm run --prefix xmcl-electron-app build
+      env:
+        BUILD_NUMBER: ${{ github.run_number }}
+        NODE_ENV: production
+        CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_TOKEN }}
+        WIN_CSC_LINK: ${{ secrets.CODE_SIGN_BASE64 }}
+        APPX_PUBLISHER: ${{ secrets.APPX_PUBLISHER }}
+        WIN_CSC_KEY_PASSWORD: ${{ secrets.CODE_SIGN_PWD }}

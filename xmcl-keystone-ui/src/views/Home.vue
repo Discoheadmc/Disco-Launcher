@@ -1,0 +1,150 @@
+<template>
+  <div
+    ref="scrollElement"
+    class="select-none"
+    :class="[{ 'h-full': isFocus }, { 'h-full': inventoryTheme || dashboardHome }]"
+    v-context-menu="isFocus ? getFocusBackgroundMenu : undefined"
+  >
+    <HomeCriticalError />
+    <transition name="slide-y-reverse-transition" mode="out-in">
+      <!-- Disco: "Yeni Ana Ekran" replaces the grid entirely; its own card
+           carries every action, so the side panel is hidden while it is on. -->
+      <HomeDashboard v-if="dashboardHome" />
+      <div
+        v-else-if="!isFocus"
+        class="flex items-start gap-0 pr-0"
+      >
+        <div class="flex-1 min-w-0 mx-3 relative">
+          <!-- Disco: the inventory theme swaps the instance grid for square
+               slots. The classic grid stays untouched for the classic layout. -->
+          <InstanceSlotGrid
+            v-if="inventoryTheme"
+            @contextmenu="onGridContextMenu"
+          />
+          <HomeInstanceGrid
+            v-else
+            @contextmenu="onGridContextMenu"
+          />
+        </div>
+        <!-- Disco: InstanceActionsPanel moved to HomeLayout so it spans the
+             full page height next to the header too (the header launch pill
+             was removed; the panel's own launch button is the single entry). -->
+      </div>
+      <HomeFocusFooter v-else class="absolute bottom-0 left-0 pb-[26px]" />
+    </transition>
+  </div>
+</template>
+<script lang="ts" setup>
+import { useDialog } from '@/composables/dialog'
+import { useGlobalDrop } from '@/composables/dropHandler'
+import { kInstance } from '@/composables/instance'
+import { kInstanceLaunch } from '@/composables/instanceLaunch'
+import { useGamepadAction } from '@/composables/gamepad'
+import { kUpstream } from '@/composables/instanceUpdate'
+import { kCompact } from '@/composables/scrollTop'
+import { useTutorial } from '@/composables/tutorial'
+import { useInFocusMode } from '@/composables/uiLayout'
+import { useHomeFocusCards } from '@/composables/homeCards'
+import { vContextMenu } from '@/directives/contextMenu'
+import { kSettingsState } from '@/composables/setting'
+import { injection } from '@/util/inject'
+import { isBedrockInstance } from '@xmcl/instance'
+import type { DriveStep } from 'driver.js'
+import HomeCriticalError from './HomeCriticalError.vue'
+import HomeFocusFooter from './HomeFocusFooterV2.vue'
+import HomeInstanceGrid from './HomeInstanceGrid.vue'
+import InstanceSlotGrid from '@/components/InstanceSlotGrid.vue'
+import HomeDashboard from './HomeDashboard.vue'
+
+const isFocus = useInFocusMode()
+/** Disco: "Envanter Teması" - square instance slots + tooltip detail panel. */
+const { state } = injection(kSettingsState)
+const inventoryTheme = computed(() => state.value?.inventoryTheme ?? true)
+/** Disco: "Yeni Ana Ekran" - the large last-played card replaces the grid. */
+const dashboardHome = computed(() => state.value?.dashboardHome ?? true)
+
+function onGridContextMenu(event: MouseEvent, inst: any) {
+  emit('contextmenu', event, inst)
+}
+const emit = defineEmits<{ (e: 'contextmenu', event: MouseEvent, inst: any): void }>()
+const { getBackgroundMenu: getFocusBackgroundMenu } = useHomeFocusCards()
+const { instance } = injection(kInstance)
+const isBedrock = computed(() => isBedrockInstance(instance.value))
+
+watch(isBedrock, (bedrock) => {
+  if (bedrock) {
+    isFocus.value = false
+  }
+}, { immediate: true })
+provide(
+  kUpstream,
+  computed(() => ({
+    upstream: instance.value.upstream,
+    minecraft: instance.value.runtime.minecraft,
+  })),
+)
+
+const compact = injection(kCompact)
+onMounted(() => {
+  compact.value = false
+})
+
+const { show } = useDialog('HomeDropModpackDialog')
+
+useGlobalDrop({
+  onDrop: async (e) => {
+    const files = e.files
+    const file = files?.[0]
+    if (file) {
+      const ext = file.name.split('.').pop()
+      const filePath = windowController.getPathForFile(file)
+      if ((ext === 'zip' || ext === 'mrpack') && filePath) {
+        show(filePath)
+        return
+      }
+    }
+  },
+})
+
+const scrollElement = ref(null as HTMLElement | null)
+provide('scrollElement', scrollElement)
+
+const { t } = useI18n()
+
+import { kLaunchButton } from '@/composables/launchButton'
+
+// Gamepad face-button actions scoped to the home page (auto-unregister on leave).
+const router = useRouter()
+// The app-root launch button, so the gamepad binding runs the same preclick
+// guards (unauthenticated warning, instance-edit flush) as the real button.
+const { text: launchText, onClick: onLaunchClick } = injection(kLaunchButton)
+useGamepadAction('X', {
+  label: () => launchText.value,
+  handler: () => onLaunchClick(),
+})
+useGamepadAction('Y', {
+  label: () => t('gamepad.guide.instanceSettings'),
+  handler: () => router.push('/base-setting'),
+})
+
+useTutorial(
+  computed(() => {
+    const steps: DriveStep[] = [
+      {
+        element: '#my-stuff-button',
+        popover: { title: t('userAccount.add'), description: t('tutorial.userAccountDescription') },
+      },
+      {
+        element: '#create-instance-button',
+        popover: { title: t('instances.add'), description: t('tutorial.instanceAddDescription') },
+      },
+      {
+        // Disco: header launch pill removed; the panel's launch button is the entry.
+        element: '[data-testid="panel-launch"]',
+        popover: { title: t('launch.launch'), description: t('tutorial.launchDescription') },
+      },
+    ]
+    return steps
+  }),
+)
+</script>

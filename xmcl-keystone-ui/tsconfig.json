@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "downlevelIteration": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "moduleResolution": "Bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "~main/*": [
+        "./src/windows/main/*"
+      ],
+    },
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "preserve",
+    "types": [
+      "vite/client",
+      "@xmcl/runtime-api/client",
+      "@xmcl/runtime-api/monitorClient"
+    ]
+  },
+  "vueCompilerOptions": {
+    "target": 3.5,
+    "experimentalSuppressUnknownJsxPropertyErrors": false
+  },
+  "exclude": [
+    "node_modules",
+    "../xmcl",
+    "../xmcl-runtime-api"
+  ]
+}

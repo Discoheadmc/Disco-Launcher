@@ -1,0 +1,17 @@
+* text=auto eol=lf
+
+*.md text
+*.ts text
+*.js text
+*.json text
+
+*.png binary
+*.exe binary
+*.jpg binary
+*.zip binary
+*.jar binary
+*.litemod binary
+*.dat binary
+*.mcmeta binary
+*.web binary
+*.webp binary

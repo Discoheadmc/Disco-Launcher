@@ -1,0 +1,845 @@
+<template>
+  <div class="store-entry h-full w-full flex flex-col overflow-y-auto custom-scrollbar lg:(flex-row overflow-hidden)">
+    <v-progress-linear
+      class="absolute left-0 top-0 z-20 m-0 p-0"
+      :active="loading"
+      height="3"
+      :indeterminate="true"
+    />
+
+    <!--#region Sidebar Filters -->
+    <aside
+      id="store-filters"
+      class="store-sidebar w-auto lg:(w-88 h-full overflow-y-auto pb-20) flex-none border-b lg:(border-b-0 border-r) border-divider/40 px-4 pt-6 flex flex-col gap-6 custom-scrollbar"
+    >
+      <div class="flex flex-col gap-4 flex-shrink-0">
+        <!-- Content Type -->
+        <div class="filter-group">
+          <h3 class="filter-title">{{ t('store.contentType.name') }}</h3>
+          <div class="flex gap-2">
+            <button
+              v-for="type in contentTypeList"
+              :key="type.id"
+              type="button"
+              :aria-label="type.text"
+              :aria-pressed="contentType === type.id"
+              class="source-button prism-flat-box relative flex-1 flex flex-col items-center justify-center p-3"
+              :class="{ selected: contentType === type.id }"
+              @click="selectContentType(type.id)"
+            >
+              <v-icon size="22" class="mb-1">{{ type.icon }}</v-icon>
+              <span class="text-xs font-bold">{{ type.text }}</span>
+            </button>
+          </div>
+        </div>
+        <!-- Sources -->
+        <div class="filter-group">
+          <h3 class="filter-title">
+            {{ t('modrinth.modpackSource.source') }}
+          </h3>
+          <div class="flex gap-2">
+            <button
+              v-for="source in sourcesList"
+              :key="source.id"
+              type="button"
+              :aria-label="source.text"
+              :aria-pressed="!omitSources.includes(source.id)"
+              class="source-button prism-flat-box relative flex-1 flex flex-col items-center justify-center p-3"
+              :class="{
+                omitted: omitSources.includes(source.id),
+                'source-button--unavailable': !isSourceAvailable(source.id),
+              }"
+              :disabled="!isSourceAvailable(source.id)"
+              v-shared-tooltip="() => (isSourceAvailable(source.id) ? undefined : t('store.ftbOnlyModpacks'))"
+              @click="isSourceAvailable(source.id) && toggleSource(source.id)"
+            >
+              <component :is="source.component" class="w-6 h-6 fill-current" />
+              <span class="text-xs font-bold mt-2">{{ source.text }}</span>
+              <div
+                class="cross-overlay absolute inset-0 flex items-center justify-center transition-opacity duration-200"
+              >
+                <v-icon color="red" size="60">close</v-icon>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <!-- Sort -->
+          <div class="filter-group">
+            <h3 class="filter-title">{{ t('modrinth.sort.title') }}</h3>
+            <v-select
+              v-model="sort"
+              :items="sortBy"
+              :disabled="sources.length === 0 || (sources.length === 1 && sources[0] === 'ftb')"
+              :aria-label="t('modrinth.sort.title')"
+              item-title="text"
+              item-value="value"
+              variant="solo"
+              density="compact"
+              rounded="lg"
+              hide-details
+              :placeholder="t('modrinth.sort.title')"
+            />
+          </div>
+          <!-- Game Version -->
+          <div class="filter-group">
+            <h3 class="filter-title">{{ t('modrinth.gameVersions.name') }}</h3>
+            <v-autocomplete
+              v-model="gameVersion"
+              :items="gameVersions"
+              item-title="version"
+              item-value="version"
+              variant="solo"
+              density="compact"
+              rounded="lg"
+              clearable
+              hide-details
+              :placeholder="t('modrinth.gameVersions.name')"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- ModLoaders — hidden for resource packs: they are loader-agnostic. -->
+      <FilterCard
+        v-if="contentType !== 'resourcepack'"
+        :title="t('modrinth.modLoaders.name')"
+        :items="
+          catModLoaders.map((loader) => ({
+            id: loader.name,
+            text: loader.name[0].toUpperCase() + loader.name.slice(1),
+            iconHTML: loader.icon,
+          }))
+        "
+        :selected="modLoaders"
+        :selected-count="modLoaders.length"
+        @toggle="toggleModLoader"
+        @clear="modLoaders = []"
+      />
+      <!-- Modrinth Categories -->
+      <FilterCard
+        :title="`${t('curseforge.category')} (Modrinth)`"
+        :items="modrinthCategoriesDisplay"
+        :selected="_modrinthCategories"
+        :selected-count="_modrinthCategories.length"
+        @toggle="toggleModrinthCategory"
+        @clear="_modrinthCategories = []"
+      />
+      <!-- CurseForge Categories -->
+      <FilterCard
+        :title="`${t('curseforge.category')} (CurseForge)`"
+        :items="curseforgeCategoriesDisplay"
+        :selected="curseforgeCategory ? [curseforgeCategory.toString()] : []"
+        :selected-count="curseforgeCategory ? 1 : 0"
+        @toggle="toggleCurseforgeCategory"
+        @clear="curseforgeCategory = undefined"
+      />
+    </aside>
+
+    <!-- Right pane: on narrow it collapses (display:contents) so the search
+         bar and content become direct children of store-entry, letting the
+         search bar sit above the filters and stick to the top. -->
+    <div class="contents lg:(flex flex-col flex-1 overflow-hidden relative)">
+      <div
+        id="store-search"
+        class="store-search-bar order-first lg:order-none flex-none px-6 lg:px-10 py-5 sticky top-0 z-10 backdrop-blur-md border-b border-divider/40"
+      >
+        <div class="max-w-3xl">
+          <v-text-field
+            ref="filter"
+            v-model="keyword"
+            data-testid="store-search"
+            variant="solo"
+            flat
+            hide-details
+            rounded="xl"
+            density="comfortable"
+            :placeholder="searchPlaceholder"
+            prepend-inner-icon="search"
+            class="elevated-search"
+          >
+            <template #append-inner>
+              <v-slide-x-transition>
+                <v-icon v-if="keyword" class="cursor-pointer" @click="onClose">close</v-icon>
+              </v-slide-x-transition>
+            </template>
+          </v-text-field>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div id="store-content" class="p-6 lg:(flex-1 overflow-y-auto p-10) custom-scrollbar relative" ref="container">        <!-- Latest Minecraft: compact single-line info bar -->
+        <section
+          v-if="!keyword && selectedCount === 0"
+          class="latest-bar"
+          role="region"
+          :aria-label="latestBarAriaLabel"
+        >
+          <span class="latest-bar__dot" aria-hidden="true" />
+          <span :id="latestMinecraftHeadingId" class="latest-bar__text">
+            {{ latestBarText }}
+          </span>
+          <v-btn
+            icon="refresh"
+            variant="text"
+            size="x-small"
+            density="comfortable"
+            :aria-label="t('shared.refresh')"
+            @click="refreshRecentMinecraft"
+          />
+        </section>
+        <section
+          v-if="!keyword && selectedCount === 0 && recentMinecraftItems.length > 0"
+          class="mb-10"
+          role="region"
+          :aria-labelledby="latestMinecraftHeadingId"
+        >
+          <div
+            v-roving-tabindex
+            role="group"
+            :aria-labelledby="latestMinecraftHeadingId"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          >
+            <StoreExploreCardModern
+              v-for="item in recentMinecraftItems"
+              :key="`minecraft-${item.id}`"
+              :value="item"
+              @click="enter(item.type, item.id)"
+            />
+          </div>
+        </section>
+
+        <!-- Grid -->
+        <section class="min-h-screen" role="region" :aria-labelledby="discoverHeadingId">
+          <div class="flex items-end justify-between mb-6 gap-2">
+            <div>
+              <h2 :id="discoverHeadingId" class="text-2xl mb-3 font-bold text-gray-900 dark:text-white flex items-center gap-3">
+                <v-icon color="primary" size="large" aria-hidden="true">{{ hasFilters ? 'search' : 'explore' }}</v-icon>
+                {{ hasFilters ? t('store.searchResult') : t('store.discover') }}
+              </h2>
+              <p class="text-gray-500 dark:text-gray-300 text-sm mt-1 whitespace-nowrap">
+                {{ t('modrinth.projects', { count: items.length }) }}
+              </p>
+            </div>
+            <!-- Active Filters -->
+            <div v-if="hasFilters" class="flex justify-end items-center gap-2">
+              <div class="flex gap-2 flex-wrap items-center">
+                <v-chip
+                  v-for="tag in activeTags"
+                  :key="`${tag.type}-${tag.id}`"
+                  size="small"
+                  variant="outlined"
+                  closable
+                  @click:close="removeTag(tag)"
+                >
+                  {{ tag.text }}
+                </v-chip>
+              </div>
+              <v-btn
+                v-if="hasFilters"
+                color="red"
+                size="small"
+                variant="text"
+                prepend-icon="clear"
+                @click="clearAllFilters"
+              >
+                {{ t('shared.cancel') }}
+              </v-btn>
+            </div>
+          </div>
+          <div
+            v-if="items.length === 0"
+            class="flex flex-col justify-center items-center h-96 text-center opacity-50"
+          >
+            <v-icon size="96" color="grey">mood_bad</v-icon>
+            <h3 class="text-2xl font-bold mt-4">{{ t('store.empty') }}</h3>
+            <p class="text-gray-400 mt-2">{{ t('store.emptyHint') }}</p>
+          </div>
+          <div
+            v-else
+            v-roving-tabindex
+            role="group"
+            :aria-labelledby="discoverHeadingId"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 pb-20"
+          >
+            <StoreExploreCardModern
+              v-for="mod in items"
+              :key="`${mod.type}:${mod.id}`"
+              :value="mod"
+              :installable="canQuickInstall(mod)"
+              @click="enter(mod.type, mod.id)"
+              @install="onQuickInstall(mod)"
+            />
+          </div>
+
+          <!-- Pagination -->
+          <div
+            v-if="pageCount > 1"
+            class="store-pagination hover:(scale-100 opacity-100) sticky bottom-3 z-10 w-full scale-95 transform opacity-60 transition duration-200 mt-4"
+          >
+            <v-pagination
+              v-model="page"
+              :length="pageCount"
+              active-color="primary"
+              :disabled="isSearching"
+              :total-visible="12"
+              rounded="circle"
+              density="comfortable"
+            />
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import CurseforgeIcon from '@/components/CurseforgeIcon.vue'
+import FilterCard from '@/components/FilterCard.vue'
+import FTBIcon from '@/components/FTBIcon.vue'
+import ModrinthIcon from '@/components/ModrinthIcon.vue'
+import StoreExploreCardModern from '@/components/StoreExploreCardModern.vue'
+import type { ExploreProjectModern } from '@/components/StoreExploreCardModern.vue'
+import { kCurseforgeCategories, useCurseforgeCategoryI18n } from '@/composables/curseforge'
+import { useDateString } from '@/composables/date'
+import { useDialog } from '@/composables/dialog'
+import { kModrinthTags } from '@/composables/modrinth'
+import { useQuery, useQueryNumber, useQueryStringArray } from '@/composables/query'
+import { useSortByItems } from '@/composables/sortBy'
+import { normalizeMarketSort } from '@/composables/marketSort'
+import { useTextFieldBehavior } from '@/composables/textfieldBehavior'
+import { kTheme } from '@/composables/theme'
+import { vSharedTooltip } from '@/directives/sharedTooltip'
+import { useRecentMinecraftItems } from '@/composables/useRecentMinecraftItems'
+import { useSearchedItems } from '@/composables/useSearchedItems'
+import { StoreInstallTargetsDialogKey } from '@/composables/storeInstall'
+import { getCurseforgeCategoryParentId, getCurseforgeClassId, normalizeStoreContentType, STORE_CONTENT_TYPES, StoreContentType } from '@/composables/storeContentType'
+import { useGamepadInnerNav } from '@/composables/gamepad'
+import { vRovingTabindex } from '@/directives/rovingTabindex'
+import { injection } from '@/util/inject'
+import { useTutorial } from '@/composables/tutorial'
+import { useFocus } from '@vueuse/core'
+import { useId } from 'vue'
+
+const { push, replace } = useRouter()
+const route = useRoute()
+const { t } = useI18n()
+const latestMinecraftHeadingId = useId()
+const discoverHeadingId = useId()
+
+// --- Query State ---
+function ensureQuery(query: Record<string, string | (string | null)[] | null | undefined>) {
+  query.page = '1'
+  delete query.sortOrder
+}
+
+const query = useQuery('query', ensureQuery)
+const gameVersion = useQuery('gameVersion', ensureQuery)
+const modLoaders = useQueryStringArray('modLoaders', ensureQuery)
+const sortQuery = useQuery('sort', ensureQuery)
+const contentTypeQuery = useQuery('contentType', ensureQuery)
+const sort = computed({
+  get: () => normalizeMarketSort(sortQuery.value || (query.value ? 'relevance' : 'downloads')),
+  set: (value: string) => { sortQuery.value = value },
+})
+const page = useQueryNumber('page', 1)
+const omitSources = useQueryStringArray('omitSources', ensureQuery)
+const keyword = ref(query)
+const _modrinthCategories = useQueryStringArray('modrinthCategories', ensureQuery)
+const curseforgeCategory = useQueryNumber(
+  'curseforgeCategory',
+  undefined as undefined | number,
+  ensureQuery,
+)
+const pageSize = 20
+
+// Disco: the store's content-type selector. Defaults to modpack so the screen
+// opens exactly as it did before the selector existed.
+const contentType = computed<StoreContentType>({
+  get: () => normalizeStoreContentType(contentTypeQuery.value),
+  set: (value) => { contentTypeQuery.value = value },
+})
+const contentTypeList = computed(() => STORE_CONTENT_TYPES.map((id) => ({
+  id,
+  icon: id === 'modpack' ? 'inventory_2' : id === 'mod' ? 'extension' : 'texture',
+  text: t(`store.contentType.${id}`),
+})))
+const searchPlaceholder = computed(() => t(`store.searchHint.${contentType.value}`))
+
+function selectContentType(type: StoreContentType) {
+  if (contentType.value === type) return
+  // One replace, not several computed writes: every useQuery setter reads
+  // route.query synchronously and Vue Router does not update it between
+  // synchronous calls, so sequential writes would clobber each other.
+  const newQuery: Record<string, string | (string | null)[] | null | undefined> = {
+    ...route.query,
+    contentType: type,
+    // Categories are type-specific (a modpack category is meaningless in a
+    // mod search and vice versa), so drop them on every switch.
+    modrinthCategories: undefined,
+    curseforgeCategory: undefined,
+    page: '1',
+  }
+  // Loader filters only make sense for modpacks and mods.
+  if (type === 'resourcepack') newQuery.modLoaders = undefined
+  if (type !== 'modpack') {
+    // If FTB was the only active source, switching to a type FTB cannot
+    // serve would leave the store with zero sources. Fall back to Modrinth.
+    const omitted = new Set(newQuery.omitSources ? String(newQuery.omitSources).split(',') : [])
+    if (omitted.has('modrinth') && omitted.has('curseforge')) {
+      omitted.delete('modrinth')
+      omitted.delete('curseforge')
+      newQuery.omitSources = omitted.size > 0 ? Array.from(omitted).join(',') : undefined
+    }
+  }
+  delete newQuery.sortOrder
+  replace({ query: newQuery })
+}
+
+// Disco Launcher: the "Trending" carousel was removed; the latest-Minecraft
+// section still renders only when no search or category filter is active.
+// Mirrors `selectedCount > 0 || !!keyword` from raw state so it can be
+// declared before the data-fetching composables that consume it.
+const hasFilters = computed(() =>
+  !!keyword.value ||
+  !!query.value ||
+  !!gameVersion.value ||
+  modLoaders.value.length > 0 ||
+  _modrinthCategories.value.length > 0 ||
+  curseforgeCategory.value !== undefined ||
+  omitSources.value.length > 0 ||
+  !!sortQuery.value,
+)
+const hasFiltersComputed = hasFilters
+
+// --- Data Fetching Logic ---
+const tCategory = useCurseforgeCategoryI18n()
+const { getDateString } = useDateString()
+const galleryMappings = ref<Record<string, { name: string; description: string }>>({})
+
+// FTB only serves modpacks, so it is unavailable (shown dimmed with a hint)
+// whenever another content type is browsed, and effectively omitted from the
+// search even if it was active before.
+function isSourceAvailable(id: string) {
+  return !(id === 'ftb' && contentType.value !== 'modpack')
+}
+const effectiveOmitSources = computed(() => {
+  if (contentType.value === 'modpack') return omitSources.value
+  return Array.from(new Set([...omitSources.value, 'ftb']))
+})
+
+const { items, isSearching, searchError, pageCount, sources } = useSearchedItems({
+  query,
+  gameVersion,
+  modLoaders,
+  sort,
+  page,
+  omitSources: effectiveOmitSources,
+  modrinthCategories: _modrinthCategories,
+  curseforgeCategory,
+  contentType,
+  pageSize,
+  tCategory,
+})
+
+// Gamepad triggers (L2/R2) turn store result pages.
+useGamepadInnerNav({
+  handler: (dir) => {
+    if (pageCount.value <= 1) return
+    page.value = dir === 'next'
+      ? Math.min(page.value + 1, pageCount.value)
+      : Math.max(page.value - 1, 1)
+    // scroll to top of discoverHeadingId
+    const element = document.getElementById(discoverHeadingId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  },
+  disabled: () => pageCount.value <= 1,
+})
+
+const { recentMinecraftItems: allRecentMinecraftItems } = useRecentMinecraftItems(galleryMappings, hasFiltersComputed, contentType)
+
+// Compact single-line info bar: "Latest Version" label + small refresh
+// button. The version number is intentionally not displayed (Disco task 3);
+// the refresh button keeps rotating the cards and the version check keeps
+// running in the background.
+const latestBarText = computed(() => t('store.latestVersionBar'))
+const latestBarAriaLabel = computed(() => t('store.latestMinecraft'))
+
+// Display only 8 items, with rotation support
+const recentMinecraftOffset = ref(0)
+
+const recentMinecraftItems = computed(() => {
+  const items = allRecentMinecraftItems.value
+  if (items.length === 0) return []
+  const offset = recentMinecraftOffset.value % items.length
+  // Rotate items starting from offset and take 8
+  const rotated = [...items.slice(offset), ...items.slice(0, offset)]
+  return rotated.slice(0, 8)
+})
+
+const refreshRecentMinecraft = () => {
+  recentMinecraftOffset.value += 8
+}
+
+// Search Logic
+const sortByItems = useSortByItems()
+const sortBy = computed(() => sortByItems.value.map(item => ({
+  ...item,
+  text: item.value === 'follows' ? t('store.popularity') : item.text,
+})))
+
+const loading = computed(() => isSearching.value)
+
+// Mappings for results
+const mappings = ref<Record<string, { name: string; description: string }>>({})
+const {
+  refreshing: refreshingTag,
+  categories: modrinthCategories,
+  modLoaders: modrinthModloaders,
+  gameVersions,
+} = injection(kModrinthTags)
+const { categories: curseforgeCategories } = injection(kCurseforgeCategories)
+const catModLoaders = computed(() =>
+  modrinthModloaders.value.filter((v) => v.supported_project_types.includes(contentType.value)),
+)
+
+const enter = (type: string, id: string) => {
+  push(`/store/${type}/${id}`)
+}
+
+// Disco: quick install — mods and resource packs go straight into an
+// existing instance. Modpacks keep the create-instance flow and FTB has no
+// per-instance content, so those cards never show the button.
+const canQuickInstall = (mod: ExploreProjectModern) =>
+  contentType.value !== 'modpack' && (mod.type === 'modrinth' || mod.type === 'curseforge')
+
+const { show: showInstallTargets } = useDialog(StoreInstallTargetsDialogKey)
+function onQuickInstall(mod: ExploreProjectModern) {
+  if (mod.type !== 'modrinth' && mod.type !== 'curseforge') return
+  const ct = contentType.value
+  if (ct === 'modpack') return
+  showInstallTargets({
+    market: mod.type,
+    projectId: mod.id,
+    icon: mod.iconUrl,
+    title: mod.localizedTitle || mod.title,
+    contentType: ct,
+  })
+}
+
+// --- UI Logic for Filters ---
+const sourcesList = [
+  { id: 'modrinth', text: 'Modrinth', component: ModrinthIcon },
+  { id: 'curseforge', text: 'CurseForge', component: CurseforgeIcon },
+  { id: 'ftb', text: 'FTB', component: FTBIcon },
+]
+
+function toggleSource(id: string) {
+  if (omitSources.value.includes(id)) {
+    omitSources.value = omitSources.value.filter((s) => s !== id)
+  } else {
+    omitSources.value = [...omitSources.value, id]
+  }
+}
+
+// Categories Display — per content type; a modpack category is meaningless
+// in a mod search and vice versa.
+const modrinthCategoriesDisplay = computed(() => {
+  return modrinthCategories.value
+    .filter((v) => v.project_type === contentType.value)
+    .map((c) => ({
+      id: c.name,
+      text: t(`modrinth.categories.${c.name}`, c.name),
+      iconHTML: c.icon,
+    }))
+})
+
+function toggleModLoader(name: string) {
+  if (modLoaders.value.includes(name)) {
+    modLoaders.value = modLoaders.value.filter((n) => n !== name)
+  } else {
+    modLoaders.value = [...modLoaders.value, name]
+  }
+}
+
+// CurseForge Categories Display — children of the content type's class.
+const curseforgeCategoriesDisplay = computed(() => {
+  const parent = getCurseforgeCategoryParentId(contentType.value)
+  return (curseforgeCategories.value?.filter((c) => c.parentCategoryId === parent) || []).map(
+    (c) => ({
+      id: c.id.toString(),
+      text: tCategory(c.name),
+      icon: c.iconUrl,
+    }),
+  )
+})
+
+function toggleModrinthCategory(id: string) {
+  if (_modrinthCategories.value.includes(id)) {
+    _modrinthCategories.value = _modrinthCategories.value.filter((c) => c !== id)
+  } else {
+    _modrinthCategories.value = [..._modrinthCategories.value, id]
+  }
+}
+
+function toggleCurseforgeCategory(id: string | number) {
+  id = Number(id)
+  if (curseforgeCategory.value === id) {
+    curseforgeCategory.value = undefined
+  } else {
+    curseforgeCategory.value = id
+  }
+}
+
+// Active Filter Chips
+const activeTags = computed(() => {
+  const tags: {
+    id: string
+    text: string
+    type: 'source' | 'version' | 'sort' | 'loader' | 'category'
+  }[] = []
+
+  omitSources.value.forEach((s) =>
+    tags.push({ id: s, text: sourcesList.find((x) => x.id === s)?.text || s, type: 'source' }),
+  )
+  if (gameVersion.value)
+    tags.push({ id: gameVersion.value, text: gameVersion.value, type: 'version' })
+  if (sortQuery.value) {
+    const label = sortBy.value.find(item => item.value === sort.value)?.text || ''
+    tags.push({
+      id: sort.value,
+      text: label,
+      type: 'sort',
+    })
+  }
+  modLoaders.value.forEach((l) => tags.push({ id: l, text: l, type: 'loader' }))
+  _modrinthCategories.value.forEach((c) =>
+    tags.push({
+      id: c,
+      text: modrinthCategoriesDisplay.value.find((x) => x.id === c)?.text || c,
+      type: 'category',
+    }),
+  )
+  if (curseforgeCategory.value) {
+    const name = curseforgeCategoriesDisplay.value.find(
+      (x) => x.id === curseforgeCategory.value?.toString(),
+    )?.text
+    tags.push({
+      id: curseforgeCategory.value.toString(),
+      text: name || 'Category',
+      type: 'category',
+    })
+  }
+
+  return tags
+})
+
+const selectedCount = computed(() => activeTags.value.length)
+
+function removeTag(tag: typeof activeTags.value[number]) {
+  if (tag.type === 'sort') {
+    replace({ query: { ...route.query, sort: undefined, sortOrder: undefined, page: '1' } })
+  }
+  if (tag.type === 'source') toggleSource(tag.id)
+  if (tag.type === 'version') gameVersion.value = ''
+  if (tag.type === 'loader') modLoaders.value = modLoaders.value.filter((l) => l !== tag.id)
+  if (tag.type === 'category') {
+    if (_modrinthCategories.value.includes(tag.id)) toggleModrinthCategory(tag.id)
+    else toggleCurseforgeCategory(Number(tag.id))
+  }
+}
+
+function clearAllFilters() {
+  replace({
+    query: {
+      ...route.query,
+      omitSources: undefined,
+      gameVersion: undefined,
+      modLoaders: undefined,
+      modrinthCategories: undefined,
+      curseforgeCategory: undefined,
+      sort: undefined,
+      sortOrder: undefined,
+      page: '1',
+    },
+  })
+}
+
+function onClose() {
+  query.value = ''
+  keyword.value = ''
+}
+
+const filter = ref<HTMLElement | null>(null)
+const { focused } = useFocus(filter)
+useTextFieldBehavior(filter, focused)
+
+useTutorial(
+  computed(() => [
+    {
+      element: '#store-search',
+      popover: {
+        title: t('modSearch.searchInMarket'),
+        description: t('tutorial.storeSearchDescription'),
+      },
+    },
+    {
+      element: '#store-filters',
+      popover: {
+        title: t('curseforge.category'),
+        description: t('tutorial.storeSearchCategoryDescription'),
+      },
+    },
+    {
+      element: '#store-content',
+      popover: {
+        title: t('store.discover'),
+        description: t('tutorial.storeSearchDescription'),
+      },
+    },
+  ]),
+)
+</script>
+
+<style scoped>
+.store-entry {
+  user-select: none;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.theme--dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme--dark .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Search input: flat, no elevation glow */
+.elevated-search :deep(.v-field) {
+  box-shadow: none !important;
+  border-radius: 3px !important;
+}
+
+.elevated-search :deep(.v-field--focused) {
+  border: 1px solid rgba(var(--v-theme-primary), 0.55) !important;
+}
+
+.filter-title {
+  @apply font-bold mb-3 text-xs uppercase text-gray-700 dark:text-gray-200 tracking-wider ml-1;
+}
+
+.filter-group {
+  @apply mb-2;
+}
+
+/* Source Button Styles — Prism-style flat box: sharp corners, thin
+   border, no lift or shadow. The selected (on) state swaps the border
+   to the accent colour. */
+.source-button {
+  @apply text-gray-600 dark:text-gray-400;
+  border-radius: 2px;
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.18);
+  background: transparent;
+}
+
+.source-button:hover {
+  border-color: rgba(var(--v-theme-primary), 0.55);
+}
+
+.source-button .cross-overlay {
+  opacity: 0;
+}
+
+/* Off-state: dimmed shell */
+.source-button.omitted,
+.source-button.omitted:hover {
+  background: transparent;
+  border-color: rgba(var(--v-theme-on-surface), 0.08);
+  opacity: 0.5;
+}
+
+/* On-state for single-select buttons (the content-type switch): same accent
+   treatment the modloader tiles use. */
+.source-button.selected {
+  background: rgba(var(--v-theme-primary), 0.08);
+  border-color: rgba(var(--v-theme-primary), 0.9);
+  @apply text-gray-800 dark:text-gray-100;
+}
+
+/* Unavailable source (FTB outside modpacks): dimmed, not clickable, the
+   tooltip carries the reason. */
+.source-button--unavailable,
+.source-button--unavailable:hover {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: rgba(var(--v-theme-on-surface), 0.08);
+}
+
+.source-button.omitted {
+  @apply text-gray-400 dark:text-gray-500;
+}
+
+.source-button.omitted .cross-overlay {
+  opacity: 0.5;
+}
+
+.source-button:hover .cross-overlay {
+  opacity: 1;
+}
+
+/* Compact latest-version info bar (single line, prism-flat) */
+.latest-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding: 5px 10px;
+  width: fit-content;
+  border-radius: var(--card-subsection-radius, 3px);
+  background: rgba(var(--v-theme-on-surface), 0.04);
+}
+
+.latest-bar__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgb(var(--v-theme-green, var(--v-theme-primary)));
+  flex-shrink: 0;
+}
+
+.latest-bar__text {
+  color: rgba(var(--v-theme-on-surface), 0.72);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.latest-bar :deep(.v-btn) {
+  opacity: 0.6;
+}
+
+.latest-bar :deep(.v-btn:hover) {
+  opacity: 1;
+}
+</style>

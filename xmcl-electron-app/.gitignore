@@ -1,0 +1,7 @@
+cache
+dist
+meta.json
+build/icon-pngs/
+scripts/check-alpha.mjs
+scripts/probe-alpha.mjs
+scripts/preview-icon.html

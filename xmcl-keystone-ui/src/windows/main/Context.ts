@@ -1,0 +1,294 @@
+import { useExternalRoute, useI18nSync } from '@/composables'
+import { kCriticalStatus, useCriticalStatus } from '@/composables/criticalStatus'
+import { kCurseforgeCategories, useCurseforgeCategories } from '@/composables/curseforge'
+import { kCustomCss, useCustomCss } from '@/composables/customCss'
+import { kDropHandler, useDropHandler } from '@/composables/dropHandler'
+import { kEnvironment, useEnvironment } from '@/composables/environment'
+import { kImageDialog, useImageDialog } from '@/composables/imageDialog'
+import { kInstance, useInstance } from '@/composables/instance'
+import { kInstanceBlueprints, useInstanceBlueprints } from '@/composables/instanceBlueprints'
+import {
+  kInstanceDefaultSource,
+  useInstanceDefaultSource,
+} from '@/composables/instanceDefaultSource'
+import { kInstanceFiles, useInstanceFiles } from '@/composables/instanceFiles'
+import { kInstanceJava, useInstanceJava } from '@/composables/instanceJava'
+import { kInstanceJavaDiagnose, useInstanceJavaDiagnose } from '@/composables/instanceJavaDiagnose'
+import { kInstanceLaunch, useInstanceLaunch } from '@/composables/instanceLaunch'
+import { kInstanceModsContext, useInstanceMods } from '@/composables/instanceMods'
+import { kInstanceOptions, useInstanceOptions } from '@/composables/instanceOptions'
+import {
+  kInstanceResourcePacks,
+  useInstanceResourcePacks,
+} from '@/composables/instanceResourcePack'
+import { kInstanceSave, useInstanceSaves } from '@/composables/instanceSave'
+import { kInstanceServerInfo, useInstanceServerInfo } from '@/composables/instanceServerInfo'
+import { kInstanceShaderPacks, useInstanceShaderPacks } from '@/composables/instanceShaderPack'
+import { kInstanceTheme, useInstanceTheme } from '@/composables/instanceTheme'
+import { kInstanceVersion, useInstanceVersion } from '@/composables/instanceVersion'
+import {
+  kInstanceVersionInstall,
+  useInstanceVersionInstallInstruction,
+} from '@/composables/instanceVersionInstall'
+import { kInstances, useInstances } from '@/composables/instances'
+import { kJavaContext, useJavaContext } from '@/composables/java'
+import { kLaunchTask, useLaunchTask } from '@/composables/launchTask'
+import { kModDependenciesCheck, useModDependenciesCheck } from '@/composables/modDependenciesCheck'
+import { kModLibCleaner, useModLibCleaner } from '@/composables/modLibCleaner'
+import { kModUpgrade, useModUpgrade } from '@/composables/modUpgrade'
+import { kModpackExport, useModpackExport } from '@/composables/modpack'
+import { kInstanceServerLaunch, useInstanceServerLaunch } from '@/composables/instanceServerLaunch'
+import { kModrinthTags, useModrinthTags } from '@/composables/modrinth'
+import {
+  kModrinthAuthenticatedAPI,
+  useModrinthAuthenticatedAPI,
+} from '@/composables/modrinthAuthenticatedAPI'
+import { kLocalCollections, useLocalCollections } from '@/composables/localCollections'
+import { kSearchModel, useSearchModel } from '@/composables/search'
+import { kServerStatusCache, useServerStatusCache } from '@/composables/serverStatus'
+import { kSettingsState, useSettingsState } from '@/composables/setting'
+import {
+  DEFAULT_CARD_CLICKABLE_RADIUS,
+  DEFAULT_CARD_ITEM_RADIUS,
+  DEFAULT_CARD_PROMINENT_RADIUS,
+  DEFAULT_CARD_RADIUS,
+  DEFAULT_CARD_SUBSECTION_RADIUS,
+  DEFAULT_PANEL_RADIUS,
+  DEFAULT_SURFACE_MENU_ITEM_RADIUS,
+  DEFAULT_SURFACE_PILL_RADIUS,
+  DEFAULT_SURFACE_RADIUS,
+  DEFAULT_SURFACE_BUTTON_RADIUS,
+  DEFAULT_SURFACE_DIALOG_RADIUS,
+  DEFAULT_SURFACE_TOOLTIP_RADIUS,
+  kSurfaceTokens,
+  useSurfaceTokens,
+} from '@/composables/surfaceTokens'
+import { useSurfaceColorsSync } from '@/composables/surfaceColors'
+import { useTelemetryTrack } from '@/composables/telemetryTrack'
+import { kTheme, useTheme } from '@/composables/theme'
+import { kTutorial, useTutorialModel } from '@/composables/tutorial'
+
+import { kNetworkStatus, useNetworkStatus } from '@/composables/useNetworkStatus'
+import { kUserContext, useUserContext } from '@/composables/user'
+import { kLatestMinecraftVersion, useMinecraftLatestRelease, warmMinecraftVersions } from '@/composables/version'
+import { kLocalVersions, useLocalVersions } from '@/composables/versionLocal'
+import { kSupportedAuthorityMetadata, useSupportedAuthority } from '@/composables/yggrasil'
+import { vuetify } from '@/vuetify'
+import { provide, watchEffect } from 'vue'
+
+export default defineComponent({
+  setup(props, ctx) {
+    provide(kServerStatusCache, useServerStatusCache())
+
+    provide(kDropHandler, useDropHandler())
+
+    const user = useUserContext()
+    provide(kUserContext, user)
+    const java = useJavaContext()
+    const localVersions = useLocalVersions()
+    const instances = useInstances()
+    const router = useRouter()
+    const onNavigate = (route: string) => { void router.push(route) }
+    windowController.on('navigate', onNavigate)
+    onUnmounted(() => windowController.removeListener('navigate', onNavigate))
+    watch([instances.ready, instances.allInstances], ([ready, current], [wasReady, previous]) => {
+      if (ready && current.length === 0 && (!wasReady || previous.length > 0) && router.currentRoute.value.path !== '/me') {
+        router.replace('/me')
+      }
+    })
+    const instance = useInstance(instances.selectedInstance, instances.instances)
+    const settings = useSettingsState()
+    const instanceVersion = useInstanceVersion(
+      instance.instance,
+      localVersions.versions,
+      localVersions.servers,
+    )
+    const instanceJava = useInstanceJava(
+      instance.instance,
+      instanceVersion.resolvedVersion,
+      java.all,
+      computed(() => settings.state.value?.globalJava),
+    )
+    provide(kInstanceJavaDiagnose, useInstanceJavaDiagnose(instanceJava))
+    const instanceDefaultSource = useInstanceDefaultSource(instance.path)
+    const options = useInstanceOptions(instance.path)
+    const saves = useInstanceSaves(instance.path)
+    const serverInfo = useInstanceServerInfo(instance.path)
+    const resourcePacks = useInstanceResourcePacks(instance.path, options.gameOptions)
+    const instanceMods = useInstanceMods(instance.path, instance.runtime, instanceJava.java)
+    const blueprints = useInstanceBlueprints(
+      instance.path,
+      computed(() => router.currentRoute.value.meta.blueprintState === true),
+    )
+    const shaderPacks = useInstanceShaderPacks(
+      instance.path,
+      instance.runtime,
+      instanceMods.mods,
+      options.gameOptions,
+    )
+    const files = useInstanceFiles(instance.path)
+    const task = useLaunchTask(instance.path, instance.runtime, instanceVersion.versionId)
+    const instanceLaunch = useInstanceLaunch(
+      instance.instance,
+      instanceVersion.versionId,
+      instanceVersion.serverVersionId,
+      instanceJava.java,
+      user.userProfile,
+      settings,
+      instanceMods.mods,
+    )
+
+    const modrinthAPI = useModrinthAuthenticatedAPI()
+    provide(kModrinthAuthenticatedAPI, modrinthAPI)
+    provide(kLocalCollections, useLocalCollections())
+    const searchModel = useSearchModel(instance.runtime)
+    provide(kSearchModel, searchModel)
+    const modUpgrade = useModUpgrade(
+      instance.path,
+      instance.runtime,
+      instanceMods.mods,
+      instanceMods.updateMetadataAndWait,
+    )
+
+    const install = useInstanceVersionInstallInstruction(
+      instance.path,
+      instance.instances,
+      instanceVersion.resolvedVersion,
+      instanceVersion.refreshResolvedVersion,
+      java.all,
+    )
+
+    useTelemetryTrack(settings.state)
+
+    provide(kCriticalStatus, useCriticalStatus(settings.state))
+
+    const latestMinecraftVersion = useMinecraftLatestRelease()
+    provide(kLatestMinecraftVersion, latestMinecraftVersion)
+    // Disco: warm the Minecraft version metadata as soon as the window opens.
+    // It used to load only when a version picker mounted, so opening "create
+    // instance" on a cold start showed an empty version field until the fetch
+    // landed.
+    warmMinecraftVersions(latestMinecraftVersion)
+    provide(kJavaContext, java)
+    provide(kSettingsState, settings)
+    provide(kInstances, instances)
+    provide(kInstance, instance)
+    provide(kLocalVersions, localVersions)
+    provide(kInstanceLaunch, instanceLaunch)
+
+    provide(kInstanceVersion, instanceVersion)
+    provide(kInstanceDefaultSource, instanceDefaultSource)
+    provide(kInstanceJava, instanceJava)
+    provide(kInstanceOptions, options)
+    provide(kInstanceSave, saves)
+    provide(kInstanceServerInfo, serverInfo)
+    provide(kInstanceResourcePacks, resourcePacks)
+    provide(kInstanceModsContext, instanceMods)
+    provide(kInstanceBlueprints, blueprints)
+    provide(kInstanceFiles, files)
+    provide(kLaunchTask, task)
+
+    provide(kInstanceVersionInstall, install)
+
+    provide(kInstanceShaderPacks, shaderPacks)
+    provide(
+      kModDependenciesCheck,
+      useModDependenciesCheck(
+        instance.path,
+        instance.runtime,
+        instanceMods.mods,
+        instanceMods.updateMetadataAndWait,
+      ),
+    )
+    provide(kModLibCleaner, useModLibCleaner(instanceMods.mods, instanceMods.allowLoaders))
+    provide(kModUpgrade, modUpgrade)
+    provide(kEnvironment, useEnvironment())
+
+    const instanceTheme = useInstanceTheme(instance.path)
+    provide(kInstanceTheme, instanceTheme)
+    const theme = useTheme(instanceTheme.instanceTheme)
+    provide(kTheme, theme)
+    const surfaceTokens = useSurfaceTokens()
+    provide(kSurfaceTokens, surfaceTokens)
+    // Disco: gray surface colors (background/card/input/border) stored in the
+    // theme and applied live through Vuetify's surface color + the surface
+    // tokens. Absent block = today's default look. Passed as arguments
+    // (not injected) because this runs inside Context's own setup.
+    useSurfaceColorsSync(theme, surfaceTokens)
+
+    // Disco (task 5): the "Rounded Corners" theme setting was removed — the
+    // minimal Prism-style design defines its corner rounding in fixed surface
+    // tokens. The radii are always the defaults now; the old on/off token
+    // plumbing (which zeroed every radius when disabled) is gone.
+    surfaceTokens.radius.value = DEFAULT_SURFACE_RADIUS
+    surfaceTokens.dialogRadius.value = DEFAULT_SURFACE_DIALOG_RADIUS
+    surfaceTokens.menuItemRadius.value = DEFAULT_SURFACE_MENU_ITEM_RADIUS
+    surfaceTokens.cardRadius.value = DEFAULT_CARD_RADIUS
+    surfaceTokens.cardSubsectionRadius.value = DEFAULT_CARD_SUBSECTION_RADIUS
+    surfaceTokens.cardItemRadius.value = DEFAULT_CARD_ITEM_RADIUS
+    surfaceTokens.panelRadius.value = DEFAULT_PANEL_RADIUS
+    surfaceTokens.cardProminentRadius.value = DEFAULT_CARD_PROMINENT_RADIUS
+    surfaceTokens.cardClickableRadius.value = DEFAULT_CARD_CLICKABLE_RADIUS
+    surfaceTokens.tooltipRadius.value = DEFAULT_SURFACE_TOOLTIP_RADIUS
+    surfaceTokens.pillRadius.value = DEFAULT_SURFACE_PILL_RADIUS
+    vuetify.defaults.value = {
+      ...vuetify.defaults.value,
+      VBtn: {
+        ...vuetify.defaults.value?.VBtn,
+        rounded: DEFAULT_SURFACE_BUTTON_RADIUS,
+      },
+      VBtnGroup: {
+        ...vuetify.defaults.value?.VBtnGroup,
+        rounded: DEFAULT_SURFACE_BUTTON_RADIUS,
+        VBtn: {
+          rounded: null,
+        },
+      },
+      VBtnToggle: {
+        ...vuetify.defaults.value?.VBtnToggle,
+        rounded: DEFAULT_SURFACE_BUTTON_RADIUS,
+      },
+      VChip: {
+        ...vuetify.defaults.value?.VChip,
+        rounded: DEFAULT_SURFACE_BUTTON_RADIUS,
+      },
+      VTextField: {
+        ...vuetify.defaults.value?.VTextField,
+        rounded: DEFAULT_SURFACE_BUTTON_RADIUS,
+      },
+      VSelect: {
+        ...vuetify.defaults.value?.VSelect,
+        rounded: DEFAULT_SURFACE_BUTTON_RADIUS,
+      },
+      VSwitch: {
+        ...vuetify.defaults.value?.VSwitch,
+        rounded: undefined,
+      },
+    }
+
+    provide(
+      kCustomCss,
+      useCustomCss({
+        currentTheme: theme.currentTheme,
+        instanceTheme: instanceTheme.instanceTheme,
+        instanceCss: instanceTheme.customCss,
+        suppressed: theme.suppressed,
+      }),
+    )
+
+    useI18nSync(settings.state)
+
+    useExternalRoute(router)
+
+    provide(kImageDialog, useImageDialog())
+    provide(kSupportedAuthorityMetadata, useSupportedAuthority())
+    provide(kTutorial, useTutorialModel())
+    provide(kModrinthTags, useModrinthTags())
+    provide(kCurseforgeCategories, useCurseforgeCategories())
+    provide(kModpackExport, useModpackExport())
+    provide(kInstanceServerLaunch, useInstanceServerLaunch())
+    provide(kNetworkStatus, useNetworkStatus())
+
+    return () => ctx.slots.default?.()
+  },
+})

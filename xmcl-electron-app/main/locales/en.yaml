@@ -1,0 +1,24 @@
+browseApps: Browse Customized Launcher UI
+checkUpdate: Check Update
+openUrl:
+  cancel: Cancel
+  message: >-
+    The launcher want to open the {url} in your default browser. Do you allow
+    this operation?
+  title: Open in Browser
+  trust: Trust this site and don't show next time
+  'yes': 'Yes'
+quit: Quit
+relaunch: Relaunch
+showDiagnosis: Show Diagnose
+showLauncher: Show Launcher
+showLogsFolder: Show Logs Folder
+task:
+  continue: View in Launcher
+  fail: One Task Failed
+  success: One Task Success
+title: Disco Launcher
+urlFailed: Unknown url {url}. Please check your url or contact developer!
+urlSuccess: Success! You can return to the launcher.
+multiplayer: P2P Multiplayer
+makeDesktopShortcut: Make Desktop Shortcut

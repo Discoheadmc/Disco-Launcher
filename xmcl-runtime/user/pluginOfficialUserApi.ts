@@ -1,0 +1,123 @@
+import { AUTHORITY_MICROSOFT } from '@xmcl/runtime-api'
+import { MicrosoftAuthenticator, MojangClient } from '@xmcl/user'
+import { LauncherAppPlugin } from '~/app'
+import { kNetworkInterface } from '~/network'
+import { AnyError } from '@xmcl/utils'
+import { UserService } from './UserService'
+import { MicrosoftAccountSystem } from './accountSystems/MicrosoftAccountSystem'
+import { MicrosoftOAuthClient } from './accountSystems/MicrosoftOAuthClient'
+import { kUserTokenStorage } from './userTokenStore'
+import { withRetry } from './utils/withRetry'
+
+const CLIENT_ID = '1363d629-5b06-48a9-a5fb-c65de945f13e'
+const XBOX_DEVICE_STORAGE_SERVICE = 'xmcl/xbox-device'
+const XBOX_DEVICE_STORAGE_ACCOUNT = 'XMCL_XBOX_DEVICE'
+
+export const pluginOfficialUserApi: LauncherAppPlugin = async (app) => {
+  app.registry.get(kNetworkInterface).then((networkInterface) => {
+  })
+
+  // @ts-ignore
+  const mojangApi = new MojangClient({ fetch: (...args) => app.fetch(...args) })
+  app.registry.register(MojangClient, mojangApi)
+
+  const logger = app.getLogger('OfficialUserSystem')
+
+  const userService = await app.registry.getOrCreate(UserService)
+  const headers = {}
+
+  const system = new MicrosoftAccountSystem(logger,
+    // app.fetch resolves to Electron's net.fetch (with an undici fallback)
+    // -- neither path applies retry interceptors. Compose retry on top via
+    // withRetry() so that 408/425/429/5xx from Microsoft endpoints are
+    // retried with Retry-After honored, regardless of which underlying
+    // HTTP stack handles the call. See issue #1445 / PR #1447.
+    new MicrosoftAuthenticator({
+      fetch: withRetry((...args) => app.fetch(...args)),
+      xboxDeviceTokenStorage: {
+        get: async () => {
+          const value = await app.secretStorage.get(XBOX_DEVICE_STORAGE_SERVICE, XBOX_DEVICE_STORAGE_ACCOUNT)
+          if (!value) return undefined
+          try {
+            return JSON.parse(value)
+          } catch {
+            return undefined
+          }
+        },
+        put: state => app.secretStorage.put(
+          XBOX_DEVICE_STORAGE_SERVICE,
+          XBOX_DEVICE_STORAGE_ACCOUNT,
+          JSON.stringify(state),
+        ),
+      },
+    }),
+    mojangApi,
+    () => app.registry.get(kUserTokenStorage),
+    new MicrosoftOAuthClient(
+      (...args) => app.fetch(...args),
+      logger,
+      CLIENT_ID,
+      async (url, redirectUri, signal, authAttemptId) => {
+        if (app.controller.openMicrosoftLogin) {
+          return app.controller.openMicrosoftLogin(url, redirectUri, signal, authAttemptId)
+        }
+        app.shell.openInBrowser(url)
+        userService.emit('microsoft-authorize-url', url)
+        return await new Promise<string>((resolve, reject) => {
+          const abort = () => {
+            reject(new AnyError('AuthCodeTimeoutError', 'Timeout to wait the auth code! Please try again later!'))
+          }
+          (signal as any)?.addEventListener('abort', abort)
+          userService.once('microsoft-authorize-code', (err, code) => {
+            app.controller.requireFocus()
+            if (err) {
+              reject(err)
+            } else {
+              resolve(code!)
+            }
+          })
+        })
+      },
+      async (directRedirectToLauncher) => {
+        const port = await app.serverPort ?? 25555
+        directRedirectToLauncher = true // force to use localhost before the website is fixed
+        return (directRedirectToLauncher ? `http://localhost:${port}/auth` : `https://xmcl.app/auth?port=${port}`)
+      },
+      (response) => {
+        userService.emit('device-code', response)
+        app.shell.openInBrowser(response.verificationUri)
+      },
+      app.secretStorage,
+      () => app.controller.getNativeWindowHandle?.(),
+      event => app.emit('microsoft-auth-telemetry', event),
+    ), app)
+
+  userService.registerAccountSystem(AUTHORITY_MICROSOFT, system)
+  await userService.initialize()
+
+  app.protocol.registerHandler('disco', ({ request, response }) => {
+    const parsed = request.url
+    if (parsed.host === 'launcher' && parsed.pathname === '/auth') {
+      let error: Error | undefined
+      if (parsed.searchParams.get('error')) {
+        const err = parsed.searchParams.get('error')!
+        const errDescription = parsed.searchParams.get('error')!
+        error = new Error(unescape(errDescription));
+        (error as any).error = err
+      }
+      const code = parsed.searchParams.get('code') as string
+      userService.emit('microsoft-authorize-code', error, code)
+      response.status = 200
+      try {
+        response.body = app.controller.getLoginSuccessHTML()
+        response.headers = {
+          'Content-Type': 'text/html',
+        }
+      } catch (e) {
+        if (e instanceof Error) {
+          logger.error(e)
+        }
+      }
+    }
+  })
+}

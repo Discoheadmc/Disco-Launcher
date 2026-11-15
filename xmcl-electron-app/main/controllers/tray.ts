@@ -1,0 +1,185 @@
+import { ElectronController } from '@/ElectronController'
+import { darkIcon, darkTray, lightIcon, lightTray } from '@/utils/icons'
+import { BaseService } from '@xmcl/runtime/app'
+import { app, contentTracing, dialog, Menu, Tray, nativeTheme, nativeImage, MenuItemConstructorOptions, shell } from 'electron'
+import { join } from 'path'
+import { ControllerPlugin } from './plugin'
+import { kSettings } from '@xmcl/runtime/settings'
+
+export const trayPlugin: ControllerPlugin = function (this: ElectronController) {
+  const { t } = this.i18n
+  let isTracing = false
+  const toggleTracing = async () => {
+    if (!isTracing) {
+      try {
+        await contentTracing.startRecording({
+          included_categories: ['*'],
+        })
+        isTracing = true
+      } catch (e) {
+        dialog.showErrorBox('Content tracing', `Failed to start recording: ${(e as Error).message}`)
+      }
+    } else {
+      const out = join(app.getPath('logs'), `trace-${Date.now()}.json`)
+      try {
+        const file = await contentTracing.stopRecording(out)
+        isTracing = false
+        shell.showItemInFolder(file)
+      } catch (e) {
+        isTracing = false
+        dialog.showErrorBox('Content tracing', `Failed to stop recording: ${(e as Error).message}`)
+      }
+    }
+    this.tray?.setContextMenu(createMenu())
+  }
+  // nativeTheme.addListener('updated', () => {
+  //   if (nativeTheme.shouldUseDarkColors) {
+
+  //   } else {
+
+  //   }
+  // })
+  const createMenu = () => {
+    const app = this.app
+    const onBrowseAppClicked = () => {
+      if (this.browserRef && !this.browserRef.isDestroyed()) {
+        this.browserRef.show()
+      } else {
+        this.createBrowseWindow()
+      }
+    }
+    const diagnose = () => {
+      this.openDevTools()
+    }
+    const showLogs = () => {
+      // shell.openPath(this.app.logManager.getLogRoot())
+    }
+    const options: MenuItemConstructorOptions[] = [
+      {
+        label: t('makeDesktopShortcut'),
+        type: 'normal',
+        click: () => {
+          this.app.registry.get(BaseService).then(service => service.makeDesktopShortcut())
+        },
+      },
+      // {
+      //   label: t('browseApps'),
+      //   type: 'normal',
+      //   click: onBrowseAppClicked,
+      // },
+      { type: 'separator' },
+      // {
+      //   label: t('showLogsFolder'),
+      //   type: 'normal',
+      //   click: showLogs,
+      // },
+      {
+        label: t('showDiagnosis'),
+        type: 'normal',
+        click: () => {
+          diagnose()
+        },
+        role: 'toggleDevTools',
+      },
+      {
+        label: isTracing ? 'Stop CPU trace' : 'Start CPU trace',
+        type: 'normal',
+        click: () => {
+          toggleTracing()
+        },
+      },
+      {
+        label: t('relaunch'),
+        type: 'normal',
+        click() {
+          app.relaunch()
+        },
+      },
+      {
+        label: t('quit'),
+        type: 'normal',
+        click() {
+          app.quit()
+        },
+      },
+    ]
+    const show = () => {
+      const window = this.mainWin
+      if ((!window || window.isDestroyed()) && this.activatedManifest) {
+        this.activate(this.activatedManifest)
+      } else {
+        window?.show()
+        if (this.maximized) {
+          window?.maximize()
+        }
+      }
+    }
+    options.unshift({
+      label: t('showLauncher'),
+      type: 'normal',
+      click: () => {
+        show()
+      },
+    })
+    return Menu.buildFromTemplate(options)
+  }
+
+  const getTrayImage = (dark: string, light: string) => {
+    const path = nativeTheme.shouldUseDarkColors ? dark : light
+    if (this.app.platform.os === 'osx') {
+      const icon = nativeImage.createFromPath(path)
+      return icon.resize({ width: 20, height: 20 })
+    }
+    return path
+  }
+
+  this.app.waitEngineReady().then(async () => {
+    this.app.registry.get(kSettings).then(state => {
+      state.subscribe('config', () => {
+        tray.setToolTip(t('title'))
+        tray.setContextMenu(createMenu())
+      }).subscribe('localeSet', () => {
+        tray.setToolTip(t('title'))
+        tray.setContextMenu(createMenu())
+      })
+    })
+
+    const tray = new Tray(getTrayImage(darkTray, lightTray))
+    if (this.app.platform.os === 'windows') {
+      tray.on('double-click', () => {
+        const window = this.mainWin
+        if (window) {
+          if (window.isVisible()) {
+            window.focus()
+          } else {
+            window.show()
+            if (this.maximized) {
+              window.maximize()
+            }
+          }
+        }
+      })
+    }
+
+    tray.setToolTip(t('title'))
+    tray.setContextMenu(createMenu())
+
+    if (app.dock) {
+      app.on('activate', () => {
+        if (this.mainWin && !this.mainWin.isDestroyed()) {
+          this.mainWin?.show()
+        } else if (this.activatedManifest) {
+          this.activate(this.activatedManifest, false)
+        }
+      })
+    }
+    app.on('before-quit', () => {
+      this.tray?.destroy()
+    })
+    this.tray = tray
+  })
+
+  this.app.on('app-booted', (man) => {
+    this.tray?.setImage(getTrayImage(man.iconSets.darkTrayIcon, man.iconSets.trayIcon))
+  })
+}

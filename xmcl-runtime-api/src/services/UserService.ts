@@ -1,0 +1,312 @@
+import type { GameProfile } from '@xmcl/user'
+import { Exception } from '../entities/exception'
+import type { GameProfileAndTexture, UserProfile } from '../entities/user.schema'
+import type { AuthlibInjectorApiProfile } from '../entities/yggdrasil.schema'
+import type { GenericEventEmitter } from '../events'
+import type { SharedState } from '../util/SharedState'
+import type { ServiceKey } from './Service'
+
+export interface RefreshSkinOptions {
+  gameProfileId?: string
+  userId?: string
+  force?: boolean
+}
+
+export interface LoginOptions {
+  username: string
+  password?: string
+  /**
+   * The authority url.
+   */
+  authority: string
+  /**
+   * Custom property for special login service
+   */
+  properties?: Record<string, string>
+}
+
+export type SkinPayload = Pick<UploadSkinOptions, 'skin' | 'cape'>
+
+export interface UploadSkinOptions {
+  /**
+   * The game profile id of this skin
+   */
+  gameProfileId?: string
+  /**
+   * The user id of this skin
+   */
+  userId: string
+  /**
+   * The player skin data.
+   * - `undefined` means we don't want to change skin
+   * - `null` means we want to reset texture
+   */
+  skin?: {
+    /**
+     * The skin url. Can be either a http/https url or a file: protocol url.
+     */
+    url: string
+    /**
+     * If the skin is using slim model.
+     */
+    slim: boolean
+  } | null
+  /**
+   * The cape url.
+   * - `undefined` means we don't want to set cape texture
+   * - empty string means we want to reset cape texture
+   */
+  cape?: string
+}
+
+export interface SaveSkinOptions {
+  url: string
+  path: string
+}
+
+export interface SwitchProfileOptions {
+  /**
+   * The user id of the user
+   */
+  userId: string
+  /**
+   * The game profile id of the user
+   */
+  profileId: string
+}
+
+interface UserServiceEventMap {
+  'user-login': string
+  'user-login-success': UserProfile
+  'user-refresh-success': UserProfile
+  'error': UserException
+  'auth-profile-added': string
+  'microsoft-authorize-url': string
+  'device-code': {
+    userCode: string
+    deviceCode: string
+    verificationUri: string
+    expiresIn: number
+    interval: number
+    message: string
+  }
+}
+
+export class UserState {
+  /**
+   * The user id to user profile mapping
+   */
+  users: Record<string, UserProfile> = {}
+
+  userData(data: { users: Record<string, UserProfile> }) {
+    this.users = data.users
+  }
+
+  gameProfileUpdate({ profile, userId }: { userId: string; profile: (GameProfileAndTexture | GameProfile) }) {
+    const userProfile = this.users[userId]
+    if (profile.id in userProfile.profiles) {
+      const instance = { textures: { SKIN: { url: '' } }, ...profile }
+      userProfile.profiles[profile.id] = instance
+    } else {
+      userProfile.profiles[profile.id] = {
+        textures: { SKIN: { url: '' } },
+        ...profile,
+      }
+    }
+  }
+
+  userProfileRemove(userId: string) {
+    delete this.users[userId]
+  }
+
+  userProfile(user: UserProfile) {
+    if (this.users[user.id]) {
+      const current = this.users[user.id]
+      current.avatar = user.avatar
+      current.expiredAt = user.expiredAt
+      current.profiles = user.profiles
+      current.username = user.username
+      current.selectedProfile = user.selectedProfile
+      current.invalidated = user.invalidated
+    } else {
+      this.users[user.id] = user
+    }
+  }
+}
+
+export interface RefreshUserOptions {
+  /**
+   * Use cached token to refresh user and won't trigger popup window.
+   */
+  silent?: boolean
+  /**
+   * Igore cache and force to refresh user.
+   */
+  force?: boolean
+  /**
+   * Force to validate the user token with joinServer.
+   */
+  validate?: boolean
+}
+
+export interface UserService extends GenericEventEmitter<UserServiceEventMap> {
+  getUserState(): Promise<SharedState<UserState>>
+  /**
+   * Refresh the current user login status.
+   *
+   * This will also refresh the game profiles with skins.
+   *
+   * This will failed if user need to re-login the user.
+   *
+   * @throw 'userAccessTokenExpired'
+   */
+  refreshUser(userId: string, options?: RefreshUserOptions): Promise<UserProfile>
+  /**
+   * Upload the skin to server. If the userId and profileId is not assigned,
+   * it will use the selected user and selected profile.
+   *
+   * This will update the user profile state.
+   *
+   * Notice that this operation might fail if the user is not authorized (accessToken is not valid).
+   * If that happened, please let user refresh it credential or re-login.
+   */
+  uploadSkin(options: UploadSkinOptions): Promise<void>
+  /**
+   * Save the skin to the disk.
+   */
+  saveSkin(options: SaveSkinOptions): Promise<void>
+  /**
+   * Remove the user profile. This will logout to the user
+   */
+  removeUser(userProfile: UserProfile): Promise<void>
+  /**
+   * Select game profile of a user.
+   */
+  selectUserGameProfile(userProfile: UserProfile, gameProfileId: string): Promise<void>
+  /**
+   * Remove the game profile of a user. This only supported for offline user currently.
+   */
+  removeUserGameProfile(userProfile: UserProfile, gameProfileId: string): Promise<void>
+  /**
+   * Login new user account.
+   */
+  login(options: LoginOptions): Promise<UserProfile>
+  /**
+   * Abort current login
+   */
+  abortLogin(): Promise<void>
+  /**
+   * Abort the refresh user operation
+   */
+  abortRefresh(): Promise<void>
+  /**
+   * Get the supported authorities for login
+   */
+  getSupportedAuthorityMetadata(): Promise<AuthorityMetadata[]>
+  /**
+   * Add a third-party account system satisfy the authlib-injector format
+   * @param url The account api url
+   */
+  addYggdrasilService(url: string): Promise<void>
+  /**
+   * Remove a third-party account system satisfy the authlib-injector format
+   * @param url The account api url
+   */
+  removeYggdrasilService(url: string): Promise<void>
+
+  loginModrinth(invalidate?: boolean): Promise<void>
+
+  hasModrinthToken(): Promise<boolean>
+}
+
+export interface AuthorityMetadata {
+  /**
+   * The url of the authority
+   */
+  authority: string
+  /**
+   * Is this a built-in service
+   */
+  kind: 'builtin' | 'yggdrasil'
+  /**
+   * The cache for authlib injector compatible api.
+   *
+   * This is only available for authlib-injector compatible service.
+   */
+  authlibInjector?: AuthlibInjectorApiProfile
+  /**
+   * The favicon of the service
+   */
+  favicon?: string
+  /**
+   * The login flow of the service
+   */
+  flow: Array<'grant-code' | 'device-code' | 'password' | 'anonymous'>
+  /**
+   * Only allow email login
+   */
+  emailOnly?: boolean
+}
+
+export const UserServiceKey: ServiceKey<UserService> = 'UserService'
+
+export type UserExceptions = {
+  type: 'loginInternetNotConnected' | 'loginInvalidCredentials' | 'loginGeneral' | 'loginTimeout' | 'loginReset'
+} | {
+  type: 'userAcquireMicrosoftTokenFailed'
+  /** The user closed the Windows native-broker account picker. */
+  reason?: 'USER_CANCELED' | 'NETWORK_ERROR'
+} | {
+  type: 'userExchangeXboxTokenFailed'
+  /**
+    * The classified reason for the failure. New granular reasons were added
+    * for issue #1445 so the UI can show the user what exactly went wrong
+    * (and, where applicable, deep-link the Microsoft fix-it URL via
+    * {@link xErrRedirect}). `NO_ACCOUNT` / `BAD_AGE` / `BAD_XSTS` are kept
+    * for backwards compatibility with older renderers.
+    */
+  reason?: 'NO_ACCOUNT' | 'BAD_AGE' | 'BAD_XSTS'
+    | 'NO_XBOX_PROFILE'
+    | 'CHILD_ACCOUNT'
+    | 'ADULT_VERIFICATION_REQUIRED'
+    | 'REGION_LOCKED'
+    | 'BANNED'
+    | 'RATE_LIMITED'
+    | 'TIMEOUT'
+  /** Raw XErr code from the XSTS /authorize 401 body, if any. */
+  xErr?: number
+  /** The Message field from the XErr body (often empty). */
+  xErrMessage?: string
+  /** The Redirect URL Microsoft returns alongside the XErr (e.g. AddChildToFamily, CreateAccount). */
+  xErrRedirect?: string
+} | {
+  type: 'userLoginMinecraftByXboxFailed'
+  /** HTTP status code from /authentication/login_with_xbox, if available. */
+  status?: number
+  /** Raw response body (truncated by the catch site) — useful when debugging. */
+  statusBody?: string
+  /** Whether the failure was a transient HTTP code retried by the client. */
+  retryable?: boolean
+  /** Effective Retry-After (ms) the server asked us to wait, if any. */
+  retryAfter?: number
+  /** A permanent account-state failure returned by Minecraft authentication. */
+  reason?: 'ACCOUNT_SUSPENDED'
+} | {
+  type: 'userCheckGameOwnershipFailed'
+} | {
+  type: 'fetchMinecraftProfileFailed'
+  errorType: 'NOT_FOUND' | string
+  error: string | 'NOT_FOUND'
+  errorMessage: string
+  developerMessage: string
+} | {
+  type: 'userAccessTokenExpired'
+} | {
+  type: 'userSetSkinFailed'
+  reason: 'INVALID_IMAGE' | 'REQUEST_REJECTED'
+} | {
+  type: 'loginServiceNotSupported'
+  authority: string
+}
+
+export class UserException extends Exception<UserExceptions> { }

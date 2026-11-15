@@ -1,0 +1,345 @@
+import { isNotNull } from '@xmcl/core/utils'
+import { download } from '@xmcl/file-transfer'
+import { onDownloadSingle, Tracker } from '@xmcl/installer'
+import { isValidModrinthId, ResourceDomain, ResourceManager, type Resource } from '@xmcl/resource'
+import { kResourceManager } from '~/resource'
+import { ModMetadataServiceKey, type ModMetadataService as IModMetadataService, type ModMetadata, type ModMetadataFacts, DownloadModMetadataDbTask, DownloadModMetadataDbTrackerEvents } from '@xmcl/runtime-api'
+import { createReadStream, existsSync } from 'fs'
+import { unlink } from 'fs/promises'
+import { move } from 'fs-extra'
+import { Kysely } from 'kysely'
+import { DatabaseSync } from 'node:sqlite'
+import { Inject, LauncherApp, LauncherAppKey } from '~/app'
+import { kTasks, type Tasks } from '~/infra'
+import { kDownloadOptions } from '~/network'
+import { AbstractService, ExposeServiceKey } from '~/service'
+import { jsonObjectFrom, NodeSqliteDialect } from '@xmcl/sqlite'
+import { checksumFromStream } from '~/util/fs'
+import { isNonnull } from '~/util/object'
+import { getTracker } from '~/util/taskHelper'
+import {
+  createDatabaseDownloadController,
+  fetchDatabaseText,
+  getModMetadataDownloadUrls,
+} from './databaseDownload'
+
+interface Database {
+  file: {
+    sha1: string
+    name: string
+    domain: string
+  }
+  project_mapping: {
+    curseforge_project: number
+    modrinth_project: string
+  }
+  modrinth_version: {
+    sha1: string
+    project: string
+    version: string
+  }
+  curseforge_file: {
+    sha1: string
+    project: number
+    file: number
+  }
+  forge_mod: {
+    sha1: string
+    id: string
+    version: string
+  }
+  fabric_mod: {
+    sha1: string
+    id: string
+    version: string
+  }
+}
+
+@ExposeServiceKey(ModMetadataServiceKey)
+export class ModMetadataService extends AbstractService implements IModMetadataService {
+  private db: Kysely<Database> | undefined
+
+  constructor(@Inject(LauncherAppKey) app: LauncherApp,
+    @Inject(kTasks) private tasks: Tasks,
+  ) {
+    super(app, async () => {
+      // await this.#ensureDb()
+    })
+  }
+
+  async lookupMapping(lookup: { curseforge: number[]; modrinth: string[] }): Promise<{ curseforge?: Record<number, string>; modrinth?: Record<string, number> }> {
+    const db = await this.#ensureDb()
+    const curseforge = await db.selectFrom('project_mapping')
+      .where('curseforge_project', 'in', lookup.curseforge)
+      .selectAll()
+      .execute()
+    const modrinth = await db.selectFrom('project_mapping')
+      .where('modrinth_project', 'in', lookup.modrinth)
+      .selectAll()
+      .execute()
+    return {
+      curseforge: curseforge?.filter(isNotNull).reduce((acc, cur) => {
+        acc[cur.curseforge_project] = cur.modrinth_project
+        return acc
+      }, {} as Record<number, string>),
+      modrinth: modrinth?.filter(isNotNull).reduce((acc, cur) => {
+        acc[cur.modrinth_project] = cur.curseforge_project
+        return acc
+      }, {} as Record<string, number>),
+    }
+  }
+
+  async getMetadataFromSha1s(sha1: string[]): Promise<ModMetadata[]> {
+    const db = await this.#ensureDb()
+    const result = await db.selectFrom('file')
+      .where('sha1', 'in', sha1)
+      .select((eb) => [
+        'sha1',
+        'name',
+        'domain',
+        jsonObjectFrom(
+          eb.selectFrom('forge_mod').select(['id', 'version']).whereRef('forge_mod.sha1', '=', 'file.sha1'),
+        ).as('forge'),
+        jsonObjectFrom(
+          eb.selectFrom('fabric_mod').select(['id', 'version']).whereRef('fabric_mod.sha1', '=', 'file.sha1'),
+        ).as('fabric'),
+        jsonObjectFrom(
+          eb.selectFrom('modrinth_version').select(['project', 'version']).whereRef('modrinth_version.sha1', '=', 'file.sha1'),
+        ).as('modrinth'),
+        jsonObjectFrom(
+          eb.selectFrom('curseforge_file').select(['project', 'file']).whereRef('curseforge_file.sha1', '=', 'file.sha1'),
+        ).as('curseforge'),
+      ])
+      .execute()
+    return result?.filter(isNonnull).map((r) => {
+      const domain = r.domain as ResourceDomain
+      const name = r.name
+      const forge = r.forge
+      const fabric = r.fabric
+      const modrinth = r.modrinth
+      const curseforge = r.curseforge
+      return {
+        sha1: r.sha1,
+        name,
+        domain,
+        forge: forge ? { id: forge.id, version: forge.version } : undefined,
+        fabric: fabric ? { id: fabric.id, version: fabric.version } : undefined,
+        modrinth: modrinth ? { id: modrinth.project, version: modrinth.version } : undefined,
+        curseforge: curseforge ? { id: curseforge.project, file: curseforge.file } : undefined,
+      }
+    }) || []
+  }
+
+  async getMetadataFromSha1(sha1: string): Promise<ModMetadata | undefined> {
+    const db = await this.#ensureDb()
+    const result = await db.selectFrom('file')
+      .where('sha1', '=', sha1)
+      .select((eb) => [
+        'name',
+        'domain',
+        jsonObjectFrom(
+          eb.selectFrom('forge_mod').select(['id', 'version']).where('sha1', '=', sha1),
+        ).as('forge'),
+        jsonObjectFrom(
+          eb.selectFrom('fabric_mod').select(['id', 'version']).where('sha1', '=', sha1),
+        ).as('fabric'),
+        jsonObjectFrom(
+          eb.selectFrom('modrinth_version').select(['project', 'version']).where('sha1', '=', sha1),
+        ).as('modrinth'),
+        jsonObjectFrom(
+          eb.selectFrom('curseforge_file').select(['project', 'file']).where('sha1', '=', sha1),
+        ).as('curseforge'),
+      ])
+      .executeTakeFirst()
+    if (!result) return
+    const domain = result.domain as ResourceDomain
+    const name = result.name
+    const forge = result.forge
+    const fabric = result.fabric
+    const modrinth = result.modrinth
+    const curseforge = result.curseforge
+    return {
+      sha1,
+      name,
+      domain,
+      forge: forge ? { id: forge.id, version: forge.version } : undefined,
+      fabric: fabric ? { id: fabric.id, version: fabric.version } : undefined,
+      modrinth: modrinth ? { id: modrinth.project, version: modrinth.version } : undefined,
+      curseforge: curseforge ? { id: curseforge.project, file: curseforge.file } : undefined,
+    }
+  }
+
+  async getLocalMetadataFactsFromSha1s(sha1s: string[]): Promise<ModMetadataFacts[] | undefined> {
+    if (sha1s.length === 0) return []
+    const dbPath = this.getAppDataPath('db.sqlite')
+    if (!existsSync(dbPath)) return undefined
+
+    // Keep this connection independent from the validated service database so
+    // telemetry cannot bypass the normal checksum and update path.
+    const database = new DatabaseSync(dbPath, { readOnly: true })
+    try {
+      const placeholders = sha1s.map(() => '?').join(',')
+      const files = database.prepare(
+        `SELECT sha1, name, domain FROM file WHERE sha1 IN (${placeholders})`,
+      ).all(...sha1s) as { sha1: string; name: string; domain: string }[]
+      const facts = new Map<string, ModMetadataFacts>(files.map((file) => [
+        file.sha1,
+        {
+          sha1: file.sha1,
+          name: file.name,
+          domain: file.domain as ResourceDomain,
+          forge: [],
+          fabric: [],
+          modrinth: [],
+          curseforge: [],
+        },
+      ]))
+      if (facts.size === 0) return []
+
+      const knownSha1s = [...facts.keys()]
+      const knownPlaceholders = knownSha1s.map(() => '?').join(',')
+      const forge = database.prepare(
+        `SELECT sha1, id, version FROM forge_mod WHERE sha1 IN (${knownPlaceholders})`,
+      ).all(...knownSha1s) as { sha1: string; id: string; version: string }[]
+      const fabric = database.prepare(
+        `SELECT sha1, id, version FROM fabric_mod WHERE sha1 IN (${knownPlaceholders})`,
+      ).all(...knownSha1s) as { sha1: string; id: string; version: string }[]
+      const modrinth = database.prepare(
+        `SELECT sha1, project, version FROM modrinth_version WHERE sha1 IN (${knownPlaceholders})`,
+      ).all(...knownSha1s) as { sha1: string; project: string; version: string }[]
+      const curseforge = database.prepare(
+        `SELECT sha1, project, file FROM curseforge_file WHERE sha1 IN (${knownPlaceholders})`,
+      ).all(...knownSha1s) as { sha1: string; project: number; file: number }[]
+      for (const entry of forge) {
+        facts.get(entry.sha1)?.forge.push({ id: entry.id, version: entry.version })
+      }
+      for (const entry of fabric) {
+        facts.get(entry.sha1)?.fabric.push({ id: entry.id, version: entry.version })
+      }
+      for (const entry of modrinth) {
+        facts.get(entry.sha1)?.modrinth.push({ id: entry.project, version: entry.version })
+      }
+      for (const entry of curseforge) {
+        facts.get(entry.sha1)?.curseforge.push({ id: entry.project, file: entry.file })
+      }
+      return [...facts.values()]
+    } finally {
+      database.close()
+    }
+  }
+
+  async lookupModrinthId(curseforgeId: number): Promise<string | undefined> {
+    const db = await this.#ensureDb()
+    const result = await db.selectFrom('project_mapping')
+      .where('curseforge_project', '=', curseforgeId)
+      .selectAll()
+      .executeTakeFirst()
+    return result?.modrinth_project
+  }
+
+  async lookupCurseforgeId(modrinthId: string): Promise<number | undefined> {
+    const db = await this.#ensureDb()
+    const result = await db.selectFrom('project_mapping')
+      .where('modrinth_project', '=', modrinthId)
+      .selectAll()
+      .executeTakeFirst()
+    return result?.curseforge_project
+  }
+
+  async decorateResources(resources: Resource[]) {
+    const sha1s = resources.map((r) => r.hash)
+    const metadatas = await this.getMetadataFromSha1s(sha1s)
+    const resource = await this.app.registry.get(kResourceManager)
+    const resourceDict = resources.reduce((acc, cur) => {
+      acc[cur.hash] = cur
+      return acc
+    }, {} as Record<string, Resource>)
+    const toUpdates = [] as Resource[]
+    for (const metadata of metadatas) {
+      const res = resourceDict[metadata.sha1]
+      if (!res) continue
+      let dirty = false
+      if (!res.metadata.curseforge && metadata.curseforge && Number.isInteger(metadata.curseforge.id) && Number.isInteger(metadata.curseforge.file)) {
+        res.metadata.curseforge = {
+          projectId: metadata.curseforge.id,
+          fileId: metadata.curseforge.file,
+        }
+        dirty = true
+      }
+      if (!res.metadata.modrinth && metadata.modrinth && isValidModrinthId(metadata.modrinth.id) && isValidModrinthId(metadata.modrinth.version)) {
+        res.metadata.modrinth = {
+          projectId: metadata.modrinth.id,
+          versionId: metadata.modrinth.version,
+        }
+        dirty = true
+      }
+      if (dirty) {
+        toUpdates.push(res)
+      }
+    }
+    await resource.updateMetadata(toUpdates)
+    return resources
+  }
+
+  async #ensureDb() {
+    if (this.db) return this.db
+    const fetcher = (input: string, init?: RequestInit) => this.app.fetch(input, init)
+    const sha1 = await fetchDatabaseText(
+      fetcher,
+      getModMetadataDownloadUrls('db.sqlite.sha1'),
+    )
+    if (!/^[a-f0-9]{40}$/i.test(sha1)) {
+      throw new Error('The mod metadata database checksum is invalid')
+    }
+    const dbPath = this.getAppDataPath('db.sqlite')
+    const actual = await checksumFromStream(createReadStream(dbPath), 'sha1').catch(() => '')
+    if (actual !== sha1) {
+      const urls = getModMetadataDownloadUrls('db.sqlite')
+      const tempPath = `${dbPath}.download`
+      const task = this.tasks.create<DownloadModMetadataDbTask>({
+        type: 'downloadModMetadataDb',
+        key: 'download-mod-metadata-db',
+      })
+
+      const trackerCallback: Tracker<DownloadModMetadataDbTrackerEvents> = getTracker(task)
+      const tracker = onDownloadSingle(trackerCallback, 'download', { url: urls[0] })
+
+      try {
+        const downloadOptions = await this.app.registry.get(kDownloadOptions)
+        await download({
+          ...downloadOptions,
+          url: urls,
+          destination: tempPath,
+          signal: task.controller.signal,
+          tracker,
+          controller: createDatabaseDownloadController(),
+        })
+        const downloadedSha1 = await checksumFromStream(createReadStream(tempPath), 'sha1')
+        if (downloadedSha1 !== sha1) {
+          throw new Error('The downloaded mod metadata database checksum does not match')
+        }
+        await move(tempPath, dbPath, { overwrite: true })
+        task.complete()
+      } catch (error) {
+        await unlink(tempPath).catch(() => {})
+        task.fail(error)
+        throw error
+      }
+    }
+    return this.#openDb(dbPath)
+  }
+
+  #openDb(dbPath: string) {
+    if (this.db) return this.db
+    const dialect = new NodeSqliteDialect({
+      database: () => new DatabaseSync(dbPath, {
+        readOnly: true,
+      }),
+    })
+    const db = new Kysely<Database>({
+      dialect,
+    })
+    this.db = db
+    return db
+  }
+}

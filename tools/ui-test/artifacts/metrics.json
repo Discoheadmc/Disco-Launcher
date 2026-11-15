@@ -1,0 +1,12 @@
+{
+  "afterBoot": {
+    "jsHeap": "-0.0",
+    "nodes": -1,
+    "listeners": -1
+  },
+  "afterStress": {
+    "jsHeap": "-0.0",
+    "nodes": -1,
+    "listeners": -1
+  }
+}

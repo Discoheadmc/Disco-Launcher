@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Boot without renderer exceptions",
+    "ok": true,
+    "detail": "0 exceptions so far"
+  },
+  {
+    "name": "Renderer JS heap after boot",
+    "ok": true,
+    "detail": "-0.0 MB, DOM nodes: -1"
+  },
+  {
+    "name": "Me/profile view renders",
+    "ok": true,
+    "detail": "search | Hızlı eylem | Ctrl+Shift+C | assignment | minimize | crop_din | close | arrow_back | store | add | settings | refresh | Discoheadmc"
+  },
+  {
+    "name": "Local Closet button visible",
+    "ok": true,
+    "detail": "checkroom\nYerel Gardırop"
+  },
+  {
+    "name": "Custom cape section visible",
+    "ok": false,
+    "detail": "false"
+  },
+  {
+    "name": "Store: trending section removed",
+    "ok": true,
+    "detail": "trending found: false"
+  },
+  {
+    "name": "Store: discover + search render",
+    "ok": false,
+    "detail": "{\"trending\":false,\"discover\":false,\"search\":false,\"filters\":0}"
+  },
+  {
+    "name": "Store: filter groups render",
+    "ok": true,
+    "detail": "3 filter groups"
+  },
+  {
+    "name": "Settings view renders",
+    "ok": true,
+    "detail": "search | Hızlı eylem | Ctrl+Shift+C | assignment | minimize | crop_din | close | arrow_back | store | add | settings | K"
+  },
+  {
+    "name": "Heap growth after route stress < 60MB",
+    "ok": true,
+    "detail": "-0.0 -> -0.0 MB (0.0)"
+  },
+  {
+    "name": "No exceptions after stress navigation",
+    "ok": true,
+    "detail": "0 exceptions"
+  },
+  {
+    "name": "Renderer app root healthy",
+    "ok": true,
+    "detail": "true"
+  }
+]

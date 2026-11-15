@@ -1,0 +1,208 @@
+import { InstanceLogServiceKey, type InstanceLogService as IInstanceLogService } from '@xmcl/runtime-api'
+import { readFile, unlink } from 'fs-extra'
+import { isAbsolute, join } from 'path'
+import { Inject, LauncherAppKey } from '~/app'
+import { kEncodingWorker, type EncodingWorker } from '~/encoding'
+import { AbstractService, ExposeServiceKey, Singleton } from '~/service'
+import { LauncherApp } from '../app/LauncherApp'
+import { UTF8 } from '../util/encoding'
+import { AnyError, isSystemError } from '@xmcl/utils'
+import { ENOENT_ERROR, readdirIfPresent } from '../util/fs'
+import { gunzip } from '../util/zip'
+import { LaunchHistoryStore } from '../launch/LaunchHistoryStore'
+
+/**
+ * Provide the ability to list/read/remove log and crash reports of a instance.
+ */
+@ExposeServiceKey(InstanceLogServiceKey)
+export class InstanceLogService extends AbstractService implements IInstanceLogService {
+  private launchHistory: LaunchHistoryStore
+
+  constructor(@Inject(LauncherAppKey) app: LauncherApp,
+    @Inject(kEncodingWorker) private encoder: EncodingWorker,
+  ) {
+    super(app)
+    this.launchHistory = new LaunchHistoryStore(this.getAppDataPath('launch-history'))
+  }
+
+  listLaunches(instancePath: string) {
+    return this.launchHistory.list(instancePath)
+  }
+
+  getLaunch(instancePath: string, launchId: string) {
+    return this.launchHistory.get(instancePath, launchId)
+  }
+
+  getLaunchEvidence(instancePath: string, launchId: string, name: 'game.log' | 'debug.log' | 'crash-report.txt' | 'launcher-output.log') {
+    return this.launchHistory.readEvidence(instancePath, launchId, name)
+  }
+
+  async findLaunchByCrashReport(instancePath: string, name: string) {
+    const content = await this.getCrashReportContent(instancePath, name)
+    return this.launchHistory.findByCrashReport(instancePath, content)
+  }
+
+  /**
+   * List the log in current instances.
+   */
+  @Singleton()
+  async listLogs(instancePath: string) {
+    const files = await readdirIfPresent(join(instancePath, 'logs'))
+    return files.filter(f => f.endsWith('.gz') || f.endsWith('.txt') || f.endsWith('.log'))
+  }
+
+  /**
+   * List the dedicated-server logs in `<instance>/server/logs/`.
+   */
+  @Singleton()
+  async listServerLogs(instancePath: string) {
+    const files = await readdirIfPresent(join(instancePath, 'server', 'logs'))
+    return files.filter(f => f.endsWith('.gz') || f.endsWith('.txt') || f.endsWith('.log'))
+  }
+
+  /**
+   * Remove a dedicated-server log from disk
+   * @param name The log file name
+   */
+  @Singleton(name => name)
+  async removeServerLog(instancePath: string, name: string) {
+    const filePath = join(instancePath, 'server', 'logs', name)
+    this.log(`Remove server log ${filePath}`)
+    await unlink(filePath).catch(() => {})
+  }
+
+  /**
+   * Get the dedicated-server log content.
+   * @param name The log file name
+   */
+  @Singleton(name => name)
+  async getServerLogContent(instancePath: string, name: string) {
+    try {
+      const filePath = join(instancePath, 'server', 'logs', name)
+      let buf: any = await readFile(filePath)
+      if (name.endsWith('.gz')) {
+        buf = await gunzip(buf)
+      }
+      const encoding = await this.encoder.guessEncodingByBuffer(buf as any).catch(e => undefined)
+      const result = await this.encoder.decode(buf as any, encoding || UTF8)
+      return result
+    } catch (e) {
+      return ''
+    }
+  }
+
+  /**
+   * Show the dedicated-server log file on disk. This will open a file explorer.
+   * @param name The log file name
+   */
+  showServerLog(instancePath: string, name: string) {
+    const filePath = join(instancePath, 'server', 'logs', name)
+    this.app.shell.showItemInFolder(filePath)
+  }
+
+  /**
+   * Remove a log from disk
+   * @param name The log file name
+   */
+  @Singleton(name => name)
+  async removeLog(instancePath: string, name: string) {
+    const filePath = join(instancePath, 'logs', name)
+    this.log(`Remove log ${filePath}`)
+    await unlink(filePath).catch(() => {})
+  }
+
+  /**
+   * Get the log content.
+   * @param name The log file name
+   */
+  @Singleton(name => name)
+  async getLogContent(instancePath: string, name: string) {
+    try {
+      const filePath = join(instancePath, 'logs', name)
+      let buf: any = await readFile(filePath)
+      if (name.endsWith('.gz')) {
+        buf = await gunzip(buf)
+      }
+      const encoding = await this.encoder.guessEncodingByBuffer(buf as any).catch(e => undefined)
+      const result = await this.encoder.decode(buf as any, encoding || UTF8)
+      return result
+    } catch (e) {
+      return ''
+    }
+  }
+
+  /**
+   * List crash reports in current instance
+   */
+  @Singleton()
+  async listCrashReports(instancePath: string) {
+    const files = await readdirIfPresent(join(instancePath, 'crash-reports'))
+    return files.filter(f => f.endsWith('.gz') || f.endsWith('.txt'))
+  }
+
+  /**
+   * Remove a crash report from disk
+   * @param name The crash report file name
+   */
+  @Singleton((name) => name)
+  async removeCrashReport(instancePath: string, name: string) {
+    const filePath = join(instancePath, 'crash-reports', name)
+    this.log(`Remove crash report ${filePath}`)
+    try {
+      await unlink(filePath)
+    } catch (e) {
+      if (isSystemError(e) && e.code === ENOENT_ERROR) {
+        return
+      }
+      throw e
+    }
+  }
+
+  /**
+   * Get the crash report content
+   * @param name The name of crash report
+   */
+  @Singleton((name) => name)
+  async getCrashReportContent(instancePath: string, name: string) {
+    let filePath: string
+    if (isAbsolute(name)) {
+      filePath = name
+    } else {
+      filePath = join(instancePath, 'crash-reports', name)
+    }
+    try {
+      let buf: any = await readFile(filePath.trim())
+      if (name.endsWith('.gz')) {
+        buf = await gunzip(buf)
+      }
+      const encoding = await this.encoder.guessEncodingByBuffer(buf as any).catch(() => undefined)
+      const result = await this.encoder.decode(buf as any, encoding || UTF8)
+      return result
+    } catch (e) {
+      if (isSystemError(e) && e.code === ENOENT_ERROR) {
+        // expected
+        return ''
+      }
+      this.error(new AnyError('GetCrashContentError', `Fail to get log content "${name}"`, { cause: e }))
+      return ''
+    }
+  }
+
+  /**
+   * Show the log file on disk. This will open a file explorer.
+   * @param name The log file name
+   */
+  showLog(instancePath: string, name: string) {
+    const filePath = join(instancePath, 'logs', name)
+    this.app.shell.showItemInFolder(filePath)
+  }
+
+  /**
+   * Show a crash report on disk. This will open a file explorer.
+   * @param name The crash report file name
+   */
+  showCrash(instancePath: string, name: string) {
+    const filePath = join(instancePath, 'crash-reports', name)
+    this.app.shell.showItemInFolder(filePath)
+  }
+}

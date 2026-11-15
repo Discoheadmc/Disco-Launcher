@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Panel 3D önizleme (canvas) render",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "Özel pelerin thumb seçili görünümde",
+    "ok": true,
+    "detail": "{\"canvas\":true,\"thumbCount\":4,\"customSelected\":true}"
+  },
+  {
+    "name": "Gardırop diyaloğu açılıyor",
+    "ok": true,
+    "detail": "{\"open\":true,\"canvases\":0}"
+  },
+  {
+    "name": "Diyalog içinde 3D önizleme canvas",
+    "ok": false,
+    "detail": ""
+  },
+  {
+    "name": "Özel pelerin aktif (thumb highlight)",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "Gardırop kapanıyor",
+    "ok": false,
+    "detail": ""
+  }
+]

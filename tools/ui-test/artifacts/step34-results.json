@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Minecraft fontu yüklü (@font-face)",
+    "ok": true,
+    "detail": "{\"loaded\":true,\"check\":true}"
+  },
+  {
+    "name": "Me paneli mount",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "Gardırop 3D önizleme (canvas) — placeholder yok",
+    "ok": true,
+    "detail": "{\"open\":true,\"canvas\":1,\"placeholder\":false}"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Closet dialog opens on click",
+    "ok": false,
+    "detail": ""
+  },
+  {
+    "name": "Closet dialog closes",
+    "ok": true,
+    "detail": "true"
+  },
+  {
+    "name": "Official cape selection applies (2nd cape active)",
+    "ok": true,
+    "detail": "[\"false\",\"true\",\"false\"]"
+  },
+  {
+    "name": "No-cape option restores",
+    "ok": true,
+    "detail": "[\"true\",\"false\",\"false\"]"
+  },
+  {
+    "name": "Custom cape pick button clickable",
+    "ok": true,
+    "detail": "true"
+  }
+]

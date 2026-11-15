@@ -1,0 +1,65 @@
+import { build as esbuild, Plugin } from 'esbuild'
+import { basename, join, resolve } from 'path'
+import { cleanUrl } from './util'
+
+/**
+ * Resolve ?worker import to the function creating the worker object
+ */
+export default function createWorkerPlugin(): Plugin {
+  return {
+    name: 'resolve-worker',
+    setup(build) {
+      build.onResolve({ filter: /^.+\?worker$/ }, async ({ path, resolveDir }) => ({
+        path: resolve(resolveDir, path),
+        namespace: 'worker',
+      }))
+      build.onLoad({ filter: /^.+\?worker$/, namespace: 'worker' }, async ({ path }) => {
+        let absoltePath = cleanUrl(path)
+        absoltePath = !absoltePath.endsWith('.ts') ? absoltePath + '.ts' : absoltePath
+        const outDir = build.initialOptions.outdir
+        if (!outDir) {
+          throw new Error()
+        }
+        const result = await esbuild({
+          bundle: true,
+          metafile: true,
+          entryNames: '[dir]/[name].worker',
+          assetNames: '[name]',
+          loader: build.initialOptions.loader,
+          entryPoints: [absoltePath],
+          treeShaking: true,
+          define: build.initialOptions.define,
+          write: true,
+          outdir: outDir,
+          sourcemap: build.initialOptions.sourcemap,
+          minifyWhitespace: build.initialOptions.minifyWhitespace,
+          minifySyntax: build.initialOptions.minifySyntax,
+          keepNames: true,
+          platform: 'node',
+          format: build.initialOptions.format,
+          target: build.initialOptions.target,
+          outExtension: build.initialOptions.outExtension,
+          plugins: build.initialOptions.plugins,
+        })
+        const entryOutput = Object.entries(result.metafile?.outputs ?? {}).find(([, output]) => output.entryPoint)
+        if (!entryOutput) throw new Error(`Worker build produced no entry output for ${absoltePath}`)
+        const fileName = basename(entryOutput[0])
+        const functionName = basename(absoltePath).replace(/\W+/g, '_').replace(/^(\d)/, '_$1')
+        console.log(functionName)
+        return {
+          errors: result.errors,
+          warnings: result.warnings,
+          contents: build.initialOptions.plugins!.find(v => v.name === 'dev')
+            ? `import { Worker } from 'worker_threads';
+export const path = ${JSON.stringify(join(outDir, fileName))};
+export default function ${functionName} (options) { return new Worker(path, options); }`
+            : `import { join, dirname } from 'path';
+import { Worker } from 'worker_threads';
+export const path = join(__dirname.replace("app.asar", "app.asar"), ${JSON.stringify(fileName)});
+export default function ${functionName} (options) { return new Worker(path, options); }`,
+          resolveDir: outDir,
+        }
+      })
+    },
+  }
+}
