@@ -37,7 +37,7 @@ export function useInstanceContentLinks(): InstanceContentLink[] {
     { id: 'mods', label: t('instanceContent.mods'), icon: 'extension', to: '/mods' },
     { id: 'saves', label: t('instanceContent.saves'), icon: 'map', to: '/save' },
     { id: 'worlds', label: t('instanceContent.worlds'), icon: 'public', to: '/save' },
-    { id: 'servers', label: t('instanceContent.servers'), icon: 'dns', to: '/base-setting?target=server' },
+    { id: 'servers', label: t('instanceContent.servers'), icon: 'dns', to: '/base-setting?target=servers' },
   ]
 }
 
