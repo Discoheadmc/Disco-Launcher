@@ -22,6 +22,8 @@ const { start, end } = useBlockSharedTooltip()
 
 <style>
 .store {
+  /* Disco: room for the floating hotbar overlay. */
+  padding-bottom: calc(var(--hotbar-h, 0px) + 16px);
   .v-window__container {
     max-height: 360px;
   }

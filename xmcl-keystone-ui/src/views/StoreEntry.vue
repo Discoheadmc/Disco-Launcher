@@ -276,7 +276,7 @@
           <!-- Pagination -->
           <div
             v-if="pageCount > 1"
-            class="store-pagination hover:(scale-100 opacity-100) sticky bottom-3 z-10 w-full scale-95 transform opacity-60 transition duration-200 mt-4"
+            class="store-pagination hover:(scale-100 opacity-100) sticky bottom-[calc(var(--hotbar-h)+16px)] z-10 w-full scale-95 transform opacity-60 transition duration-200 mt-4"
           >
             <v-pagination
               v-model="page"
