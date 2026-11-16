@@ -487,7 +487,15 @@ async function onConfirmTargets() {
       await performInstall()
     }
   } catch (e) {
-    notify({ level: 'error', title: t('storeInstall.depsFailed'), body: (e as Error).message })
+    // Same operation key as performInstall: a dependency-resolution failure
+    // and its retry collapse into one toast rather than two.
+    const p = payload.value
+    notify({
+      level: 'error',
+      title: t('storeInstall.depsFailed'),
+      body: (e as Error).message,
+      key: p ? `store-install:${p.projectId}:${[...selectedPaths.value].sort().join(',')}` : undefined,
+    })
   } finally {
     loadingDeps.value = false
   }
@@ -596,21 +604,57 @@ async function performInstall() {
   installing.value = false
   isShown.value = false
 
-  if (succeeded.length > 0) {
+  // Disco: one notification per install operation. The same operation key
+  // dedupes by (market, project, target set), so repeating the identical
+  // install - or re-running the dialog several times before installing -
+  // merges into a single toast instead of stacking copies.
+  const targetsKey = targets.map(r => r.path).sort().join(',')
+  const installKey = `store-install:${p.projectId}:${targetsKey}`
+  const depCount = [...deps.values()].reduce((sum, list) => sum + list.length, 0)
+
+  if (succeeded.length > 0 && failed.length === 0) {
+    // Full success. Mention the dependency count when the dialog resolved
+    // any, so a mod + 3 deps reads as one operation result.
+    const title = succeeded.length === 1
+      ? t('storeInstall.installedOne', { project: p.title, instance: succeeded[0] })
+      : t('storeInstall.installedMany', { project: p.title, count: succeeded.length })
+    const body = depCount > 0
+      ? `${succeeded.join(', ')} · ${t('storeInstall.depsIncluded', { count: depCount })}`
+      : succeeded.join(', ')
     notify({
       level: 'success',
       icon: p.contentType === 'mod' ? 'extension' : 'texture',
-      title: t('storeInstall.done', { project: p.title }),
-      body: succeeded.join(', '),
+      title,
+      body,
+      key: installKey,
     })
+    return
   }
-  for (const f of failed) {
+
+  if (succeeded.length > 0 && failed.length > 0) {
+    // Partial: successes and failures in ONE summary notification.
     notify({
-      level: 'error',
-      title: t('storeInstall.failed', { instance: f.name }),
-      body: f.error.message,
+      level: 'warning',
+      icon: p.contentType === 'mod' ? 'extension' : 'texture',
+      title: t('storeInstall.partial', { succeeded: succeeded.length, total: targets.length }),
+      body: [
+        `${t('storeInstall.installedList')}: ${succeeded.join(', ')}`,
+        `${t('storeInstall.failedList')}: ${failed.map(f => `${f.name} (${f.error.message})`).join('; ')}`,
+        ...(depCount > 0 ? [t('storeInstall.depsIncluded', { count: depCount })] : []),
+      ].join('\n'),
+      key: installKey,
     })
+    return
   }
+
+  // Total failure: one notification listing every failed instance.
+  notify({
+    level: 'error',
+    icon: 'error',
+    title: t('storeInstall.failedSummary', { count: failed.length }),
+    body: failed.map(f => `${f.name}: ${f.error.message}`).join('\n'),
+    key: installKey,
+  })
 }
 
 function onCancel() {

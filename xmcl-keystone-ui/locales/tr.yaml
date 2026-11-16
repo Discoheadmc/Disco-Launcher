@@ -1757,6 +1757,15 @@ storeInstall:
   depsFailed: Bağımlılıklar çözümlenemedi
   done: '{project} kuruldu'
   failed: '{instance} oyununa kurulamadı'
+  # Single-report messages: one notification per install operation, even when
+  # several instances and dependencies are involved.
+  installedOne: '{project} · {instance} kuruldu'
+  installedMany: '{project} · {count} instance kuruldu'
+  depsIncluded: '+{count} bağımlılık'
+  partial: '{succeeded}/{total} instance kuruldu'
+  failedSummary: '{count} instance kurulamadı'
+  installedList: Kurulanlar
+  failedList: Başarısızlar
 tag:
   create: Etiket Oluştur
   createSelected: Seçilenler için Etiket Oluştur
