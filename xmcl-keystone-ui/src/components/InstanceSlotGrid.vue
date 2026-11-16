@@ -12,7 +12,7 @@
     <!-- Disco: empty state with a direct "Oyun Oluştur" entry (the classic
          grid relies on the toolbar button; the inventory home has none). -->
     <div
-      v-if="instances.length === 0"
+      v-if="displayInstances.length === 0"
       class="slot-grid__empty"
       data-testid="instance-slot-grid-empty"
     >
@@ -31,19 +31,27 @@
       </v-btn>
     </div>
     <div
-      v-for="(inst, index) in instances"
+      v-for="(inst, index) in displayInstances"
       :key="inst.path"
       class="slot"
       :class="{
         'slot--selected': inst.path === selectedPath,
         'slot--incompatible': !inst.runtime.minecraft,
+        'slot--dragging': dragFrom === index,
+        'slot--dragover': dragOver === index,
       }"
       :title="inst.name"
       :aria-label="inst.name"
       :aria-pressed="inst.path === selectedPath"
       :data-testid="`instance-slot-${inst.name}`"
+      draggable="true"
       @click="select(inst.path)"
       @contextmenu.prevent="emit('contextmenu', $event, inst)"
+      @dragstart="onDragStart($event, index)"
+      @dragover.prevent="onDragOver($event, index)"
+      @dragleave="onDragLeave(index)"
+      @drop.prevent="onDrop($event, index)"
+      @dragend="onDragEnd"
     >
       <span
         v-if="typeof index === 'number' && index < 9"
@@ -84,11 +92,39 @@ import { kInstanceLaunchCoordinator } from '@/composables/instanceLaunchCoordina
 import { computed, ref } from 'vue'
 
 const { t } = useI18n()
-const { instances, selectedInstance } = injection(kInstances)
+const { displayInstances, selectedInstance, reorderInstance } = injection(kInstances)
 const { select } = injection(kInstance)
 const { isRunning } = injection(kInstanceLaunchCoordinator)
 const running = isRunning as (path: string) => boolean
 const { show: showAddInstance } = useDialog(AddInstanceDialogKey)
+
+// Disco: native HTML5 drag & drop reorders the display order (session-only -
+// see useInstances). No drag library, no dependency.
+const dragFrom = ref(-1)
+const dragOver = ref(-1)
+function onDragStart(e: DragEvent, index: number) {
+  dragFrom.value = index
+  if (e.dataTransfer) {
+    e.dataTransfer.effectAllowed = 'move'
+    e.dataTransfer.setData('text/plain', String(index))
+  }
+}
+function onDragOver(e: DragEvent, index: number) {
+  if (e.dataTransfer) e.dataTransfer.dropEffect = 'move'
+  dragOver.value = index
+}
+function onDragLeave(index: number) {
+  if (dragOver.value === index) dragOver.value = -1
+}
+function onDrop(e: DragEvent, index: number) {
+  reorderInstance(dragFrom.value, index)
+  dragFrom.value = -1
+  dragOver.value = -1
+}
+function onDragEnd() {
+  dragFrom.value = -1
+  dragOver.value = -1
+}
 
 /** "sürüm · mod yükleyici" meta below the slot name (short loader name). */
 function loaderText(inst: Instance) {
@@ -110,7 +146,7 @@ const selectedPath = selectedInstance
 // Icon cache - getInstanceIcon must not run again on every render.
 const instanceIconMap = computed(() => {
   const map = new Map<string, string>()
-  for (const inst of instances.value) {
+  for (const inst of displayInstances.value) {
     map.set(inst.path, getInstanceIcon(inst, undefined))
   }
   return map
@@ -152,8 +188,18 @@ const instanceIconMap = computed(() => {
   border: 2px solid rgba(255, 255, 255, 0.12);
   border-radius: 0;
   color: rgb(var(--v-theme-on-surface));
-  cursor: pointer;
+  cursor: grab;
   overflow: hidden;
+}
+
+/* Drag & drop feedback: the dragged slot dims, the target slot highlights. */
+.slot--dragging {
+  opacity: 0.4;
+}
+
+.slot--dragover {
+  border-color: rgb(var(--v-theme-primary));
+  background: rgba(var(--v-theme-primary), 0.18);
 }
 
 .slot:hover {

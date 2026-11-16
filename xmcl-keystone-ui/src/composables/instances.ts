@@ -79,6 +79,37 @@ export function useInstances() {
 
   const allInstances = computed(() => state.value?.instances ?? [])
 
+  // Disco: display order for the home screens. Session-only by design: the
+  // drag order lives in this ref and resets on restart (a persisted order
+  // needs a sync path for add/remove/rename, which is deliberately out of
+  // scope for now). Everything that shows a list of instances reads
+  // `displayInstances` so the grid, the classic grid and the dashboard
+  // always agree, while the selection watchers keep using the raw list.
+  const order = ref<string[]>([])
+  const displayInstances = computed(() => {
+    const list = instances.value
+    if (order.value.length === 0) return list
+    const rank = new Map(order.value.map((path, index) => [path, index]))
+    // Instances missing from the order (new ones) keep their scan position
+    // relative to each other and land after the ordered entries.
+    return [...list].sort((a, b) => {
+      const ra = rank.get(a.path)
+      const rb = rank.get(b.path)
+      if (ra === undefined && rb === undefined) return 0
+      if (ra === undefined) return 1
+      if (rb === undefined) return -1
+      return ra - rb
+    })
+  })
+  /** Move the slot at `from` to `to` in the display order (drag & drop). */
+  function reorderInstance(from: number, to: number) {
+    const paths = displayInstances.value.map(i => i.path)
+    if (from < 0 || to < 0 || from >= paths.length || to >= paths.length) return
+    const [moved] = paths.splice(from, 1)
+    paths.splice(to, 0, moved)
+    order.value = paths
+  }
+
   const _path = useLocalStorage('selectedInstancePath', '' as string)
   const path = ref('')
   // Guard against `watch(instances)` clobbering the restored selection before
@@ -202,6 +233,8 @@ export function useInstances() {
     groupsSet,
     ready,
     instances,
+    displayInstances,
+    reorderInstance,
     allInstances,
     isValidating,
     error,
