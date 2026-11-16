@@ -102,7 +102,7 @@
         </div>
         <div class="list__rows">
           <div
-            v-for="inst in instances"
+            v-for="inst in displayInstances"
             :key="inst.path"
             class="row"
             :class="{ 'row--selected': inst.path === hero?.path }"
@@ -162,7 +162,7 @@ import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
-const { instances, selectedInstance } = injection(kInstances)
+const { instances, displayInstances, selectedInstance } = injection(kInstances)
 const { select } = injection(kInstance)
 const { onClick: onLaunchClick } = injection(kLaunchButton)
 const { show: showAddInstance } = useDialog(AddInstanceDialogKey)
