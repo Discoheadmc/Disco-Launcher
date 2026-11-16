@@ -2225,6 +2225,15 @@ storeInstall:
   depsFailed: Failed to resolve dependencies
   done: '{project} installed'
   failed: 'Failed to install to {instance}'
+  # Single-report messages: one notification per install operation, even when
+  # several instances and dependencies are involved.
+  installedOne: '{project} · {instance} installed'
+  installedMany: '{project} · {count} instances installed'
+  depsIncluded: '+{count} dependencies'
+  partial: '{succeeded}/{total} instances installed'
+  failedSummary: '{count} instances failed'
+  installedList: Installed
+  failedList: Failed
   searchResult: Search Result
   trending: Trending
 tag:
