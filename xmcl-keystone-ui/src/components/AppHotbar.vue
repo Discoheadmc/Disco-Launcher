@@ -189,7 +189,9 @@ defineExpose({ slots, activeSlot, hovered })
 }
 
 /* Minecraft's hotbar slot: square, framed, selected slot draws a heavier
-   border. Theme tokens only - no new colors. */
+   border. Theme tokens only - no new colors. The fill stays very light on
+   purpose: six solid 52px squares in a row read as a bar/band, which the
+   user reported; the thin frame alone separates the slots. */
 .hotbar__slot {
   position: relative;
   width: 52px;
@@ -199,8 +201,8 @@ defineExpose({ slots, activeSlot, hovered })
   align-items: center;
   justify-content: center;
   gap: 1px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 2px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 0;
   color: rgb(var(--v-theme-on-surface));
   cursor: pointer;
