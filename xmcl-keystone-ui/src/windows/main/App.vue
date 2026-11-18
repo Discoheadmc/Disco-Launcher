@@ -322,24 +322,7 @@ img {
   overflow: hidden;
 }
 
-/* Disco: the hotbar floats over the page instead of taking layout space,
-     so every scrollable area ends hotbar height + 16px above the window
-     bottom and the last row can always scroll out from under it. */
-.inventory-shell__main .custom-scrollbar,
-.inventory-shell__main .scroll-container,
-.inventory-shell__main .visible-scroll,
-.inventory-shell__main .home-page,
-.inventory-shell__main .dashboard,
-.inventory-shell__main .my-stuff-page,
-.inventory-shell__main .store-entry,
-.inventory-shell__main .store-sidebar,
-.inventory-shell__main .market-base,
-.inventory-shell__main .base-setting-scroll,
-.inventory-shell__main .save-page,
-.inventory-shell__main #store-content {
-  padding-bottom: calc(var(--hotbar-h) + 16px);
-}
-
+/* Disco: the hotbar floats over the page instead of taking layout space, so every scrollable area ends hotbar height + 16px above the window bottom and the last row can always scroll out from under it. The rule itself lives in the unscoped style block at the end of this file - a scoped selector compiles with a [data-v-...] attribute and never matches the pages this component hosts. */
 /* Every page fills the remaining height and scrolls on its own, which keeps a
    single scroll container per screen (no nested page+list scrollbars). */
 .inventory-shell__main > * {
@@ -357,5 +340,24 @@ img {
   max-height: 100% !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
+}
+</style>
+
+
+<style>
+/* Disco: the hotbar is a floating overlay, not a layout box. Every scrollable area under the inventory shell reserves hotbar height + 16px at its bottom so the last row can always scroll above the bar. This must stay in an UNSCOPED style block: scoped selectors compile with a [data-v-...] attribute and then only match this component's own elements instead of the pages it hosts. */
+.inventory-shell__main .custom-scrollbar,
+.inventory-shell__main .scroll-container,
+.inventory-shell__main .visible-scroll,
+.inventory-shell__main .home-page,
+.inventory-shell__main .dashboard,
+.inventory-shell__main .my-stuff-page,
+.inventory-shell__main .store-entry,
+.inventory-shell__main .store-sidebar,
+.inventory-shell__main .market-base,
+.inventory-shell__main .base-setting-scroll,
+.inventory-shell__main .save-page,
+.inventory-shell__main #store-content {
+  padding-bottom: calc(var(--hotbar-h) + 16px);
 }
 </style>
