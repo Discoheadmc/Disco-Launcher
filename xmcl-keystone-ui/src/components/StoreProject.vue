@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!project"
-    class="flex w-full flex-col gap-4 overflow-auto p-4 lg:flex-row select-none"
+    class="flex w-full flex-col gap-4 overflow-auto p-4 store-project-page lg:flex-row select-none"
   >
     <v-progress-linear
       class="absolute left-0 top-0 z-10 m-0 p-0"
@@ -16,7 +16,7 @@
   </div>
   <div
     v-else
-    class="flex flex-col gap-4 p-4 select-none"
+    class="flex flex-col gap-4 p-4 store-project-page select-none"
   >
     <v-progress-linear
       class="absolute left-0 top-0 z-10 m-0 p-0"
@@ -158,3 +158,10 @@ useGamepadAction('X', {
   handler: onInstall,
 })
 </script>
+
+<style scoped>
+/* Disco: reserve hotbar space at the bottom of the project page so the last row/scroll area never hides behind the floating hotbar overlay. */
+.store-project-page {
+  padding-bottom: calc(var(--hotbar-h) + 16px);
+}
+</style>
