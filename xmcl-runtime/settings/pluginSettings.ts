@@ -51,6 +51,18 @@ export const pluginSettings: LauncherAppPlugin = async (app) => {
   readJson(settingJsonPath).catch(() => ({})).then((rawData) => {
     // SettingSchema uses .catch() for each field, so invalid fields fallback to defaults automatically
     const data = SettingSchema.parse(rawData)
+
+    // Disco Launcher: Beta Mode migration. Before Beta Mode existed the two
+    // layout features defaulted to ON, so an existing install with at least
+    // one of them on is migrated to Beta Mode on. An absent betaMode key on
+    // an empty/missing settings file is a fresh install and stays off. This
+    // whole block is the single migration place - remove it together with
+    // the betaMode key once the migration is obsolete.
+    if (data.betaMode === undefined) {
+      const isFreshInstall = Object.keys(rawData as Record<string, unknown>).length === 0
+      data.betaMode = isFreshInstall ? false : (data.inventoryTheme || data.dashboardHome)
+    }
+
     data.locale = normalizeLocale(data.locale)
     state.config(data)
   }).catch((e) => {

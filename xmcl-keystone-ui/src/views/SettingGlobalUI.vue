@@ -80,30 +80,38 @@
             <v-divider class="my-2" />
             <!-- Disco: UI identity toggles. Independent switches - all four
                  combinations must work, and "off + off" is the classic layout
-                 exactly as it was before this feature existed. -->
-            <SettingItem
-              :title="t('setting.uiLayout.inventoryTheme')"
-              :description="t('setting.uiLayout.inventoryThemeHint')"
-            >
-              <template #action>
-                <v-switch v-model="inventoryTheme" color="primary" hide-details dense />
-              </template>
-            </SettingItem>
-            <SettingItem
-              :title="t('setting.uiLayout.dashboardHome')"
-              :description="t('setting.uiLayout.dashboardHomeHint')"
-            >
-              <template #action>
-                <v-switch v-model="dashboardHome" color="primary" hide-details dense />
-              </template>
-            </SettingItem>
-            <SettingItem :title="t('setting.uiLayout.backToClassic')">
-              <template #action>
-                <v-btn variant="outlined" @click="backToClassic">
-                  {{ t('setting.uiLayout.backToClassic') }}
-                </v-btn>
-              </template>
-            </SettingItem>
+                 exactly as it was before this feature existed. Disco Launcher:
+                 the whole group only shows while Beta Mode is on (setting it
+                 up lives in SettingGeneral next to Developer Mode); the layout
+                 readers check the effective value, so flipping the gate off
+                 restores the classic layout without touching these toggles. -->
+            <template v-if="betaMode">
+              <SettingItem :description="t('setting.uiLayout.inventoryThemeHint')">
+                <template #title>
+                  {{ t('setting.uiLayout.inventoryTheme') }}
+                  <BetaBadge />
+                </template>
+                <template #action>
+                  <v-switch v-model="inventoryTheme" color="primary" hide-details dense />
+                </template>
+              </SettingItem>
+              <SettingItem :description="t('setting.uiLayout.dashboardHomeHint')">
+                <template #title>
+                  {{ t('setting.uiLayout.dashboardHome') }}
+                  <BetaBadge />
+                </template>
+                <template #action>
+                  <v-switch v-model="dashboardHome" color="primary" hide-details dense />
+                </template>
+              </SettingItem>
+              <SettingItem :title="t('setting.uiLayout.backToClassic')">
+                <template #action>
+                  <v-btn variant="outlined" @click="backToClassic">
+                    {{ t('setting.uiLayout.backToClassic') }}
+                  </v-btn>
+                </template>
+              </SettingItem>
+            </template>
           </v-list>
         </div>
       </div>
@@ -214,6 +222,7 @@ import AppearanceItems from '@/components/AppearanceItems.vue'
 import { vRovingTabindex } from '@/directives/rovingTabindex'
 import SettingItem from '@/components/SettingItem.vue'
 import SettingItemCheckbox from '@/components/SettingItemCheckbox.vue'
+import BetaBadge from '@/components/BetaBadge.vue'
 import { useLocalStorage } from '@vueuse/core'
 import { kEnvironment } from '@/composables/environment'
 import { kSettingsState } from '@/composables/setting'
@@ -252,6 +261,13 @@ const inventoryTheme = computed({
 const dashboardHome = computed({
   get: () => state.value?.dashboardHome ?? true,
   set: (v) => state.value?.dashboardHomeSet(v),
+})
+// Disco Launcher: Beta Mode gate. The two toggles above only exist while the
+// gate is on; their readers elsewhere check the effective value, so turning it
+// off restores the classic layout right away.
+const betaMode = computed({
+  get: () => state.value?.betaMode ?? false,
+  set: (v) => state.value?.betaModeSet(v),
 })
 function backToClassic() {
   inventoryTheme.value = false

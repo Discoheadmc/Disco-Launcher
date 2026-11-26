@@ -95,7 +95,7 @@ import { kDropHandler } from '@/composables/dropHandler'
 import { kInstance } from '@/composables/instance'
 import { AddInstanceDialogKey } from '@/composables/instanceTemplates'
 import { kCompact } from '@/composables/scrollTop'
-import { kSettingsState } from '@/composables/setting'
+import { kSettingsState, useSettings } from '@/composables/setting'
 import { kTheme } from '@/composables/theme'
 import { injection } from '@/util/inject'
 
@@ -107,7 +107,10 @@ const { t } = useI18n()
 // Disco: inventory theme + dashboard off = the home is a two-column layout
 // whose detail panel already carries every instance fact, so the header
 // extension (chips row) would only duplicate them.
-const inventoryDetailMode = computed(() => (state.value?.inventoryTheme ?? true) && !(state.value?.dashboardHome ?? true))
+// Disco Launcher: effective values (Beta Mode AND the feature key), computed
+// once in composables/setting.ts.
+const { inventoryThemeEffective, dashboardHomeEffective } = useSettings()
+const inventoryDetailMode = computed(() => inventoryThemeEffective.value && !dashboardHomeEffective.value)
 
 const transitioning = ref(false)
 provide('transitioning', transitioning)
