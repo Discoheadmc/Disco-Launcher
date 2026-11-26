@@ -268,10 +268,24 @@ export function useSettings() {
     set: (v) => state.value?.dashboardHomeSet(v),
   })
 
+  // Disco Launcher: Beta Mode gate. The two layout features below only run
+  // while Beta Mode is on; every consumer reads the effective value, never
+  // the raw key. Existing installs are migrated once when setting.json is
+  // loaded (xmcl-runtime/settings/pluginSettings.ts).
+  const betaMode = computed({
+    get: () => state.value?.betaMode ?? false,
+    set: (v) => state.value?.betaModeSet(v),
+  })
+  const inventoryThemeEffective = computed(() => betaMode.value && inventoryTheme.value)
+  const dashboardHomeEffective = computed(() => betaMode.value && dashboardHome.value)
+
   return {
     enableDedicatedGPUOptimization,
     streamerMode,
     developerMode,
+    betaMode,
+    inventoryThemeEffective,
+    dashboardHomeEffective,
     httpProxyEnabled,
     enableDiscord,
     quickActionShortcut,

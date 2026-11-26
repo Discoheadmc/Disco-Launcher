@@ -366,6 +366,9 @@ describe('pluginSettings', () => {
         developerMode: true,
         disableTelemetry: true,
         linuxTitlebar: false,
+        betaMode: true, // Disco Launcher: migrated on for this pre-Beta-Mode file
+        dashboardHome: true,
+        inventoryTheme: true,
         enableDedicatedGPUOptimization: true,
         windowTranslucent: false,
         quickActionShortcut: '',
@@ -439,8 +442,79 @@ describe('pluginSettings', () => {
         windowTranslucent: false,
         quickActionShortcut: '',
         globalResolution: {},
+        betaMode: false, // Disco Launcher: fresh install (empty settings file)
+        dashboardHome: true,
+        inventoryTheme: true,
       },
       { spaces: 2 },
     )
+  })
+
+  // Disco Launcher: Beta Mode migration. A settings file written before the
+  // betaMode key existed migrates to Beta Mode on when at least one of the
+  // two layout features is on; an explicit decision is always preserved.
+  test('should migrate an existing install to Beta Mode on', async () => {
+    vi.mocked(fsExtra.readJson).mockResolvedValue({
+      locale: 'tr',
+      inventoryTheme: true,
+      dashboardHome: true,
+    })
+
+    const { pluginSettings } = await import('./pluginSettings')
+    await pluginSettings(mockApp, mockManifest)
+
+    await vi.waitFor(() => {
+      expect(mockApp.registry.register).toHaveBeenCalled()
+    })
+
+    expect(mockState.betaMode).toBe(true)
+  })
+
+  test('should migrate an existing install with both layout features off to Beta Mode off', async () => {
+    vi.mocked(fsExtra.readJson).mockResolvedValue({
+      locale: 'tr',
+      inventoryTheme: false,
+      dashboardHome: false,
+    })
+
+    const { pluginSettings } = await import('./pluginSettings')
+    await pluginSettings(mockApp, mockManifest)
+
+    await vi.waitFor(() => {
+      expect(mockApp.registry.register).toHaveBeenCalled()
+    })
+
+    expect(mockState.betaMode).toBe(false)
+  })
+
+  test('should keep Beta Mode off on a fresh install', async () => {
+    vi.mocked(fsExtra.readJson).mockResolvedValue({})
+
+    const { pluginSettings } = await import('./pluginSettings')
+    await pluginSettings(mockApp, mockManifest)
+
+    await vi.waitFor(() => {
+      expect(mockApp.registry.register).toHaveBeenCalled()
+    })
+
+    expect(mockState.betaMode).toBe(false)
+  })
+
+  test('should preserve an explicit betaMode value', async () => {
+    vi.mocked(fsExtra.readJson).mockResolvedValue({
+      locale: 'tr',
+      betaMode: false,
+      inventoryTheme: true,
+      dashboardHome: true,
+    })
+
+    const { pluginSettings } = await import('./pluginSettings')
+    await pluginSettings(mockApp, mockManifest)
+
+    await vi.waitFor(() => {
+      expect(mockApp.registry.register).toHaveBeenCalled()
+    })
+
+    expect(mockState.betaMode).toBe(false)
   })
 })

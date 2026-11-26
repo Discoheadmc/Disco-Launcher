@@ -25,6 +25,11 @@ export class Settings implements SettingSchema {
   globalResolution: { width?: number; height?: number; fullscreen?: boolean; monitor?: string } = {}
   discordPresence = false
   developerMode = false
+  // Disco Launcher: gates the experimental layout features (inventory theme,
+  // new home). Off by default; an install that predates betaMode is migrated
+  // in the settings loader (xmcl-runtime/settings/pluginSettings.ts). The
+  // field stays undefined until then/on a fresh install.
+  betaMode: boolean | undefined = false
   // Disco Launcher: telemetry off by default.
   disableTelemetry = true
   linuxTitlebar = false
@@ -125,6 +130,7 @@ export class Settings implements SettingSchema {
     this.globalEnv = config.globalEnv
     this.discordPresence = config.discordPresence
     this.developerMode = config.developerMode
+    this.betaMode = config.betaMode
     this.disableTelemetry = config.disableTelemetry
     this.linuxTitlebar = config.linuxTitlebar
     this.windowTranslucent = config.windowTranslucent
@@ -138,6 +144,10 @@ export class Settings implements SettingSchema {
 
   developerModeSet(developerMode: boolean) {
     this.developerMode = developerMode
+  }
+
+  betaModeSet(enabled: boolean) {
+    this.betaMode = enabled
   }
 
   quickActionShortcutSet(shortcut: string) {

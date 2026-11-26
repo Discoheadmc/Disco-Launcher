@@ -2,7 +2,7 @@
   <v-app v-if="!showSetup" class="h-full max-h-screen overflow-hidden select-none" :class="{ 'dark': isDark }">
     <AppBackground />
     <div
-      v-if="!inventoryTheme"
+      v-if="!inventoryThemeEffective"
       class="w-full h-full absolute left-0 header-overlay"
       :style="{
         height: headerHeight + 70 + 'px',
@@ -17,7 +17,7 @@
          and the Esc pause menu. Everything below the shell - dialogs,
          notifier, context menu, task dialog - is shared, so both layouts
          keep every feature. -->
-    <template v-if="!inventoryTheme">
+    <template v-if="!inventoryThemeEffective">
     <AppSystemBar :back="false" />
     <AppMenuBar />
     <div
@@ -103,7 +103,7 @@ import { kLaunchButton, useLaunchButton } from '@/composables/launchButton'
 import { kLocalizedContent, useLocalizedContentControl } from '@/composables/localizedContent'
 import { useNotifier } from '@/composables/notifier'
 import { kCompact } from '@/composables/scrollTop'
-import { kSettingsState } from '@/composables/setting'
+import { kSettingsState, useSettings } from '@/composables/setting'
 import { kTheme } from '@/composables/theme'
 import { kTutorial } from '@/composables/tutorial'
 import { kInFocusMode } from '@/composables/uiLayout'
@@ -153,7 +153,8 @@ const showSetup = ref(location.search.indexOf('bootstrap') !== -1)
 const { state } = injection(kSettingsState)
 const dialogModel = injection(kDialogModel)
 // Disco: "Envanter Temasi" - the inventory layout replaces the classic shell.
-const inventoryTheme = computed(() => state.value?.inventoryTheme ?? true)
+// Effective value only: it also stays false while Beta Mode is off.
+const { inventoryThemeEffective } = useSettings()
 const lazyDialogComponent = computed(() => lazyDialogComponents[dialogModel.current.value.dialog as keyof typeof lazyDialogComponents])
 const developerMode = computed(() => state.value?.developerMode ?? false)
 

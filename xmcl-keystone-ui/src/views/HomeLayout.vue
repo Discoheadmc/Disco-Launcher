@@ -68,7 +68,7 @@ import InstanceActionsPanel from './InstanceActionsPanel.vue'
 import InstanceTooltipPanel from '@/components/InstanceTooltipPanel.vue'
 import AppCollectionDialog from './AppCollectionDialog.vue'
 import HomeDropModpackDialog from './HomeDropModpackDialog.vue'
-import { kSettingsState } from '@/composables/setting'
+import { kSettingsState, useSettings } from '@/composables/setting'
 import { useGamepadInnerNav } from '@/composables/gamepad'
 
 const router = useRouter()
@@ -77,8 +77,11 @@ const router = useRouter()
 // detail panel instead of the classic action list. "Yeni Ana Ekran" hides that
 // column completely, because its own card carries every action.
 const { state } = injection(kSettingsState)
-const inventoryTheme = computed(() => state.value?.inventoryTheme ?? true)
-const dashboardHome = computed(() => state.value?.dashboardHome ?? true)
+// Disco Launcher: read the effective values (Beta Mode AND the feature key),
+// computed once in composables/setting.ts.
+const { inventoryThemeEffective, dashboardHomeEffective } = useSettings()
+const inventoryTheme = computed(() => inventoryThemeEffective.value)
+const dashboardHome = computed(() => dashboardHomeEffective.value)
 
 // Gamepad triggers (L2/R2) cycle through the instance pages.
 const HOME_GROUP = ['/', '/mods', '/resourcepacks', '/shaderpacks', '/save']

@@ -1474,6 +1474,12 @@ setting:
   darkThemeDescription: Koyu veya açık tema arasında seçim yapın
   developerMode: Geliştirici Modu
   developerModeDescription: Geliştirici Modu kendi modlarınızı test etmek içindir
+  betaMode: Beta Modu
+  betaModeDescription: Deneysel düzen özelliklerini (Envanter Teması ve Yeni Ana Ekran) açar. Kapatınca klasik düzene dönersiniz.
+  betaBadge: BETA
+  betaModeOffConfirmTitle: Beta Modu kapatılsın mı?
+  betaModeOffConfirm: Beta düzenleri kapatılacak ve klasik düzene dönülecek. Seçimleriniz kaydedilir; Beta Modu'nu tekrar açtığınızda geri gelir.
+  betaModeOffConfirmAction: Kapat ve klasik düzene dön
   disableTelemetry: Telemetriyi Devre Dışı Bırak
   disableTelemetryDescription: DHMC oyun başlatma ve kullanıcı giriş olaylarını toplayacaktır.
   enableDedicatedGPUOptimization: Özel GPU Ata
