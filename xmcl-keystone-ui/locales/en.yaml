@@ -2023,6 +2023,20 @@ setting:
   sidebarPosition: Sidebar Position
   sidebarShowOnlyPinned: Show Only Pinned Instances
   sidebarShowOnlyPinnedHint: Only display pinned instances in the sidebar
+  aboutPage:
+    tagline: A fast and simple Minecraft launcher
+    version: Version
+    platform: Platform
+    account: Account
+    copyInfo: Copy info
+    copied: Copied
+    copyFailed: Copy failed
+    github: GitHub
+    releases: Releases
+    community: Community
+    thanks: Special thanks
+    thanksList: XMCL, Voxelum and ci010
+    copyright: Disco Launcher is built on X Minecraft Launcher (XMCL) and distributed under the MIT license.
   uiLayout:
     name: Layout
     inventoryTheme: Inventory Theme

@@ -6,6 +6,10 @@ dotenv()
 
 export const config = {
   productName: 'Disco Launcher',
+  // The package version carries a semver prerelease tag (0.1.0-beta), which is
+  // not a valid Windows 4-part FileVersion. Pin the exe file version to
+  // 0.1.0.0; the product version shown in Explorer properties stays 0.1.0-beta.
+  buildVersion: '0.1.0.0',
   appId: 'com.discolauncher.app',
   directories: {
     output: 'build/output',
