@@ -1,5 +1,5 @@
 #!/bin/sh
-# Portable installer for X Minecraft Launcher (XMCL) — macOS & Linux.
+# Portable installer for Disco Launcher (upstream: X Minecraft Launcher / XMCL) — macOS & Linux.
 #
 # Reconstructs a runnable launcher — equivalent to extracting the official
 # tar.xz (Linux) or the dmg's .app (macOS) — by downloading the matching
@@ -17,7 +17,7 @@ set -eu
 
 REGISTRY="${XMCL_REGISTRY:-https://registry.npmmirror.com}"
 ELECTRON_MIRROR="${XMCL_ELECTRON_MIRROR:-https://npmmirror.com/mirrors/electron}"
-APP_NAME="X Minecraft Launcher"
+APP_NAME="Disco Launcher"
 
 VERSION="latest"
 INSTALL_DIR="${XMCL_INSTALL_DIR:-}"
@@ -162,8 +162,8 @@ else
   rm -f "$INSTALL_DIR/resources/default_app.asar"
   mv "$asar_src" "$INSTALL_DIR/resources/app.asar"
 
-  mv "$INSTALL_DIR/electron" "$INSTALL_DIR/xmcl"
-  chmod +x "$INSTALL_DIR/xmcl"
+  mv "$INSTALL_DIR/electron" "$INSTALL_DIR/disco-launcher"
+  chmod +x "$INSTALL_DIR/disco-launcher"
 
   # chrome-sandbox must be root-owned + setuid, which needs privileges we may
   # not have in a portable install. Best-effort; otherwise --no-sandbox works.
@@ -174,7 +174,7 @@ else
     fi
   fi
 
-  step "Installed to $INSTALL_DIR/xmcl"
-  echo "    if it fails with a sandbox error, run: $INSTALL_DIR/xmcl --no-sandbox"
-  [ "$LAUNCH" = "1" ] && "$INSTALL_DIR/xmcl" >/dev/null 2>&1 &
+  step "Installed to $INSTALL_DIR/disco-launcher"
+  echo "    if it fails with a sandbox error, run: $INSTALL_DIR/disco-launcher --no-sandbox"
+  [ "$LAUNCH" = "1" ] && "$INSTALL_DIR/disco-launcher" >/dev/null 2>&1 &
 fi

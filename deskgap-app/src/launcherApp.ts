@@ -19,7 +19,7 @@ import { plugins } from './plugins'
 import { toWebResponseBody } from './transport'
 
 const manifest = {
-  name: 'X Minecraft Launcher',
+  name: 'Disco Launcher',
   description: 'The default XMCL interface hosted by DeskGap',
   url: 'xmcl-deskgap://launcher/index.html',
   backgroundColor: '0x424242',

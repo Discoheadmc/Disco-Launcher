@@ -132,7 +132,7 @@ export class LauncherApp extends EventEmitter {
 
   get userAgent() {
     const version = IS_DEV ? '0.0.0' : this.host.getVersion()
-    return `discolauncher/disco-launcher/${version}`
+    return `DiscoLauncher/${version}`
   }
 
   #disposed = false
