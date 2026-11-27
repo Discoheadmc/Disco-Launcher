@@ -39,7 +39,15 @@
           </transition>
         </router-view>
       </div>
-      <router-view name="extensions" v-slot="{ Component }">
+      <!-- Disco: in the inventory home with the new dashboard OFF, the
+           extension row (playtime/last-played chips) is hidden - the same
+           facts live in the detail panel, and showing them twice in two
+           formats was the duplication this layout is meant to fix. -->
+      <router-view
+        v-if="!inventoryDetailMode"
+        name="extensions"
+        v-slot="{ Component }"
+      >
         <transition
           name="slide-y-reverse-transition"
           mode="out-in"
@@ -87,12 +95,22 @@ import { kDropHandler } from '@/composables/dropHandler'
 import { kInstance } from '@/composables/instance'
 import { AddInstanceDialogKey } from '@/composables/instanceTemplates'
 import { kCompact } from '@/composables/scrollTop'
+import { kSettingsState, useSettings } from '@/composables/setting'
 import { kTheme } from '@/composables/theme'
 import { injection } from '@/util/inject'
 
 const { name, runtime: version } = injection(kInstance)
 const { blurAppBar } = injection(kTheme)
+const { state } = injection(kSettingsState)
 const { t } = useI18n()
+
+// Disco: inventory theme + dashboard off = the home is a two-column layout
+// whose detail panel already carries every instance fact, so the header
+// extension (chips row) would only duplicate them.
+// Disco Launcher: effective values (Beta Mode AND the feature key), computed
+// once in composables/setting.ts.
+const { inventoryThemeEffective, dashboardHomeEffective } = useSettings()
+const inventoryDetailMode = computed(() => inventoryThemeEffective.value && !dashboardHomeEffective.value)
 
 const transitioning = ref(false)
 provide('transitioning', transitioning)

@@ -106,7 +106,7 @@
     <v-snackbar
       :model-value="isModified"
       :color="snackbarColor"
-      :class="{ 'shake-animation': hasAnimation }"
+      :class="{ 'shake-animation': hasAnimation, 'base-snackbar': true }"
       :timeout="-1"
       @update:model-value="() => {}"
     >
@@ -554,7 +554,9 @@ useTutorial(computed(() => {
 .base-setting-scroll {
   height: 100%;
   overflow-y: auto;
-  padding: 0 20px 32px 0;
+  /* Disco: room for the floating hotbar overlay, so the last setting row
+     can still scroll above it. */
+  padding: 0 20px calc(var(--hotbar-h, 0px) + 16px) 0;
 }
 
 .base-setting-tabs {
@@ -633,6 +635,12 @@ useTutorial(computed(() => {
   80% { transform: translate(10px, 0); }
   90% { transform: translate(-10px, 0); }
   100% { transform: translate(0, 0); }
+}
+
+/* Disco: the hotbar is a floating overlay, so the unsaved-changes snackbar
+   must sit above it instead of under the page's bottom edge. */
+.base-snackbar :deep(.v-overlay__content) {
+  margin-bottom: calc(var(--hotbar-h) + 16px);
 }
 
 .shake-animation {

@@ -89,6 +89,10 @@ export const SettingSchema = z.object({
   discordPresence: z.boolean().catch(false),
   /** Developer mode setting */
   developerMode: z.boolean().catch(false),
+  // Optional (not .catch) on purpose: an absent key means the install
+  // predates Beta Mode, and the loader needs to tell that apart from an
+  // explicit false. See the migration in xmcl-runtime/settings/pluginSettings.ts.
+  betaMode: z.boolean().optional(),
   /** Disable telemetry setting */
   disableTelemetry: z.boolean().catch(true),
   /** Linux titlebar setting */

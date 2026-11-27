@@ -12,7 +12,7 @@
          IntersectionObserver ile ilk render'da font yüklemesini önler. -->
     <div v-if="!collapsed" ref="cardsRef" class="instance-grid__cards">
       <button
-        v-for="inst in instances"
+        v-for="inst in displayInstances"
         :key="inst.path"
         type="button"
         class="instance-card"
@@ -44,7 +44,7 @@ import { kInstances } from '@/composables/instances'
 import { kInstance } from '@/composables/instance'
 
 const { t } = useI18n()
-const { instances, selectedInstance } = injection(kInstances)
+const { displayInstances, instances, selectedInstance } = injection(kInstances)
 const { select } = injection(kInstance)
 
 const collapsed = ref(false)

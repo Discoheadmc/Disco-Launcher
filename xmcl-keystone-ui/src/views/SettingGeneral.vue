@@ -80,6 +80,50 @@
           <v-chip v-if="developerMode" size="x-small" color="warning" class="ml-2">{{ t('setting.devModeLabel') }}</v-chip>
         </SettingItemSwitcher>
 
+        <!-- Disco Launcher: Beta Mode gates the two experimental layout
+             features (Envanter Teması and Yeni Ana Ekran). Turning it off is
+             confirmed first; on confirm the layout switches back to classic
+             immediately, because every layout reader checks the effective
+             value. The switch is bound with :model-value so cancelling the
+             dialog leaves it untouched. -->
+        <SettingItem
+          data-testid="beta-mode"
+          :description="t('setting.betaModeDescription')"
+        >
+          <template #title>
+            <v-icon start size="small" color="primary">science</v-icon>
+            {{ t('setting.betaMode') }}
+          </template>
+          <template #action="{ titleId, descriptionId }">
+            <!-- The switch mirrors "on unless the off dialog is open": cancelling
+               flips it back with no remount, because the prop really changes. -->
+            <v-switch
+              :model-value="betaMode && !showBetaModeOffConfirm"
+              color="primary"
+              hide-details
+              dense
+              :aria-labelledby="titleId"
+              :aria-describedby="descriptionId"
+              @update:model-value="onBetaModeToggle"
+            />
+          </template>
+        </SettingItem>
+
+        <v-dialog v-model="showBetaModeOffConfirm" max-width="420">
+          <v-card :title="t('setting.betaModeOffConfirmTitle')">
+            <v-card-text>
+              {{ t('setting.betaModeOffConfirm') }}
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn variant="text" @click="showBetaModeOffConfirm = false">{{ t('shared.cancel') }}</v-btn>
+              <v-btn color="primary" variant="text" @click="onConfirmBetaModeOff">
+                {{ t('setting.betaModeOffConfirmAction') }}
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
         <SettingItemSwitcher
           v-model="streamerMode"
           :title="t('setting.streamerMode')"
@@ -128,6 +172,7 @@ const env = injection(kEnvironment)
 const {
   streamerMode,
   developerMode,
+  betaMode,
   selectedLocale,
   replaceNative,
   disableTelemetry,
@@ -160,6 +205,22 @@ async function browseRootDir() {
 }
 
 const { show: onMigrateFromOther } = useDialog('migrate-wizard')
+
+// Disco Launcher: Beta Mode confirmation. Turning the gate off is asked first;
+// on confirm the setting is written and every layout reader flips to the
+// classic layout right away.
+const showBetaModeOffConfirm = ref(false)
+function onBetaModeToggle(next: boolean | null) {
+  if (next) {
+    betaMode.value = true
+    return
+  }
+  showBetaModeOffConfirm.value = true
+}
+function onConfirmBetaModeOff() {
+  showBetaModeOffConfirm.value = false
+  betaMode.value = false
+}
 
 </script>
 

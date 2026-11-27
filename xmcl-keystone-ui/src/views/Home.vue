@@ -46,7 +46,7 @@ import { useTutorial } from '@/composables/tutorial'
 import { useInFocusMode } from '@/composables/uiLayout'
 import { useHomeFocusCards } from '@/composables/homeCards'
 import { vContextMenu } from '@/directives/contextMenu'
-import { kSettingsState } from '@/composables/setting'
+import { kSettingsState, useSettings } from '@/composables/setting'
 import { injection } from '@/util/inject'
 import { isBedrockInstance } from '@xmcl/instance'
 import type { DriveStep } from 'driver.js'
@@ -59,9 +59,12 @@ import HomeDashboard from './HomeDashboard.vue'
 const isFocus = useInFocusMode()
 /** Disco: "Envanter Teması" - square instance slots + tooltip detail panel. */
 const { state } = injection(kSettingsState)
-const inventoryTheme = computed(() => state.value?.inventoryTheme ?? true)
+// Disco Launcher: read the effective values (Beta Mode AND the feature key),
+// computed once in composables/setting.ts.
+const { inventoryThemeEffective, dashboardHomeEffective } = useSettings()
+const inventoryTheme = computed(() => inventoryThemeEffective.value)
 /** Disco: "Yeni Ana Ekran" - the large last-played card replaces the grid. */
-const dashboardHome = computed(() => state.value?.dashboardHome ?? true)
+const dashboardHome = computed(() => dashboardHomeEffective.value)
 
 function onGridContextMenu(event: MouseEvent, inst: any) {
   emit('contextmenu', event, inst)

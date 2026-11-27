@@ -5,7 +5,11 @@ import type { Configuration } from 'electron-builder'
 dotenv()
 
 export const config = {
-  productName: 'XMCL Disco Launcher',
+  productName: 'Disco Launcher',
+  // The package version carries a semver prerelease tag (0.1.0-beta), which is
+  // not a valid Windows 4-part FileVersion. Pin the exe file version to
+  // 0.1.0.0; the product version shown in Explorer properties stays 0.1.0-beta.
+  buildVersion: '0.1.0.0',
   appId: 'com.discolauncher.app',
   directories: {
     output: 'build/output',
@@ -13,7 +17,7 @@ export const config = {
     app: '.',
   },
   protocols: {
-    name: 'XMCL Disco Launcher',
+    name: 'Disco Launcher',
     schemes: ['disco'],
   },
   // assign publish for auto-updater

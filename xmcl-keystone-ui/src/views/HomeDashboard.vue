@@ -41,8 +41,8 @@
             <template v-else-if="hero.runtime.fabricLoader"> · Fabric {{ hero.runtime.fabricLoader }}</template>
           </div>
           <div class="hero__facts">
-            <span><v-icon size="14">schedule</v-icon> {{ playTimeText() }}</span>
-            <span><v-icon size="14">update</v-icon> {{ lastPlayedText }}</span>
+            <span><v-icon size="14">schedule</v-icon> {{ heroPlayTime }}</span>
+            <span><v-icon size="14">update</v-icon> {{ heroLastPlayed }}</span>
           </div>
           <div class="hero__actions">
             <v-btn
@@ -102,7 +102,7 @@
         </div>
         <div class="list__rows">
           <div
-            v-for="inst in instances"
+            v-for="inst in displayInstances"
             :key="inst.path"
             class="row"
             :class="{ 'row--selected': inst.path === hero?.path }"
@@ -146,6 +146,7 @@
 
 <script lang="ts" setup>
 import { useInstanceActions, useInstanceContentLinks } from '@/composables/instanceActions'
+import { useInstanceFacts } from '@/composables/instanceFacts'
 import { useDialog } from '@/composables/dialog'
 import { kInstance } from '@/composables/instance'
 import { kInstances } from '@/composables/instances'
@@ -161,7 +162,7 @@ import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
-const { instances, selectedInstance } = injection(kInstances)
+const { instances, displayInstances, selectedInstance } = injection(kInstances)
 const { select } = injection(kInstance)
 const { onClick: onLaunchClick } = injection(kLaunchButton)
 const { show: showAddInstance } = useDialog(AddInstanceDialogKey)
@@ -214,29 +215,11 @@ function onCreate() {
   showAddInstance(undefined)
 }
 
-function playTimeText() {
-  const ms = hero.value?.playtime
-  if (!ms) return t('instance.neverPlayed')
-  const totalMinutes = Math.floor(ms / 60000)
-  const days = Math.floor(totalMinutes / 1440)
-  const hours = Math.floor((totalMinutes % 1440) / 60)
-  const minutes = totalMinutes % 60
-  // t() already composes the number with the unit ("3 gün"), so the parts are
-  // joined directly - prefixing the count again would print it twice.
-  const parts: string[] = []
-  if (days > 0) parts.push(t('duration.day', { duration: days }, { plural: days }))
-  if (hours > 0) parts.push(t('duration.hour', { duration: hours }, { plural: hours }))
-  if (parts.length === 0 || minutes > 0) {
-    parts.push(t('duration.minute', { duration: minutes }, { plural: minutes }))
-  }
-  return parts.join(' ')
-}
-
-const lastPlayedText = computed(() => {
-  const date = hero.value?.lastPlayedDate
-  if (!date) return t('instance.neverPlayed')
-  return new Date(date).toLocaleString()
-})
+// Disco: the hero card's facts come from the shared formatter, the same one
+// the tooltip detail panel uses, so the two surfaces never disagree.
+const { formatPlayTime, formatLastPlayed } = useInstanceFacts()
+const heroPlayTime = computed(() => formatPlayTime(hero.value?.playtime ?? 0))
+const heroLastPlayed = computed(() => formatLastPlayed(hero.value?.lastPlayedDate ?? 0).text)
 
 /** Primary action on the card: install when broken, otherwise launch. */
 const { issues, fixInstanceFileIssue } = useInstanceLaunchMenuItems()
@@ -281,7 +264,7 @@ async function launchInstance(instancePath: string) {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: 12px 4px 8px;
+  padding: 12px 4px calc(var(--hotbar-h, 0px) + 16px);
   /* In the inventory shell the dashboard is the lobby screen's scroll
      container. A fixed height (not flex-basis:auto) is what stops it growing
      with content, so the list scrolls instead of stretching past the hotbar. */

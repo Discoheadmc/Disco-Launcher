@@ -1913,6 +1913,12 @@ setting:
   devModeLabel: DEV
   developerMode: Developer Mode
   developerModeDescription: Developer Mode is for testing your own mods
+  betaMode: Beta Mode
+  betaModeDescription: Turns on the experimental layout features (Inventory Theme and New Home Screen). Turning it off returns you to the classic layout.
+  betaBadge: BETA
+  betaModeOffConfirmTitle: Turn off Beta Mode?
+  betaModeOffConfirm: The beta layouts will be turned off and the classic layout will be restored. Your choices are kept, so they come back when you enable Beta Mode again.
+  betaModeOffConfirmAction: Turn off and return to classic
   disableTelemetry: Disable Telemetry
   disableTelemetryDescription: DHMC will collect the game launch and user login events.
   enableDedicatedGPUOptimization: Assign Dedicated GPU
@@ -2017,6 +2023,20 @@ setting:
   sidebarPosition: Sidebar Position
   sidebarShowOnlyPinned: Show Only Pinned Instances
   sidebarShowOnlyPinnedHint: Only display pinned instances in the sidebar
+  aboutPage:
+    tagline: A fast and simple Minecraft launcher
+    version: Version
+    platform: Platform
+    account: Account
+    copyInfo: Copy info
+    copied: Copied
+    copyFailed: Copy failed
+    github: GitHub
+    releases: Releases
+    community: Community
+    thanks: Special thanks
+    thanksList: XMCL, Voxelum and ci010
+    copyright: Disco Launcher is built on X Minecraft Launcher (XMCL) and distributed under the MIT license.
   uiLayout:
     name: Layout
     inventoryTheme: Inventory Theme
@@ -2225,6 +2245,15 @@ storeInstall:
   depsFailed: Failed to resolve dependencies
   done: '{project} installed'
   failed: 'Failed to install to {instance}'
+  # Single-report messages: one notification per install operation, even when
+  # several instances and dependencies are involved.
+  installedOne: '{project} · {instance} installed'
+  installedMany: '{project} · {count} instances installed'
+  depsIncluded: '+{count} dependencies'
+  partial: '{succeeded}/{total} instances installed'
+  failedSummary: '{count} instances failed'
+  installedList: Installed
+  failedList: Failed
   searchResult: Search Result
   trending: Trending
 tag:

@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  Portable installer for X Minecraft Launcher (XMCL).
+  Portable installer for Disco Launcher (upstream: X Minecraft Launcher / XMCL).
 
 .DESCRIPTION
   Reconstructs a runnable launcher folder — equivalent to extracting the
@@ -46,7 +46,7 @@ $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue' # Invoke-WebRequest is ~10x faster without the progress bar.
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$AppName = 'X Minecraft Launcher'
+$AppName = 'Disco Launcher'
 $Tar = Join-Path $env:SystemRoot 'System32\tar.exe' # bsdtar, shipped since Windows 10 1803.
 
 function Write-Step($msg) { Write-Host "==> $msg" -ForegroundColor Cyan }

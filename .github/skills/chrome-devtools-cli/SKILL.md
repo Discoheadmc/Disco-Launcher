@@ -37,7 +37,7 @@ npx -y -p chrome-devtools-mcp@latest chrome-devtools
    npx -y -p chrome-devtools-mcp@latest chrome-devtools list_pages --output-format=json
    ```
 
-   The real development page must be titled `X Minecraft Launcher` or `XMCL`
+   The real development page must be titled `Disco Launcher` (older builds: `XMCL Disco Launcher`)
    and load from `http://localhost:3000`, not `http://xmcl.runtime`. Keep its
    numeric page ID for every page-scoped command.
 

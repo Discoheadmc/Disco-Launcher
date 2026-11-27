@@ -1474,6 +1474,12 @@ setting:
   darkThemeDescription: Koyu veya açık tema arasında seçim yapın
   developerMode: Geliştirici Modu
   developerModeDescription: Geliştirici Modu kendi modlarınızı test etmek içindir
+  betaMode: Beta Modu
+  betaModeDescription: Deneysel düzen özelliklerini (Envanter Teması ve Yeni Ana Ekran) açar. Kapatınca klasik düzene dönersiniz.
+  betaBadge: BETA
+  betaModeOffConfirmTitle: Beta Modu kapatılsın mı?
+  betaModeOffConfirm: Beta düzenleri kapatılacak ve klasik düzene dönülecek. Seçimleriniz kaydedilir; Beta Modu'nu tekrar açtığınızda geri gelir.
+  betaModeOffConfirmAction: Kapat ve klasik düzene dön
   disableTelemetry: Telemetriyi Devre Dışı Bırak
   disableTelemetryDescription: DHMC oyun başlatma ve kullanıcı giriş olaylarını toplayacaktır.
   enableDedicatedGPUOptimization: Özel GPU Ata
@@ -1606,6 +1612,20 @@ setting:
   livePreview: Canlı Önizleme
   sidebarShowOnlyPinned: Yalnızca Sabitlenmiş Örnekleri Göster
   sidebarShowOnlyPinnedHint: Kenar çubuğunda yalnızca sabitlenmiş örnekleri göster
+  aboutPage:
+    tagline: Hızlı ve sade Minecraft launcher'ı
+    version: Sürüm
+    platform: Platform
+    account: Hesap
+    copyInfo: Bilgiyi kopyala
+    copied: Kopyalandı
+    copyFailed: Kopyalanamadı
+    github: GitHub
+    releases: Sürüm notları
+    community: Topluluk
+    thanks: Özel teşekkür
+    thanksList: XMCL, Voxelum ve ci010
+    copyright: Disco Launcher, X Minecraft Launcher (XMCL) tabanlıdır ve MIT lisansıyla dağıtılır.
   uiLayout:
     name: Düzen
     inventoryTheme: Envanter Teması
@@ -1757,6 +1777,15 @@ storeInstall:
   depsFailed: Bağımlılıklar çözümlenemedi
   done: '{project} kuruldu'
   failed: '{instance} oyununa kurulamadı'
+  # Single-report messages: one notification per install operation, even when
+  # several instances and dependencies are involved.
+  installedOne: '{project} · {instance} kuruldu'
+  installedMany: '{project} · {count} instance kuruldu'
+  depsIncluded: '+{count} bağımlılık'
+  partial: '{succeeded}/{total} instance kuruldu'
+  failedSummary: '{count} instance kurulamadı'
+  installedList: Kurulanlar
+  failedList: Başarısızlar
 tag:
   create: Etiket Oluştur
   createSelected: Seçilenler için Etiket Oluştur
