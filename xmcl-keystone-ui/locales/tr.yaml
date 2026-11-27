@@ -1612,6 +1612,20 @@ setting:
   livePreview: Canlı Önizleme
   sidebarShowOnlyPinned: Yalnızca Sabitlenmiş Örnekleri Göster
   sidebarShowOnlyPinnedHint: Kenar çubuğunda yalnızca sabitlenmiş örnekleri göster
+  aboutPage:
+    tagline: Hızlı ve sade Minecraft launcher'ı
+    version: Sürüm
+    platform: Platform
+    account: Hesap
+    copyInfo: Bilgiyi kopyala
+    copied: Kopyalandı
+    copyFailed: Kopyalanamadı
+    github: GitHub
+    releases: Sürüm notları
+    community: Topluluk
+    thanks: Özel teşekkür
+    thanksList: XMCL, Voxelum ve ci010
+    copyright: Disco Launcher, X Minecraft Launcher (XMCL) tabanlıdır ve MIT lisansıyla dağıtılır.
   uiLayout:
     name: Düzen
     inventoryTheme: Envanter Teması
