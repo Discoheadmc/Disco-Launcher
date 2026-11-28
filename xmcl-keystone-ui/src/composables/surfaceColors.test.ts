@@ -1,5 +1,16 @@
-import { describe, expect, it } from 'vitest'
-import { DEFAULT_SURFACE_COLORS, parseHex, surfaceContrastRatio, toSurfaceHex } from './surfaceColors'
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest'
+import {
+  DEFAULT_SURFACE_COLORS,
+  PRESET_SURFACE_COLORS,
+  RECENT_COLORS_LIMIT,
+  applySurfaceColors,
+  parseHex,
+  readRecentColors,
+  rememberRecentColor,
+  surfaceContrastRatio,
+  toSurfaceHex,
+} from './surfaceColors'
+import { useSurfaceTokens } from './surfaceTokens'
 
 describe('parseHex', () => {
   it('parses 6-digit hex', () => {
@@ -67,10 +78,113 @@ describe('surfaceContrastRatio', () => {
 })
 
 describe('DEFAULT_SURFACE_COLORS', () => {
-  it('mirrors the pre-feature look (Vuetify palette)', () => {
-    expect(DEFAULT_SURFACE_COLORS.dark.background).toBe('#212121')
+  it('mirrors the pre-feature look', () => {
+    // The page background is Vuetify/theme `background` (darker than cards).
+    expect(DEFAULT_SURFACE_COLORS.dark.background).toBe('#121212')
+    expect(DEFAULT_SURFACE_COLORS.dark.card).toBe('#212121')
     expect(DEFAULT_SURFACE_COLORS.light.background).toBe('#FFFFFF')
     // A dark border must stay visible against the dark surface.
     expect(surfaceContrastRatio(DEFAULT_SURFACE_COLORS.dark.border, true)).toBeGreaterThan(1.5)
+  })
+})
+
+describe('PRESET_SURFACE_COLORS', () => {
+  it('offers only valid, mode-fitting grays', () => {
+    for (const mode of ['dark', 'light'] as const) {
+      const colors = PRESET_SURFACE_COLORS[mode]
+      expect(colors.length).toBeGreaterThanOrEqual(8)
+      for (const color of colors) {
+        expect(toSurfaceHex(color)).toBe(color)
+      }
+    }
+  })
+})
+
+describe('recent colors', () => {
+  // The unit environment is node (no DOM): give the composable a minimal
+  // in-memory Storage for this block only.
+  const store = new Map<string, string>()
+  beforeAll(() => {
+    ;(globalThis as any).localStorage = {
+      getItem: (k: string) => (store.has(k) ? store.get(k)! : null),
+      setItem: (k: string, v: string) => void store.set(k, String(v)),
+      removeItem: (k: string) => void store.delete(k),
+      clear: () => store.clear(),
+      key: () => null,
+      length: 0,
+    } as Storage
+  })
+  beforeEach(() => store.clear())
+
+  it('remembers the newest color first, deduped', () => {
+    rememberRecentColor('#111111')
+    rememberRecentColor('#222222')
+    rememberRecentColor('#111111')
+    expect(readRecentColors()).toEqual(['#111111', '#222222'])
+  })
+
+  it('caps the list at the limit', () => {
+    for (let i = 0; i < RECENT_COLORS_LIMIT + 4; i++) {
+      rememberRecentColor(`#${(i + 10).toString(16).padStart(6, '0')}`)
+    }
+    const recents = readRecentColors()
+    expect(recents.length).toBe(RECENT_COLORS_LIMIT)
+    // Newest is the last one written.
+    expect(recents[0]).toBe(`#${(RECENT_COLORS_LIMIT + 13).toString(16).padStart(6, '0')}`)
+  })
+
+  it('ignores junk and keeps the existing list', () => {
+    rememberRecentColor('#123456')
+    rememberRecentColor('not-a-color')
+    expect(readRecentColors()).toEqual(['#123456'])
+  })
+
+  it('survives corrupted storage', () => {
+    store.set('surface-colors-recents', '{not json')
+    expect(readRecentColors()).toEqual([])
+  })
+})
+
+describe('applySurfaceColors', () => {
+  function tokens() { return useSurfaceTokens() }
+
+  it('writes the page background to the theme colors, not Vuetify surface', () => {
+    const t = tokens()
+    const theme = { colors: { darkBackground: '#121212A5', lightBackground: '#FFFFFF' } }
+    applySurfaceColors({ background: '#0d0d0d', card: '#212121', input: '#212121', border: '#424242' }, true, t, theme)
+    expect(theme.colors.darkBackground).toBe('#0d0d0d')
+    expect(theme.colors.lightBackground).toBe('#FFFFFF')
+  })
+
+  it('restores the pre-override background when the set has none', () => {
+    const t = tokens()
+    const theme = { colors: { darkBackground: '#123456', lightBackground: '#FFFFFF' } }
+    applySurfaceColors({ card: '#212121' }, true, t, theme, '#121212')
+    expect(theme.colors.darkBackground).toBe('#121212')
+  })
+
+  it('leaves the theme background untouched without an override or fallback', () => {
+    const t = tokens()
+    const theme = { colors: { darkBackground: '#123456', lightBackground: '#FFFFFF' } }
+    applySurfaceColors(undefined, true, t, theme)
+    expect(theme.colors.darkBackground).toBe('#123456')
+  })
+
+  it('pushes card/input/border onto the surface tokens', () => {
+    const t = tokens()
+    applySurfaceColors({ card: '#010203', input: '#040506', border: '#070809' }, true, t)
+    expect(t.cardBg.value).toBe('#010203')
+    expect(t.cardSubsectionBg.value).toBe('#010203')
+    expect(t.cardRowBg.value).toBe('#010203')
+    expect(t.inputBg.value).toBe('#040506')
+    expect(t.border.value).toBe('1px solid #070809')
+  })
+
+  it('falls back to the mode defaults for missing fields', () => {
+    const t = tokens()
+    applySurfaceColors(undefined, true, t)
+    expect(t.cardBg.value).toBe(DEFAULT_SURFACE_COLORS.dark.card)
+    expect(t.inputBg.value).toBe(DEFAULT_SURFACE_COLORS.dark.input)
+    expect(t.border.value).toBe(`1px solid ${DEFAULT_SURFACE_COLORS.dark.border}`)
   })
 })

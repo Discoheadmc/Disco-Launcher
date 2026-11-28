@@ -1470,6 +1470,15 @@ setting:
     save: Kaydet
     reset: Varsayılana sıfırla
     lowContrast: Metin zor okunabilir olabilir
+    hexLabel: Hex değeri
+    hexInvalid: Geçersiz renk kodu
+    eyeDropper: Ekrandan renk seç
+    presets: Hazır renkler
+    recents: Son kullanılanlar
+    preview: Önizleme
+    resetRow: Varsayılana dön
+    resetConfirmTitle: Tüm renkler sıfırlansın mı?
+    resetConfirm: Dört yüzey rengi de varsayılan değerlerine dönecek. Devam edilsin mi?
   darkTheme: Tema
   darkThemeDescription: Koyu veya açık tema arasında seçim yapın
   developerMode: Geliştirici Modu

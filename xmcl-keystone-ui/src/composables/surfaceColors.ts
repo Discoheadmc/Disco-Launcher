@@ -4,25 +4,73 @@ import { useTheme as useVuetifyTheme } from 'vuetify'
 import { computed, watch } from 'vue'
 
 /**
- * The Vuetify theme instance. Must be captured during component setup —
- * Vuetify's useTheme() injects through the current instance and throws
- * "Cannot find Symbol(theme) to inject" when called from a watcher callback
- * that runs outside the setup context. Callers therefore capture it once
- * and pass it into {@link applySurfaceColors}.
+ * The Vuetify theme instance. Kept as a type for callers that still capture
+ * it during setup (Vuetify's useTheme() throws when called outside a setup
+ * context).
  */
 export type VuetifyThemeInstance = ReturnType<typeof useVuetifyTheme>
 
 /**
  * Disco: gray surface colors for the "Yüzey Renkleri" editor.
  *
- * Defaults reproduce today's look exactly: Vuetify's own palette (dark
- * #212121, light #FFFFFF surfaces, grey borders) — so "reset" and an absent
- * stored block both render the pre-feature appearance.
+ * Defaults reproduce today's look exactly: the page background comes from the
+ * theme's own background color (Vuetify's `background`, #121212 in dark /
+ * #FFFFFF in light), cards and input fields are Vuetify's `surface`
+ * (#212121 / #FFFFFF) and borders are grey — so "reset" and an absent stored
+ * block both render the pre-feature appearance.
  */
 export const DEFAULT_SURFACE_COLORS = {
-  dark: { background: '#212121', card: '#212121', input: '#212121', border: '#424242' },
+  dark: { background: '#121212', card: '#212121', input: '#212121', border: '#424242' },
   light: { background: '#FFFFFF', card: '#FFFFFF', input: '#FFFFFF', border: '#E0E0E0' },
 } as const
+
+/**
+ * Disco: preset swatches offered in the editor, per mode. Dark grays for the
+ * dark theme, light grays for the light theme — no brand colors, no accents.
+ */
+export const PRESET_SURFACE_COLORS = {
+  dark: ['#0d0d0d', '#121212', '#181818', '#1f1f1f', '#212121', '#282828', '#303030', '#3a3a3a', '#424242', '#4f4f4f'],
+  light: ['#ffffff', '#fafafa', '#f5f5f5', '#eeeeee', '#e0e0e0', '#d6d6d6', '#cccccc', '#c2c2c2', '#b8b8b8', '#adadad'],
+} as const
+
+/** Disco: how many recently used colors the editor remembers per mode. */
+export const RECENT_COLORS_LIMIT = 6
+
+const RECENTS_STORAGE_KEY = 'surface-colors-recents'
+
+function safeLocalStorage(): Storage | undefined {
+  try {
+    return typeof localStorage === 'undefined' ? undefined : localStorage
+  } catch {
+    return undefined
+  }
+}
+
+/** Disco: the last used colors, newest first, normalized to `#RRGGBB`. */
+export function readRecentColors(): string[] {
+  const store = safeLocalStorage()
+  if (!store) return []
+  try {
+    const parsed = JSON.parse(store.getItem(RECENTS_STORAGE_KEY) ?? '[]')
+    if (!Array.isArray(parsed)) return []
+    return parsed
+      .filter((v): v is string => typeof v === 'string' && parseHex(v) !== undefined)
+      .slice(0, RECENT_COLORS_LIMIT)
+      .map(v => toSurfaceHex(v) as string)
+  } catch {
+    return []
+  }
+}
+
+/** Disco: record a color as the most recently used one. */
+export function rememberRecentColor(hex: string): string[] {
+  const normalized = toSurfaceHex(hex)
+  if (!normalized) return readRecentColors()
+  const next = [normalized, ...readRecentColors().filter(c => c !== normalized)].slice(0, RECENT_COLORS_LIMIT)
+  const store = safeLocalStorage()
+  store?.setItem(RECENTS_STORAGE_KEY, JSON.stringify(next))
+  return next
+}
 
 /** Parse #RGB / #RRGGBB / #RRGGBBAA into components; null when unparseable. */
 export function parseHex(hex: string): { r: number; g: number; b: number; a: number } | undefined {
@@ -82,22 +130,35 @@ function toHexColor(c: { r: number; g: number; b: number; a: number }) {
 }
 
 /**
- * Push one surface color set onto the live UI: Vuetify's surface color for
- * the background, the surface tokens for cards/panels/inputs/borders. Absent
- * fields fall back to the defaults matching today's look.
+ * Push one surface color set onto the live UI: the theme's own background
+ * color for the page, the surface tokens for cards/panels/inputs/borders.
+ * Absent fields fall back to the defaults matching today's look.
  *
  * Nothing here persists anything — the caller decides (the app-level sync
  * applies stored theme data, the editor previews and persists on save).
+ *
+ * @param theme When given, the "background" row writes the theme's own
+ *   background color (`colors.darkBackground` / `colors.lightBackground`),
+ *   which is what actually paints `html, body` (see theme.ts). Vuetify's
+ *   `surface` is deliberately NOT touched: it paints dialogs and menus, which
+ *   belong to the card/panel row's domain.
+ * @param backgroundWithoutOverride Value to restore when the set carries no
+ *   background entry (the editor uses it to undo a preview). When omitted and
+ *   the set has no background entry, the theme's current color is left alone.
  */
-export function applySurfaceColors(set: SurfaceColorSet | undefined, dark: boolean, tokens: SurfaceTokens, framework: VuetifyThemeInstance) {
+export function applySurfaceColors(
+  set: SurfaceColorSet | undefined,
+  dark: boolean,
+  tokens: SurfaceTokens,
+  theme?: { colors: Record<string, string> },
+  backgroundWithoutOverride?: string,
+) {
   const defaults = dark ? DEFAULT_SURFACE_COLORS.dark : DEFAULT_SURFACE_COLORS.light
 
-  // Background → Vuetify runtime surface color. Runtime-only: persistence
-  // goes through theme.surfaceColors, never through Vuetify's theme object.
-  const themeName = framework.global.name.value
-  const themeColors = framework.themes.value[themeName]?.colors as Record<string, string> | undefined
-  if (themeColors) {
-    themeColors.surface = set?.background || defaults.background
+  // Page background → the theme's own background color (drives --color-bg).
+  if (theme) {
+    const key = dark ? 'darkBackground' : 'lightBackground'
+    theme.colors[key] = set?.background || backgroundWithoutOverride || theme.colors[key]
   }
 
   // Card / panel — one color drives every card tier; panels get the same
@@ -133,15 +194,50 @@ export function applySurfaceColors(set: SurfaceColorSet | undefined, dark: boole
  * it provides itself, so injection(kTheme) would throw here even though
  * provide(kTheme) runs a few lines earlier.
  */
+/**
+ * One-time migration for the row/target fix: the "background" row used to
+ * write Vuetify's `surface` color, whose default equals the card color. A
+ * stored block that simply repeats that default is therefore an accidental
+ * save (or the old default), not a chosen page color — re-point it to the
+ * theme's own background color so the page does not change for those users.
+ * Runs once per stored block; afterwards the value no longer matches the
+ * legacy signature. Explicitly chosen values that differ from the card
+ * default are left alone.
+ */
+function migrateLegacyBackground(set: SurfaceColorSet | undefined, dark: boolean): SurfaceColorSet | undefined {
+  if (!set || !set.background) return set
+  if (set.background !== DEFAULT_SURFACE_COLORS[dark ? 'dark' : 'light'].card) return set
+  return { ...set }
+}
+
 export function useSurfaceColorsSync(theme: ReturnType<typeof import('./theme')['useTheme']>, tokens: SurfaceTokens) {
-  // Capture during setup — see VuetifyThemeInstance.
-  const framework = useVuetifyTheme()
   watch(
     [computed(() => theme.currentTheme.value?.surfaceColors), theme.isDark],
     () => {
       const dark = theme.isDark.value
-      const set = theme.currentTheme.value?.surfaceColors?.[dark ? 'dark' : 'light']
-      applySurfaceColors(set, dark, tokens, framework)
+      const mode = dark ? 'dark' : 'light'
+      const current = theme.currentTheme.value
+      let set = current?.surfaceColors?.[mode]
+      const legacy = migrateLegacyBackground(set, dark)
+      if (current && legacy && set?.background) {
+        const themeBackground = current.colors[dark ? 'darkBackground' : 'lightBackground']
+        if (themeBackground && themeBackground !== legacy.background) {
+          legacy.background = themeBackground
+          if (!current.surfaceColors) current.surfaceColors = {}
+          current.surfaceColors[mode] = legacy
+          set = legacy
+          // Persist the corrected block; saveCurrentTheme writes theme.json.
+          try {
+            theme.saveCurrentTheme()
+          } catch {
+            // Non-fatal: the in-memory value is already correct.
+          }
+        }
+      }
+      // The theme object is passed so a stored background override is applied
+      // to the theme's own background color at boot; when the set carries no
+      // background entry the theme's current color is left untouched.
+      applySurfaceColors(set, dark, tokens, current ?? undefined)
     },
     { immediate: true, deep: true },
   )

@@ -1894,6 +1894,15 @@ setting:
     save: Save
     reset: Reset to default
     lowContrast: Text may be hard to read
+    hexLabel: Hex value
+    hexInvalid: Invalid color code
+    eyeDropper: Pick a color from the screen
+    presets: Preset colors
+    recents: Recently used
+    preview: Preview
+    resetRow: Restore default
+    resetConfirmTitle: Reset all surface colors?
+    resetConfirm: All four surface colors will return to their default values. Continue?
   customCss:
     advancedDescription: Override the launcher's current styling with your own CSS.
     assistantHint: Describe the look you want and I'll write the CSS for you.
